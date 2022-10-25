@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace HospitalLibrary.Settings
 {
@@ -30,10 +31,10 @@ namespace HospitalLibrary.Settings
                 Name = "Ime",
                 Surname = "Prezime",
                 Email = "imeprezime024@gmail.com",
-                Room = room1,
+                RoomId = room1.Id,
                 StartWorkTime = 8,
                 EndWorkTime = 15,
-                Appointments = null
+                Appointments = new List<Appointment>()
             };
             Doctor doctor2 = new Doctor()
             {
@@ -41,10 +42,10 @@ namespace HospitalLibrary.Settings
                 Name = "Pera",
                 Surname = "Peric",
                 Email = "peraperic024@gmail.com",
-                Room = room2,
+                RoomId = room2.Id,
                 StartWorkTime = 8,
                 EndWorkTime = 15,
-                Appointments = null
+                Appointments = new List<Appointment>()
             };
             Doctor doctor3 = new Doctor()
             {
@@ -52,10 +53,10 @@ namespace HospitalLibrary.Settings
                 Name = "Djole",
                 Surname = "Djokic",
                 Email = "djole1312@gmail.com",
-                Room = room3,
+                RoomId = room3.Id,
                 StartWorkTime = 8,
                 EndWorkTime = 15,
-                Appointments = null
+                Appointments = new List<Appointment>()
             };
 
             modelBuilder.Entity<Doctor>().HasData(
@@ -66,25 +67,26 @@ namespace HospitalLibrary.Settings
                 new Appointment
                 {
                     Id = "APP1",
-                    Doctor = doctor1,
+                    DoctorId = doctor1.Id,
                     PatientId = "PAT1",
-                    Start = new DateTime(2022, 10, 25, 12, 20, 0)
-
+                    Start = new DateTime(2022, 10, 25, 12, 20, 0),
+                    RoomId = room1.Id
                 },
                 new Appointment
                 {
                     Id = "APP2",
-                    Doctor = doctor2,
+                    DoctorId = doctor2.Id,
                     PatientId = "PAT2",
-                    Start = new DateTime(2022, 10, 25, 12, 20, 0)
-
+                    Start = new DateTime(2022, 10, 25, 12, 20, 0),
+                    RoomId = room2.Id
                 },
                 new Appointment
                 {
                     Id = "APP3",
-                    Doctor = doctor3,
+                    DoctorId = doctor3.Id,
                     PatientId = "PAT3",
-                    Start = new DateTime(2022, 10, 25, 12, 20, 0)
+                    Start = new DateTime(2022, 10, 25, 12, 20, 0),
+                    RoomId = room2.Id
                 }
             );
             base.OnModelCreating(modelBuilder);

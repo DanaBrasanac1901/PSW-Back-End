@@ -17,18 +17,18 @@ namespace HospitalLibrary.Core.Model
         //public virtual Patient Patient {get; set;}
         public DateTime Start {get; set;}
         public int Duration {get; set;}
-        public Room Room {get; set;}
+        public int RoomId { get; set; }
+        public virtual Room Room {get; set;}
         public AppointmentStatus Status {get; set;}
         public Appointment() {}
         //constructor below should be changed once patients are added to the model(Patient object instead of patientId)
-        public Appointment(string id, Doctor doctor, string patientId, DateTime start){
+        public Appointment(string id,string doctorId, string patientId, DateTime start,int roomId){
             Id = id;
-            Doctor = doctor;
-            DoctorId = doctor.Id;
+            DoctorId = doctorId;
             PatientId = patientId;
             Start = start;
             Duration = AppointmentDuration;
-            Room = doctor.Room;
+            RoomId = roomId;
             Status = AppointmentStatus.Scheduled;
         }
     }
