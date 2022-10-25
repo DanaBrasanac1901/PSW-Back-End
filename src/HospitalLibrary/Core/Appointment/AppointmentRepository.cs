@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Settings;
+﻿using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Repository
+namespace HospitalLibrary.Core.Appointment
 {
     public class AppointmentRepository : IAppointmentRepository
     {
@@ -16,6 +15,10 @@ namespace HospitalLibrary.Core.Repository
         public AppointmentRepository(HospitalDbContext context)
         {
             _context = context;
+        }
+
+        public Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc) {
+            return _context.Doctors.FirstOrDefault(r => r.Id == doc.Id);
         }
 
         public IEnumerable<Appointment> GetAll()
@@ -30,7 +33,9 @@ namespace HospitalLibrary.Core.Repository
 
         public void Create(Appointment appointment)
         {
-            _context.Appointments.Add(appointment);
+            var flag = _context.Appointments.FirstOrDefault(r => r.Id == appointment.Id);
+            Appointment app = flag;
+            _context.Appointments.Add(app);
             _context.SaveChanges();
         }
 
@@ -54,7 +59,8 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
-        public IEnumerable<Appointment> GetAllByDoctor(string id){
+        public IEnumerable<Appointment> GetAllByDoctor(string id)
+        {
             List<Appointment> appointments = _context.Appointments.Where(appointment => appointment.DoctorId.Equals(id)).ToList();
             return appointments; ;
         }

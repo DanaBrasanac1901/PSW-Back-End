@@ -1,5 +1,4 @@
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Appointment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -43,7 +42,8 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            var doc = _appointmentService.SetDoctorAppointment(appointment.Doctor);
+            appointment.Doctor = doc;
             _appointmentService.Create(appointment);
             return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
         }

@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
