@@ -6,16 +6,16 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentController : ControllerBase
+    public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
 
-        public AppointmentController(IAppointmentService appointmentService)
+        public AppointmentsController(IAppointmentService appointmentService)
         {
             _appointmentService = appointmentService;
         }
 
-        // GET: api/rooms
+        // GET: api/appointments
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -35,7 +35,7 @@ namespace HospitalAPI.Controllers
             return Ok(appointment);
         }
 
-        // POST api/rooms
+        // POST api/appointments
         [HttpPost]
         public ActionResult Create(Appointment appointment)
         {
@@ -48,7 +48,7 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
         }
 
-        // PUT api/rooms/2
+        // PUT api/appointments/2
         [HttpPut("{id}")]
         public ActionResult Update(string id, Appointment appointment)
         {
@@ -74,7 +74,7 @@ namespace HospitalAPI.Controllers
             return Ok(appointment);
         }
 
-        // DELETE api/rooms/2
+        // DELETE api/appointments/2
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
@@ -86,6 +86,17 @@ namespace HospitalAPI.Controllers
 
             _appointmentService.Delete(appointment);
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("api/[controller]/[action]/{id}")]
+        public ActionResult GetAllByDoctor(string id)
+        {
+            var appointments = _appointmentService.GetAllByDoctor(id);
+            if (appointments == null)
+                return NotFound();
+
+            return Ok(appointments);
         }
     }
 }

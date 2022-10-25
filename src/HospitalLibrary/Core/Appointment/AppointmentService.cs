@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
-    public class AppointmentService
+    public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
 
