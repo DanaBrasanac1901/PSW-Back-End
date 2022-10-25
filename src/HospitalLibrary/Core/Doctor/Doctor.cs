@@ -13,7 +13,8 @@ namespace HospitalLibrary.Core.Model
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public Room Room { get; set; }
+        public int RoomId { get; set; }
+        public virtual Room Room { get; set; }
 
         [Range(0, 23)]
         public int StartWorkTime { get; set; }
@@ -25,12 +26,13 @@ namespace HospitalLibrary.Core.Model
         
         public Doctor() {}
 
-        public Doctor(string id, string name, string surname, string email, Room room, int startWorkTime, int endWorkTime, ICollection<Appointment> appointments)
+        public Doctor(string id, string name, string surname, string email,int roomId, Room room, int startWorkTime, int endWorkTime, ICollection<Appointment> appointments)
         {
             Id = id;
             Name = name;
             Surname = surname;
             Email = email;
+            RoomId = roomId;
             Room = room;
             StartWorkTime = startWorkTime;
             EndWorkTime = endWorkTime;
