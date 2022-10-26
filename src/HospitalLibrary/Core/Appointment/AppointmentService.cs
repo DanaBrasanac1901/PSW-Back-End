@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Appointment;
+using HospitalLibrary.Core.Appointment.DTOS;
 //using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,9 @@ namespace HospitalLibrary.Core.Appointment
             return _appointmentRepository.GetById(id);
         }
 
-        public void Create(Appointment appointment)
+        public void Create(CreateAppointmentDTO appointmentDTO)
         {
-            Appointment app = new Appointment(appointment.Id, appointment.DoctorId, appointment.PatientId, appointment.Start, appointment.RoomId); ;
+            Appointment app = AppointmentAdapter.CreateAppointmentDTOToAppointment(appointmentDTO);
             _appointmentRepository.Create(app);
         }
 

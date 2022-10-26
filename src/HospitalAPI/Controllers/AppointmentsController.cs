@@ -1,4 +1,5 @@
 using HospitalLibrary.Core.Appointment;
+using HospitalLibrary.Core.Appointment.DTOS;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -36,16 +37,16 @@ namespace HospitalAPI.Controllers
 
         // POST api/rooms
         [HttpPost]
-        public ActionResult Create(Appointment appointment)
+        public ActionResult Create(CreateAppointmentDTO appointmentDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var doc = _appointmentService.SetDoctorAppointment(appointment.Doctor);
-            appointment.Doctor = doc;
-            _appointmentService.Create(appointment);
-            return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
+            //var doc = _appointmentService.SetDoctorAppointment(appointment.Doctor);
+            //appointment.Doctor = doc;
+            _appointmentService.Create(appointmentDTO);
+            return CreatedAtAction("GetById", new { id = appointmentDTO.id }, appointmentDTO);
         }
 
         // PUT api/rooms/2

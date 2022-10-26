@@ -35,7 +35,7 @@ namespace HospitalLibrary.Core.Appointment
         {
             var flag = _context.Appointments.FirstOrDefault(r => r.Id == appointment.Id);
             Appointment app = flag;
-            _context.Appointments.Add(app);
+            _context.Appointments.Add(appointment);
             _context.SaveChanges();
         }
 
