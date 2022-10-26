@@ -49,9 +49,16 @@ namespace HospitalLibrary.Core.Appointment
             _appointmentRepository.Delete(appointment);
         }
 
-        public IEnumerable<Appointment> GetAllByDoctor(string id)
+
+        public IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id)
         {
-            return _appointmentRepository.GetAllByDoctor(id);
+            IEnumerable<Appointment> doctorsApointments = _appointmentRepository.GetAllByDoctor(id);
+            List<ViewAllAppointmentsDTO> appointmentsDTOs = new List<ViewAllAppointmentsDTO>();
+            foreach(Appointment a in doctorsApointments)
+                appointmentsDTOs.Add(AppointmentAdapter.AppointmentToViewAllAppointmentsDTO(a));
+
+
+            return appointmentsDTOs;
         }
     }
 }

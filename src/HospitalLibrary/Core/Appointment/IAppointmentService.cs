@@ -12,7 +12,7 @@ namespace HospitalLibrary.Core.Appointment
         void Delete(Appointment appointment);
 
 
-        IEnumerable<Appointment> GetAllByDoctor(string id);
+        IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id);
 
         Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc);
 

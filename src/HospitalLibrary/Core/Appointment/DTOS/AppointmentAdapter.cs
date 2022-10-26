@@ -21,6 +21,18 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             return app;
         }
 
+        public static ViewAllAppointmentsDTO AppointmentToViewAllAppointmentsDTO(Appointment appointment)
+        {
+            ViewAllAppointmentsDTO appointmentDto = new ViewAllAppointmentsDTO();
+
+            appointmentDto.Id = appointment.Id;
+            appointmentDto.PatientId = appointment.PatientId;
+            appointmentDto.RoomId = appointment.RoomId.ToString();
+            appointmentDto.Start = appointment.Start.ToString();
+            appointmentDto.Status = appointment.Status;
+
+            return appointmentDto;
+        }
         
     }
 }
