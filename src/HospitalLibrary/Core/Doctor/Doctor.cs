@@ -37,9 +37,6 @@ namespace HospitalLibrary.Core.Model
             StartWorkTime = startWorkTime;
             EndWorkTime = endWorkTime;
             Appointments = appointments;
-        }
-
-        
-        
+        } 
     }
 }
