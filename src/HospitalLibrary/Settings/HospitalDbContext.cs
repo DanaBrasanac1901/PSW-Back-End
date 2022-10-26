@@ -1,5 +1,6 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.Core.Room;
+using HospitalLibrary.Core.Appointment;
+using HospitalLibrary.Core.Doctor;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

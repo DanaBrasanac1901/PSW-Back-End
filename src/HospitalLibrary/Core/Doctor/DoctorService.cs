@@ -1,14 +1,13 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Core.Doctor
 {
-    public class DoctorService : IDoctorService
+    public class DoctorService: IDoctorService
+
     {
         private readonly IDoctorRepository _doctorRepository;
 
@@ -40,6 +39,17 @@ namespace HospitalLibrary.Core.Service
         public void Delete(Doctor doctor)
         {
             _doctorRepository.Delete(doctor);
+        }
+
+        //funkcija za proveru
+
+        public Boolean IsAvailable(string doctorId, string appointmentTime)
+        {
+            //parse string to datetime
+            DateTime dt = new DateTime();
+            Doctor doc = _doctorRepository.GetById(doctorId);
+            //funkcija za proveru
+            return false;
         }
     }
 }
