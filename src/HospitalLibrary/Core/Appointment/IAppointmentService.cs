@@ -10,6 +10,11 @@ namespace HospitalLibrary.Core.Appointment
         void Create(CreateAppointmentDTO appointment);
         void Update(Appointment appointment);
         void Delete(Appointment appointment);
+
+
+        IEnumerable<Appointment> GetAllByDoctor(string id);
+
         Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc);
+
     }
 }

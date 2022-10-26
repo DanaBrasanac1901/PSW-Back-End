@@ -25,6 +25,8 @@ namespace HospitalLibrary.Core.Appointment
         public AppointmentStatus Status { get; set; }
         public Appointment() { }
         //constructor below should be changed once patients are added to the model(Patient object instead of patientId)
+ 
+
         public Appointment(string id, string doctorId, string patientId, DateTime start, int roomId)
         {
             Id = id;
