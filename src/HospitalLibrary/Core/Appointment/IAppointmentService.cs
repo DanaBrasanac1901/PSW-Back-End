@@ -1,14 +1,15 @@
-using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Appointment.DTOS;
 using System.Collections.Generic;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Core.Appointment
 {
     public interface IAppointmentService
     {
         IEnumerable<Appointment> GetAll();
         Appointment GetById(string id);
-        void Create(Appointment appointment);
+        void Create(CreateAppointmentDTO appointment);
         void Update(Appointment appointment);
         void Delete(Appointment appointment);
+        Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc);
     }
 }

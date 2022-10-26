@@ -1,10 +1,9 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Settings;
+﻿using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HospitalLibrary.Core.Repository
+namespace HospitalLibrary.Core.Room
 {
     public class RoomRepository : IRoomRepository
     {
