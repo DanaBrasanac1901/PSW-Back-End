@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Feedback;
 using HospitalLibrary.Core.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +14,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Appointment> Appointments {get; set;}
 
         public DbSet<Doctor> Doctors { get; set; }
+
+        public DbSet<Feedback> Feedbacks { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -89,6 +92,14 @@ namespace HospitalLibrary.Settings
                     RoomId = room2.Id
                 }
             );
+
+            Feedback feedback1 = new Feedback() { PatientId = 1, Text="neki komentar", Visibility=true, Approved = false, Date = new DateTime(2022,8,27,8,15,0)};
+            Feedback feedback2 = new Feedback() { PatientId = 2, Text = "neki drugi komentar", Visibility = true, Approved = false, Date = new DateTime(2022,9,13,14,53,0)};
+            Feedback feedback3 = new Feedback() { PatientId = 3, Text = "neki treci komentar", Visibility = true, Approved = false, Date = new DateTime(2022,10,10,11,22,0)};
+            modelBuilder.Entity<Feedback>().HasData(
+               feedback1,feedback2,feedback3
+            );
+
             base.OnModelCreating(modelBuilder);
         }
     }

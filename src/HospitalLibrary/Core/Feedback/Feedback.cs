@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Model
+namespace HospitalLibrary.Core.Feedback
 {
    public class Feedback
     {
@@ -13,6 +13,11 @@ namespace HospitalLibrary.Core.Model
         private Boolean visibility;
         private Boolean approved;
         private DateTime date;
+
+        public Feedback()
+        {
+
+        }
 
         public Feedback(int patientId, string text, bool visibility, bool approved, DateTime date)
         {
