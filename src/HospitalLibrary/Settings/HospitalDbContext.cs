@@ -93,9 +93,9 @@ namespace HospitalLibrary.Settings
                 }
             );
 
-            Feedback feedback1 = new Feedback() { PatientId = 1, Text="neki komentar", Visibility=true, Approved = false, Date = new DateTime(2022,8,27,8,15,0)};
-            Feedback feedback2 = new Feedback() { PatientId = 2, Text = "neki drugi komentar", Visibility = true, Approved = false, Date = new DateTime(2022,9,13,14,53,0)};
-            Feedback feedback3 = new Feedback() { PatientId = 3, Text = "neki treci komentar", Visibility = true, Approved = false, Date = new DateTime(2022,10,10,11,22,0)};
+            Feedback feedback1 = new Feedback() { PatientId = 1, Text="neki komentar", VisibleToPublic=true, Approved = false, Date = new DateTime(2022,8,27,8,15,0)};
+            Feedback feedback2 = new Feedback() { PatientId = 2, Text = "neki drugi komentar", VisibleToPublic = true, Approved = false, Date = new DateTime(2022,9,13,14,53,0)};
+            Feedback feedback3 = new Feedback(new Feedback.FeedbackBuilder().PatientID(3).Text("neki treci komentar").VisibleToPublic(true).Approved(false).Date(new DateTime(2022,10,10,11,22,0)));
             modelBuilder.Entity<Feedback>().HasData(
                feedback1,feedback2,feedback3
             );

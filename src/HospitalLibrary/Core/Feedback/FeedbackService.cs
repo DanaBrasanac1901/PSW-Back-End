@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Feedback.Injectors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,10 @@ namespace HospitalLibrary.Core.Feedback
     {
         private readonly IFeedbackRepository _feedbackRepository;
 
-        public FeedbackService(IFeedbackRepository feedbackRepository)
+        public FeedbackService()
         {
-            _feedbackRepository = feedbackRepository;
+           _feedbackRepository=new FeedbackRepositoryInjector().Inject();
+
         }
 
         public IEnumerable<Feedback> GetAll()
@@ -51,8 +53,9 @@ namespace HospitalLibrary.Core.Feedback
         }
         public void ChangeVisibility(Feedback feedback)
         {
-            if(feedback.Visibility)
-                fee
+            if(feedback.VisibleToPublic)
+                feedback.VisibleToPublic = false;
+            else feedback.VisibleToPublic = true;
             _feedbackRepository.Update(feedback);
         }
     }

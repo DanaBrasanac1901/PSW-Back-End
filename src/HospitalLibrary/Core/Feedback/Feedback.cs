@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Feedback
 {
-   public class Feedback
+    public class Feedback
     {
         private int patientId;
         private String text;
@@ -18,7 +18,55 @@ namespace HospitalLibrary.Core.Feedback
         {
 
         }
+        public class FeedbackBuilder
+            {
+            internal int patientId;
+            internal String text;
+            internal Boolean visibleToPublic;
+            internal Boolean approved;
+            internal DateTime date;
+            internal int id;
 
+            public FeedbackBuilder Approved(bool approved)
+            {
+                this.approved = approved;
+                return this;
+            }
+
+            public FeedbackBuilder Date(DateTime date)
+            {
+                this.date = date;
+                return this;
+            }
+
+            public FeedbackBuilder ID(int id)
+            {
+                this.id = id;
+                return this;
+            }
+
+            public FeedbackBuilder PatientID(int patientId)
+            {
+                this.patientId = patientId;
+                return this;
+            }
+
+            public FeedbackBuilder Text(string text)
+            {
+                this.text = text;
+                return this;
+            }
+
+            public FeedbackBuilder VisibleToPublic(bool visibleToPublic)
+            {
+                this.visibleToPublic = visibleToPublic;
+                return this;
+            }
+            public Feedback build()
+            {
+                return new Feedback(this);
+            }
+        }
         public Feedback(int patientId, string text, bool visibility, bool approved, DateTime date, int iD)
         {
             this.patientId = patientId;
@@ -28,7 +76,15 @@ namespace HospitalLibrary.Core.Feedback
             this.date = date;
             this.ID = iD;
         }
-
+        public Feedback(FeedbackBuilder feedbackBuilder)
+        {
+            this.patientId = feedbackBuilder.patientId;
+            this.text = feedbackBuilder.text;
+            this.VisibleToPublic = feedbackBuilder.visibleToPublic;
+            this.approved = feedbackBuilder.approved;
+            this.date = feedbackBuilder.date;
+            this.ID = feedbackBuilder.id;
+        }
         public int PatientId { get => patientId; set => patientId = value; }
         public string Text { get => text; set => text = value; }
         public bool VisibleToPublic { get => visibleToPublic; set => visibleToPublic = value; }

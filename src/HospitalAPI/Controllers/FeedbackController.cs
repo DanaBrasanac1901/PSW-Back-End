@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Feedback;
+using HospitalLibrary.Core.Feedback.Injectors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -10,9 +11,9 @@ namespace HospitalAPI.Controllers
         {
             return View();
         }
-        public FeedbackController(IFeedbackService _feedbackService)
+        public FeedbackController()
         {
-            this._feedbackService = _feedbackService;
+            _feedbackService = new FeedbackServiceInjector().Inject();
         }
 
         [HttpGet]
@@ -41,7 +42,20 @@ namespace HospitalAPI.Controllers
             }
 
             _feedbackService.Create(feedback);
-            return CreatedAtAction("GetById", new {id=feedback.Id}, feedback);
+            return CreatedAtAction("GetById", new {id=feedback.ID}, feedback);
+        }
+
+        [HttpPost("verify/{commentID}")]
+        public ActionResult AcceptFeedback(Feedback feedback)
+        {
+            _feedbackService.AcceptFeedback(feedback);
+            return Ok(feedback);
+        }
+        [HttpPost("changevisibility/{commentID}")]
+        public ActionResult ChangeVisibility(Feedback feedback)
+        {
+            _feedbackService.ChangeVisibility(feedback);
+            return Ok(feedback);
         }
 
         [HttpPut("{id}")]
@@ -52,7 +66,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != feedback.Id)
+            if (id != feedback.ID)
             {
                 return BadRequest();
             }
