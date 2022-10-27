@@ -39,6 +39,17 @@ namespace HospitalLibrary.Core.Feedback
         {
             _feedbackRepository.Delete(feedback);
         }
+        public void AcceptFeedback(Feedback feedback)
+        {
+            feedback.Approved = true;
+            _feedbackRepository.Update(feedback);
+        }
+        public void ChangeVisibility(Feedback feedback)
+        {
+            if(feedback.Visibility)
+                fee
+            _feedbackRepository.Update(feedback);
+        }
     }
 }
 
