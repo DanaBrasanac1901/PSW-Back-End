@@ -20,6 +20,11 @@ namespace HospitalLibrary.Core.Feedback
             return _feedbackRepository.GetAll();
         }
 
+        public Feedback GetById(int id)
+        {
+            return _feedbackRepository.GetById(id);
+        }
+
         public Feedback GetByPatientId(int id)
         {
             return _feedbackRepository.GetByPatientId(id);

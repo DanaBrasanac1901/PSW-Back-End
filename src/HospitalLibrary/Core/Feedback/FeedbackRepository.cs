@@ -49,6 +49,11 @@ namespace HospitalLibrary.Core.Feedback
             _context.Feedbacks.Remove(feedback);
             _context.SaveChanges();
         }
+
+        public Feedback GetById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
-}
+

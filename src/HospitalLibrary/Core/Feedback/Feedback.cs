@@ -8,6 +8,7 @@ namespace HospitalLibrary.Core.Feedback
 {
    public class Feedback
     {
+        private int id;
         private int patientId;
         private String text;
         private Boolean visibility;
@@ -19,8 +20,9 @@ namespace HospitalLibrary.Core.Feedback
 
         }
 
-        public Feedback(int patientId, string text, bool visibility, bool approved, DateTime date)
+        public Feedback(int id,int patientId, string text, bool visibility, bool approved, DateTime date)
         {
+            Id = id;
             PatientId = patientId;
             Text = text;
             Visibility = visibility;
@@ -29,6 +31,7 @@ namespace HospitalLibrary.Core.Feedback
            
         }
 
+        public int Id { get { return id; } set { id = value; } }
         public int PatientId { get => patientId; set => patientId = value; }
         public string Text { get => text; set => text = value; }
         public bool Visibility { get => visibility; set => visibility = value; }
