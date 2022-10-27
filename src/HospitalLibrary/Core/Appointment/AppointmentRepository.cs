@@ -62,7 +62,7 @@ namespace HospitalLibrary.Core.Appointment
         public IEnumerable<Appointment> GetAllByDoctor(string id)
         {
             List<Appointment> appointments = _context.Appointments.Where(appointment => appointment.DoctorId.Equals(id)).ToList();
-            return appointments; ;
+            return appointments;
         }
     }
 }
