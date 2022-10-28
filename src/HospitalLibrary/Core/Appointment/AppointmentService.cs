@@ -33,10 +33,65 @@ namespace HospitalLibrary.Core.Appointment
             return _appointmentRepository.GetById(id);
         }
 
+        private int IdNumber()
+        {
+            IEnumerable<Appointment> listToCount =  _appointmentRepository.GetAll();
+            return listToCount.Count() + 1;
+        }
+
+        //funkcija za proveru
+
+        public List<String> GetAllDatesAndTimesForDoctor(string doctorId)
+        {
+            IEnumerable<Appointment> allApp = GetAll();
+            List<Appointment> allAppList = allApp.ToList();
+            List<String> dateAndTime = new List<String>();
+            foreach (var app in allApp)
+            {
+                if(app.DoctorId == doctorId)
+                {
+                    dateAndTime.Add(app.Start.ToString());
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return dateAndTime;
+        }
+
+        public Boolean IsAvailable(Appointment app)
+        {
+            List<String> dateAndTimeList = GetAllDatesAndTimesForDoctor(app.DoctorId);
+            String dateAndTimeToCheck = app.Start.ToString();
+            foreach (var dateAndTime in dateAndTimeList)
+            {
+                if(dateAndTime == dateAndTimeToCheck)
+                {
+                    return true;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return false;
+        }
+
         public void Create(CreateAppointmentDTO appointmentDTO)
         {
+
             Appointment app = AppointmentAdapter.CreateAppointmentDTOToAppointment(appointmentDTO);
-            _appointmentRepository.Create(app);
+            app.Id = "APP" + IdNumber().ToString();
+            Boolean checkFlag = IsAvailable(app);
+            if(checkFlag == true)
+            {
+                Console.WriteLine("Zauzet termin");
+            }
+            else
+            {
+                _appointmentRepository.Create(app);
+            }
         }
 
         public void Update(Appointment appointment)

@@ -40,15 +40,6 @@ namespace HospitalLibrary.Core.Doctor
             _doctorRepository.Delete(doctor);
         }
 
-        //funkcija za proveru
-
-        public Boolean IsAvailable(string doctorId, string appointmentTime)
-        {
-            //parse string to datetime
-            DateTime dt = new DateTime();
-            Doctor doc = _doctorRepository.GetById(doctorId);
-            //funkcija za proveru
-            return false;
-        }
+        
     }
 }

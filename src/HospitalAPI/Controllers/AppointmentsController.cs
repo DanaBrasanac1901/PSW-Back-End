@@ -46,7 +46,7 @@ namespace HospitalAPI.Controllers
             //var doc = _appointmentService.SetDoctorAppointment(appointment.Doctor);
             //appointment.Doctor = doc;
             _appointmentService.Create(appointmentDTO);
-            return CreatedAtAction("GetById", new { id = appointmentDTO.id }, appointmentDTO);
+            return NoContent();
         }
 
         // PUT api/rooms/2
