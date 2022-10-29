@@ -39,8 +39,6 @@ namespace HospitalLibrary.Core.Appointment
             return listToCount.Count() + 1;
         }
 
-        //funkcija za proveru
-
         public List<String> GetAllDatesAndTimesForDoctor(string doctorId)
         {
             IEnumerable<Appointment> allApp = GetAll();
@@ -77,6 +75,19 @@ namespace HospitalLibrary.Core.Appointment
             }
             return false;
         }
+
+        //Provera da ga zakaze za buducnost
+        //public Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
+        //{
+        //    DateTime currentDate = DateTime.Now;
+        //    switch (currentDate)
+        //    {
+        //        case currentDate.Year < dateToCheck.Year:
+
+        //        default:
+        //            break;
+        //    }
+        //}
 
         public void Create(CreateAppointmentDTO appointmentDTO)
         {

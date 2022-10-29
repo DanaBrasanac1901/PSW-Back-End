@@ -12,9 +12,9 @@ namespace HospitalLibrary.Core.Appointment.DTOS
         public static Appointment CreateAppointmentDTOToAppointment(CreateAppointmentDTO appDTO)
         {
             Appointment app = new Appointment();
-            app.DoctorId = appDTO.doctorId;
+            app.DoctorId = "DOC1";
             app.PatientId = appDTO.patientId;
-            string DAT = "2022-10-29 12:20:00";
+            string DAT = appDTO.startDate + " " + appDTO.startTime + ":00";
             app.Start = Convert.ToDateTime(DAT);
             app.RoomId = appDTO.roomId;
             app.Status = AppointmentStatus.Scheduled;
