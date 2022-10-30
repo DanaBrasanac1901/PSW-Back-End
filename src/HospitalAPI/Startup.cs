@@ -25,7 +25,7 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
+            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

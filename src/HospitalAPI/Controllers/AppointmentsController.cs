@@ -1,5 +1,6 @@
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
+using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -43,9 +44,8 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //var doc = _appointmentService.SetDoctorAppointment(appointment.Doctor);
-            //appointment.Doctor = doc;
             _appointmentService.Create(appointmentDTO);
+            Appointment appointment = new Appointment();
             return NoContent();
         }
 

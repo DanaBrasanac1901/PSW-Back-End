@@ -12,6 +12,8 @@ namespace HospitalLibrary.Core.Doctor
     {
         private readonly HospitalDbContext _context;
 
+        
+
         public DoctorRepository(HospitalDbContext context)
         {
             _context = context;

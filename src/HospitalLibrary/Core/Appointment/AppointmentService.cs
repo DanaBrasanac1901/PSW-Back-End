@@ -1,5 +1,7 @@
 ﻿using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
+using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.Room;
 //using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -12,11 +14,17 @@ namespace HospitalLibrary.Core.Appointment
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly IRoomRepository _roomRepository;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository)
+        public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
+            IRoomRepository roomRepository)
         {
             _appointmentRepository = appointmentRepository;
+            _doctorRepository = doctorRepository;
+            _roomRepository = roomRepository;
         }
+
 
         public Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc)
         {
@@ -39,65 +47,57 @@ namespace HospitalLibrary.Core.Appointment
             return listToCount.Count() + 1;
         }
 
-        public List<String> GetAllDatesAndTimesForDoctor(string doctorId)
-        {
-            IEnumerable<Appointment> allApp = GetAll();
-            List<Appointment> allAppList = allApp.ToList();
-            List<String> dateAndTime = new List<String>();
-            foreach (var app in allApp)
-            {
-                if(app.DoctorId == doctorId)
-                {
-                    dateAndTime.Add(app.Start.ToString());
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return dateAndTime;
-        }
-
         public Boolean IsAvailable(Appointment app)
         {
-            List<String> dateAndTimeList = GetAllDatesAndTimesForDoctor(app.DoctorId);
-            String dateAndTimeToCheck = app.Start.ToString();
-            foreach (var dateAndTime in dateAndTimeList)
+            Doctor.Doctor doc = app.Doctor;
+            ICollection<Appointment> allApp = app.Doctor.Appointments;
+            List<Appointment> allAppList = allApp.ToList();
+
+            foreach (var appToCheck in allAppList)
             {
-                if(dateAndTime == dateAndTimeToCheck)
+                if(appToCheck.Start.ToString() == app.Start.ToString())
                 {
                     return true;
-                }
-                else
-                {
-                    continue;
                 }
             }
             return false;
         }
 
-        //Provera da ga zakaze za buducnost
-        //public Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
-        //{
-        //    DateTime currentDate = DateTime.Now;
-        //    switch (currentDate)
-        //    {
-        //        case currentDate.Year < dateToCheck.Year:
-
-        //        default:
-        //            break;
-        //    }
-        //}
+        public Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
+        {
+            DateTime dateTimeNow = DateTime.Now;
+            if (dateTimeNow.Year > dateToCheck.Year)
+            {
+                return true;
+            }
+            else if (dateTimeNow.Month > dateToCheck.Month && dateTimeNow.Year >= dateToCheck.Year)
+            {
+                return true;
+            }
+            else if (dateTimeNow.Day >= dateToCheck.Day && dateTimeNow.Month >= dateToCheck.Month && dateTimeNow.Year >= dateToCheck.Year) 
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public void Create(CreateAppointmentDTO appointmentDTO)
         {
-
             Appointment app = AppointmentAdapter.CreateAppointmentDTOToAppointment(appointmentDTO);
+            app.Doctor = _doctorRepository.GetById(appointmentDTO.doctorId);
             app.Id = "APP" + IdNumber().ToString();
             Boolean checkFlag = IsAvailable(app);
+            Boolean dateFlag = CheckIfAppointmentIsSetInFuture(app.Start);
             if(checkFlag == true)
             {
                 Console.WriteLine("Zauzet termin");
+            }
+            else if(dateFlag == true)
+            {
+                Console.WriteLine("Termine zakazivati za buducnost");
             }
             else
             {
