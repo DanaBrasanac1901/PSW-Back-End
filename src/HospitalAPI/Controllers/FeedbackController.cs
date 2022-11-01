@@ -4,13 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
-    public class FeedbackController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class FeedbackController : ControllerBase
     {
         private readonly IFeedbackService _feedbackService;
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         public FeedbackController()
         {
             _feedbackService = new FeedbackServiceInjector().Inject();
@@ -26,6 +25,17 @@ namespace HospitalAPI.Controllers
         public ActionResult GetByPatientId(int id)
         {
             var feedback=_feedbackService.GetByPatientId(id);
+            if (feedback == null)
+            {
+                return NotFound();
+            }
+            return Ok(feedback);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var feedback = _feedbackService.GetById(id);
             if (feedback == null)
             {
                 return NotFound();
