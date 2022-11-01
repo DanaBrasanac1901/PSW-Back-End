@@ -14,6 +14,7 @@ namespace HospitalLibrary.Core.Feedback
         private Boolean approved;
         private DateTime date;
         private int id;
+        private Boolean anonymous;
         public Feedback()
         {
 
@@ -26,6 +27,13 @@ namespace HospitalLibrary.Core.Feedback
             internal Boolean approved;
             internal DateTime date;
             internal int id;
+            private Boolean anonymous;
+
+            public FeedbackBuilder Anonymous(bool anonymous)
+            {
+                this.anonymous = anonymous;
+                return this;
+            }
 
             public FeedbackBuilder Approved(bool approved)
             {
@@ -85,11 +93,24 @@ namespace HospitalLibrary.Core.Feedback
             this.date = feedbackBuilder.date;
             this.ID = feedbackBuilder.id;
         }
+
+        public Feedback(int patientId, string text, bool visibleToPublic, bool approved, DateTime date, int id, bool anonymous)
+        {
+            this.patientId = patientId;
+            this.text = text;
+            this.visibleToPublic = visibleToPublic;
+            this.approved = approved;
+            this.date = date;
+            this.id = id;
+            this.anonymous = anonymous;
+        }
+
         public int PatientId { get => patientId; set => patientId = value; }
         public string Text { get => text; set => text = value; }
         public bool VisibleToPublic { get => visibleToPublic; set => visibleToPublic = value; }
         public bool Approved { get => approved; set => approved = value; }
         public DateTime Date { get => date; set => date = value; }
         public int ID { get => id; set => id = value; }
+        public bool Anonymous { get => anonymous; set => anonymous = value; }
     }
 }

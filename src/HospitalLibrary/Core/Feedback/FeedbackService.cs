@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Feedback.Injectors;
+using HospitalLibrary.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace HospitalLibrary.Core.Feedback
     {
         private readonly IFeedbackRepository _feedbackRepository;
 
-        public FeedbackService()
+        public FeedbackService(HospitalDbContext hospitalDb)
         {
-           _feedbackRepository=new FeedbackRepositoryInjector().Inject();
+           _feedbackRepository=new FeedbackRepositoryInjector(hospitalDb).Inject();
 
         }
 

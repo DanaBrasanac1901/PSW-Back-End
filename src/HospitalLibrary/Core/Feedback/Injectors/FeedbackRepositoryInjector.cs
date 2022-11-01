@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Service;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,10 @@ namespace HospitalLibrary.Core.Feedback.Injectors
 {
     internal class FeedbackRepositoryInjector
     {
-            HospitalDbContext context= new HospitalDbContext(null);
-
-        public FeedbackRepositoryInjector()
+        HospitalDbContext context;
+        public FeedbackRepositoryInjector(HospitalDbContext hospitalDb)
         {
-            context = new HospitalDbContext(null);
+            context = hospitalDb;
         }
 
         public IFeedbackRepository Inject()
