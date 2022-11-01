@@ -90,7 +90,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/[controller]/[action]/{id}")]
+        [Route("[action]/{id}")]
         public ActionResult GetAllByDoctor(string id)
         {
             var appointments = _appointmentService.GetAllByDoctor(id);

@@ -30,7 +30,7 @@ namespace HospitalAPI
 
 
             services.AddControllers().AddJsonOptions(x =>
-                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+                 x.JsonSerializerOptions.ReferenceHandler = null);
             
             services.AddSwaggerGen(c =>
             {
