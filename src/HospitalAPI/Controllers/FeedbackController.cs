@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Feedback;
 using HospitalLibrary.Core.Feedback.Injectors;
+using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -10,9 +11,9 @@ namespace HospitalAPI.Controllers
     {
         private readonly IFeedbackService _feedbackService;
 
-        public FeedbackController()
+        public FeedbackController(HospitalDbContext hospitalDb)
         {
-            _feedbackService = new FeedbackServiceInjector().Inject();
+            _feedbackService = new FeedbackServiceInjector().Inject(hospitalDb);
         }
 
         [HttpGet]

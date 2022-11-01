@@ -10,9 +10,9 @@ namespace HospitalLibrary.Core.Feedback.Injectors
 {
     public class FeedbackServiceInjector
     {
-            public IFeedbackService Inject()
+            public IFeedbackService Inject(HospitalDbContext hospitalDb)
             {
-                IFeedbackService service = new FeedbackService();
+                IFeedbackService service = new FeedbackService(hospitalDb);
                 return service;
             }
     }
