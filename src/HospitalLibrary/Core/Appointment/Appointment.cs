@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Text.Json.Serialization;
 
 namespace HospitalLibrary.Core.Appointment
 {
@@ -14,6 +14,7 @@ namespace HospitalLibrary.Core.Appointment
         private const int AppointmentDuration = 20;
         public string Id { get; set; }
         public string DoctorId { get; set; }
+        [JsonIgnore]
         public virtual Doctor.Doctor Doctor { get; set; }
         public string PatientId { get; set; }
         //line below should be uncommented once Patients have been created
@@ -21,6 +22,7 @@ namespace HospitalLibrary.Core.Appointment
         public DateTime Start { get; set; }
         public int Duration { get; set; }
         public int RoomId { get; set; }
+        [JsonIgnore]
         public virtual Room.Room Room { get; set; }
         public AppointmentStatus Status { get; set; }
         public Appointment() { }

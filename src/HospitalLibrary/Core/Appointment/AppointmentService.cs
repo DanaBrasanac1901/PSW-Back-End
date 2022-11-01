@@ -16,6 +16,7 @@ namespace HospitalLibrary.Core.Appointment
         public AppointmentService(IAppointmentRepository appointmentRepository)
         {
             _appointmentRepository = appointmentRepository;
+            UpdateFinishedAppointments();
         }
 
         public Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc)
@@ -59,6 +60,24 @@ namespace HospitalLibrary.Core.Appointment
 
 
             return appointmentsDTOs;
+        }
+
+        public void UpdateFinishedAppointments()
+        {
+            List<Appointment> appointments = (List<Appointment>)_appointmentRepository.GetAll();
+
+            TimeSpan difference;
+            DateTime currentTime = DateTime.Now;
+
+            foreach (Appointment appointment in appointments)
+            {
+                difference = currentTime.Subtract(appointment.Start);
+                if (difference.TotalMinutes > 20)
+                {
+                    appointment.Status = AppointmentStatus.Finished;
+                    _appointmentRepository.Update(appointment);
+                }
+            }
         }
     }
 }

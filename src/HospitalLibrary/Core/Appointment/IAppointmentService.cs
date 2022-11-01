@@ -16,5 +16,7 @@ namespace HospitalLibrary.Core.Appointment
 
         Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc);
 
+       void UpdateFinishedAppointments();
+
     }
 }

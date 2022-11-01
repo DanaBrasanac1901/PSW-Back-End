@@ -27,7 +27,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
 
             appointmentDto.Id = appointment.Id;
             appointmentDto.PatientId = appointment.PatientId;
-            appointmentDto.RoomId = appointment.RoomId.ToString();
+            appointmentDto.RoomNumber = appointment.Room.Number;
             appointmentDto.Start = appointment.Start.ToString();
             appointmentDto.Status = appointment.Status;
 
