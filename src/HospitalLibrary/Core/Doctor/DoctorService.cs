@@ -43,13 +43,19 @@ namespace HospitalLibrary.Core.Doctor
 
         //funkcija za proveru
 
-        public Boolean IsAvailable(string doctorId, string appointmentTime)
+        public Boolean IsAvailable(string doctorId, DateTime appointmentTime)
         {
-            //parse string to datetime
-            DateTime dt = new DateTime();
-            Doctor doc = _doctorRepository.GetById(doctorId);
-            //funkcija za proveru
-            return false;
+            //DateTime appointment = DateTime.Parse(appointmentTime);
+            Doctor doc = GetById(doctorId);
+            foreach (Appointment.Appointment a in doc.Appointments)
+            {
+                TimeSpan interval = a.Start - appointmentTime;
+                if (interval.Minutes < 20)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

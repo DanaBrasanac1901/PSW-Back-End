@@ -1,5 +1,6 @@
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
+using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -9,6 +10,7 @@ namespace HospitalAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
+        private readonly IDoctorService _doctorService;
 
         public AppointmentsController(IAppointmentService appointmentService)
         {
@@ -62,16 +64,17 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest();
             }
-
-            try
+            if(_doctorService.IsAvailable(appointment.DoctorId, appointment.Start))
             {
-                _appointmentService.Update(appointment);
+                try
+                {
+                    _appointmentService.Update(appointment);
+                }
+                catch
+                {
+                    return BadRequest();
+                }
             }
-            catch
-            {
-                return BadRequest();
-            }
-
             return Ok(appointment);
         }
 
