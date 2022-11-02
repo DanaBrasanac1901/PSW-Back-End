@@ -1,5 +1,7 @@
+using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,11 +16,27 @@ namespace IntegrationAPI
             Configuration = configuration;
         }
 
+
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddDbContext<IntegrationDbContext>(options =>
+            options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
+            services.AddAutoMapper(typeof(Startup));
+            //services.AddControllersWithViews();
+
+            services.AddCors((setup) =>
+            {
+                setup.AddPolicy("default", (options) =>
+                {
+                    options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                });
+
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -36,7 +54,7 @@ namespace IntegrationAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
             }
-
+            app.UseCors("default");
             app.UseRouting();
 
             app.UseAuthorization();
