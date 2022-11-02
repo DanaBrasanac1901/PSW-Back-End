@@ -34,6 +34,7 @@ namespace HospitalAPI
             .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
 
+            
             services.AddControllers().AddJsonOptions(x =>
                  x.JsonSerializerOptions.ReferenceHandler = null);
             

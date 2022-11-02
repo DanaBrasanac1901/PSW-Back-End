@@ -33,6 +33,7 @@ namespace HospitalLibrary.Core.Appointment
         {
             Id = id;
             DoctorId = doctorId;
+            Doctor.Id = doctorId;
             PatientId = patientId;
             Start = start;
             Duration = AppointmentDuration;

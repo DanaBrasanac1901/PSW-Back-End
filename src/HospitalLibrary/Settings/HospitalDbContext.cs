@@ -16,5 +16,6 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+
     }
 }

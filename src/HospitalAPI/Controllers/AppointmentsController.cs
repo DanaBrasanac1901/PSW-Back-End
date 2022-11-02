@@ -1,6 +1,7 @@
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.EmailSender;
+using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -38,7 +39,7 @@ namespace HospitalAPI.Controllers
             return Ok(appointment);
         }
 
-        // POST api/appointments
+
         [HttpPost]
         public ActionResult Create(CreateAppointmentDTO appointmentDTO)
         {
@@ -46,10 +47,9 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            //var doc = _appointmentService.SetDoctorAppointment(appointment.Doctor);
-            //appointment.Doctor = doc;
             _appointmentService.Create(appointmentDTO);
-            return CreatedAtAction("GetById", new { id = appointmentDTO.id }, appointmentDTO);
+            Appointment appointment = new Appointment();
+            return NoContent();
         }
 
         // PUT api/appointments/2
@@ -114,6 +114,18 @@ namespace HospitalAPI.Controllers
             return NoContent();
         }
 
+
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult CreateAppointment(CreateAppointmentDTO appDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            string idFlag = _appointmentService.Create(appDTO);
+            return CreatedAtAction("GetById", new { id = idFlag }, appDTO);
+
         [HttpGet]
         [Route("[action]/{id}")]
         public ActionResult GetAllByDoctor(string id)
@@ -123,6 +135,7 @@ namespace HospitalAPI.Controllers
                 return NotFound();
 
             return Ok(appointments);
+
         }
     }
 }

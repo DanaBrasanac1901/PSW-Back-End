@@ -12,10 +12,10 @@ namespace HospitalLibrary.Core.Appointment.DTOS
         public static Appointment CreateAppointmentDTOToAppointment(CreateAppointmentDTO appDTO)
         {
             Appointment app = new Appointment();
-            app.Id = appDTO.id;
-            app.DoctorId = appDTO.doctorId;
+            app.DoctorId = "DOC1";
             app.PatientId = appDTO.patientId;
-            app.Start = DateTime.Now;
+            string DAT = appDTO.startDate + " " + appDTO.startTime + ":00";
+            app.Start = Convert.ToDateTime(DAT);
             app.RoomId = appDTO.roomId;
             app.Status = AppointmentStatus.Scheduled;
             return app;
@@ -28,7 +28,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             appointmentDto.Id = appointment.Id;
             appointmentDto.PatientId = appointment.PatientId;
             appointmentDto.RoomNumber = appointment.Room.Number;
-            appointmentDto.Start = appointment.Start.ToString();
+            appointmentDto.Start = appointment.Start.ToString("yyyy/MM/dd H:mm:ss");
             appointmentDto.Status = appointment.Status;
 
             return appointmentDto;
