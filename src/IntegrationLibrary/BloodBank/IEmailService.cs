@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.BloodBank
 {
-    internal interface IEmailService
+    public interface IEmailService
     {
-        void SendEmail(Email email);
+        Email ConfigureEmail(Guid id);
     }
 }

@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.BloodBank
 {
-    internal class Email
+    public class Email
     {
 
-        private string  To { get; set; }
-        private string Subject { get; set; }
+       public string  To { get; set; }
+       public string From { get; set; }
+       public string Password { get; set; }
 
-        private string Body { get; set; }
+
+        public Email(string to, string from, string password)
+        {
+            To = to;
+            From = from;
+            Password = password;
+        }   
     }
 }

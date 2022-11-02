@@ -24,8 +24,4 @@
     <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BBConnection\" />
-  </ItemGroup>
-
 </Project>

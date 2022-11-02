@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.BloodBank
 {
-    internal interface IBloodBankRepository
+    public interface IBloodBankRepository
     {
+        IEnumerable<BloodBank> GetAll();
+        BloodBank GetById(Guid id);
+        void Create(BloodBank bb);
+        void Update(BloodBank bb);
+        void Delete(BloodBank bb);
+
     }
 }

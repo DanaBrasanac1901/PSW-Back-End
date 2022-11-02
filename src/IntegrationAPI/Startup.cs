@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using IntegrationLibrary.BloodBank;
 
 namespace IntegrationAPI
 {
@@ -43,11 +44,25 @@ namespace IntegrationAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
+
+
+            services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IBloodBankRepository,BloodBankRepository>();
+            services.AddScoped<IEmailService, BloodBankService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
