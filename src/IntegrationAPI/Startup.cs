@@ -56,7 +56,7 @@ namespace IntegrationAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
             }
             app.UseCors("default");
-            app.UseExceptionMiddleware();
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseRouting();
 
             app.UseAuthorization();
