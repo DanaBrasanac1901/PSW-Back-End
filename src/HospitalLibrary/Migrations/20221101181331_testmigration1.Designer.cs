@@ -3,15 +3,17 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221101181331_testmigration1")]
+    partial class testmigration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,38 +51,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Appointments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "APP1",
-                            DoctorId = "DOC1",
-                            Duration = 0,
-                            PatientId = "PAT1",
-                            RoomId = 1,
-                            Start = new DateTime(2022, 10, 25, 12, 20, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = "APP2",
-                            DoctorId = "DOC2",
-                            Duration = 0,
-                            PatientId = "PAT2",
-                            RoomId = 2,
-                            Start = new DateTime(2022, 10, 25, 12, 20, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = "APP3",
-                            DoctorId = "DOC3",
-                            Duration = 0,
-                            PatientId = "PAT3",
-                            RoomId = 2,
-                            Start = new DateTime(2022, 10, 25, 12, 20, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
@@ -111,38 +81,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Doctors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "DOC1",
-                            Email = "imeprezime024@gmail.com",
-                            EndWorkTime = 15,
-                            Name = "Ime",
-                            RoomId = 1,
-                            StartWorkTime = 8,
-                            Surname = "Prezime"
-                        },
-                        new
-                        {
-                            Id = "DOC2",
-                            Email = "peraperic024@gmail.com",
-                            EndWorkTime = 15,
-                            Name = "Pera",
-                            RoomId = 2,
-                            StartWorkTime = 8,
-                            Surname = "Peric"
-                        },
-                        new
-                        {
-                            Id = "DOC3",
-                            Email = "djole1312@gmail.com",
-                            EndWorkTime = 15,
-                            Name = "Djole",
-                            RoomId = 3,
-                            StartWorkTime = 8,
-                            Surname = "Djokic"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
@@ -162,26 +100,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Floor = 1,
-                            Number = "101A"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Floor = 2,
-                            Number = "204"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Floor = 3,
-                            Number = "305B"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Appointment.Appointment", b =>
