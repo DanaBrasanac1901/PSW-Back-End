@@ -22,7 +22,7 @@ namespace HospitalAPI.Controllers
             return Ok(_feedbackService.GetAll());
         }
         
-        [HttpGet("{patientId}")]
+        [HttpGet("patient/{id}")]
         public ActionResult GetByPatientId(int id)
         {
             var feedback=_feedbackService.GetByPatientId(id);
