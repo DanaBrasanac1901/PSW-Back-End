@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using HospitalLibrary.Core.EmailSender;
 
 namespace HospitalAPI
 {
@@ -28,6 +29,10 @@ namespace HospitalAPI
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
 
+            var emailConfig = Configuration
+            .GetSection("EmailConfiguration")
+            .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
 
             
             services.AddControllers().AddJsonOptions(x =>
@@ -44,6 +49,7 @@ namespace HospitalAPI
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IEmailSend, EmailSend>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
