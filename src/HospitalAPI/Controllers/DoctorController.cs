@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.Doctor.DTOS;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -33,6 +34,19 @@ namespace HospitalAPI.Controllers
 
             return Ok(doctor);
         }
+
+        //GET api/doctorNestoDTO/DOC1
+        //[HttpGet("{id}")]
+        //public ActionResult GetDoctorForShift(string id)
+        //{
+        //    DoctorShiftDTO doctorsShiftDTO = _doctorService.GetById(id);
+        //    if (doctorsShiftDTO == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(doctorsShiftDTO);
+        //}
 
         // POST api/rooms
         [HttpPost]
@@ -85,6 +99,19 @@ namespace HospitalAPI.Controllers
 
             _doctorService.Delete(doctor);
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetDoctorShiftDTO(string id)
+        {
+            var doctor = _doctorService.GetDoctorsShiftById(id);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctor);
         }
     }
 }

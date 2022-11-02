@@ -29,6 +29,7 @@ namespace HospitalAPI
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
 
 
+            
             services.AddControllers().AddJsonOptions(x =>
                  x.JsonSerializerOptions.ReferenceHandler = null);
             

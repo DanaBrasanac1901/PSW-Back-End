@@ -7,7 +7,7 @@ namespace HospitalLibrary.Core.Appointment
     {
         IEnumerable<Appointment> GetAll();
         Appointment GetById(string id);
-        void Create(CreateAppointmentDTO appointment);
+        string Create(CreateAppointmentDTO appointment);
         void Update(Appointment appointment);
         void Delete(Appointment appointment);
 
