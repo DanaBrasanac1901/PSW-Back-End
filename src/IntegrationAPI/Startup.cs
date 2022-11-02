@@ -1,4 +1,5 @@
 
+using IntegrationAPI.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +56,7 @@ namespace IntegrationAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
             }
             app.UseCors("default");
+            app.UseExceptionMiddleware();
             app.UseRouting();
 
             app.UseAuthorization();

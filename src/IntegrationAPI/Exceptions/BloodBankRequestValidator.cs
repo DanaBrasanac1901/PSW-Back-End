@@ -1,22 +1,22 @@
 using System.Text.RegularExpressions;
+using IntegrationAPI.DTO;
+using IntegrationLibrary.BloodBank;
 
 namespace IntegrationAPI.Exceptions
 {
     public static class BloodBankRequestValidator{
 
-      /*  public static void Validate(BloodBankRequest bloodbankrequest){
+       public static void Validate(BloodBank bloodbankrequest){
             if(bloodbankrequest==null)
 
             {
                 throw new BloodBankArgumentException($"{nameof(bloodbankrequest)} is null");
 
             }
-            else if (string.IsNullOrWhiteSpace(bloodbankrequest.Name))
+            else if (string.IsNullOrWhiteSpace(bloodbankrequest.Username))
             {
-                throw new BloodBankArgumentException($"{nameof(bloodbankrequest.Name)} is null/empty/whitespace");
-
-
-
+                throw new BloodBankArgumentException($"{nameof(bloodbankrequest.Username)} is null/empty/whitespace");
+                
             }
             else if(bloodbankrequest.Email.Length > 0)
             {
@@ -26,14 +26,13 @@ namespace IntegrationAPI.Exceptions
                 if (emailRegex.IsMatch(bloodbankrequest.Email))
 
                 {
-
                     throw new BloodBankArgumentException($"{nameof(bloodbankrequest.Email)} is invalid");
 
                 }
 
             }
 
-        }*/
+        }
 
     }
 }

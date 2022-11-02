@@ -11,6 +11,7 @@ namespace IntegrationAPI.Exceptions
         public ExceptionMiddleware(RequestDelegate next) { this.next = next;}
 
         public async Task InvokeAsync(HttpContext httpContext){
+            
             try {await next(httpContext);}
             catch(Exception ex){
                 httpContext.Response.StatusCode = (int)ExceptionStatusCodes.GetExceptionStatusCode(ex);
@@ -19,12 +20,11 @@ namespace IntegrationAPI.Exceptions
 
         }
     }
-//ispod prve klase u istom fajlu
     public static class MiddlewareExtensions
     {
-        public static IApplicationBuilder UseExceptionMiddleware(this IApplicationBuilder builder){
-            return builder.UseMiddleware<ExceptionMiddleware>();
-//u startup iznad routing dodas app.UseExceptionMiddleware();
+        public static void UseExceptionMiddleware(this IApplicationBuilder builder)
+        {
+            builder.UseMiddleware<ExceptionMiddleware>();
         }
     }
 
