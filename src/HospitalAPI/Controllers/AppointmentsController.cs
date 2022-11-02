@@ -82,7 +82,7 @@ namespace HospitalAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
-            
+
 
             var appointment = _appointmentService.GetById(id);
             if (appointment.PatientId == "PAT1")
@@ -93,7 +93,7 @@ namespace HospitalAPI.Controllers
             {
                 _email = "milos.adnadjevic@gmail.com";
             }
-            else if (appointment.PatientId =="PAT3")
+            else if (appointment.PatientId == "PAT3")
             {
                 _email = "jales32331@harcity.com";
             }
@@ -125,6 +125,7 @@ namespace HospitalAPI.Controllers
             }
             string idFlag = _appointmentService.Create(appDTO);
             return CreatedAtAction("GetById", new { id = idFlag }, appDTO);
+        }
 
         [HttpGet]
         [Route("[action]/{id}")]
