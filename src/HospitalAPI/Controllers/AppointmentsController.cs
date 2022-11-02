@@ -85,15 +85,15 @@ namespace HospitalAPI.Controllers
 
 
             var appointment = _appointmentService.GetById(id);
-            if (appointment.PatientId == "PAT1")
+            if (appointment.PatientId == "Pera Peric")
             {
                 _email = "imeprezime0124@gmail.com";
             }
-            else if (appointment.PatientId == "PAT2")
+            else if (appointment.PatientId == "Sima Simic")
             {
                 _email = "milos.adnadjevic@gmail.com";
             }
-            else if (appointment.PatientId == "PAT3")
+            else if (appointment.PatientId == "Djordje Djokic")
             {
                 _email = "jales32331@harcity.com";
             }
