@@ -23,6 +23,7 @@ namespace HospitalLibrary.Core.Appointment
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
             _roomRepository = roomRepository;
+            UpdateFinishedAppointments();
         }
 
 
@@ -118,9 +119,34 @@ namespace HospitalLibrary.Core.Appointment
             _appointmentRepository.Delete(appointment);
         }
 
-        public IEnumerable<Appointment> GetAllByDoctor(string id)
+
+        public IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id)
         {
-            return _appointmentRepository.GetAllByDoctor(id);
+            IEnumerable<Appointment> doctorsApointments = _appointmentRepository.GetAllByDoctor(id);
+            List<ViewAllAppointmentsDTO> appointmentsDTOs = new List<ViewAllAppointmentsDTO>();
+            foreach(Appointment a in doctorsApointments)
+                appointmentsDTOs.Add(AppointmentAdapter.AppointmentToViewAllAppointmentsDTO(a));
+
+
+            return appointmentsDTOs;
+        }
+
+        public void UpdateFinishedAppointments()
+        {
+            List<Appointment> appointments = (List<Appointment>)_appointmentRepository.GetAll();
+
+            TimeSpan difference;
+            DateTime currentTime = DateTime.Now;
+
+            foreach (Appointment appointment in appointments)
+            {
+                difference = currentTime.Subtract(appointment.Start);
+                if (difference.TotalMinutes > 20)
+                {
+                    appointment.Status = AppointmentStatus.Finished;
+                    _appointmentRepository.Update(appointment);
+                }
+            }
         }
     }
 }

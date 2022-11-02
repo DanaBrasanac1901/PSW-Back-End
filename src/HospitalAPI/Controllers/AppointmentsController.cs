@@ -16,7 +16,7 @@ namespace HospitalAPI.Controllers
             _appointmentService = appointmentService;
         }
 
-        // GET: api/rooms
+        // GET: api/appointments
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -37,7 +37,6 @@ namespace HospitalAPI.Controllers
         }
 
 
-        // POST api/rooms
         [HttpPost]
         public ActionResult Create(CreateAppointmentDTO appointmentDTO)
         {
@@ -50,7 +49,7 @@ namespace HospitalAPI.Controllers
             return NoContent();
         }
 
-        // PUT api/rooms/2
+        // PUT api/appointments/2
         [HttpPut("{id}")]
         public ActionResult Update(string id, Appointment appointment)
         {
@@ -76,7 +75,7 @@ namespace HospitalAPI.Controllers
             return Ok(appointment);
         }
 
-        // DELETE api/rooms/2
+        // DELETE api/appointments/2
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
@@ -90,6 +89,7 @@ namespace HospitalAPI.Controllers
             return NoContent();
         }
 
+
         [HttpPost]
         [Route("[action]")]
         public ActionResult CreateAppointment(CreateAppointmentDTO appDTO)
@@ -100,6 +100,17 @@ namespace HospitalAPI.Controllers
             }
             string idFlag = _appointmentService.Create(appDTO);
             return CreatedAtAction("GetById", new { id = idFlag }, appDTO);
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetAllByDoctor(string id)
+        {
+            var appointments = _appointmentService.GetAllByDoctor(id);
+            if (appointments == null)
+                return NotFound();
+
+            return Ok(appointments);
+
         }
     }
 }

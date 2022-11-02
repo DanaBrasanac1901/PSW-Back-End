@@ -37,9 +37,6 @@ namespace HospitalLibrary.Core.Doctor
             StartWorkTime = startWorkTime;
             EndWorkTime = endWorkTime;
             Appointments = appointments;
-        }
-
-        
-        
+        } 
     }
 }

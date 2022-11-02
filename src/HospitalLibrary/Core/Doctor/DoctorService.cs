@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace HospitalLibrary.Core.Doctor
 {
     public class DoctorService: IDoctorService
+
     {
         private readonly IDoctorRepository _doctorRepository;
 
