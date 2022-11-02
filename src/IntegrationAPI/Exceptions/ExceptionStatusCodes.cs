@@ -9,8 +9,7 @@ namespace IntegrationAPI.Exceptions
     {
         public static Dictionary<string, string> GetExceptionDetails(Exception exception)
         {
-            var properties = exception.GetType()
-                .GetProperties();
+            var properties = exception.GetType().GetProperties();
             var fields = properties
                 .Select(property => new
                 {

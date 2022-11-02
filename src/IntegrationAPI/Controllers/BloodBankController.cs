@@ -33,10 +33,6 @@ namespace IntegrationAPI.Controllers
         {
 
             var bloodBanks = _IbbService.GetAll();
-            if (bloodBanks== null)
-            {
-                throw new BloodBankNotFoundException("List is empty");
-            }
             return Ok(bloodBanks);
 
         }
@@ -48,15 +44,9 @@ namespace IntegrationAPI.Controllers
         public async Task<IActionResult> GetbyId([FromRoute] Guid id)
         {
             var bloodBank = _IbbService.GetById(id);
-           
-
-
-                
+            BloodBankRequestValidator.Validate(bloodBank);
             return Ok(bloodBank);
         }
-
-
-        
 
 
         [HttpPost]
@@ -66,12 +56,7 @@ namespace IntegrationAPI.Controllers
             BloodBank bank1 = new BloodBank();
 
             bank1 = _mapper.Map<BloodBank>(bbDTO);
-
-
             _IbbService.Create(bank1);
-
-
-
             return Ok(_mapper.Map<BloodBankDTO>(_IbbService.GetById(bank1.Id)));
         }
 
@@ -80,20 +65,10 @@ namespace IntegrationAPI.Controllers
 
         public async Task<IActionResult> UpdateBloodBank([FromRoute] Guid id, [FromBody] BloodBank bb)
         {
-
+            
             var bloodBank = _IbbService.Update(id, bb);
-
-            if (bloodBank == null)
-            {
-                return NotFound("Blood bank not found");
-            }
-
-
-            else
-            {
-                throw new BloodBankNotFoundException("Bloodbank not found");
-            }
-
+            BloodBankRequestValidator.Validate(bloodBank);
+            return Ok(bloodBank);
         }
 
 
@@ -102,29 +77,18 @@ namespace IntegrationAPI.Controllers
 
         public async Task<IActionResult> DeleteBloodBank([FromRoute] Guid id)
         {
-
-
+            
             _IbbService.Delete(id);
             return Ok(_IbbService.GetAll());
-
-
-
+            
         }
-
-            [HttpPut]
-            [Route("ConfirmBBAccount/{id:Guid}")]
-
+        
+        [HttpPut] 
+        [Route("ConfirmBBAccount/{id:Guid}")]
         public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromBody] object pp)
             {
-
-               
                 _IbbService.UpdatePassword(id, pp.ToString());
-                return NotFound("Blood bank not found");
-
-
-
-
-
+                return NotFound("Blood bank not found"); //?
             }
 
         }

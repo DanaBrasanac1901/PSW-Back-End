@@ -25,6 +25,7 @@ namespace IntegrationLibrary.BloodBank
             bb.Apikey = "";
             bb.Password = "";
             bloodBankRepository.Create(bb);
+            
         }
 
         public void Delete(Guid id)
@@ -45,6 +46,7 @@ namespace IntegrationLibrary.BloodBank
         public BloodBank GetById(Guid id)
         {
            return bloodBankRepository.GetById(id);
+           
         }
 
         
@@ -60,6 +62,7 @@ namespace IntegrationLibrary.BloodBank
                 bloodBankRepository.Update(bloodBank);
                 return (bloodBank);
             }
+            
             return null;
         }
 
