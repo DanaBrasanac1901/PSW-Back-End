@@ -7,11 +7,11 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentController : ControllerBase
+    public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
 
-        public AppointmentController(IAppointmentService appointmentService)
+        public AppointmentsController(IAppointmentService appointmentService)
         {
             _appointmentService = appointmentService;
         }
@@ -35,6 +35,7 @@ namespace HospitalAPI.Controllers
 
             return Ok(appointment);
         }
+
 
         // POST api/rooms
         [HttpPost]
@@ -87,6 +88,18 @@ namespace HospitalAPI.Controllers
 
             _appointmentService.Delete(appointment);
             return NoContent();
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult CreateAppointment(CreateAppointmentDTO appDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            string idFlag = _appointmentService.Create(appDTO);
+            return CreatedAtAction("GetById", new { id = idFlag }, appDTO);
         }
     }
 }

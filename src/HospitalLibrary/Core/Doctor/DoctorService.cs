@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Doctor.DTOS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,6 +41,12 @@ namespace HospitalLibrary.Core.Doctor
             _doctorRepository.Delete(doctor);
         }
 
+        public DoctorsShiftDTO GetDoctorsShiftById(string id)
+        {
+            Doctor doctor = _doctorRepository.GetById(id);
+            DoctorAdapter adapter = new DoctorAdapter();
+            return adapter.DoctorToDoctorsShiftDTO(doctor);
+        }
         
     }
 }

@@ -84,7 +84,7 @@ namespace HospitalLibrary.Core.Appointment
             }
         }
 
-        public void Create(CreateAppointmentDTO appointmentDTO)
+        public string Create(CreateAppointmentDTO appointmentDTO)
         {
             Appointment app = AppointmentAdapter.CreateAppointmentDTOToAppointment(appointmentDTO);
             app.Doctor = _doctorRepository.GetById(appointmentDTO.doctorId);
@@ -94,14 +94,17 @@ namespace HospitalLibrary.Core.Appointment
             if(checkFlag == true)
             {
                 Console.WriteLine("Zauzet termin");
+                return "";
             }
             else if(dateFlag == true)
             {
                 Console.WriteLine("Termine zakazivati za buducnost");
+                return "";
             }
             else
             {
                 _appointmentRepository.Create(app);
+                return app.Id;
             }
         }
 
