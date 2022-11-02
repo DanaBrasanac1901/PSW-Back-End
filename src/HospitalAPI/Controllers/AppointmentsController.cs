@@ -1,5 +1,6 @@
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
+using HospitalLibrary.Core.EmailSender;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -9,10 +10,12 @@ namespace HospitalAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-
-        public AppointmentsController(IAppointmentService appointmentService)
+        private readonly IEmailSend _emailSend;
+        private string _email;
+        public AppointmentsController(IAppointmentService appointmentService, IEmailSend emailSend)
         {
             _appointmentService = appointmentService;
+            _emailSend = emailSend;
         }
 
         // GET: api/appointments
@@ -79,7 +82,29 @@ namespace HospitalAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
+            
+
             var appointment = _appointmentService.GetById(id);
+            if (appointment.PatientId == "PAT1")
+            {
+                _email = "imeprezime0124@gmail.com";
+            }
+            else if (appointment.PatientId == "PAT2")
+            {
+                _email = "milos.adnadjevic@gmail.com";
+            }
+            else if (appointment.PatientId =="PAT3")
+            {
+                _email = "jales32331@harcity.com";
+            }
+            //else
+            //{
+            //    return BadRequest();
+            //}
+
+            var message = new Message(new string[] { _email }, "Appointment cancelled", "Dear Sir/Madam, \n Your appointment is cancelled because your doctor has emergency call.\n Please go to our site to make new appointment or call our Call center on 0800/ 100 100. \n Sincerely, \n Your Hospital.");
+            _emailSend.SendEmail(message);
+
             if (appointment == null)
             {
                 return NotFound();
