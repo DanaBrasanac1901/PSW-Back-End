@@ -8,6 +8,7 @@ using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using IntegrationAPI.Exceptions;
 
 namespace IntegrationAPI.Controllers
 {
@@ -28,7 +29,10 @@ namespace IntegrationAPI.Controllers
         public async Task<IActionResult> GetAllBloodBanks()
         {
             var bloodBanks = await integrationDbContext.BloodBankTable.ToListAsync();
-
+            if (bloodBanks.Count < 1)
+            {
+                throw new BloodBankNotFoundException("List is empty");
+            }
             return Ok(bloodBanks);
         }   
             
@@ -39,12 +43,17 @@ namespace IntegrationAPI.Controllers
     public async Task<IActionResult> GetbyId([FromRoute] Guid id)
         {
         var bloodBank = await integrationDbContext.BloodBankTable.FirstOrDefaultAsync(x=>x.Id==id);
-            if(bloodBank!=null)
+           
+        if(bloodBank!=null)
             {
                 return Ok(_mapper.Map<BloodBankDTO>(bloodBank));
             }
 
-        return NotFound("Blood bank not found");
+        else 
+            {
+                throw new BloodBankNotFoundException("Bloodbank not found");
+            }
+      //  return NotFound("Blood bank not found");
         }
 
   
@@ -58,6 +67,7 @@ namespace IntegrationAPI.Controllers
             bank1 = _mapper.Map<BloodBank>(bbDTO);
 
             await integrationDbContext.BloodBankTable.AddAsync(bank1);
+            BloodBankRequestValidator.Validate(bank1);
             await integrationDbContext.SaveChangesAsync();
 
             return await GetbyId(bank1.Id);
@@ -75,10 +85,13 @@ namespace IntegrationAPI.Controllers
                 bloodBank.Password = bb.Password;
                 bloodBank.Path = bb.Path;
                 await integrationDbContext.SaveChangesAsync();
+                BloodBankRequestValidator.Validate(bloodBank);
                 return Ok(bloodBank);
             }
-
-            return NotFound("Blood bank not found");
+            else
+            {
+                throw new BloodBankNotFoundException("Bloodbank not found");
+            }
         }
 
 
@@ -91,12 +104,13 @@ namespace IntegrationAPI.Controllers
             if (bloodBank != null)
             {
                 integrationDbContext.Remove(bloodBank);
-               
                 await integrationDbContext.SaveChangesAsync();
                 return Ok(bloodBank);
             }
-
-            return NotFound("Blood bank not found");
+            else
+            {
+                throw new BloodBankNotFoundException("Bloodbank not found");
+            }
         }
 
         [HttpPut]
@@ -104,8 +118,8 @@ namespace IntegrationAPI.Controllers
 
         public async Task<IActionResult> UpdateBloodBankAccount([FromRoute] string id, [FromBody] string pp)
         {
+            
             await integrationDbContext.SaveChangesAsync();
-
             return Ok(id);
 
         }
