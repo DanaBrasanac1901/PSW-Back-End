@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IntegrationLibrary.BloodBank;
+using Microsoft.AspNetCore.HttpsPolicy;
 
 namespace IntegrationAPI
 {
@@ -50,6 +51,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository,BloodBankRepository>();
             services.AddScoped<IEmailService, BloodBankService>();
+            services.AddScoped<ExceptionMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

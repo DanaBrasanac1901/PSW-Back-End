@@ -28,7 +28,7 @@ namespace IntegrationAPI.BBConnection
             email.From.Add(MailboxAddress.Parse(emailConf.From));
             email.To.Add(MailboxAddress.Parse(emailConf.To));
             email.Subject = "Confirm Your registration in our hospital";
-            email.Body= new TextPart(MimeKit.Text.TextFormat.Html) { }
+            email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { };
         }
         
            
