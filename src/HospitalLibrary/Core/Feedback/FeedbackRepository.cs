@@ -19,6 +19,13 @@ namespace HospitalLibrary.Core.Feedback
             return _context.Feedbacks.ToList();
         }
 
+        private int getIdOfLast()
+        {
+            List<Feedback> feedbacks = (List<Feedback>)GetAll() ;
+            return ++feedbacks.Last().ID;
+
+        }
+
         public Feedback GetByPatientId(int id)
         {
             return _context.Feedbacks.Find(id);
@@ -26,6 +33,13 @@ namespace HospitalLibrary.Core.Feedback
 
         public void Create(Feedback feedback)
         {
+            feedback.Date = System.DateTime.Today;
+            feedback.Approved = false;
+
+            //change when login gets implemented
+            feedback.PatientId = 0;
+
+            
             _context.Feedbacks.Add(feedback);
             _context.SaveChanges();
         }
