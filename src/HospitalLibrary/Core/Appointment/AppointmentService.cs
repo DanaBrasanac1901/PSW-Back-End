@@ -42,11 +42,11 @@ namespace HospitalLibrary.Core.Appointment
             return _appointmentRepository.GetById(id);
         }
 
-        private int IdNumber()
-        {
-            IEnumerable<Appointment> listToCount =  _appointmentRepository.GetAll();
-            return listToCount.Count() + 1;
-        }
+        //private int IdNumber()
+        //{
+        //    IEnumerable<Appointment> listToCount =  _appointmentRepository.GetAll();
+        //    return listToCount.Count() + 1;
+        //}
 
         public Boolean IsAvailable(Appointment app)
         {
@@ -89,7 +89,7 @@ namespace HospitalLibrary.Core.Appointment
         {
             Appointment app = AppointmentAdapter.CreateAppointmentDTOToAppointment(appointmentDTO);
             app.Doctor = _doctorRepository.GetById(appointmentDTO.doctorId);
-            app.Id = "APP" + IdNumber().ToString();
+            app.Id = DateTime.Now.ToString("yyMMddhhmmssffffff");
             Boolean checkFlag = IsAvailable(app);
             Boolean dateFlag = CheckIfAppointmentIsSetInFuture(app.Start);
             if(checkFlag == true)
@@ -114,9 +114,11 @@ namespace HospitalLibrary.Core.Appointment
             _appointmentRepository.Update(appointment);
         }
 
-        public void Delete(Appointment appointment)
+        public void Delete(string appId)
         {
-            _appointmentRepository.Delete(appointment);
+            Appointment app = _appointmentRepository.GetById(appId);
+            app.Status = AppointmentStatus.Cancelled;
+            _appointmentRepository.Update(app);
         }
 
 

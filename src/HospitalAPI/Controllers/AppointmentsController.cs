@@ -110,7 +110,7 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
 
-            _appointmentService.Delete(appointment);
+            _appointmentService.Delete(id);
             return NoContent();
         }
 
