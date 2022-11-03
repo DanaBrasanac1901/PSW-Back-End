@@ -109,8 +109,12 @@ namespace HospitalLibrary.Core.Appointment
             }
         }
 
-        public void Update(Appointment appointment)
+        public void Update(RescheduleAppointmentDTO appointmentDTO)
         {
+            Appointment appointment = GetById(appointmentDTO.AppointmentId);
+            string timeParse = appointmentDTO.Date + " " + appointmentDTO.Time;
+            DateTime newStartTime = Convert.ToDateTime(timeParse);
+            appointment.Start = newStartTime;
             _appointmentRepository.Update(appointment);
         }
 

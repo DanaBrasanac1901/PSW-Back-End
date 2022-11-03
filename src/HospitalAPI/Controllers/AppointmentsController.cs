@@ -3,6 +3,8 @@ using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Globalization;
 
 namespace HospitalAPI.Controllers
 {
@@ -11,11 +13,13 @@ namespace HospitalAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
+        private readonly IDoctorService _doctorService;
         private readonly IEmailSend _emailSend;
         private string _email;
-        public AppointmentsController(IAppointmentService appointmentService, IEmailSend emailSend)
+        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService, IEmailSend emailSend)
         {
             _appointmentService = appointmentService;
+            _doctorService = doctorService;
             _emailSend = emailSend;
         }
 
@@ -54,28 +58,27 @@ namespace HospitalAPI.Controllers
 
         // PUT api/appointments/2
         [HttpPut("{id}")]
-        public ActionResult Update(string id, Appointment appointment)
+        public ActionResult Update(RescheduleAppointmentDTO appointmentDTO)
         {
+            Console.WriteLine("MAMA DOBRO SAM!");
+            Appointment appointment = _appointmentService.GetById(appointmentDTO.AppointmentId);
+            string timeParse = appointmentDTO.Date + " " + appointmentDTO.Time;
+            DateTime newStartTime = DateTime.ParseExact(timeParse, "MM-dd-yyyy hh:mm", null);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != appointment.Id)
+            if(_doctorService.IsAvailable(appointment.DoctorId, newStartTime))
+            {
+                
+                _appointmentService.Update(appointmentDTO);
+                return Ok();
+            }
+            else
             {
                 return BadRequest();
             }
-
-            try
-            {
-                _appointmentService.Update(appointment);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-
-            return Ok(appointment);
         }
 
         // DELETE api/appointments/2

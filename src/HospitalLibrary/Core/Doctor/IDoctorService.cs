@@ -15,5 +15,6 @@ namespace HospitalLibrary.Core.Doctor
         void Update(Doctor doctor);
         void Delete(Doctor doctor);
         DoctorsShiftDTO GetDoctorsShiftById(string id);
+        Boolean IsAvailable(string id, DateTime time);
     }
 }
