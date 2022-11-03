@@ -11,9 +11,9 @@ namespace IntegrationAPI.Exceptions
                 throw new BloodBankArgumentException($"{nameof(bloodbankrequest)} is null");
 
             }
-            else if (string.IsNullOrWhiteSpace(bloodbankrequest.Password))
+            else if (bloodbankrequest.Username.Length < 7)
             {
-                throw new BloodBankArgumentException($"{nameof(bloodbankrequest.Username)} is null/empty/whitespace");
+                throw new BloodBankArgumentException("Username is too short");
             }
 
        }

@@ -7,6 +7,11 @@ namespace IntegrationAPI.Exceptions
 {
     public static class ExceptionStatusCodes
     {
+       /* private static Dictionary<Type, HttpStatusCode> exceptionStatusCode = new Dictionary<Type, HttpStatusCode>
+        {
+            {typeof(BloodBankArgumentException), HttpStatusCode.BadRequest},
+            {typeof(BloodBankNotFoundException), HttpStatusCode.NotFound}
+        };*/
         public static Dictionary<string, string> GetExceptionDetails(Exception exception)
         {
             var properties = exception.GetType().GetProperties();
