@@ -42,11 +42,11 @@ namespace HospitalLibrary.Core.Appointment
             return _appointmentRepository.GetById(id);
         }
 
-        private int IdNumber()
-        {
-            IEnumerable<Appointment> listToCount =  _appointmentRepository.GetAll();
-            return listToCount.Count() + 1;
-        }
+        //private int IdNumber()
+        //{
+        //    IEnumerable<Appointment> listToCount =  _appointmentRepository.GetAll();
+        //    return listToCount.Count() + 1;
+        //}
 
         public Boolean IsAvailable(Appointment app)
         {
@@ -57,6 +57,22 @@ namespace HospitalLibrary.Core.Appointment
             foreach (var appToCheck in allAppList)
             {
                 if(appToCheck.Start.ToString() == app.Start.ToString())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Boolean IsAvailableDateOnly(DateTime date, string docId)
+        {
+            Doctor.Doctor doc = _doctorRepository.GetById(docId);
+            ICollection<Appointment> allApp = doc.Appointments;
+            List<Appointment> allAppList = allApp.ToList();
+
+            foreach (var appToCheck in allAppList)
+            {
+                if (appToCheck.Start.ToString() == date.ToString())
                 {
                     return true;
                 }
@@ -89,7 +105,7 @@ namespace HospitalLibrary.Core.Appointment
         {
             Appointment app = AppointmentAdapter.CreateAppointmentDTOToAppointment(appointmentDTO);
             app.Doctor = _doctorRepository.GetById(appointmentDTO.doctorId);
-            app.Id = "APP" + IdNumber().ToString();
+            app.Id = DateTime.Now.ToString("yyMMddhhmmssffffff");
             Boolean checkFlag = IsAvailable(app);
             Boolean dateFlag = CheckIfAppointmentIsSetInFuture(app.Start);
             if(checkFlag == true)
@@ -111,16 +127,18 @@ namespace HospitalLibrary.Core.Appointment
 
         public void Update(RescheduleAppointmentDTO appointmentDTO)
         {
-            Appointment appointment = GetById(appointmentDTO.AppointmentId);
-            string timeParse = appointmentDTO.Date + " " + appointmentDTO.Time;
+            Appointment appointment = GetById(appointmentDTO.id);
+            string timeParse = appointmentDTO.date + " " + appointmentDTO.time;
             DateTime newStartTime = Convert.ToDateTime(timeParse);
             appointment.Start = newStartTime;
             _appointmentRepository.Update(appointment);
         }
 
-        public void Delete(Appointment appointment)
+        public void Delete(string appId)
         {
-            _appointmentRepository.Delete(appointment);
+            Appointment app = _appointmentRepository.GetById(appId);
+            app.Status = AppointmentStatus.Cancelled;
+            _appointmentRepository.Update(app);
         }
 
 
