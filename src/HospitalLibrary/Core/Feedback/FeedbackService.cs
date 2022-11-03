@@ -46,8 +46,10 @@ namespace HospitalLibrary.Core.Feedback
         }
         public void ChangeVisibility(Feedback feedback)
         {
-            if(feedback.Visibility)
-                fee
+            if (feedback.VisibleToPublic)
+                feedback.VisibleToPublic = false;
+            else
+                feedback.VisibleToPublic = true;
             _feedbackRepository.Update(feedback);
         }
     }
