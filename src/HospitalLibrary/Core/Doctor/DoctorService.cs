@@ -48,6 +48,21 @@ namespace HospitalLibrary.Core.Doctor
             DoctorAdapter adapter = new DoctorAdapter();
             return adapter.DoctorToDoctorsShiftDTO(doctor);
         }
-        
+
+        public Boolean IsAvailable(string doctorId, DateTime appointmentTime)
+        {
+            //DateTime appointment = DateTime.Parse(appointmentTime);
+            Doctor doc = GetById(doctorId);
+            foreach (Appointment.Appointment a in doc.Appointments)
+            {
+                TimeSpan interval = a.Start - appointmentTime;
+                if (Math.Abs(interval.Minutes) < 20)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
