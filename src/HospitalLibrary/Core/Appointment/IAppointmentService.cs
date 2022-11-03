@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Appointment.DTOS;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Appointment
@@ -12,8 +13,12 @@ namespace HospitalLibrary.Core.Appointment
         void Delete(string appId);
 
         void Update(RescheduleAppointmentDTO appointment);
-     
 
+        Boolean IsAvailable(Appointment appointment);
+
+        Boolean IsAvailableDateOnly(DateTime date, string docId);
+
+        Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck);
 
         IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id);
 

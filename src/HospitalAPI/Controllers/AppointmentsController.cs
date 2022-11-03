@@ -61,15 +61,18 @@ namespace HospitalAPI.Controllers
         public ActionResult Update(RescheduleAppointmentDTO appointmentDTO)
         {
             Console.WriteLine("MAMA DOBRO SAM!");
-            Appointment appointment = _appointmentService.GetById(appointmentDTO.AppointmentId);
-            string timeParse = appointmentDTO.Date + " " + appointmentDTO.Time;
-            DateTime newStartTime = DateTime.ParseExact(timeParse, "MM-dd-yyyy hh:mm", null);
+            Appointment appointment = _appointmentService.GetById(appointmentDTO.id);
+            string timeParse = appointmentDTO.date + " " + appointmentDTO.time + ":00";
+            DateTime newStartTime = Convert.ToDateTime(timeParse);
+            //appointment.Start = newStartTime;
+            Boolean flag1 = _appointmentService.CheckIfAppointmentIsSetInFuture(newStartTime);
+            Boolean flag2 = _appointmentService.IsAvailableDateOnly(newStartTime,appointment.DoctorId);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if(_doctorService.IsAvailable(appointment.DoctorId, newStartTime))
+            if(flag1 == false && flag2 == false)
             {
                 
                 _appointmentService.Update(appointmentDTO);

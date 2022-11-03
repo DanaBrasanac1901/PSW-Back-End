@@ -8,8 +8,8 @@ namespace HospitalLibrary.Core.Appointment.DTOS
 {
     public class RescheduleAppointmentDTO
     {
-        public string AppointmentId { get; set; }
-        public string Date { get; set; }
-        public string Time { get; set; }
+        public string id { get; set; }
+        public string date { get; set; }
+        public string time { get; set; }
     }
 }

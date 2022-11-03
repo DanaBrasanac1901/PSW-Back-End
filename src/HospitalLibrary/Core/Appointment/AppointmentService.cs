@@ -64,6 +64,22 @@ namespace HospitalLibrary.Core.Appointment
             return false;
         }
 
+        public Boolean IsAvailableDateOnly(DateTime date, string docId)
+        {
+            Doctor.Doctor doc = _doctorRepository.GetById(docId);
+            ICollection<Appointment> allApp = doc.Appointments;
+            List<Appointment> allAppList = allApp.ToList();
+
+            foreach (var appToCheck in allAppList)
+            {
+                if (appToCheck.Start.ToString() == date.ToString())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
         {
             DateTime dateTimeNow = DateTime.Now;
@@ -111,8 +127,8 @@ namespace HospitalLibrary.Core.Appointment
 
         public void Update(RescheduleAppointmentDTO appointmentDTO)
         {
-            Appointment appointment = GetById(appointmentDTO.AppointmentId);
-            string timeParse = appointmentDTO.Date + " " + appointmentDTO.Time;
+            Appointment appointment = GetById(appointmentDTO.id);
+            string timeParse = appointmentDTO.date + " " + appointmentDTO.time;
             DateTime newStartTime = Convert.ToDateTime(timeParse);
             appointment.Start = newStartTime;
             _appointmentRepository.Update(appointment);
