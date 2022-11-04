@@ -1,9 +1,7 @@
 ﻿using HospitalLibrary.Core.Room;
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
-﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Feedback;
-using HospitalLibrary.Core.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
