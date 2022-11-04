@@ -24,5 +24,7 @@ namespace IntegrationLibrary.BloodBank
 
         public string Apikey { get; set; }
 
+        public Boolean IsConfirmed { get; set; }
+
     }
 }

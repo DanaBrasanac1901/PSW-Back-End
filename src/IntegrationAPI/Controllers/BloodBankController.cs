@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using IntegrationAPI.DTO;
 using IntegrationLibrary.BloodBank;
-
+using IntegrationAPI.BBConnection;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using IntegrationAPI.Exceptions;
 using System.Linq;
+using Nest;
 
 namespace IntegrationAPI.Controllers
 {
@@ -22,11 +23,12 @@ namespace IntegrationAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IBloodBankService _IbbService;
 
-
+       
 
         public BloodBankController(IBloodBankService IbbService, IMapper mapper) {
             this._IbbService = IbbService;
             this._mapper = mapper;
+           
         }
         [HttpGet]
         public async Task<IActionResult> GetAllBloodBanks()
@@ -56,7 +58,11 @@ namespace IntegrationAPI.Controllers
             BloodBank bank1 = new BloodBank();
 
             bank1 = _mapper.Map<BloodBank>(bbDTO);
+
+            BloodBankRequestValidator.Validate(bank1);
             _IbbService.Create(bank1);
+            
+           
             return Ok(_mapper.Map<BloodBankDTO>(_IbbService.GetById(bank1.Id)));
         }
 
@@ -85,10 +91,11 @@ namespace IntegrationAPI.Controllers
         
         [HttpPut] 
         [Route("ConfirmBBAccount/{id:Guid}")]
-        public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromBody] object pp)
+        public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromBody] object password)
             {
-                _IbbService.UpdatePassword(id, pp.ToString());
-                return NotFound("Blood bank not found"); //?
+                _IbbService.UpdatePassword(id, password.ToString());
+                
+                return Ok("Confirmed"); //?
             }
 
         }

@@ -1,14 +1,19 @@
 ﻿using IntegrationLibrary.Settings;
+using MailKit;
 using Microsoft.Extensions.Configuration;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
+using Nest;
 
 namespace IntegrationLibrary.BloodBank
 {
-    public class BloodBankService : IBloodBankService, IEmailService
+    public class BloodBankService : IBloodBankService
     {
         private readonly IBloodBankRepository bloodBankRepository;
         private readonly IConfiguration _config;
@@ -19,13 +24,19 @@ namespace IntegrationLibrary.BloodBank
         }
 
 
-        public void Create(BloodBank bb)
+        public  void Create(BloodBank bb)
         {
             bb.Id = Guid.NewGuid();
-            bb.Apikey = "";
-            bb.Password = "";
+            var key = new byte[32];
+            using (var generator = RandomNumberGenerator.Create())
+                generator.GetBytes(key);
+            bb.Apikey = Convert.ToBase64String(key);
+            bb.Password =  Guid.NewGuid().ToString();
+            bb.IsConfirmed = false;
             bloodBankRepository.Create(bb);
-            
+           SendEmail(bb.Id);
+
+
         }
 
         public void Delete(Guid id)
@@ -70,16 +81,45 @@ namespace IntegrationLibrary.BloodBank
         {
             var bloodBank = GetById(id);
             bloodBank.Password = pp;
+            bloodBank.IsConfirmed = true;
             bloodBankRepository.Update(bloodBank);
         }
 
-        Email IEmailService.ConfigureEmail(Guid id)
+        
+
+        Email ConfigureEmail(Guid id)
         {
-            
             var bloodBank = GetById(id);
-            Email email = new Email(bloodBank.Email,_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
+            Email email = new Email(bloodBank.Email, _config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
             return email;
 
+        }
+
+        void SendEmail(Guid id)
+        {
+
+            Email emailConf = ConfigureEmail(id);
+
+            string path = id.ToString();
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(emailConf.From));
+            email.To.Add(MailboxAddress.Parse(emailConf.To));
+            email.Subject = "Confirm Your registration in our hospital";
+            //'/'
+            email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "Please" };
+
+
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate(emailConf.From, emailConf.Password);
+            smtp.Send(email);
+            smtp.Disconnect(true);
+
+        }
+
+        void IBloodBankService.SendEmail(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

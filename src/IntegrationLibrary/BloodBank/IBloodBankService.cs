@@ -17,7 +17,10 @@ namespace IntegrationLibrary.BloodBank
             void Delete(Guid bb);
 
             void UpdatePassword(Guid id, string pp);
-       
+
+           void SendEmail(Guid id);
+
+
     }
 }
 

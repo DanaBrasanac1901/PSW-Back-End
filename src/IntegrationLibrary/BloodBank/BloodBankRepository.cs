@@ -20,8 +20,8 @@ namespace IntegrationLibrary.BloodBank
 
         public async void Create(BloodBank bb)
         {
-            await integrationDbContext.BloodBankTable.AddAsync(bb);
-            await integrationDbContext.SaveChangesAsync();
+            integrationDbContext.BloodBankTable.AddAsync(bb);
+            integrationDbContext.SaveChangesAsync();
 
         }
 

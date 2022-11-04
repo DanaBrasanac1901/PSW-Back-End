@@ -17,9 +17,10 @@ namespace IntegrationLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            BloodBank.BloodBank bank1 = new BloodBank.BloodBank() { Id=Guid.NewGuid(),  Username = "101A", Password = "edhb", Apikey = "efwfe" ,Email="andykesic123@gmail.com"};
-            BloodBank.BloodBank bank2 = new BloodBank.BloodBank() { Id = Guid.NewGuid(), Username = "101A", Password = "fewsfd", Apikey = "dqad", Email="andykesic123@gmail.com" };
-            BloodBank.BloodBank bank3 = new BloodBank.BloodBank() { Id = Guid.NewGuid(), Username = "101A", Password = "fcsde", Apikey = "ads", Email="andykesic123@gmail.com" };
+            BloodBank.BloodBank bank1 = new BloodBank.BloodBank() { Id = Guid.NewGuid(), Username = "101A", Password = "edhb", Apikey = "efwfe", Email = "andykesic123@gmail.com", IsConfirmed = true };
+            BloodBank.BloodBank bank2 = new BloodBank.BloodBank() { Id = Guid.NewGuid(), Username = "101A", Password = "fewsfd", Apikey = "dqad", Email = "andykesic123@gmail.com", IsConfirmed = true };
+           
+    BloodBank.BloodBank bank3 = new BloodBank.BloodBank() { Id = Guid.NewGuid(), Username = "101A", Password = "fcsde", Apikey = "ads", Email = "andykesic123@gmail.com", IsConfirmed = true };
 
             modelBuilder.Entity < BloodBank.BloodBank>().HasData(
                bank1, bank2, bank3
