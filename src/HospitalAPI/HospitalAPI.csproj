@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controllers\BloodContoller" />
     <None Remove="Controllers\NewFile.txt" />
+    <None Remove="Controllers\NewFile1.txt" />
   </ItemGroup>
 
   <ItemGroup>
