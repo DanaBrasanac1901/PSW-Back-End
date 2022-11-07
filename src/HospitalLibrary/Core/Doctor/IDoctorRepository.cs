@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.Model;
 
-namespace HospitalLibrary.Core.Repository
+namespace HospitalLibrary.Core.Doctor
 {
     public interface IDoctorRepository
     {

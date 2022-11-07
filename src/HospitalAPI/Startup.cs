@@ -1,5 +1,7 @@
-using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Room;
+using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.Appointment;
+using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
+using HospitalLibrary.Core.EmailSender;
 
 namespace HospitalAPI
 {
@@ -24,9 +28,17 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
+            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
 
-            services.AddControllers();
+            var emailConfig = Configuration
+            .GetSection("EmailConfiguration")
+            .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+
+            
+            services.AddControllers().AddJsonOptions(x =>
+                 x.JsonSerializerOptions.ReferenceHandler = null);
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
@@ -34,6 +46,16 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IEmailSend, EmailSend>();
+
+            services.AddScoped<IBloodConsuptionRecordRepository, BloodConsumptionRecordRepository>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+            services.AddScoped<IBloodService, BloodService>();
+            services.AddScoped<IBloodSupplyRepository, BloodSupplyRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
