@@ -27,7 +27,7 @@ namespace HospitalLibrary.Core.Feedback
             internal Boolean approved;
             internal DateTime date;
             internal int id;
-            private Boolean anonymous;
+            internal Boolean anonymous;
 
             public FeedbackBuilder Anonymous(bool anonymous)
             {
