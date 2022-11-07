@@ -1,11 +1,11 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Doctor.DTOS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Core.Doctor
 {
     public interface IDoctorService
     {
@@ -14,5 +14,7 @@ namespace HospitalLibrary.Core.Service
         void Create(Doctor doctor);
         void Update(Doctor doctor);
         void Delete(Doctor doctor);
+        DoctorsShiftDTO GetDoctorsShiftById(string id);
+        Boolean IsAvailable(string id, DateTime time);
     }
 }

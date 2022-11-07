@@ -1,7 +1,6 @@
-﻿using HospitalLibrary.Core.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Core.Room
 {
     public interface IRoomService
     {

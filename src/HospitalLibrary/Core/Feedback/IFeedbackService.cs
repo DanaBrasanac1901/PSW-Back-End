@@ -10,5 +10,9 @@ namespace HospitalLibrary.Core.Feedback
         void Create(Feedback feedback);
         void Update(Feedback feedback);
         void Delete(Feedback feedback);
+        Feedback GetById(int id);
+        void AcceptFeedback(Feedback feedback);
+        void ChangeVisibility(Feedback feedback);
+        
     }
 }
