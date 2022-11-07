@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Feedback
 {
@@ -110,6 +111,7 @@ namespace HospitalLibrary.Core.Feedback
         public bool VisibleToPublic { get => visibleToPublic; set => visibleToPublic = value; }
         public bool Approved { get => approved; set => approved = value; }
         public DateTime Date { get => date; set => date = value; }
+        
         public int ID { get => id; set => id = value; }
         public bool Anonymous { get => anonymous; set => anonymous = value; }
     }
