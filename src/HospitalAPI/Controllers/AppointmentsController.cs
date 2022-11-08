@@ -14,13 +14,12 @@ namespace HospitalAPI.Controllers
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IDoctorService _doctorService;
-        private readonly IEmailSend _emailSend;
-        private string _email;
-        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService, IEmailSend emailSend)
+  
+        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
         {
             _appointmentService = appointmentService;
             _doctorService = doctorService;
-            _emailSend = emailSend;
+            
         }
 
         // GET: api/appointments
@@ -91,25 +90,7 @@ namespace HospitalAPI.Controllers
 
 
             var appointment = _appointmentService.GetById(id);
-            if (appointment.PatientId == "Pera Peric")
-            {
-                _email = "imeprezime0124@gmail.com";
-            }
-            else if (appointment.PatientId == "Sima Simic")
-            {
-                _email = "milos.adnadjevic@gmail.com";
-            }
-            else if (appointment.PatientId == "Djordje Djokic")
-            {
-                _email = "jales32331@harcity.com";
-            }
-            //else
-            //{
-            //    return BadRequest();
-            //}
-
-            var message = new Message(new string[] { _email }, "Appointment cancelled", "Dear Sir/Madam, \n Your appointment is cancelled because your doctor has emergency call.\n Please go to our site to make new appointment or call our Call center on 0800/ 100 100. \n Sincerely, \n Your Hospital.");
-            _emailSend.SendEmail(message);
+            
 
             if (appointment == null)
             {
