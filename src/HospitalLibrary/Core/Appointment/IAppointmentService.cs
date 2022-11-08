@@ -26,5 +26,7 @@ namespace HospitalLibrary.Core.Appointment
 
        void UpdateFinishedAppointments();
 
+        RescheduleAppointmentDTO GetAppoitnemtnToReschedule(string id);
+
     }
 }

@@ -144,5 +144,17 @@ namespace HospitalAPI.Controllers
             return Ok(appointments);
 
         }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetAppToReschedule(string id)
+        {
+            var appointment = _appointmentService.GetAppoitnemtnToReschedule(id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+            return Ok(appointment);
+        }
     }
 }
