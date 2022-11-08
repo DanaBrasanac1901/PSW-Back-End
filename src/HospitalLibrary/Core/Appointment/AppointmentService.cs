@@ -170,5 +170,12 @@ namespace HospitalLibrary.Core.Appointment
                 }
             }
         }
+
+        public RescheduleAppointmentDTO GetAppoitnemtnToReschedule(string id)
+        {
+            Appointment app = _appointmentRepository.GetById(id);
+            RescheduleAppointmentDTO dto = AppointmentAdapter.AppointmentToRescheduleAppointmentDTO(app);
+            return dto;
+        }
     }
 }

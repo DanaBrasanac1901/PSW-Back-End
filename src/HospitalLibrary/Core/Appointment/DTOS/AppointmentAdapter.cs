@@ -33,6 +33,15 @@ namespace HospitalLibrary.Core.Appointment.DTOS
 
             return appointmentDto;
         }
-        
+
+        public static RescheduleAppointmentDTO AppointmentToRescheduleAppointmentDTO(Appointment appointment)
+        {
+            RescheduleAppointmentDTO dto = new RescheduleAppointmentDTO();
+            dto.id = appointment.Id;
+            dto.patientId = appointment.PatientId;
+            dto.date = appointment.Start.Year + "-" + appointment.Start.Month + "-" + appointment.Start.Day;
+            dto.time = appointment.Start.Hour + ":" + appointment.Start.Minute;
+            return dto;
+        }
     }
 }
