@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.EmailSender
 {
-    public interface IEmailSend
+    public interface IEmailSendService
     {
         void SendEmail(Message message);
     }

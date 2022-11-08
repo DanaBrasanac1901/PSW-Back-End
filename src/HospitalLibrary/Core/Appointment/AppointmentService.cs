@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Room;
 //using HospitalLibrary.Core.Repository;
 using System;
@@ -16,13 +17,15 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IDoctorRepository _doctorRepository;
         private readonly IRoomRepository _roomRepository;
-
+        private readonly IEmailSendService _emailSend;
+        private string _email;
         public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
-            IRoomRepository roomRepository)
+            IRoomRepository roomRepository, IEmailSendService emailSend)
         {
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
             _roomRepository = roomRepository;
+            _emailSend = emailSend;
             UpdateFinishedAppointments();
         }
 
@@ -136,6 +139,27 @@ namespace HospitalLibrary.Core.Appointment
 
         public void Delete(string appId)
         {
+            var appointment =GetById(appId);
+            if (appointment.PatientId == "Pera Peric")
+            {
+                _email = "imeprezime0124@gmail.com";
+            }
+            else if (appointment.PatientId == "Sima Simic")
+            {
+                _email = "milos.adnadjevic@gmail.com";
+            }
+            else if (appointment.PatientId == "Djordje Djokic")
+            {
+                _email = "jales32331@harcity.com";
+            }
+
+
+            var message = new Message(new string[] { _email }, "Appointment cancelled", "Dear Sir/Madam, \n" +
+                " Your appointment is cancelled because your doctor has emergency call.\n " +
+                "Please go to our site to make new appointment or call our Call center on 0800/ 100 100. \n Sincerely, \n Your Hospital.");
+            
+            _emailSend.SendEmail(message);
+
             Appointment app = _appointmentRepository.GetById(appId);
             app.Status = AppointmentStatus.Cancelled;
             _appointmentRepository.Update(app);

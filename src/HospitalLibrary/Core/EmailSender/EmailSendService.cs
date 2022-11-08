@@ -10,11 +10,11 @@ using MailKit.Net.Smtp;
 namespace HospitalLibrary.Core.EmailSender
 {
 
-    public class EmailSend : IEmailSend
+    public class EmailSendService : IEmailSendService
     {
         private readonly EmailConfiguration _emailConfig;
 
-        public EmailSend(EmailConfiguration emailConfig)
+        public EmailSendService(EmailConfiguration emailConfig)
         {
             _emailConfig = emailConfig;
         }
