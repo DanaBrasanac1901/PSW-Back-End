@@ -7,6 +7,7 @@ using HospitalLibrary.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using HospitalLibrary.Core.Patient;
 
 namespace HospitalLibrary.Settings
 {
@@ -15,6 +16,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Room> Rooms { get; set; }
 
         public DbSet<Appointment> Appointments {get; set;}
+
+        public DbSet<Patient> Patients { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
 

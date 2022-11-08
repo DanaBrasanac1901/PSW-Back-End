@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Patient
 {
-    internal class Patient
+    public class Patient
     {
         private String patientName;
         private String email;
@@ -16,17 +16,18 @@ namespace HospitalLibrary.Core.Patient
         private String allergies;
         private String doctorID;
         private bool active;
+        private int id;
 
-        public Patient(string patientName, string email, string password, BloodType bloodType,
-            string allergies, string doctorID, bool active)
+        public Patient(string patientName, string email, string password, BloodType bloodType, string allergies, string doctorID, bool active, int id)
         {
-            this.patientName = patientName;
-            this.email = email;
-            this.password = password;
-            this.bloodType = bloodType;
-            this.allergies = allergies;
-            this.doctorID = doctorID;
-            this.active = active;
+            this.PatientName = patientName;
+            this.Email = email;
+            this.Password = password;
+            this.BloodType = bloodType;
+            this.Allergies = allergies;
+            this.DoctorID = doctorID;
+            this.Active = active;
+            this.Id = id;
         }
 
         public string PatientName { get => patientName; set => patientName = value; }
@@ -36,5 +37,6 @@ namespace HospitalLibrary.Core.Patient
         public string Allergies { get => allergies; set => allergies = value; }
         public string DoctorID { get => doctorID; set => doctorID = value; }
         public bool Active { get => active; set => active = value; }
+        public int Id { get => id; set => id = value; }
     }
 }
