@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Room;
+using HospitalLibrary.Core.Room;
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Blood;
@@ -15,7 +15,7 @@ namespace HospitalLibrary.Settings
     {
         public DbSet<Room> Rooms { get; set; }
 
-        public DbSet<Appointment> Appointments {get; set;}
+        public DbSet<Appointment> Appointments { get; set; }
 
         public DbSet<Patient> Patients { get; set; }
 
