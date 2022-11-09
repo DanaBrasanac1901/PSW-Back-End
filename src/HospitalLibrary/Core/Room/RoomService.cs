@@ -1,12 +1,12 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
+﻿using HospitalLibrary.Core.Appointment;
 using System.Collections.Generic;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Core.Room
 {
     public class RoomService : IRoomService
     {
         private readonly IRoomRepository _roomRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
 
         public RoomService(IRoomRepository roomRepository)
         {

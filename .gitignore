@@ -546,3 +546,4 @@ $RECYCLE.BIN/
 #JetBrains
 .DS_Store
 .idea
+src/HospitalAPI/appsettings.json

@@ -19,7 +19,7 @@ namespace HospitalLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Appointment.Appointment", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -49,41 +49,165 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodConsumptionRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodConsumptionRecords");
 
                     b.HasData(
                         new
                         {
-                            Id = "APP1",
+                            Id = 1,
+                            Amount = 10.0,
+                            CreatedAt = new DateTime(2022, 11, 6, 21, 57, 21, 459, DateTimeKind.Local).AddTicks(6417),
                             DoctorId = "DOC1",
-                            Duration = 0,
-                            PatientId = "PAT1",
-                            RoomId = 1,
-                            Start = new DateTime(2022, 10, 25, 12, 20, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0
+                            Reason = "need for surgery",
+                            Type = 0
                         },
                         new
                         {
-                            Id = "APP2",
+                            Id = 2,
+                            Amount = 20.0,
+                            CreatedAt = new DateTime(2022, 11, 6, 21, 57, 21, 463, DateTimeKind.Local).AddTicks(5990),
                             DoctorId = "DOC2",
-                            Duration = 0,
-                            PatientId = "PAT2",
-                            RoomId = 2,
-                            Start = new DateTime(2022, 10, 25, 12, 20, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0
+                            Reason = "need for patient treatment",
+                            Type = 1
                         },
                         new
                         {
-                            Id = "APP3",
-                            DoctorId = "DOC3",
-                            Duration = 0,
-                            PatientId = "PAT3",
-                            RoomId = 2,
-                            Start = new DateTime(2022, 10, 25, 12, 20, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0
+                            Id = 3,
+                            Amount = 15.0,
+                            CreatedAt = new DateTime(2022, 11, 6, 21, 57, 21, 463, DateTimeKind.Local).AddTicks(6039),
+                            DoctorId = "DOC1",
+                            Reason = "need for transfusion",
+                            Type = 2
                         });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Due")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 100.0,
+                            DoctorId = "DOC1",
+                            Due = new DateTime(2022, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Reason = "need for patient treatment",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 150.0,
+                            DoctorId = "DOC2",
+                            Due = new DateTime(2022, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Reason = "need for patient treatment",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 150.0,
+                            DoctorId = "DOC1",
+                            Due = new DateTime(2022, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Reason = "need for transfusion",
+                            Type = 2
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodSupply", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HospitalBlood");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 150.0,
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 130.0,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 100.0,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Amount = 110.0,
+                            Type = 3
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -111,41 +235,71 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Feedback.Feedback", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("Anonymous")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("VisibleToPublic")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Feedbacks");
 
                     b.HasData(
                         new
                         {
-                            Id = "DOC1",
-                            Email = "imeprezime024@gmail.com",
-                            EndWorkTime = 15,
-                            Name = "Ime",
-                            RoomId = 1,
-                            StartWorkTime = 8,
-                            Surname = "Prezime"
+                            ID = 1,
+                            Anonymous = false,
+                            Approved = false,
+                            Date = new DateTime(2022, 8, 27, 8, 15, 0, 0, DateTimeKind.Unspecified),
+                            PatientId = 1,
+                            Text = "neki komentar",
+                            VisibleToPublic = true
                         },
                         new
                         {
-                            Id = "DOC2",
-                            Email = "peraperic024@gmail.com",
-                            EndWorkTime = 15,
-                            Name = "Pera",
-                            RoomId = 2,
-                            StartWorkTime = 8,
-                            Surname = "Peric"
+                            ID = 2,
+                            Anonymous = false,
+                            Approved = false,
+                            Date = new DateTime(2022, 9, 13, 14, 53, 0, 0, DateTimeKind.Unspecified),
+                            PatientId = 2,
+                            Text = "neki drugi komentar",
+                            VisibleToPublic = true
                         },
                         new
                         {
-                            Id = "DOC3",
-                            Email = "djole1312@gmail.com",
-                            EndWorkTime = 15,
-                            Name = "Djole",
-                            RoomId = 3,
-                            StartWorkTime = 8,
-                            Surname = "Djokic"
+                            ID = 3,
+                            Anonymous = false,
+                            Approved = false,
+                            Date = new DateTime(2022, 10, 10, 11, 22, 0, 0, DateTimeKind.Unspecified),
+                            PatientId = 3,
+                            Text = "neki treci komentar",
+                            VisibleToPublic = true
                         });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,35 +316,15 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Floor = 1,
-                            Number = "101A"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Floor = 2,
-                            Number = "204"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Floor = 3,
-                            Number = "305B"
-                        });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Appointment.Appointment", b =>
                 {
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
+                    b.HasOne("HospitalLibrary.Core.Doctor.Doctor", "Doctor")
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId");
 
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
+                    b.HasOne("HospitalLibrary.Core.Room.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -201,9 +335,9 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {
-                    b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
+                    b.HasOne("HospitalLibrary.Core.Room.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -212,7 +346,7 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {
                     b.Navigation("Appointments");
                 });
