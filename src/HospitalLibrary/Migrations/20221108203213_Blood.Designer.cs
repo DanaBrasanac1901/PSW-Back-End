@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221108200752_Blood")]
+    [Migration("20221108203213_Blood")]
     partial class Blood
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -27,5 +27,7 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+
+       
     }
 }
