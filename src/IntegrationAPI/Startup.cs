@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using IntegrationLibrary.BloodBank;
 using Microsoft.AspNetCore.HttpsPolicy;
 using IntegrationAPI.BBConnection;
+using System.Linq;
 
 namespace IntegrationAPI
 {
@@ -53,7 +54,9 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankRepository,BloodBankRepository>();
            // services.AddScoped<IEmailService, IEmailService>();
             services.AddScoped<ExceptionMiddleware>();
+
             
+
 
         }
 
