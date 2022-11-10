@@ -1,4 +1,5 @@
 ﻿using HospitalAPI;
+using HospitalLibrary.Core.Room;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -6,15 +7,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 
-namespace HospitalAPITestProject.Setup
+namespace HospitalTests.Setup
 {
-    public class TestDataBaseFactory<TStartup> : WebApplicationFactory<Startup>
+    public class TestDatabaseFactory<TStartup> : WebApplicationFactory<Startup>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
-                using var scope = BuilderServiceProvider(services).CreateScope();
+                using var scope = BuildServiceProvider(services).CreateScope();
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<HospitalDbContext>();
 
@@ -22,7 +23,7 @@ namespace HospitalAPITestProject.Setup
             });
         }
 
-        private static ServiceProvider BuilderServiceProvider(IServiceCollection services)
+        private static ServiceProvider BuildServiceProvider(IServiceCollection services)
         {
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<HospitalDbContext>));
             services.Remove(descriptor);
@@ -36,21 +37,18 @@ namespace HospitalAPITestProject.Setup
             return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=super;";
         }
 
-        private void InitializeDatabase(HospitalDbContext context)
+        private static void InitializeDatabase(HospitalDbContext context)
         {
             context.Database.EnsureCreated();
-            
-            SettingUpDoctors(context);
+
+            //da li uopste pisati integracioni i sta proveravati njime? (da li se napravio blood consumption record u bazi?)
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
+            context.Rooms.Add(new Room { Id = 1, Floor = 1, Number = "11" });
+            context.Rooms.Add(new Room { Id = 2, Floor = 1, Number = "12" });
+            context.Rooms.Add(new Room { Id = 3, Floor = 2, Number = "21" });
+            context.Rooms.Add(new Room { Id = 4, Floor = 3, Number = "31" });
 
             context.SaveChanges();
         }
-
-        private static void SettingUpDoctors(HospitalDbContext context)
-        {
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Doctors\";");
-           // context.Doctors.Add(new Doctor());
-        }
     }
-
-
 }

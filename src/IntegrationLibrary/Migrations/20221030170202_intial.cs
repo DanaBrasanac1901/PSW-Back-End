@@ -1,41 +1,43 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace HospitalLibrary.Migrations
+namespace IntegrationLibrary.Migrations
 {
-    public partial class RoomMigration : Migration
+    public partial class intial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Rooms",
+                name: "BloodBank",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Number = table.Column<string>(type: "text", nullable: false),
-                    Floor = table.Column<int>(type: "integer", nullable: false)
+                    Username = table.Column<string>(type: "text", nullable: true),
+                    Path = table.Column<string>(type: "text", nullable: true),
+                    Password = table.Column<int>(type: "integer", nullable: false),
+                    Apikey = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.PrimaryKey("PK_BloodBank", x => x.Id);
                 });
 
             migrationBuilder.InsertData(
-                table: "Rooms",
-                columns: new[] { "Id", "Floor", "Number" },
+                table: "BloodBank",
+                columns: new[] { "Id", "Apikey", "Password", "Path", "Username" },
                 values: new object[,]
                 {
-                    { 1, 1, "101A" },
-                    { 2, 2, "204" },
-                    { 3, 3, "305B" }
+                    { 1, 34, 1, null, "101A" },
+                    { 2, 34, 1, null, "101A" },
+                    { 3, 34, 1, null, "101A" }
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Rooms");
+                name: "BloodBank");
         }
     }
 }

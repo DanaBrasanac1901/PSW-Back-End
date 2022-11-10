@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Appointment.DTOS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,23 @@ namespace HospitalLibrary.Core.Blood.DTOS
             recordTransformed.DoctorId = "DOC1";
 
             return recordTransformed;
+        }
+
+        public static BloodRequest CreateBloodRequestDTOToObject(CreateBloodRequestDTO newBloodRequest)
+        {
+           BloodRequest bloodRequestTransformed= new BloodRequest();
+
+            bloodRequestTransformed.Id = newBloodRequest.id;
+            bloodRequestTransformed.DoctorId = "DOC1";
+            bloodRequestTransformed.Type = newBloodRequest.type;
+            bloodRequestTransformed.Amount = newBloodRequest.amount;
+            bloodRequestTransformed.Reason = newBloodRequest.reason;
+            newBloodRequest.due = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
+            bloodRequestTransformed.Due =Convert.ToDateTime(newBloodRequest.due);
+            
+
+            return bloodRequestTransformed;
+
         }
 
     }
