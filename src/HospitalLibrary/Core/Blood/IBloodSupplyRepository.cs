@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace HospitalLibrary.Core.Blood
         void Create(BloodSupply bloodSupply);
         void Update(BloodSupply bloodSupply);
         void Delete(BloodSupply bloodSupply);
+        BloodSupply GetByGroup(BloodType type);
     }
 }
