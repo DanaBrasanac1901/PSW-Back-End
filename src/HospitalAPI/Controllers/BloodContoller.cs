@@ -26,7 +26,7 @@ namespace HospitalAPI.Controllers
             }
 
             _bloodService.CreateBloodConsumptionRecord(record);
-            return Ok();
+            return Ok(record);
         }
         
         [HttpPost]

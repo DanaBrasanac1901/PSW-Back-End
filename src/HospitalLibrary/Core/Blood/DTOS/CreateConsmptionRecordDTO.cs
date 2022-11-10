@@ -9,7 +9,13 @@ namespace HospitalLibrary.Core.Blood.DTOS
 {
     public class CreateConsmptionRecordDTO
     {
-        public CreateConsmptionRecordDTO(){}
+        private readonly IBloodService _bloodService;
+
+        public CreateConsmptionRecordDTO() {}
+        public CreateConsmptionRecordDTO(IBloodService bloodService)
+        {
+            _bloodService = bloodService;
+        }
 
         public double Amount { get; set; }
         public BloodType Type { get; set; }
