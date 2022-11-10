@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 
-namespace HospitalLibrary.Core.Repository
+namespace HospitalLibrary.Core.Doctor
 {
     public class DoctorRepository : IDoctorRepository
     {
         private readonly HospitalDbContext _context;
+
+        
 
         public DoctorRepository(HospitalDbContext context)
         {

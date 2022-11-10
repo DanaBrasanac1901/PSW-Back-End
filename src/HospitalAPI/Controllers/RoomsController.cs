@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.Core.Room;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -8,83 +7,83 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly IRoomService _roomService;
+        private readonly IRoomService _patientService;
 
-        public RoomsController(IRoomService roomService)
+        public RoomsController(IRoomService patientService)
         {
-            _roomService = roomService;
+            _patientService = patientService;
         }
 
-        // GET: api/rooms
+        // GET: api/patients
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_roomService.GetAll());
+            return Ok(_patientService.GetAll());
         }
 
-        // GET api/rooms/2
+        // GET api/patients/2
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var room = _roomService.GetById(id);
-            if (room == null)
+            var patient = _patientService.GetById(id);
+            if (patient == null)
             {
                 return NotFound();
             }
 
-            return Ok(room);
+            return Ok(patient);
         }
 
-        // POST api/rooms
+        // POST api/patients
         [HttpPost]
-        public ActionResult Create(Room room)
+        public ActionResult Create(Room patient)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _roomService.Create(room);
-            return CreatedAtAction("GetById", new { id = room.Id }, room);
+            _patientService.Create(patient);
+            return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
-        // PUT api/rooms/2
+        // PUT api/patients/2
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Room room)
+        public ActionResult Update(int id, Room patient)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != room.Id)
+            if (id != patient.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                _roomService.Update(room);
+                _patientService.Update(patient);
             }
             catch
             {
                 return BadRequest();
             }
 
-            return Ok(room);
+            return Ok(patient);
         }
 
-        // DELETE api/rooms/2
+        // DELETE api/patients/2
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var room = _roomService.GetById(id);
-            if (room == null)
+            var patient = _patientService.GetById(id);
+            if (patient == null)
             {
                 return NotFound();
             }
 
-            _roomService.Delete(room);
+            _patientService.Delete(patient);
             return NoContent();
         }
     }

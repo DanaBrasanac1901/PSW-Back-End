@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HospitalLibrary.Core.Model
+namespace HospitalLibrary.Core.Room
 {
     public class Room
     {
