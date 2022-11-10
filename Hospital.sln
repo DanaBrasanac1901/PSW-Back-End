@@ -16,6 +16,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalLibraryTestProject", "HospitalLibraryTestProject\HospitalLibraryTestProject.csproj", "{3E2E2DB6-3637-4269-A291-898935E46E64}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalAPITestProject", "HospitalAPITestProject\HospitalAPITestProject.csproj", "{FF9B58D7-BCA4-4B84-AC7A-C2738016733F}"
+
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +48,11 @@ Global
 		{FF9B58D7-BCA4-4B84-AC7A-C2738016733F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF9B58D7-BCA4-4B84-AC7A-C2738016733F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF9B58D7-BCA4-4B84-AC7A-C2738016733F}.Release|Any CPU.Build.0 = Release|Any CPU
+
+		{9560035E-EC59-4917-BF46-904F63713656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9560035E-EC59-4917-BF46-904F63713656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9560035E-EC59-4917-BF46-904F63713656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9560035E-EC59-4917-BF46-904F63713656}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

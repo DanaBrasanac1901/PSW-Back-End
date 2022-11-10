@@ -3,15 +3,17 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221108203213_Blood")]
+    partial class Blood
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,8 +90,6 @@ namespace HospitalLibrary.Migrations
                             Type = 0
                         });
                 });
-
-           
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
                 {
@@ -170,22 +170,8 @@ namespace HospitalLibrary.Migrations
                             Id = 1,
                             Amount = 150.0,
                             Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 130.0,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 100.0,
-                            Type = 2
                         });
                 });
-
-            
 
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {
