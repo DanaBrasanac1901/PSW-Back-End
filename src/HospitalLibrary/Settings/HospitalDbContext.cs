@@ -31,5 +31,5 @@ namespace HospitalLibrary.Settings
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
-
+    }
 }
