@@ -28,7 +28,16 @@ namespace HospitalLibrary.Core.Patient
         {
             _patientRepository.Create(patient);
         }
-
+        public void Register(Patient patient)
+        {
+            patient.Active = false;
+            _patientRepository.Create(patient);
+        }
+        public void Activate(Patient patient)
+        {
+            patient.Active = true;
+            _patientRepository.Update(patient);
+        }
         public void Update(Patient patient)
         {
             _patientRepository.Update(patient);
