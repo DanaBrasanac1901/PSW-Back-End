@@ -45,12 +45,6 @@ namespace HospitalLibrary.Core.Appointment
             return _appointmentRepository.GetById(id);
         }
 
-        //private int IdNumber()
-        //{
-        //    IEnumerable<Appointment> listToCount =  _appointmentRepository.GetAll();
-        //    return listToCount.Count() + 1;
-        //}
-
         public Boolean IsAvailable(Appointment app)
         {
             Doctor.Doctor doc = app.Doctor;
@@ -61,26 +55,10 @@ namespace HospitalLibrary.Core.Appointment
             {
                 if(appToCheck.Start.ToString() == app.Start.ToString())
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
-        }
-
-        public Boolean IsAvailableDateOnly(DateTime date, string docId)
-        {
-            Doctor.Doctor doc = _doctorRepository.GetById(docId);
-            ICollection<Appointment> allApp = doc.Appointments;
-            List<Appointment> allAppList = allApp.ToList();
-
-            foreach (var appToCheck in allAppList)
-            {
-                if (appToCheck.Start.ToString() == date.ToString())
-                {
-                    return true;
-                }
-            }
-            return false;
+            return true;
         }
 
         public Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
@@ -88,19 +66,19 @@ namespace HospitalLibrary.Core.Appointment
             DateTime dateTimeNow = DateTime.Now;
             if (dateTimeNow.Year > dateToCheck.Year)
             {
-                return true;
+                return false;
             }
             else if (dateTimeNow.Month > dateToCheck.Month && dateTimeNow.Year >= dateToCheck.Year)
             {
-                return true;
+                return false;
             }
             else if (dateTimeNow.Day >= dateToCheck.Day && dateTimeNow.Month >= dateToCheck.Month && dateTimeNow.Year >= dateToCheck.Year) 
             {
-                return true;
+                return false;
             }
             else
             {
-                return false;
+                return true;
             }
         }
 
@@ -111,12 +89,12 @@ namespace HospitalLibrary.Core.Appointment
             app.Id = DateTime.Now.ToString("yyMMddhhmmssffffff");
             Boolean checkFlag = IsAvailable(app);
             Boolean dateFlag = CheckIfAppointmentIsSetInFuture(app.Start);
-            if(checkFlag == true)
+            if(checkFlag == false)
             {
                 Console.WriteLine("Zauzet termin");
                 return "";
             }
-            else if(dateFlag == true)
+            else if(dateFlag == false)
             {
                 Console.WriteLine("Termine zakazivati za buducnost");
                 return "";
@@ -131,35 +109,40 @@ namespace HospitalLibrary.Core.Appointment
         public void Update(RescheduleAppointmentDTO appointmentDTO)
         {
             Appointment appointment = GetById(appointmentDTO.id);
-            string timeParse = appointmentDTO.date + " " + appointmentDTO.time;
-            DateTime newStartTime = Convert.ToDateTime(timeParse);
-            appointment.Start = newStartTime;
-            _appointmentRepository.Update(appointment);
+            Appointment appToSend = AppointmentAdapter.RescheduleAppointmentDTOToAppointment(appointmentDTO, appointment);
+            if (IsAvailable(appToSend) == true && CheckIfAppointmentIsSetInFuture(appToSend.Start))
+            {
+                _appointmentRepository.Update(appToSend);
+            }
+        }
+
+        private string GetEmail(string patientId)
+        {
+            if (patientId == "Pera Peric")
+            {
+                return "imeprezime0124@gmail.com";
+            }
+            else if (patientId == "Sima Simic")
+            {
+                return "milos.adnadjevic@gmail.com";
+            }
+            else if (patientId == "Djordje Djokic")
+            {
+                return "jales32331@harcity.com";
+            }else
+            {
+                return "";
+            }
         }
 
         public void Delete(string appId)
         {
             var appointment =GetById(appId);
-            if (appointment.PatientId == "Pera Peric")
-            {
-                _email = "imeprezime0124@gmail.com";
-            }
-            else if (appointment.PatientId == "Sima Simic")
-            {
-                _email = "milos.adnadjevic@gmail.com";
-            }
-            else if (appointment.PatientId == "Djordje Djokic")
-            {
-                _email = "jales32331@harcity.com";
-            }
-
-
+            _email = GetEmail(appointment.PatientId);
             var message = new Message(new string[] { _email }, "Appointment cancelled", "Dear Sir/Madam, \n" +
                 " Your appointment is cancelled because your doctor has emergency call.\n " +
                 "Please go to our site to make new appointment or call our Call center on 0800/ 100 100. \n Sincerely, \n Your Hospital.");
-            
             _emailSend.SendEmail(message);
-
             Appointment app = _appointmentRepository.GetById(appId);
             app.Status = AppointmentStatus.Cancelled;
             _appointmentRepository.Update(app);
@@ -172,7 +155,6 @@ namespace HospitalLibrary.Core.Appointment
             List<ViewAllAppointmentsDTO> appointmentsDTOs = new List<ViewAllAppointmentsDTO>();
             foreach(Appointment a in doctorsApointments)
                 appointmentsDTOs.Add(AppointmentAdapter.AppointmentToViewAllAppointmentsDTO(a));
-
 
             return appointmentsDTOs;
         }

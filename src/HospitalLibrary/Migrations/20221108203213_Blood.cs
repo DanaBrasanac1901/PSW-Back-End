@@ -43,24 +43,6 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Feedbacks",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PatientId = table.Column<int>(type: "integer", nullable: false),
-                    Text = table.Column<string>(type: "text", nullable: true),
-                    VisibleToPublic = table.Column<bool>(type: "boolean", nullable: false),
-                    Approved = table.Column<bool>(type: "boolean", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Anonymous = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Feedbacks", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "HospitalBlood",
                 columns: table => new
                 {
@@ -90,16 +72,6 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Feedbacks",
-                columns: new[] { "ID", "Anonymous", "Approved", "Date", "PatientId", "Text", "VisibleToPublic" },
-                values: new object[,]
-                {
-                    { 1, false, false, new DateTime(2022, 8, 27, 8, 15, 0, 0, DateTimeKind.Unspecified), 1, "neki komentar", true },
-                    { 2, false, false, new DateTime(2022, 9, 13, 14, 53, 0, 0, DateTimeKind.Unspecified), 2, "neki drugi komentar", true },
-                    { 3, false, false, new DateTime(2022, 10, 10, 11, 22, 0, 0, DateTimeKind.Unspecified), 3, "neki treci komentar", true }
-                });
-
-            migrationBuilder.InsertData(
                 table: "HospitalBlood",
                 columns: new[] { "Id", "Amount", "Type" },
                 values: new object[] { 1, 150.0, 0 });
@@ -112,9 +84,6 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "BloodRequests");
-
-            migrationBuilder.DropTable(
-                name: "Feedbacks");
 
             migrationBuilder.DropTable(
                 name: "HospitalBlood");

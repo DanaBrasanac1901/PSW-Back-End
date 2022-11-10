@@ -89,6 +89,8 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+           
+
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
                 {
                     b.Property<int>("Id")
@@ -168,8 +170,22 @@ namespace HospitalLibrary.Migrations
                             Id = 1,
                             Amount = 150.0,
                             Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 130.0,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 100.0,
+                            Type = 2
                         });
                 });
+
+            
 
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {

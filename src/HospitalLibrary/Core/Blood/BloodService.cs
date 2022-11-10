@@ -28,15 +28,19 @@ namespace HospitalLibrary.Core.Blood
             BloodConsumptionRecord newRecord = BloodDTOAdapter.CreateConsmptionRecordDTOToObject(record);
 
             newRecord.Id = GenerateId(0);
-
+            
             ReduceBloodAmountAfterConsumption(newRecord.Amount, newRecord.Type);
             _bloodConsumptionRecordRepository.Create(newRecord);
         }
 
-        public void CreateBloodRequest(BloodRequest bloodRequest)
+        public void CreateBloodRequest(CreateBloodRequestDTO bloodRequest)
         {
             //change parameter to DTO received from the front end
-            _bloodRequestRepository.Create(bloodRequest);
+            BloodRequest newBloodRequest = BloodDTOAdapter.CreateBloodRequestDTOToObject(bloodRequest);
+
+            bloodRequest.id = GenerateId(0);
+
+            _bloodRequestRepository.Create(newBloodRequest);
         }
 
         public void ReduceBloodAmountAfterConsumption(double amount, BloodType type)
