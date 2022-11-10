@@ -35,7 +35,7 @@ namespace HospitalTests.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=admin;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)
@@ -48,6 +48,13 @@ namespace HospitalTests.Setup
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 2, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 3, Amount = 12, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 4, Amount = 13, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"HospitalBlood\";");
+            context.HospitalBlood.Add(new BloodSupply { Id = 1, Amount = 10, Type = BloodType.A});
+            context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B});
+            context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O});
+            context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB});
+
 
             context.SaveChanges();
         }

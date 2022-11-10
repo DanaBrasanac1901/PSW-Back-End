@@ -9,7 +9,7 @@ namespace HospitalLibrary.Core.Blood.DTOS
 {
     public class BloodDTOAdapter
     {
-        public static BloodConsumptionRecord CreateConsmptionRecordDTOToObject(CreateConsmptionRecordDTO record)
+        public static BloodConsumptionRecord CreateConsmptionRecordDTOToObject(BloodConsumptionRecordDTO record)
         {
             BloodConsumptionRecord recordTransformed = new BloodConsumptionRecord();
 

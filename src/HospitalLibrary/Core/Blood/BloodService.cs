@@ -23,22 +23,14 @@ namespace HospitalLibrary.Core.Blood
             _bloodRequestRepository = bloodRequestRepository;
         }
 
-        public bool CreateBloodConsumptionRecord(CreateConsmptionRecordDTO record)
+        public void CreateBloodConsumptionRecord(BloodConsumptionRecord record)
         {
             BloodSupply supply = _bloodSupplyRepository.GetByGroup(record.Type);
             if (supply.ReduceBy(record.Amount))
             {
-                BloodConsumptionRecord newRecord = BloodDTOAdapter.CreateConsmptionRecordDTOToObject(record);
-                newRecord.Id = GenerateId(0);
-                _bloodConsumptionRecordRepository.Create(newRecord);
-
                 _bloodSupplyRepository.Update(supply);
-
-                return true;
-            }
-            else
-                return false;
-                
+                _bloodConsumptionRecordRepository.Create(record);
+            }    
         }
 
         public void CreateBloodRequest(CreateBloodRequestDTO bloodRequest)
@@ -51,7 +43,7 @@ namespace HospitalLibrary.Core.Blood
         }
 
 
-        private int GenerateId(int type)
+        public int GenerateId(int type)
         {
             List<int> ids = new List<int>();
 
@@ -70,6 +62,11 @@ namespace HospitalLibrary.Core.Blood
                 return 0;
             else
                 return ids.Max() + 1;
+        }
+
+        public BloodConsumptionRecord GetById(int id)
+        {
+            return _bloodConsumptionRecordRepository.GetById(id);
         }
     }
 }

@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Blood.DTOS
 {
-    public class CreateConsmptionRecordDTO
+    public class BloodConsumptionRecordDTO
     {
-        private readonly IBloodService _bloodService;
+        private IBloodService bloodService;
 
-        public CreateConsmptionRecordDTO() {}
-        public CreateConsmptionRecordDTO(IBloodService bloodService)
+        public BloodConsumptionRecordDTO(){}
+
+        public BloodConsumptionRecordDTO(IBloodService bloodService)
         {
-            _bloodService = bloodService;
+            this.bloodService = bloodService;
         }
 
         public double Amount { get; set; }

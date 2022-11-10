@@ -19,9 +19,10 @@ namespace HospitalTests.Integration
         {
             return new BloodController(scope.ServiceProvider.GetRequiredService<IBloodService>());
         }
-        private static CreateConsmptionRecordDTO SetUpBloodConsumptionRecordDTO(IServiceScope scope)
+
+        private static BloodConsumptionRecordDTO SetUpBloodConsumptionRecordDTO(IServiceScope scope)
         {
-            return new CreateConsmptionRecordDTO(scope.ServiceProvider.GetRequiredService<IBloodService>());
+            return new BloodConsumptionRecordDTO(scope.ServiceProvider.GetRequiredService<IBloodService>());
         }
 
         [Fact]
@@ -30,13 +31,10 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            // promeniti act i assert
-            var record = SetUpBloodConsumptionRecordDTO(scope) ;
-            var result = ((OkObjectResult)controller.CreateConsumptionRecord(record))?.Value as CreateConsmptionRecordDTO;
+            var record = SetUpBloodConsumptionRecordDTO(scope);
+            var result = ((CreatedAtActionResult)controller.CreateConsumptionRecord(record))?.Value as BloodConsumptionRecord;
 
             Assert.NotNull(result);
         }
-     
-        
     }
 }
