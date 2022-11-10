@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Blood
     {        
        
         void CreateBloodConsumptionRecord(CreateConsmptionRecordDTO record);
-        void CreateBloodRequest(BloodRequest bloodRequest);
+        void CreateBloodRequest(CreateBloodRequestDTO bloodRequest);
         public void ReduceBloodAmountAfterConsumption(double amount, BloodType type);
     }
 }
