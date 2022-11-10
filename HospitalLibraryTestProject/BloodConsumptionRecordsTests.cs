@@ -3,12 +3,14 @@ using Xunit;
 
 namespace HospitalLibraryTestProject
 {
-    public class UnitTest1
+    public class BloodConsumptionRecordsTests
     {
         [Fact]
-        public void Test1()
+        public void Takes_blood_from_storage()
         {
 
         }
+
+
     }
 }

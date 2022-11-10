@@ -28,6 +28,25 @@ namespace HospitalAPI.Controllers
             _bloodService.CreateBloodConsumptionRecord(record);
             return Ok();
         }
-       
+        
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult CreateBloodRequest(CreateBloodRequestDTO bloodRequest )
+        {
+            if (!ModelState.IsValid )
+            {
+                return BadRequest(ModelState);
+            }
+            else if(bloodRequest.amount<=0)
+            {
+                return BadRequest();
+            }
+
+            _bloodService.CreateBloodRequest(bloodRequest);
+            return Ok();
+        }
+
+
+
     }
 }
