@@ -1,11 +1,12 @@
 ﻿using HospitalAPI;
-using HospitalLibrary.Core.Room;
+using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalTests.Setup
 {
@@ -34,7 +35,7 @@ namespace HospitalTests.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=super;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=admin;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)
@@ -42,11 +43,11 @@ namespace HospitalTests.Setup
             context.Database.EnsureCreated();
 
             //da li uopste pisati integracioni i sta proveravati njime? (da li se napravio blood consumption record u bazi?)
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
-            context.Rooms.Add(new Room { Id = 1, Floor = 1, Number = "11" });
-            context.Rooms.Add(new Room { Id = 2, Floor = 1, Number = "12" });
-            context.Rooms.Add(new Room { Id = 3, Floor = 2, Number = "21" });
-            context.Rooms.Add(new Room { Id = 4, Floor = 3, Number = "31" });
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 1, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 2, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 3, Amount = 12, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 4, Amount = 13, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
 
             context.SaveChanges();
         }
