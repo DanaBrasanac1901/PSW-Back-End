@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,5 +53,13 @@ namespace HospitalLibrary.Core.Blood
             _context.HospitalBlood.Remove(bloodSupply);
             _context.SaveChanges();
         }
+
+        public BloodSupply GetByGroup(BloodType type)
+        {
+            BloodSupply supply = _context.HospitalBlood.FirstOrDefault(s => s.Type == type);
+
+            return supply;
+        }
+
     }
 }

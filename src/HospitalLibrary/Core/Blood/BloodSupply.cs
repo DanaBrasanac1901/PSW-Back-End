@@ -16,12 +16,28 @@ namespace HospitalLibrary.Core.Blood
 
         public BloodSupply() { }
 
-        public BloodSupply(int id,BloodType type, double amount)
+        public BloodSupply(int id, BloodType type, double amount)
         {
             this.Id = id;
             this.Type = type;
             this.Amount = amount;
         }
 
+        public BloodSupply(BloodType type, double amount)
+        {
+            this.Type = type;
+            this.Amount = amount;
+        }
+
+        public bool ReduceBy(double amount)
+        {
+            if (this.Amount >= amount)
+            {
+                this.Amount -= amount;
+                return true;
+            }
+
+            return false;
+        }
     }
 }
