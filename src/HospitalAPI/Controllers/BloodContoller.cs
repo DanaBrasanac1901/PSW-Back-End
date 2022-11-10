@@ -25,8 +25,12 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            _bloodService.CreateBloodConsumptionRecord(record);
-            return Ok();
+            bool recordCreated = _bloodService.CreateBloodConsumptionRecord(record);
+
+            if (recordCreated)
+                return Ok();
+            else
+                return BadRequest();
         }
         
         [HttpPost]
