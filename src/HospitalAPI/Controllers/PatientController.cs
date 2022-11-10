@@ -1,15 +1,15 @@
-﻿using HospitalLibrary.Core.Room;
+﻿using HospitalLibrary.Core.Patient;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoomsController : ControllerBase
+    public class PatientsController : ControllerBase
     {
-        private readonly IRoomService _patientService;
+        private readonly IPatientService _patientService;
 
-        public RoomsController(IRoomService patientService)
+        public PatientsController(IPatientService patientService)
         {
             _patientService = patientService;
         }
@@ -36,7 +36,7 @@ namespace HospitalAPI.Controllers
 
         // POST api/patients
         [HttpPost]
-        public ActionResult Create(Room patient)
+        public ActionResult Create(Patient patient)
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace HospitalAPI.Controllers
 
         // PUT api/patients/2
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Room patient)
+        public ActionResult Update(int id, Patient patient)
         {
             if (!ModelState.IsValid)
             {

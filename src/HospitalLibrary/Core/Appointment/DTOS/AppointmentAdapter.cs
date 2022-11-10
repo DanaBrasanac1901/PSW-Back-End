@@ -43,5 +43,20 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             dto.time = appointment.Start.Hour + ":" + appointment.Start.Minute;
             return dto;
         }
+
+        private static DateTime createTime(RescheduleAppointmentDTO dto)
+        {
+            string timeParse = dto.date + " " + dto.time;
+            DateTime newStartTime = Convert.ToDateTime(timeParse);
+            return newStartTime;
+        }
+
+        public static Appointment RescheduleAppointmentDTOToAppointment(RescheduleAppointmentDTO dto,Appointment app)
+        {
+            string timeParse = dto.date + " " + dto.time;
+            DateTime newStartTime = Convert.ToDateTime(timeParse);
+            app.Start = createTime(dto);
+            return app;
+        }
     }
 }
