@@ -18,8 +18,8 @@ namespace HospitalLibrary.Core.Blood.DTOS
             this.bloodService = bloodService;
         }
 
-        public double Amount { get; set; }
-        public BloodType Type { get; set; }
-        public string Reason { get; set; }
+        public double amount { get; set; }
+        public string type { get; set; }
+        public string reason { get; set; }
     }
 }
