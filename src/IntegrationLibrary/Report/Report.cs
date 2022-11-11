@@ -9,8 +9,8 @@ namespace IntegrationLibrary.Report
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public DateTime ConfigurationDate { get; set; }
-        public DateInterval GeneratingPeriod{ get; set; }
+        public DateTime ConfigurationDate { get; set; } //u create staviti Today
+        public int GeneratingPeriod { get; set; } //na koliko dana da se generise 
         public int BloodBankId { get; set; } 
         
         
