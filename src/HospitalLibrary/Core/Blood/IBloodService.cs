@@ -12,8 +12,9 @@ namespace HospitalLibrary.Core.Blood
     public interface IBloodService
     {        
        
-        void CreateBloodConsumptionRecord(CreateConsmptionRecordDTO record);
-        void CreateBloodRequest(BloodRequest bloodRequest);
-        public void ReduceBloodAmountAfterConsumption(double amount, BloodType type);
+        void CreateBloodConsumptionRecord(BloodConsumptionRecord record);
+        void CreateBloodRequest(CreateBloodRequestDTO bloodRequest);
+        int GenerateId(int type);
+        BloodConsumptionRecord GetById(int id);
     }
 }

@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Room;
+using HospitalLibrary.Core.Room;
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Blood;
@@ -7,6 +7,8 @@ using HospitalLibrary.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using HospitalLibrary.Core.Vacation;
+using HospitalLibrary.Core.Patient;
 
 namespace HospitalLibrary.Settings
 {
@@ -15,6 +17,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Room> Rooms { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
+
+        public DbSet<Patient> Patients { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
 
@@ -26,6 +30,9 @@ namespace HospitalLibrary.Settings
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
+        public DbSet<VacationRequest> VacationRequests { get; set; }
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+
     }
 }

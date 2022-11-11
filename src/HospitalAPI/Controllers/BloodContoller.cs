@@ -16,18 +16,54 @@ namespace HospitalAPI.Controllers
             _bloodService = bloodService;
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetById(int id)
+        {
+            var record = _bloodService.GetById(id);
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(record);
+        }
+
         [HttpPost]
         [Route("[action]")]
-        public ActionResult CreateConsumptionRecord(CreateConsmptionRecordDTO record)
+        public ActionResult CreateConsumptionRecord(BloodConsumptionRecordDTO record)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _bloodService.CreateBloodConsumptionRecord(record);
+            BloodConsumptionRecord newRecord = BloodDTOAdapter.CreateConsmptionRecordDTOToObject(record);
+            newRecord.Id = _bloodService.GenerateId(0);
+
+            _bloodService.CreateBloodConsumptionRecord(newRecord);
+
+            return CreatedAtAction("GetById", new { id = newRecord.Id }, newRecord);
+        }
+        
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult CreateBloodRequest(CreateBloodRequestDTO bloodRequest )
+        {
+            if (!ModelState.IsValid )
+            {
+                return BadRequest(ModelState);
+            }
+            else if(bloodRequest.amount<=0)
+            {
+                return BadRequest();
+            }
+
+            _bloodService.CreateBloodRequest(bloodRequest);
             return Ok();
         }
-       
+
+
+
     }
 }

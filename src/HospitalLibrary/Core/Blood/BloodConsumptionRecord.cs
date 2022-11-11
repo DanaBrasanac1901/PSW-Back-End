@@ -8,7 +8,9 @@ using HospitalLibrary.Core.Enums;
 namespace HospitalLibrary.Core.Blood
 {
     public class BloodConsumptionRecord
-    {   
+    {
+        private IBloodService bloodService;
+
         public int Id { get; set; } 
         public double Amount { get; set; }
         public BloodType Type { get; set; }
@@ -25,6 +27,11 @@ namespace HospitalLibrary.Core.Blood
             Reason = reason;
             CreatedAt = createAt;
             DoctorId = doctorId;
+        }
+
+        public BloodConsumptionRecord(IBloodService bloodService)
+        {
+            this.bloodService = bloodService;
         }
     }
 }

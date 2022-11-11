@@ -23,29 +23,27 @@ namespace HospitalLibrary.Core.Blood
             _bloodRequestRepository = bloodRequestRepository;
         }
 
-        public void CreateBloodConsumptionRecord(CreateConsmptionRecordDTO record)
+        public void CreateBloodConsumptionRecord(BloodConsumptionRecord record)
         {
-            BloodConsumptionRecord newRecord = BloodDTOAdapter.CreateConsmptionRecordDTOToObject(record);
-
-            newRecord.Id = GenerateId(0);
-
-            ReduceBloodAmountAfterConsumption(newRecord.Amount, newRecord.Type);
-            _bloodConsumptionRecordRepository.Create(newRecord);
+            BloodSupply supply = _bloodSupplyRepository.GetByGroup(record.Type);
+            if (supply.ReduceBy(record.Amount))
+            {
+                _bloodSupplyRepository.Update(supply);
+                _bloodConsumptionRecordRepository.Create(record);
+            }    
         }
 
-        public void CreateBloodRequest(BloodRequest bloodRequest)
+        public void CreateBloodRequest(CreateBloodRequestDTO bloodRequest)
         {
-            //change parameter to DTO received from the front end
-            _bloodRequestRepository.Create(bloodRequest);
+            BloodRequest newBloodRequest = BloodDTOAdapter.CreateBloodRequestDTOToObject(bloodRequest);
+
+            bloodRequest.id = GenerateId(1);
+
+            _bloodRequestRepository.Create(newBloodRequest);
         }
 
-        public void ReduceBloodAmountAfterConsumption(double amount, BloodType type)
-        {
-            
-        }
 
-
-        private int GenerateId(int type)
+        public int GenerateId(int type)
         {
             List<int> ids = new List<int>();
 
@@ -64,6 +62,11 @@ namespace HospitalLibrary.Core.Blood
                 return 0;
             else
                 return ids.Max() + 1;
+        }
+
+        public BloodConsumptionRecord GetById(int id)
+        {
+            return _bloodConsumptionRecordRepository.GetById(id);
         }
     }
 }
