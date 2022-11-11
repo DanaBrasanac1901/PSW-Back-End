@@ -16,7 +16,8 @@ namespace HospitalLibrary.Core.Blood.DTOS
             recordTransformed.Amount = record.amount;
            
             recordTransformed.Reason = record.reason;
-            recordTransformed.CreatedAt = DateTime.Now;
+            string date = DateTime.Now.ToString("MM/dd/yyyy H:mm");
+            recordTransformed.CreatedAt = Convert.ToDateTime(date);
             //get the currently logged in doctor and set his id
             recordTransformed.DoctorId = "DOC1";
             if (record.type == "A")
