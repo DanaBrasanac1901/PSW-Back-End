@@ -13,13 +13,11 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Vacation
 {
-    public class VacationRequestService
+    public class VacationService : IVacationService
     {
-        private readonly IVacationRequestRepository _vacationRequestRepository;
+        private readonly IVacationRepository _vacationRequestRepository;
 
-
-
-        public VacationRequestService(IVacationRequestRepository vacationRequestRepository)
+        public VacationService(IVacationRepository vacationRequestRepository)
         {
             _vacationRequestRepository = vacationRequestRepository;
         }
@@ -34,6 +32,7 @@ namespace HospitalLibrary.Core.Vacation
             return _vacationRequestRepository.GetById(id);
         }
 
+        //sta je ovo?
         public Boolean CheckIfVacationIsSetInFuture(DateTime dateToCheck)
         {
             DateTime dateTimeNow = DateTime.Now;
@@ -55,7 +54,7 @@ namespace HospitalLibrary.Core.Vacation
             }
         }
 
-        private int GenerateId()
+        public int GenerateId()
         {
             List<int> ids = new List<int>();
             IEnumerable<VacationRequest> requests = _vacationRequestRepository.GetAll();
@@ -83,12 +82,37 @@ namespace HospitalLibrary.Core.Vacation
         public IEnumerable<ViewAllVacationRequestsDTO> GetAllByDoctor(string id)
         {
             IEnumerable<VacationRequest> doctorsVacationRequests = _vacationRequestRepository.GetAllByDoctor(id);
+           
             List<ViewAllVacationRequestsDTO> requestsDTO = new List<ViewAllVacationRequestsDTO>();
+            
             foreach (VacationRequest a in doctorsVacationRequests)
-                requestsDTO.Add(VacationRequestAdapter.VacationRequestToDTO(a));
+                requestsDTO.Add(VacationRequestDTOAdapter.VacationRequestToDTO(a));
 
             return requestsDTO;
         }
 
+        public void CreateVacationRequest(VacationRequest request)
+        {
+            //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje
+            Doctor.Doctor doctor = new Doctor.Doctor();
+            if (doctor.IsAvailable(request.Start, request.End))
+                _vacationRequestRepository.Create(request);
+        
+        }
+
+        public void UpdateVacationRequest(VacationRequest vacationRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsVacationTooClose(DateTime startDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool HasAppointmentsInThisPeriod(VacationRequest request, string doctorId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

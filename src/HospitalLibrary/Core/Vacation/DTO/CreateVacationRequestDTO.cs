@@ -10,6 +10,8 @@ namespace HospitalLibrary.Core.Vacation.DTO
 {
     public class CreateVacationRequestDTO
     {
+        private IVacationService vacationRequestService;
+
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Description { get; set; }
@@ -17,5 +19,9 @@ namespace HospitalLibrary.Core.Vacation.DTO
 
         public CreateVacationRequestDTO() { }
 
+        public CreateVacationRequestDTO(IVacationService vacationRequestService)
+        {
+            this.vacationRequestService = vacationRequestService;
+        }
     }
 }

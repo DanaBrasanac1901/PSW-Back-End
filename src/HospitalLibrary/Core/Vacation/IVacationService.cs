@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Vacation
 {
-    public interface IVacationRequestService
+    public interface IVacationService
     {
         IEnumerable<VacationRequest> GetAll();
         VacationRequest GetById(int id);
@@ -20,7 +20,6 @@ namespace HospitalLibrary.Core.Vacation
         bool IsVacationTooClose(DateTime startDate);
         bool HasAppointmentsInThisPeriod(VacationRequest request,string doctorId);
         IEnumerable<ViewAllVacationRequestsDTO> GetAllByDoctor(string id);
-
-
+        int GenerateId();
     }
 }
