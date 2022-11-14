@@ -42,7 +42,6 @@ namespace HospitalTests.Setup
         {
             context.Database.EnsureCreated();
 
-            //da li uopste pisati integracioni i sta proveravati njime? (da li se napravio blood consumption record u bazi?)
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 1, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 2, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
@@ -54,6 +53,9 @@ namespace HospitalTests.Setup
             context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B});
             context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O});
             context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB});
+
+
+
 
 
             context.SaveChanges();

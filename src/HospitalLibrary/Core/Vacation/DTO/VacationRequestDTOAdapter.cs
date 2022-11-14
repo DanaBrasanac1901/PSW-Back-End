@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Vacation.DTO
 {
-    public class VacationRequestAdapter
+    public class VacationRequestDTOAdapter
     {
         public static VacationRequest VacationRequestDTOToObject(CreateVacationRequestDTO request)
         {
