@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Vacation
 {
-    public interface IVacationRequestRepository
+    public interface IVacationRepository
     {
         IEnumerable<VacationRequest> GetAll();
         VacationRequest GetById(int id);

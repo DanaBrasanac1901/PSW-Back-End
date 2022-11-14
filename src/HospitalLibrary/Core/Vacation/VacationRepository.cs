@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Vacation
 {
-    public class VacationRequestRepository : IVacationRequestRepository
+    public class VacationRepository : IVacationRepository
     {
         private readonly HospitalDbContext _context;
 
-        public VacationRequestRepository(HospitalDbContext context)
+        public VacationRepository(HospitalDbContext context)
         {
             _context = context;
         }

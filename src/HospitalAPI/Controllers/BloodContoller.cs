@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Room;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Core.Blood.DTOS;
 
