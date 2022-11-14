@@ -41,44 +41,49 @@ namespace HospitalLibrary.Core.Doctor
             StartWorkTime = startWorkTime;
             EndWorkTime = endWorkTime;
             Appointments = appointments;
+            VacationRequests = new List<VacationRequest>();
         } 
 
         public bool IsAvailable(DateTime start, DateTime end)
         {
-            bool hasAppointments = HasAppointments(start, end);
-            bool hasVacation = HasVacations(start, end);
+            DateTimeRange range = new DateTimeRange(start, end);
+
+            bool hasAppointments = HasAppointments(range);
+            bool hasVacation = HasVacations(range);
 
             return !(hasAppointments || hasVacation);
         }
 
-        private bool HasAppointments(DateTime start, DateTime end)
+        private bool HasAppointments(DateTimeRange rangeToCheck)
         {
             foreach(Appointment.Appointment appointment in this.Appointments)
             {
-                if (appointment.Start >= start && appointment.Start <= end)
+                DateTimeRange appointmentRange = new DateTimeRange(appointment.Start, appointment.Start.AddMinutes(20));
+                if (appointmentRange.OverlapsWith(rangeToCheck)
+                    && appointment.Status==AppointmentStatus.Scheduled)
                     return true;
             }
 
             return false;
         }
 
-        private bool HasVacations(DateTime start, DateTime end)
+        private bool HasVacations(DateTimeRange rangeToCheck)
         {
             foreach (VacationRequest vacationRequest in this.VacationRequests)
             {
-                if (AreOverlapping(vacationRequest, start, end))
+                DateTimeRange existingRequestRange = new DateTimeRange(vacationRequest.Start, vacationRequest.End);
+
+                if(existingRequestRange.OverlapsWith(rangeToCheck) && 
+                    (
+                    vacationRequest.Status == Enums.VacationRequestStatus.WaitingForApproval ||
+                    vacationRequest.Status == Enums.VacationRequestStatus.Accepted
+                    )
+                  )
                     return true;
             }
 
             return false;
         }
-
-        private bool AreOverlapping(VacationRequest request, DateTime start, DateTime end)
-        {
-            //implementirati logiku za overlap dva vacation-a (moze i da se uvede DateRange klasa i da se u njoj proveravaju takve stvari)
-            return false;
-        }
-
 
     }
 }

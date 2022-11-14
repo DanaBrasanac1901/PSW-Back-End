@@ -97,7 +97,7 @@ namespace HospitalLibrary.Core.Vacation
             Doctor.Doctor doctor = new Doctor.Doctor();
             if (doctor.IsAvailable(request.Start, request.End))
                 _vacationRequestRepository.Create(request);
-        
+            
         }
 
         public void UpdateVacationRequest(VacationRequest vacationRequest)
