@@ -11,7 +11,9 @@ namespace IntegrationLibrary.Settings
     {
 
         public DbSet<BloodBank.BloodBank> BloodBankTable { get; set; }
-
+        
+        
+        public DbSet<Report.Report> Reports { get; set; }
         public IntegrationDbContext(Microsoft.EntityFrameworkCore.DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
 

@@ -11,6 +11,7 @@ using IntegrationLibrary.BloodBank;
 using Microsoft.AspNetCore.HttpsPolicy;
 using IntegrationAPI.BBConnection;
 using System.Linq;
+using IntegrationLibrary.Report;
 
 namespace IntegrationAPI
 {
@@ -52,6 +53,9 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository,BloodBankRepository>();
+            
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IReportRepository, ReportRepository>();
            // services.AddScoped<IEmailService, IEmailService>();
             services.AddScoped<ExceptionMiddleware>();
 
