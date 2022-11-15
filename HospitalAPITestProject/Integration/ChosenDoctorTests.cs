@@ -29,7 +29,7 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            //var result = ((OkObjectResult)controller.GetLeastPickedDoctor())?.Value as Doctor;
+            //var result = ((OkObjectResult)controller.GetLeastPickedDoctor())?.Value as String;
             var result = "4";
             Assert.Equal("4", result);
 
@@ -42,7 +42,7 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            //var result = ((OkObjectResult)controller.GetLeastPickedDoctor())?.Value as List<Doctor>;
+            //var result = ((OkObjectResult)controller.GetDoctorsWithMaxTwoMorePatients())?.Value as List<String>;
             var result = new List<String>() { "2", "3" };
             Assert.Equal(new List<String>(){ "2", "3" }, result);
 

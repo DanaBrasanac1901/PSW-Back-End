@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Appointment;
-using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.Doctor;
+using Microsoft.AspNetCore.Builder;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Patient
@@ -8,10 +9,12 @@ namespace HospitalLibrary.Core.Patient
     {
         private readonly IPatientRepository _patientRepository;
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IDoctorRepository _doctorRepository;
 
-        public PatientService(IPatientRepository patientRepository)
+        public PatientService(IPatientRepository patientRepository,IDoctorRepository doctorRepository)
         {
             _patientRepository = patientRepository;
+            _doctorRepository = doctorRepository;
         }
 
         public IEnumerable<Patient> GetAll()
@@ -46,6 +49,40 @@ namespace HospitalLibrary.Core.Patient
         public void Delete(Patient patient)
         {
             _patientRepository.Delete(patient);
+        }
+
+        public string GetDoctorWithLeastPatients()
+        {
+            string minimalId = "nesto";
+            int minNumber = 0;
+            IEnumerable<Doctor.Doctor> doctors = _doctorRepository.GetAll();
+            IEnumerable<Patient> patients = _patientRepository.GetAll();
+
+            foreach(Doctor.Doctor doctor in doctors)
+            {
+                int personalMinimal = 0;
+                foreach(Patient patient in patients)
+                {
+                    if (patient.DoctorID.Equals(doctor.Id))
+                    {
+                        personalMinimal++;
+                    }
+                }
+                if(personalMinimal <= minNumber)
+                {
+                    minNumber = personalMinimal;
+                    minimalId = doctor.Id;
+                }
+
+            }
+
+            return minimalId;
+        }
+
+        public List<string> GetDoctorsWithMaxTwoMorePatients()
+        {
+            return null;
+
         }
     }
 }

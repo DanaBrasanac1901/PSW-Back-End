@@ -88,5 +88,19 @@ namespace HospitalAPI.Controllers
             _patientService.Delete(patient);
             return NoContent();
         }
+
+        [HttpGet("minimal-patients-doctor")]
+        public ActionResult GetDoctorWithLeastPatients() {
+
+            var doctorId = _patientService.GetDoctorWithLeastPatients();
+            if(doctorId == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctorId);
+        
+        
+        }
     }
 }
