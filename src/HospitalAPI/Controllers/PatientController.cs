@@ -9,12 +9,11 @@ namespace HospitalAPI.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService _patientService;
-        private readonly IDoctorService _doctorService;
+     
 
-        public PatientsController(IPatientService patientService, IDoctorService doctorService)
+        public PatientsController(IPatientService patientService)
         {
             _patientService = patientService;
-            _doctorService = doctorService;
         }
 
         // GET: api/patients
