@@ -10,10 +10,11 @@ namespace IntegrationAPI.Controllers
     public class ReportController : Controller
     {
         private readonly IReportService _reportService;
-        private readonly ReportGenerator _reportGenerator;
-            public ReportController(IReportService reportService)
+        private readonly ReportGeneratorService _reportGeneratorService;
+            public ReportController(IReportService reportService, ReportGeneratorService reportGeneratorService)
             {
                 _reportService = reportService;
+                _reportGeneratorService = reportGeneratorService;
             }
 
             // GET: api/reports ili bez s?
@@ -24,7 +25,7 @@ namespace IntegrationAPI.Controllers
             }
 
             // GET api/reports/2
-            [HttpGet("{id}")]
+            [HttpGet("{id:guid}")]
             public ActionResult GetById(Guid id)
             {
                 var report = _reportService.GetById(id);
@@ -76,9 +77,9 @@ namespace IntegrationAPI.Controllers
             }
 
 
-            public void GeneratePDF(Guid id)
+            public void GeneratePdf(Guid id)
             {
-                _reportGenerator.GeneratePDF(id);
+                _reportGeneratorService.GeneratePdf(id);
             }
     }
     }

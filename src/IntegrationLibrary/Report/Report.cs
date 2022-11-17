@@ -12,9 +12,7 @@ namespace IntegrationLibrary.Report
         public DateTime ConfigurationDate { get; set; }
         public Period Period { get; set; } 
         
-      //  public int ConsumptionAmount { get; set; }  ubaci kad se bude generisao pdf
-       
-        
+      
         public Report(Guid id, Guid bloodbankId, DateTime configurationDate, Period period)
         {
             Id = id;

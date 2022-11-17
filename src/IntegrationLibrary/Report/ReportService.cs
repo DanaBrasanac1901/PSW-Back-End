@@ -17,7 +17,7 @@ namespace IntegrationLibrary.Report
         {
             return _reportRepository.GetAll();
         }
-
+      
         
         public Report GetById(Guid id)
         {

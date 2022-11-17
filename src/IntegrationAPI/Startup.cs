@@ -58,7 +58,7 @@ namespace IntegrationAPI
             services.AddScoped<IReportRepository, ReportRepository>();
            // services.AddScoped<IEmailService, IEmailService>();
             services.AddScoped<ExceptionMiddleware>();
-
+            services.AddScoped<ReportGeneratorService>();
             
 
 

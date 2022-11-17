@@ -9,9 +9,9 @@ using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using IntegrationAPI.Exceptions;
 using System.Linq;
 using Nest;
+using IntegrationAPI.Exceptions.Validation;
 
 namespace IntegrationAPI.Controllers
 {
