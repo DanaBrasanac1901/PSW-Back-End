@@ -16,6 +16,7 @@ namespace HospitalLibrary.Core.Vacation.DTO
         public bool Urgency { get; set; }
 
         public VacationRequestStatus Status { get; set; }
+        public string RejectionReason { get; set; }
 
         public ViewAllVacationRequestsDTO() { }
     }

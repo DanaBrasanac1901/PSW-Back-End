@@ -33,6 +33,7 @@ namespace HospitalLibrary.Core.Vacation
         }
 
         //sta je ovo?
+        /*
         public Boolean CheckIfVacationIsSetInFuture(DateTime dateToCheck)
         {
             DateTime dateTimeNow = DateTime.Now;
@@ -52,7 +53,7 @@ namespace HospitalLibrary.Core.Vacation
             {
                 return false;
             }
-        }
+        }*/
 
         public int GenerateId()
         {
@@ -85,8 +86,8 @@ namespace HospitalLibrary.Core.Vacation
            
             List<ViewAllVacationRequestsDTO> requestsDTO = new List<ViewAllVacationRequestsDTO>();
             
-            foreach (VacationRequest a in doctorsVacationRequests)
-                requestsDTO.Add(VacationRequestDTOAdapter.VacationRequestToDTO(a));
+            foreach (VacationRequest request in doctorsVacationRequests)
+                requestsDTO.Add(VacationRequestDTOAdapter.VacationRequestToDTO(request));
 
             return requestsDTO;
         }
@@ -95,22 +96,11 @@ namespace HospitalLibrary.Core.Vacation
         {
             //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje
             Doctor.Doctor doctor = new Doctor.Doctor();
-            if (doctor.IsAvailable(request.Start, request.End))
+            if (doctor.IsAvailable(request.Start, request.End) && !request.IsTooClose())
                 _vacationRequestRepository.Create(request);
-            
         }
 
         public void UpdateVacationRequest(VacationRequest vacationRequest)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsVacationTooClose(DateTime startDate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool HasAppointmentsInThisPeriod(VacationRequest request, string doctorId)
         {
             throw new NotImplementedException();
         }
