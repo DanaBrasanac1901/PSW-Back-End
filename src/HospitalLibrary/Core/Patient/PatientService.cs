@@ -11,6 +11,10 @@ namespace HospitalLibrary.Core.Patient
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IDoctorRepository _doctorRepository;
 
+        public PatientService()
+        {
+
+        }
         public PatientService(IPatientRepository patientRepository,IDoctorRepository doctorRepository)
         {
             _patientRepository = patientRepository;
@@ -29,6 +33,7 @@ namespace HospitalLibrary.Core.Patient
 
         public void Create(Patient patient)
         {
+
             _patientRepository.Create(patient);
         }
         public void Register(Patient patient)
@@ -83,6 +88,18 @@ namespace HospitalLibrary.Core.Patient
         {
             return null;
 
+        }
+
+        public bool CheckRegisterValidity(Patient patient)
+        {
+            //if...
+            return true;
+        }
+
+        internal bool DoesMailExist(string email)
+        {
+            foreach (Patient patient in GetAll()) { }
+            return true;
         }
     }
 }
