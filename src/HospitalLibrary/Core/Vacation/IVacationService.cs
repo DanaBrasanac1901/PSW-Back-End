@@ -16,9 +16,8 @@ namespace HospitalLibrary.Core.Vacation
         void UpdateVacationRequest(VacationRequest vacationRequest);
         void Cancel(int requestId);
         void Disapprove(int requestId);
-        bool CheckIfVacationIsSetInFuture(DateTime dateToCheck);
-        bool IsVacationTooClose(DateTime startDate);
-        bool HasAppointmentsInThisPeriod(VacationRequest request,string doctorId);
+        //bool CheckIfVacationIsSetInFuture(DateTime dateToCheck);
+        bool VacationTooClose(DateTime startDate);
         IEnumerable<ViewAllVacationRequestsDTO> GetAllByDoctor(string id);
         int GenerateId();
     }

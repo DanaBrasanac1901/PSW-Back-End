@@ -16,6 +16,8 @@ namespace HospitalLibrary.Core.Vacation.DTO
             vacationRequest.End = request.End;
             vacationRequest.Description = request.Description;
             vacationRequest.Urgency = request.Urgency;
+            vacationRequest.RejectionReason = "";
+            vacationRequest.Status = Enums.VacationRequestStatus.WaitingForApproval;
 
             return vacationRequest;
         }
@@ -28,6 +30,7 @@ namespace HospitalLibrary.Core.Vacation.DTO
             requestDTO.Description = request.Description;
             requestDTO.Urgency = request.Urgency;
             requestDTO.Status = request.Status;
+            requestDTO.RejectionReason = request.RejectionReason;
 
             return requestDTO;
 
