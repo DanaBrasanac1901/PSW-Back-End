@@ -22,31 +22,16 @@ namespace HospitalTests.Integration
 
         }
 
-     
+
         [Fact]
-        public void Retrieves_doctor_with_least_patients()
+        public void Retrieves_doctors_with_minimal_number_of_patients()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            //var result = ((OkObjectResult)controller.GetLeastPickedDoctor())?.Value as String;
-            var result = "4";
-            Assert.Equal("4", result);
-
-
-        }
-
-        [Fact]
-        public void Retrieves_doctors_with_max_two_more_patients()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            //var result = ((OkObjectResult)controller.GetDoctorsWithMaxTwoMorePatients())?.Value as List<String>;
-            var result = new List<String>() { "2", "3" };
-            Assert.Equal(new List<String>(){ "2", "3" }, result);
-
-
+            var result = ((OkObjectResult)controller.GetDoctorsWithLeastPatients()).Value as List<String>;           
+           
+            Assert.Equal(new List<string>(){"1","2","3" }, result);
         }
 
 

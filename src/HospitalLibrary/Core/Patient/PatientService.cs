@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Builder;
 using System.Collections.Generic;
+using System.Data;
 
 namespace HospitalLibrary.Core.Patient
 {
@@ -51,37 +52,60 @@ namespace HospitalLibrary.Core.Patient
             _patientRepository.Delete(patient);
         }
 
-        public string GetDoctorWithLeastPatients()
+        public IEnumerable<string> GetDoctorsWithLeastPatients()
         {
-            string minimalId = "nesto";
-            int minNumber = 0;
             IEnumerable<Doctor.Doctor> doctors = _doctorRepository.GetAll();
-            IEnumerable<Patient> patients = _patientRepository.GetAll();
-
-            foreach(Doctor.Doctor doctor in doctors)
-            {
-                int personalMinimal = 0;
-                foreach(Patient patient in patients)
-                {
-                    if (patient.DoctorID.Equals(doctor.Id))
-                    {
-                        personalMinimal++;
-                    }
-                }
-                if(personalMinimal <= minNumber)
-                {
-                    minNumber = personalMinimal;
-                    minimalId = doctor.Id;
-                }
-
-            }
-
-            return minimalId;
+            int minimalPatientNumber = GetMinNumOfPatients(GetMaxNumOfPatients(doctors), doctors);
+            return DoctorsWithSimiliarNumOfPatients(minimalPatientNumber, minimalPatientNumber + 2);
         }
 
-        public List<string> GetDoctorsWithMaxTwoMorePatients()
+        public int GetMinNumOfPatients(int minNumber, IEnumerable<Doctor.Doctor> doctors)
         {
-            return null;
+            foreach (Doctor.Doctor doctor in doctors)
+            {
+                int personalNumber = NumberOfPatientsByDoctor(doctor.Id);
+                if (personalNumber <= minNumber)
+                {
+                    minNumber = personalNumber;
+                }
+            }
+            return minNumber;
+        }
+
+        public int GetMaxNumOfPatients(IEnumerable<Doctor.Doctor> doctors)
+        {
+            int maxNumber = 0;
+            foreach (Doctor.Doctor doctor in doctors)
+            {
+                int personalNumber = NumberOfPatientsByDoctor(doctor.Id);
+                if (personalNumber >= maxNumber)
+                {
+                    maxNumber = personalNumber;
+                }
+            }
+            return maxNumber;
+        }
+
+        public int NumberOfPatientsByDoctor(string doctorId)
+        {
+            IEnumerable<Patient> patients = GetAll();
+            int personalNumber = 0;
+            foreach (Patient patient in patients)
+            {
+                if (patient.DoctorID.Equals(doctorId))
+                {
+                    personalNumber++;
+                }
+            }
+            return personalNumber;
+        }
+
+        public IEnumerable<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
+        {
+            List<Doctor.Doctor> doctors = (List<Doctor.Doctor>)_doctorRepository.GetAll();
+            doctors.RemoveAll(d => NumberOfPatientsByDoctor(d.Id) > maxNumber || NumberOfPatientsByDoctor(d.Id) < minNumber);
+
+            return (IEnumerable<string>)doctors;
 
         }
     }
