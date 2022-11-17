@@ -11,5 +11,8 @@ namespace HospitalLibrary.Core.Patient
         void Delete(Patient patient);
         string GetDoctorWithLeastPatients();
         List<string> GetDoctorsWithMaxTwoMorePatients();
+        void Register(Patient patient);
+        void Activate(Patient patient);
+        Patient CheckCreditentials(string username, string password);
     }
 }

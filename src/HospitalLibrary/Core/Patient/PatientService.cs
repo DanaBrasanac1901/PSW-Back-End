@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Builder;
+using Org.BouncyCastle.Crypto.Tls;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Patient
@@ -31,6 +32,7 @@ namespace HospitalLibrary.Core.Patient
         {
             _patientRepository.Create(patient);
         }
+
         public void Register(Patient patient)
         {
             patient.Active = false;
@@ -83,6 +85,17 @@ namespace HospitalLibrary.Core.Patient
         {
             return null;
 
+        }
+        public Patient CheckCreditentials(string username, string password)
+        {
+            foreach(Patient p in GetAll())
+            {
+                if (p.Email == username)
+                    if (p.Password == password)
+                        return p;
+                    else return null;
+            }
+            return null;
         }
     }
 }
