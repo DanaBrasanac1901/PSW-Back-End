@@ -1,12 +1,14 @@
 using System.Text.RegularExpressions;
 using IntegrationLibrary.BloodBank;
 
-namespace IntegrationAPI.Exceptions
+namespace IntegrationAPI.Exceptions.Validation
 {
-    public static class BloodBankRequestValidator{
+    public static class BloodBankRequestValidator
+    {
 
-       public static void Validate(BloodBank bloodbankrequest){
-            if(bloodbankrequest==null)
+        public static void Validate(BloodBank bloodbankrequest)
+        {
+            if (bloodbankrequest == null)
             {
                 throw new BloodBankArgumentException($"{nameof(bloodbankrequest)} is null");
 
@@ -16,7 +18,7 @@ namespace IntegrationAPI.Exceptions
                 throw new BloodBankArgumentException("Username is too short");
             }
 
-       }
+        }
 
     }
 }

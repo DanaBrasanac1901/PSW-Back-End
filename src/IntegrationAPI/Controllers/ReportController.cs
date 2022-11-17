@@ -1,5 +1,6 @@
 using System;
 using IntegrationLibrary.Report;
+using IronPdf;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationAPI.Controllers
@@ -10,10 +11,15 @@ namespace IntegrationAPI.Controllers
     public class ReportController : Controller
     {
         private readonly IReportService _reportService;
-        private readonly ReportGenerator _reportGenerator;
+        private readonly ReportGeneratorService _reportGeneratorService;
             public ReportController(IReportService reportService)
             {
                 _reportService = reportService;
+            }
+
+            public ReportController(ReportGeneratorService reportGeneratorService)
+            {
+                _reportGeneratorService = reportGeneratorService;
             }
 
             // GET: api/reports ili bez s?
@@ -24,7 +30,7 @@ namespace IntegrationAPI.Controllers
             }
 
             // GET api/reports/2
-            [HttpGet("{id}")]
+            [HttpGet("{id:guid}")]
             public ActionResult GetById(Guid id)
             {
                 var report = _reportService.GetById(id);
@@ -76,9 +82,16 @@ namespace IntegrationAPI.Controllers
             }
 
 
-            public void GeneratePDF(Guid id)
+            public PdfDocument GeneratePdf(Guid id)
             {
-                _reportGenerator.GeneratePDF(id);
+               return  _reportGeneratorService.GeneratePdf(id);
+            }
+            
+            //za test
+            public PdfDocument GeneratePdf()
+            {
+                return _reportGeneratorService.GeneratePdf();
+               
             }
     }
     }
