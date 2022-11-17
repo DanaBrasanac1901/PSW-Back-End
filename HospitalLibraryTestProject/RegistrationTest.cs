@@ -13,7 +13,7 @@ namespace HospitalLibraryTestProject
     {
         private readonly HospitalDbContext context;
         [Fact]
-        public void Registration_unvalidated()
+        public void ShouldRegisterUnvalidatedUser()
         {
             PatientRepository repository = new PatientRepository(context);
             PatientService service = new PatientService(repository);
@@ -22,7 +22,7 @@ namespace HospitalLibraryTestProject
             service.Delete(service.GetById(-1));
         }
         [Fact]
-        public void Registration_Validate()
+        public void ShouldValidateUser()
         {
             PatientRepository repository = new PatientRepository(context);
             PatientService service = new PatientService(repository);
