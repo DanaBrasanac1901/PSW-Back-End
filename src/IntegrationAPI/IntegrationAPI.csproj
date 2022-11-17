@@ -32,4 +32,8 @@
     <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="BBConnection\myPDF.pdf" />
+  </ItemGroup>
+
 </Project>
