@@ -35,16 +35,5 @@ namespace HospitalLibrary.Core.Vacation
             this.Status = VacationRequestStatus.WaitingForApproval;
             this.RejectionReason = "";
         }
-
-        public bool IsTooClose()
-        {
-            TimeSpan difference = DateTime.Now - this.Start;
-
-            if (difference.TotalDays >= 5)
-                return false;
-
-            else return true;
-        }
-
     }
 }

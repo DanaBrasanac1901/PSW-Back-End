@@ -96,13 +96,23 @@ namespace HospitalLibrary.Core.Vacation
         {
             //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje
             Doctor.Doctor doctor = new Doctor.Doctor();
-            if (doctor.IsAvailable(request.Start, request.End) && !request.IsTooClose())
+            if (doctor.IsAvailable(request.Start, request.End) && !VacationTooClose(request.Start))
                 _vacationRequestRepository.Create(request);
         }
 
         public void UpdateVacationRequest(VacationRequest vacationRequest)
         {
             throw new NotImplementedException();
+        }
+
+        public bool VacationTooClose(DateTime startDate)
+        {
+            TimeSpan difference = startDate - DateTime.Now;
+
+            if (difference.TotalDays >= 5)
+                return false;
+
+            else return true;
         }
     }
 }
