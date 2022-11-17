@@ -11,11 +11,11 @@ namespace HospitalLibrary.Core.Patient
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IDoctorRepository _doctorRepository;
 
-        public PatientService()
+        public PatientService(IPatientRepository patientRepository)
         {
-
+            _patientRepository = patientRepository;
         }
-        public PatientService(IPatientRepository patientRepository,IDoctorRepository doctorRepository)
+        public PatientService(IPatientRepository patientRepository, IDoctorRepository doctorRepository)
         {
             _patientRepository = patientRepository;
             _doctorRepository = doctorRepository;
@@ -63,17 +63,17 @@ namespace HospitalLibrary.Core.Patient
             IEnumerable<Doctor.Doctor> doctors = _doctorRepository.GetAll();
             IEnumerable<Patient> patients = _patientRepository.GetAll();
 
-            foreach(Doctor.Doctor doctor in doctors)
+            foreach (Doctor.Doctor doctor in doctors)
             {
                 int personalMinimal = 0;
-                foreach(Patient patient in patients)
+                foreach (Patient patient in patients)
                 {
                     if (patient.DoctorID.Equals(doctor.Id))
                     {
                         personalMinimal++;
                     }
                 }
-                if(personalMinimal <= minNumber)
+                if (personalMinimal <= minNumber)
                 {
                     minNumber = personalMinimal;
                     minimalId = doctor.Id;
@@ -96,10 +96,25 @@ namespace HospitalLibrary.Core.Patient
             return true;
         }
 
-        internal bool DoesMailExist(string email)
+        public bool DoesEmailExist(string email)
         {
-            foreach (Patient patient in GetAll()) { }
-            return true;
+            foreach (Patient patient in GetAll()) {
+                if (patient.Email.Equals(email)) return true;
+            }
+            return false;
+        }
+
+        public bool CredentialsValidity(string email, string password)
+        {
+            foreach (Patient patient in GetAll())
+            {
+                if (patient.Email.Equals(email))
+                {
+                   if (patient.Password.Equals(password)) return true;
+                }
+            }
+
+            return false;
         }
     }
 }
