@@ -53,12 +53,11 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository,BloodBankRepository>();
-            
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReportRepository, ReportRepository>();
            // services.AddScoped<IEmailService, IEmailService>();
             services.AddScoped<ExceptionMiddleware>();
-            services.AddScoped<ReportGeneratorService>();
+            services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
             
 
 

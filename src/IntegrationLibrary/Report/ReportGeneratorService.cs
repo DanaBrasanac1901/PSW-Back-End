@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.Blood;
 using IntegrationLibrary.BloodBank;
 using IronPdf;
 using Microsoft.EntityFrameworkCore;
@@ -11,16 +10,20 @@ using MimeKit.Cryptography;
 
 namespace IntegrationLibrary.Report
 {
-    public class ReportGeneratorService: BackgroundService
+    public class ReportGeneratorService: IReportGeneratorService
     {
         
         private readonly IReportRepository _reportRepository;
-
         private readonly IBloodBankRepository _bloodBankRepository;
-        
-        private readonly IBloodConsuptionRecordRepository _bloodConsuptionRecordRepository;
+       private PdfDocument _report;
 
-        private void ConsumptionAmount(Guid bloodBankId)
+        public ReportGeneratorService(IReportRepository reportRepository, 
+            IBloodBankRepository bloodBankRepository)
+        {
+            _reportRepository = reportRepository;
+            _bloodBankRepository = bloodBankRepository;
+        }
+         private void ConsumptionAmount(Guid bloodBankId)
         {
           //  BloodBank.BloodBank bloodBank = _bloodBankRepository.GetById(bloodBankId);
             //treba nam info od koje je banke
@@ -28,17 +31,9 @@ namespace IntegrationLibrary.Report
             //poziv fje koja na osnovu configuration date i perioda bira dane kad je bilo potrosnje
             //pozovemo fju koja sabere potrosnju
             
-            IEnumerable<BloodConsumptionRecord> bloodConsumpotion  = _bloodConsuptionRecordRepository.GetAll();
+          //  IEnumerable<BloodConsumptionRecord> bloodConsumpotion  = _bloodConsuptionRecordRepository.GetAll();
             
             //vrati int kolicinu
-        }
-
-
-        public ReportGeneratorService(IReportRepository reportRepository, IBloodBankRepository bloodBankRepository, IBloodConsuptionRecordRepository bloodConsuptionRecordRepository)
-        {
-            _reportRepository = reportRepository;
-            _bloodBankRepository = bloodBankRepository;
-            _bloodConsuptionRecordRepository = bloodConsuptionRecordRepository;
         }
 
         
@@ -112,7 +107,17 @@ namespace IntegrationLibrary.Report
             return _bloodBankRepository.GetById(bloodBankId);
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

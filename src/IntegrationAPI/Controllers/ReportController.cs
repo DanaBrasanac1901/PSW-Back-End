@@ -82,12 +82,16 @@ namespace IntegrationAPI.Controllers
             }
 
 
+            
+            [HttpPost("report")]
             public PdfDocument GeneratePdf(Guid id)
             {
                return  _reportGeneratorService.GeneratePdf(id);
             }
             
             //za test
+            
+            [HttpPost("report/test")]
             public PdfDocument GeneratePdf()
             {
                 return _reportGeneratorService.GeneratePdf();
