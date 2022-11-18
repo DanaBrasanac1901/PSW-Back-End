@@ -16,7 +16,15 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet]
-        [Route("[action]")]
+        [Route("[action]/{id}")]
+        public ActionResult GetAllByDoctor(string id)
+        {
+            return Ok(_vacationService.GetAllByDoctor(id));
+        }
+
+
+        [HttpGet]
+        [Route("[action]/{id}")]
         public ActionResult GetById(int id)
         {
             var request = _vacationService.GetById(id);

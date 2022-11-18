@@ -16,9 +16,13 @@ namespace HospitalLibrary.Core.Vacation
         public string Description { get; set; }
         public bool Urgency { get; set; }
         public string DoctorId { get; set; }
+
+        public string RejectionReason { get; set; }
         public VacationRequestStatus Status { get; set; }
 
-        public VacationRequest() { }
+        public VacationRequest()
+        {
+        }
 
         public VacationRequest(int id, DateTime start, DateTime end, string description,bool urgency, string doctorId)
         {
@@ -29,7 +33,7 @@ namespace HospitalLibrary.Core.Vacation
             this.Urgency = urgency;
             this.DoctorId = doctorId;
             this.Status = VacationRequestStatus.WaitingForApproval;
+            this.RejectionReason = "";
         }
-
     }
 }
