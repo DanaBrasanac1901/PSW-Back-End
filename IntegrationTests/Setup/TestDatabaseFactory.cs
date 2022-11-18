@@ -49,14 +49,16 @@ namespace IntegrationTests.Setup
 //pravljenje enuma za interval 
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\";");
-     /*       context.Reports.Add(new Report { StartDate = new DateTime(2022,11,1), 
-                                             EndDate = new DateTime(2022,11,4), 
-                                             ConfigurationDate = DateTime.Now,
-                                             GeneratingPeriod = IntegrationLibrary.Report.DateInterval.EveryTwoMonths,
-                                             BloodBankId = 55879
-                                             
-            });
-*/
+            /*       context.Reports.Add(new Report { StartDate = new DateTime(2022,11,1), 
+                                                    EndDate = new DateTime(2022,11,4), 
+                                                    ConfigurationDate = DateTime.Now,
+                                                    GeneratingPeriod = IntegrationLibrary.Report.DateInterval.EveryTwoMonths,
+                                                    BloodBankId = 55879
+
+                   });
+       */
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"NewsTable\";");
+           
 
             context.SaveChanges();
         }

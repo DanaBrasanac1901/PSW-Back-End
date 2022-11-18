@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using IntegrationAPI.BBConnection;
 using System.Linq;
 
+using News;
+
 namespace IntegrationAPI
 {
     public class Startup
@@ -55,8 +57,8 @@ namespace IntegrationAPI
            // services.AddScoped<IEmailService, IEmailService>();
             services.AddScoped<ExceptionMiddleware>();
 
-            
 
+            //services.AddScoped<RabbitMQService>();
 
         }
 
