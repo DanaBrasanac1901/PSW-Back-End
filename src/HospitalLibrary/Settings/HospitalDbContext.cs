@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.InpatientTreatmentRecord;
 
 namespace HospitalLibrary.Settings
 {
@@ -31,6 +32,8 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
         public DbSet<VacationRequest> VacationRequests { get; set; }
+        
+        public DbSet<InpatientTreatmentRecord> InpatientTreatmentRecords { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
