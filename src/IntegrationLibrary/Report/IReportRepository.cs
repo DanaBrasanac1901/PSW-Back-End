@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace IntegrationLibrary.Report
 {
-    public interface IReportService
+    public interface IReportRepository
     {
         IEnumerable<Report> GetAll();
         Report GetById(Guid id);

@@ -6,6 +6,8 @@
 
   <ItemGroup>
 
+    <PackageReference Include="IronPdf" Version="2022.11.10347" />
+
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>
@@ -31,6 +33,10 @@
 
     <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
 
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />
   </ItemGroup>
 
 </Project>

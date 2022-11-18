@@ -13,7 +13,13 @@ namespace IntegrationLibrary.Settings
     {
 
         public DbSet<BloodBank.BloodBank> BloodBankTable { get; set; }
+<<<<<<< HEAD
         public DbSet<News.Message> NewsTable { get; set; }
+=======
+        
+        
+        public DbSet<Report.Report> Reports { get; set; }
+>>>>>>> 005aa24c90975718aaebdea0edf6c7a9191dbe09
         public IntegrationDbContext(Microsoft.EntityFrameworkCore.DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
 

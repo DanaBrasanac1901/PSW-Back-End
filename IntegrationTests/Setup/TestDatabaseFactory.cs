@@ -43,12 +43,9 @@ namespace IntegrationTests.Setup
         private static void InitializeDatabase(IntegrationDbContext context)
         {
             context.Database.EnsureCreated();
-// period za koji sabiramo potrosenu krv, potrosnja- metoda u modelu koja izracuna = zbir bloodConsumption koju su napravili lekari
-// filip da ubaci mzd iz koje banke je uzeta krv?,
-// period na koji se generise, adresa banke?,
-//pravljenje enuma za interval 
-
+            
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\";");
+<<<<<<< HEAD
             /*       context.Reports.Add(new Report { StartDate = new DateTime(2022,11,1), 
                                                     EndDate = new DateTime(2022,11,4), 
                                                     ConfigurationDate = DateTime.Now,
@@ -59,6 +56,30 @@ namespace IntegrationTests.Setup
        */
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"NewsTable\";");
            
+=======
+            
+            
+            context.Reports.Add(new Report(
+                new Guid("e2ddfa02610e48e983824b23ac955632"), 
+                new Guid(),
+                DateTime.Now, 
+                IntegrationLibrary.Report.Period.Daily,
+                DateTime.Today));
+            
+            context.Reports.Add(new Report(
+                new Guid("e2ddfa02620e48e983824b23ac955632"), 
+                new Guid(),
+                DateTime.Now, 
+                IntegrationLibrary.Report.Period.Monthly,
+                
+                DateTime.Today));
+            context.Reports.Add(new Report(
+                new Guid("e2ddfa88610e48e983824b23ac955632") , 
+                new Guid(),
+                DateTime.Today, 
+                IntegrationLibrary.Report.Period.EveryTwoMonths,
+                DateTime.Today));
+>>>>>>> 005aa24c90975718aaebdea0edf6c7a9191dbe09
 
             context.SaveChanges();
         }
