@@ -95,7 +95,7 @@ namespace HospitalAPI.Controllers
         public ActionResult GetDoctorsWithLeastPatients() {
 
             var doctorIds = _patientService.GetDoctorsWithLeastPatients();
-            if(doctorIds.IsNullOrEmpty())
+            if(doctorIds == null)
             {
                 return NotFound();
             }

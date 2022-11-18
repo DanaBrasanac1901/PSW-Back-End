@@ -31,7 +31,7 @@ namespace HospitalTests.Integration
 
             var result = ((OkObjectResult)controller.GetDoctorsWithLeastPatients()).Value as List<String>;           
            
-            Assert.Equal(new List<string>(){"1","2","3" }, result);
+            Assert.Equal(new List<string>(){"2","3","4" }, result);
         }
 
 

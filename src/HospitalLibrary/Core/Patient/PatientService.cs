@@ -52,7 +52,7 @@ namespace HospitalLibrary.Core.Patient
             _patientRepository.Delete(patient);
         }
 
-        public IEnumerable<string> GetDoctorsWithLeastPatients()
+        public List<string> GetDoctorsWithLeastPatients()
         {
             IEnumerable<Doctor.Doctor> doctors = _doctorRepository.GetAll();
             int minimalPatientNumber = GetMinNumOfPatients(GetMaxNumOfPatients(doctors), doctors);
@@ -100,12 +100,16 @@ namespace HospitalLibrary.Core.Patient
             return personalNumber;
         }
 
-        public IEnumerable<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
+        public List<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
         {
             List<Doctor.Doctor> doctors = (List<Doctor.Doctor>)_doctorRepository.GetAll();
             doctors.RemoveAll(d => NumberOfPatientsByDoctor(d.Id) > maxNumber || NumberOfPatientsByDoctor(d.Id) < minNumber);
-
-            return (IEnumerable<string>)doctors;
+            List<string> doctorIds = new List<string>();
+            foreach(Doctor.Doctor d in doctors)
+            {
+                doctorIds.Add(d.Id);
+            }
+            return doctorIds;
 
         }
     }

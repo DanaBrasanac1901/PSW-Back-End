@@ -9,10 +9,10 @@ namespace HospitalLibrary.Core.Patient
         void Create(Patient patient);
         void Update(Patient patient);
         void Delete(Patient patient);
-        IEnumerable<string> GetDoctorsWithLeastPatients();
+        List<string> GetDoctorsWithLeastPatients();
         int GetMinNumOfPatients(int minNumber, IEnumerable<Doctor.Doctor> doctors);
         int GetMaxNumOfPatients(IEnumerable<Doctor.Doctor> doctors);
         int NumberOfPatientsByDoctor(string doctorId);
-        IEnumerable<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
+        List<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
     }
 }
