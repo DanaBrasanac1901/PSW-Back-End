@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class Blood : Migration
+    public partial class slavko : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,26 +55,6 @@ namespace HospitalLibrary.Migrations
                 {
                     table.PrimaryKey("PK_HospitalBlood", x => x.Id);
                 });
-
-            migrationBuilder.InsertData(
-                table: "BloodConsumptionRecords",
-                columns: new[] { "Id", "Amount", "CreatedAt", "DoctorId", "Reason", "Type" },
-                values: new object[] { 1, 10.0, new DateTime(2022, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "DOC1", "need for surgery", 0 });
-
-            migrationBuilder.InsertData(
-                table: "BloodRequests",
-                columns: new[] { "Id", "Amount", "DoctorId", "Due", "Reason", "Type" },
-                values: new object[,]
-                {
-                    { 1, 100.0, "DOC1", new DateTime(2022, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "need for patient treatment", 0 },
-                    { 2, 150.0, "DOC2", new DateTime(2022, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "need for patient treatment", 1 },
-                    { 3, 150.0, "DOC1", new DateTime(2022, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "need for transfusion", 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "HospitalBlood",
-                columns: new[] { "Id", "Amount", "Type" },
-                values: new object[] { 1, 150.0, 0 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
