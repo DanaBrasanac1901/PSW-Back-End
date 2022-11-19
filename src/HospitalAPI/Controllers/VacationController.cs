@@ -53,5 +53,23 @@ namespace HospitalAPI.Controllers
 
             return CreatedAtAction("GetById", new { id = newRequest.Id }, newRequest);
         }
+
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult CreateUrgentRequest(CreateVacationRequestDTO request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            VacationRequest newRequest = VacationRequestDTOAdapter.VacationRequestDTOToObject(request);
+            newRequest.Id = _vacationService.GenerateId();
+
+            _vacationService.CreateUrgentVacationRequest(newRequest);
+
+            return CreatedAtAction("GetById", new { id = newRequest.Id }, newRequest);
+        }
     }
 }

@@ -181,5 +181,26 @@ namespace HospitalLibrary.Core.Appointment
             RescheduleAppointmentDTO dto = AppointmentAdapter.AppointmentToRescheduleAppointmentDTO(app);
             return dto;
         }
+
+        public Boolean CheckIfAppointmentExistsForDoctor(Appointment appointment)
+        {
+            
+            foreach (var app in _appointmentRepository.GetAll())
+            {
+                if(app.DoctorId.Equals(appointment.DoctorId) && app.Start.Equals(appointment.Start))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void ChangeDoctorForAppointment(string doctorId, string appointmentId)
+        {
+            var appointment = _appointmentRepository.GetById(appointmentId);
+            appointment.DoctorId = doctorId;
+            if(CheckIfAppointmentExistsForDoctor(appointment) == true) 
+                _appointmentRepository.Update(appointment);
+        }
     }
 }

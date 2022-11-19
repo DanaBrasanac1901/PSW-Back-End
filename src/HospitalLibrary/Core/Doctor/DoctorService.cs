@@ -64,5 +64,29 @@ namespace HospitalLibrary.Core.Doctor
             return true;
         }
 
+        public List<Doctor> GetAllDoctorsForRescheduleForUrgentVacation(Appointment.Appointment appointment)
+        {
+            List<Doctor> doctorList = new List<Doctor>();
+            foreach (var doctor in GetAll())
+            {
+                if (CheckIfDoctorIsBusy(doctor, appointment.Start) == true)
+                {
+                    doctorList.Add(doctor);
+                }
+            }
+            return doctorList;
+        }
+
+        public Boolean CheckIfDoctorIsBusy(Doctor doctor,DateTime start)
+        {
+            foreach (var app in doctor.Appointments)
+            {
+                if (app.Start.Equals(start))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

@@ -35,5 +35,7 @@ namespace HospitalLibrary.Core.Vacation
             this.Status = VacationRequestStatus.WaitingForApproval;
             this.RejectionReason = "";
         }
+
+        
     }
 }
