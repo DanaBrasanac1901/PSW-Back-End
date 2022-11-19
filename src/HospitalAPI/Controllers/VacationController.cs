@@ -49,6 +49,7 @@ namespace HospitalAPI.Controllers
             VacationRequest newRequest = VacationRequestDTOAdapter.VacationRequestDTOToObject(request);
             newRequest.Id = _vacationService.GenerateId();
 
+
             _vacationService.CreateVacationRequest(newRequest);
 
             return CreatedAtAction("GetById", new { id = newRequest.Id }, newRequest);

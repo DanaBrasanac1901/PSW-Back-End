@@ -34,5 +34,31 @@ namespace HospitalLibrary.Settings
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<VacationRequest>().HasData(
+                new VacationRequest() {
+                    Id = 1,
+                    Start = new DateTime(2022, 12, 10),
+                    End = new DateTime(2022, 12, 20),
+                    Description = "im tired nigga",
+                    Urgency = false,
+                    DoctorId = "DOC1",
+                    Status = VacationRequestStatus.WaitingForApproval,
+                    RejectionReason = ""
+                },
+                new VacationRequest() {
+                    Id = 2,
+                    Start = new DateTime(2023, 2, 10),
+                    End = new DateTime(2023, 2, 20),
+                    Description = "certified nigga",
+                    Urgency = true,
+                    DoctorId = "DOC1",
+                    Status = VacationRequestStatus.Disapproved,
+                    RejectionReason = "aca lukas je narkoman"
+                }
+            );
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

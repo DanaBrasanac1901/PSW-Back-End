@@ -12,8 +12,8 @@ namespace HospitalLibrary.Core.Vacation.DTO
         {
             VacationRequest vacationRequest = new VacationRequest();
             vacationRequest.DoctorId = "DOC1";
-            vacationRequest.Start = request.Start;
-            vacationRequest.End = request.End;
+            vacationRequest.Start = new DateTime(2023, 2, 6);
+            vacationRequest.End = new DateTime(2023, 2, 8);
             vacationRequest.Description = request.Description;
             vacationRequest.Urgency = request.Urgency;
             vacationRequest.RejectionReason = "";
