@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Vacation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +40,13 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
         public void Delete(InpatientTreatmentRecord inpatientTreatmentRecord)
         {
             _inpatientTreatmentRecordRepository.Delete(inpatientTreatmentRecord);
+        }
+
+        public void Disapprove(string requestId)
+        {
+            InpatientTreatmentRecord record = _inpatientTreatmentRecordRepository.GetById(requestId);
+            record.Status = false;
+            _inpatientTreatmentRecordRepository.Update(record);
         }
     }
 }
