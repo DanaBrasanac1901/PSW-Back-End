@@ -43,6 +43,7 @@ namespace HospitalTests.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+            //naci bolji nacin za ovo jer truncate ne radi kada imamo foreign keys a brisanje pa pisanje duze traje
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 

@@ -1,11 +1,15 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Patient;
+using Moq;
+using System;
 using Xunit;
+
 
 public class LoginTest
 {
+    /*
     var mockPC = new Mock<PatientService>;
 
-    [Test]
+    [Fact]
     public void ShouldAuthenticateValidUser()
     {
         IMyMockDa mockDa = new MockDataAccess();
@@ -19,7 +23,7 @@ public class LoginTest
         Assert.IsTrue(mockDa.GetUserFromDBWasCalled);
     }
 
-    [Test]
+    [Fact]
     public void ShouldNotAuthenticateUserWithInvalidPassword()
     {
         IMyMockDa mockDa = new MockDataAccess();
@@ -32,4 +36,5 @@ public class LoginTest
         //Ensure data access layer was used
         Assert.IsTrue(mockDa.GetUserFromDBWasCalled);
     }
+    */
 }
