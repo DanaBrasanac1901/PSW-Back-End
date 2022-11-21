@@ -43,6 +43,7 @@ namespace HospitalTests.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+            //naci bolji nacin za ovo jer truncate ne radi kada imamo foreign keys a brisanje pa pisanje duze traje
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
@@ -62,8 +63,6 @@ namespace HospitalTests.Setup
         private static void InitializeDoctors(HospitalDbContext context)
         {
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Doctors\";");
-           // context.Database.ExecuteSqlRaw("DELETE FROM \"Doctors\";");
-           // context.Database.ExecuteSqlRaw("DBCC CHEKIDENT FROM \"Doctors\";");
             context.Doctors.Add(new Doctor { Id = "1", Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 13 });
             context.Doctors.Add(new Doctor { Id = "2", Name = "Milica", Surname = "Todorovic", Email = "mtodorovic@hotmail.com", RoomId = 2, StartWorkTime = 8, EndWorkTime = 13 });
             context.Doctors.Add(new Doctor { Id = "3", Name = "Darko", Surname = "Mitic", Email = "darkomitic@live.com", RoomId = 3, StartWorkTime = 13, EndWorkTime = 20 });
