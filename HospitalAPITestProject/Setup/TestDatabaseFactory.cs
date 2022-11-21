@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Vacation;
+using System;
 
 namespace HospitalTests.Setup
 {
@@ -42,20 +44,21 @@ namespace HospitalTests.Setup
         {
             context.Database.EnsureCreated();
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
-            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 1, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 2, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 3, Amount = 12, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 4, Amount = 13, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.Database.ExecuteSqlRaw("truncate table \"BloodConsumptionRecords\";");
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 5, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 6, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 7, Amount = 12, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 8, Amount = 13, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"HospitalBlood\";");
-            context.HospitalBlood.Add(new BloodSupply { Id = 1, Amount = 10, Type = BloodType.A});
-            context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B});
-            context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O});
-            context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB});
+            context.Database.ExecuteSqlRaw("truncate table \"HospitalBlood\";");
+            context.HospitalBlood.Add(new BloodSupply { Id = 1, Amount = 10, Type = BloodType.A });
+            context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B });
+            context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O });
+            context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB });
 
 
-
+            context.Database.ExecuteSqlRaw("truncate table \"VacationRequests\";");
+            context.VacationRequests.Add(new VacationRequest { Id = 5, Start = new DateTime(2023, 1, 1), End = new DateTime(2023, 1, 14), Description = "holidays", Urgency = true, DoctorId = "DOC1" });
 
 
             context.SaveChanges();

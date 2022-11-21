@@ -19,9 +19,10 @@ namespace HospitalLibrary.Core.Vacation
         private readonly IVacationRepository _vacationRequestRepository;
         private readonly IAppointmentRepository _appointmentRepository;
 
-        public VacationService(IVacationRepository vacationRequestRepository)
+        public VacationService(IVacationRepository vacationRequestRepository,IAppointmentRepository appointmentRepository)
         {
             _vacationRequestRepository = vacationRequestRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         public IEnumerable<VacationRequest> GetAll()
@@ -104,32 +105,31 @@ namespace HospitalLibrary.Core.Vacation
 
         public void CreateUrgentVacationRequest(VacationRequest request)
         {
-            
             //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje
             //Doctor.Doctor doctor = new Doctor.Doctor();
-            if(ReturnAppointments(request.Start,request.End,request.DoctorId) == null)
+            if (CheckIfThereAreAppointmentsInRange(request.Start, request.End, request.DoctorId) == false)
             {
                 _vacationRequestRepository.Create(request);
             }
         }
 
-        public List<Appointment.Appointment> ReturnAppointments(DateTime start,DateTime end,String doctorId)
+        public bool CheckIfThereAreAppointmentsInRange(DateTime start,DateTime end,String doctorId)
         {
             List<Appointment.Appointment> allApps = _appointmentRepository.GetAll().ToList();
-            List<Appointment.Appointment> retApps = new List<Appointment.Appointment>();
+            //List<Appointment.Appointment> retApps = new List<Appointment.Appointment>();
             foreach (var app in allApps)
             {
                 if(app.DoctorId == doctorId && CheckIfAppointmentIsInRange(app,start,end) == true)
                 {
-                    retApps.Add(app);
+                    return true;
                 }
             }
-            return retApps;
+            return false;
         }
 
-        public Boolean CheckIfAppointmentIsInRange(Appointment.Appointment app, DateTime start, DateTime end)
+        public bool CheckIfAppointmentIsInRange(Appointment.Appointment app, DateTime start, DateTime end)
         {
-            if (app.Start < start && app.Start > end)
+            if (app.Start < start || app.Start > end)
             {
                 return false;
             }

@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.Appointment
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IAppointmentRepository _appointmentRepositoryMock;
         private readonly IDoctorRepository _doctorRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
@@ -27,6 +28,11 @@ namespace HospitalLibrary.Core.Appointment
             _roomRepository = roomRepository;
             _emailSend = emailSend;
             UpdateFinishedAppointments();
+        }
+
+        public AppointmentService(IAppointmentRepository appointmentRepository) 
+        {
+            _appointmentRepository = appointmentRepository;
         }
 
 
@@ -181,6 +187,12 @@ namespace HospitalLibrary.Core.Appointment
             RescheduleAppointmentDTO dto = AppointmentAdapter.AppointmentToRescheduleAppointmentDTO(app);
             return dto;
         }
+
+        //public IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctorInSpecificDateRange(string id)
+        //{
+        //    List<Appointment> doctorsApointments = _appointmentRepository.GetAll().ToList();
+            
+        //}
 
         public Boolean CheckIfAppointmentExistsForDoctor(Appointment appointment)
         {
