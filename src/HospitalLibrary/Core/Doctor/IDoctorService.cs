@@ -17,5 +17,6 @@ namespace HospitalLibrary.Core.Doctor
         DoctorsShiftDTO GetDoctorsShiftById(string id);
         Boolean IsAvailable(string id, DateTime time);
         List<Doctor> GetAllDoctorsForRescheduleForUrgentVacation(Appointment.Appointment appointment);
+        List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameter);
     }
 }

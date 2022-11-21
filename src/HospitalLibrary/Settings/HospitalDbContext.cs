@@ -37,12 +37,13 @@ namespace HospitalLibrary.Settings
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<VacationRequest>();
             //modelBuilder.Entity<VacationRequest>().HasData(
             //    new VacationRequest(1, new DateTime(2023,1,1), new DateTime(2023, 1, 14), "holidays", false, "DOC1"),
             //    new VacationRequest(2, new DateTime(2023, 1, 1), new DateTime(2023, 1, 14), "holidays", false, "DOC2"),
             //    new VacationRequest(3, new DateTime(2023, 1, 1), new DateTime(2023, 1, 14), "holidays", false, "DOC3")
             //     );
-            //base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
     }

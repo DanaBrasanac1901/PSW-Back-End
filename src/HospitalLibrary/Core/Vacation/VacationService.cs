@@ -103,14 +103,16 @@ namespace HospitalLibrary.Core.Vacation
                 _vacationRequestRepository.Create(request);
         }
 
-        public void CreateUrgentVacationRequest(VacationRequest request)
+        public VacationRequest CreateUrgentVacationRequest(CreateUrgenVacationDTO dto)
         {
             //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje
             //Doctor.Doctor doctor = new Doctor.Doctor();
+            VacationRequest request = VacationRequestDTOAdapter.CreateUrgenVacationDTOToVacationRequest(dto);
             if (CheckIfThereAreAppointmentsInRange(request.Start, request.End, request.DoctorId) == false)
             {
                 _vacationRequestRepository.Create(request);
             }
+            return _vacationRequestRepository.GetById(request.Id);
         }
 
         public bool CheckIfThereAreAppointmentsInRange(DateTime start,DateTime end,String doctorId)

@@ -88,5 +88,22 @@ namespace HospitalLibrary.Core.Doctor
             }
             return true;
         }
+
+        public List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameters)
+        {
+            List<GetAppointmentsUrgentVacationDTO> returnList = new List<GetAppointmentsUrgentVacationDTO>();
+            DoctorAdapter adapter = new DoctorAdapter();
+            List<DateTime> timeRange = adapter.UrgentVacationParametersHandling(parameters);
+            foreach (var app in _doctorRepository.GetById(parameters.id).Appointments.ToList())
+            {
+                if(app.Start >= timeRange[0] && app.Start <= timeRange[1])
+                {
+                    returnList.Add(adapter.AppointmentToGetAppointmentsUrgentVacationDTO(app));
+                }
+            }
+            return returnList;
+        }
+
+
     }
 }
