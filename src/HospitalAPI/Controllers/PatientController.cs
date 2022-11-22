@@ -58,8 +58,10 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            _patientService.CheckCreditentials(patient.Email,patient.Password);
-            return CreatedAtAction("GetById", new { id = patient.Id }, patient);
+            Patient logged=_patientService.CheckCreditentials(patient.Email,patient.Password);
+            if (logged == null)
+                return NotFound();
+            return Ok(patient);
         }
         [HttpPost("validate/{id}")]
         public ActionResult Validate(Patient patient)

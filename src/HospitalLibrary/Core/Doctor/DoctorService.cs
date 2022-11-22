@@ -26,7 +26,15 @@ namespace HospitalLibrary.Core.Doctor
         {
             return _doctorRepository.GetById(id);
         }
-
+        public Doctor CheckCreditentials(string email,string password)
+        {
+            IEnumerable<Doctor> doctors = _doctorRepository.GetAll();
+            foreach (Doctor doctor in doctors)
+                if (doctor.Email == email)
+                    if (doctor.Password == password)
+                        return doctor;
+            return null;
+        }
         public void Create(Doctor doctor)
         {
             _doctorRepository.Create(doctor);

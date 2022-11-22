@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.Manager;
 
 namespace HospitalAPI
 {
@@ -47,7 +48,8 @@ namespace HospitalAPI
 
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();
-
+            services.AddScoped<IManagerRepository, ManagerRepository>();
+            services.AddScoped<IManagerService, ManagerService>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IDoctorService, DoctorService>();

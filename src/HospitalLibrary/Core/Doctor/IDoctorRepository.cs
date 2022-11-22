@@ -10,6 +10,7 @@ namespace HospitalLibrary.Core.Doctor
     {
         IEnumerable<Doctor> GetAll();
         Doctor GetById(string id);
+
         void Create(Doctor doctor);
         void Update(Doctor doctor);
         void Delete(Doctor doctor);

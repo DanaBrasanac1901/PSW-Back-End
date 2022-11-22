@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Doctor.DTOS;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace HospitalAPI.Controllers
 {
@@ -32,6 +33,17 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
 
+            return Ok(doctor);
+        }
+        [HttpPost("login")]
+        public ActionResult Login(Doctor doctor)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _doctorService.CheckCreditentials(doctor.Email, doctor.Password);
             return Ok(doctor);
         }
 

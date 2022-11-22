@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.Manager;
 
 namespace HospitalLibrary.Settings
 {
@@ -20,6 +21,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Patient> Patients { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Manager> Managers { get; set; }
 
         public DbSet<Feedback> Feedbacks { get; set; }
 

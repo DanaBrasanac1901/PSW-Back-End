@@ -5,7 +5,7 @@ using HospitalTests.Setup;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
-
+using Microsoft.AspNetCore.Mvc;
 namespace HospitalTests.Integration
 {
     public class LoginTest : BaseIntegrationTest
@@ -26,7 +26,7 @@ namespace HospitalTests.Integration
             testPatient.Id = -1;
             controller.Create(testPatient);
             var result = controller.GetById(-1);
-
+            controller.Delete(-1);
             Assert.NotNull(result);
         }
         [Fact]
@@ -34,11 +34,9 @@ namespace HospitalTests.Integration
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            Patient testPatient = new Patient();
             controller.Delete(-1);
             var result = controller.GetById(-1);
-
-            Assert.Null(result);
+            Assert.Equal(new NotFoundResult().StatusCode,((result as StatusCodeResult)).StatusCode);
         }
         [Fact]
         public void Username_Does_Not_Exist()
@@ -46,11 +44,12 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             Patient testPatient = new Patient();
+            testPatient.Id = -1;
             testPatient.Email = "non-valid";
             testPatient.Password = "nesto";
             var result = controller.Login(testPatient);
-
-            Assert.Null(result);
+            controller.Delete(-1);
+            Assert.Equal(new NotFoundResult().StatusCode, ((result as StatusCodeResult)).StatusCode);
         }
         [Fact]
         public void Wrong_Password()
@@ -59,9 +58,12 @@ namespace HospitalTests.Integration
             var controller = SetupController(scope);
             Patient testPatient = new Patient();
             testPatient.Email = "valid";
+            testPatient.Password = "valid";
+            testPatient.Id = -1;
+            controller.Create(testPatient);
             testPatient.Password = "non-valid";
             var result = controller.Login(testPatient);
-
+            controller.Delete(-1);
             Assert.Null(result);
         }
         [Fact]
@@ -70,10 +72,12 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             Patient testPatient = new Patient();
+            testPatient.Id = -1;
+            controller.Create(testPatient);
             testPatient.Email = "valid";
             testPatient.Password = "valid";
             var result = controller.Login(testPatient);
-
+            controller.Delete(-1);
             Assert.NotNull(result);
         }
     }

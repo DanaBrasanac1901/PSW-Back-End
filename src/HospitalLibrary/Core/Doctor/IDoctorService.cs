@@ -11,6 +11,8 @@ namespace HospitalLibrary.Core.Doctor
     {
         IEnumerable<Doctor> GetAll();
         Doctor GetById(string id);
+
+        Doctor CheckCreditentials(string email, string password);
         void Create(Doctor doctor);
         void Update(Doctor doctor);
         void Delete(Doctor doctor);
