@@ -26,6 +26,7 @@ namespace HospitalAPI.Controllers
         }
 
         // GET api/patients/2
+       
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -37,7 +38,6 @@ namespace HospitalAPI.Controllers
 
             return Ok(patient);
         }
-
         // POST api/patients
         [HttpPost]
         public ActionResult Create(Patient patient)
@@ -48,6 +48,39 @@ namespace HospitalAPI.Controllers
             }
 
             _patientService.Create(patient);
+            return CreatedAtAction("GetById", new { id = patient.Id }, patient);
+        }
+        [HttpPost("login")]
+        public ActionResult Login(Patient patient)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _patientService.CheckCreditentials(patient.Email,patient.Password);
+            return CreatedAtAction("GetById", new { id = patient.Id }, patient);
+        }
+        [HttpPost("validate/{id}")]
+        public ActionResult Validate(Patient patient)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _patientService.Activate(patient);
+            return Ok(patient);
+        }
+        [HttpPost("register")]
+        public ActionResult Register(Patient patient)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _patientService.Register(patient);
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
