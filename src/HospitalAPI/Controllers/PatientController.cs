@@ -1,6 +1,8 @@
-﻿using HospitalLibrary.Core.Doctor;
+﻿using Castle.Core.Internal;
+using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Patient;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -123,15 +125,15 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("minimal-patients-doctor")]
-        public ActionResult GetDoctorWithLeastPatients() {
+        public ActionResult GetDoctorsWithLeastPatients() {
 
-            var doctorId = _patientService.GetDoctorWithLeastPatients();
-            if(doctorId == null)
+            var doctorIds = _patientService.GetDoctorsWithLeastPatients();
+            if(doctorIds == null)
             {
                 return NotFound();
             }
 
-            return Ok(doctorId);
+            return Ok(doctorIds);
         
         
         }
