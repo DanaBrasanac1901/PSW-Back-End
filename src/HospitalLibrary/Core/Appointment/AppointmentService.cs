@@ -194,12 +194,12 @@ namespace HospitalLibrary.Core.Appointment
             
         //}
 
-        public Boolean CheckIfAppointmentExistsForDoctor(Appointment appointment)
+        public Boolean CheckIfAppointmentExistsForDoctor(string doctorId,DateTime start)
         {
             
             foreach (var app in _appointmentRepository.GetAll())
             {
-                if(app.DoctorId.Equals(appointment.DoctorId) && app.Start.Equals(appointment.Start))
+                if(app.DoctorId == doctorId && app.Start == start)
                 {
                     return false;
                 }
@@ -210,9 +210,13 @@ namespace HospitalLibrary.Core.Appointment
         public void ChangeDoctorForAppointment(string doctorId, string appointmentId)
         {
             var appointment = _appointmentRepository.GetById(appointmentId);
-            appointment.DoctorId = doctorId;
-            if(CheckIfAppointmentExistsForDoctor(appointment) == true) 
+            
+            if(CheckIfAppointmentExistsForDoctor(doctorId,appointment.Start) == true)
+            {
+                appointment.DoctorId = doctorId;
                 _appointmentRepository.Update(appointment);
+            }
+                
         }
     }
 }

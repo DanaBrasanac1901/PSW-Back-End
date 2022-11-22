@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Doctor.DTOS;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,6 +105,18 @@ namespace HospitalLibrary.Core.Doctor
             return returnList;
         }
 
+        
 
+        public List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime)
+        {
+            List<DoctorToChangeUrgentVacationDTO> returnList = new List<DoctorToChangeUrgentVacationDTO>();
+            DoctorAdapter adapter = new DoctorAdapter();
+            foreach (var doc in _doctorRepository.GetAll())
+            {
+                if (CheckIfDoctorIsBusy(doc, DateTime.Parse( startDate + " " + startTime))== true)
+                    returnList.Add(adapter.DoctorToDoctorToChangeUrgentVacationDTO(doc));
+            }
+            return returnList;
+        }
     }
 }

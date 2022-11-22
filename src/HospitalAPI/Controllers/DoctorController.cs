@@ -130,5 +130,19 @@ namespace HospitalAPI.Controllers
             }
             return Ok(apps);
         }
+
+        [HttpGet]
+        [Route("[action]/{startDate}/{startTime}")]
+        public ActionResult GetDoctorsForRearrange(string startDate,string startTime)
+        {
+            List<DoctorToChangeUrgentVacationDTO> doctors = _doctorService.GetFreeDoctors(startDate, startTime);
+
+            if(doctors == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(doctors);
+        }
     }
 }

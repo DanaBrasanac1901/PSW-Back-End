@@ -30,8 +30,17 @@ namespace HospitalLibrary.Core.Doctor.DTOS
             GetAppointmentsUrgentVacationDTO dto = new GetAppointmentsUrgentVacationDTO();
             dto.id = app.Id;
             dto.patient = app.PatientId;
-            dto.date = app.Start.Year + "/" + app.Start.Month + "/" + app.Start.Day;
-            dto.time = app.Start.Hour + "/" + app.Start.Minute;
+            dto.date = app.Start.Year + "-" + app.Start.Month + "-" + app.Start.Day;
+            dto.time = app.Start.Hour + ":" + app.Start.Minute;
+            return dto;
+        }
+
+        public DoctorToChangeUrgentVacationDTO DoctorToDoctorToChangeUrgentVacationDTO(Doctor doc)
+        {
+            DoctorToChangeUrgentVacationDTO dto = new DoctorToChangeUrgentVacationDTO();
+            dto.id = doc.Id;
+            dto.name = doc.Name;
+            dto.surname = doc.Surname;
             return dto;
         }
     }
