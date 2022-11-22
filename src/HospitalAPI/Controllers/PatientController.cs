@@ -51,6 +51,8 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
+        
+
         // PUT api/patients/2
         [HttpPut("{id}")]
         public ActionResult Update(int id, Patient patient)
@@ -103,6 +105,24 @@ namespace HospitalAPI.Controllers
             return Ok(doctorIds);
         
         
+        }
+
+        [HttpGet("login/{email}")]
+        public ActionResult CheckEmail(string email)
+        {
+            var patient = _patientService.DoesEmailExist(email);
+            if(patient==null) return NotFound();
+
+            return Ok(patient);
+        }
+
+        [HttpGet("{email}/{password}")]
+        public ActionResult GetUser(string email, string password)
+        {
+            var patient = _patientService.CredentialsValidity(email,password);
+            if (patient == null) return NotFound();
+
+            return Ok(patient);
         }
     }
 }

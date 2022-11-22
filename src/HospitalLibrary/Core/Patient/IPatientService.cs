@@ -14,5 +14,7 @@ namespace HospitalLibrary.Core.Patient
         int GetMaxNumOfPatients();
         int NumberOfPatientsByDoctor(string doctorId);
         IEnumerable<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
+        object DoesEmailExist(string email);
+        object CredentialsValidity(string email, string password);
     }
 }

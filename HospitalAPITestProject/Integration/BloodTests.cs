@@ -16,7 +16,7 @@ namespace HospitalTests.Integration
             return new BloodController(scope.ServiceProvider.GetRequiredService<IBloodService>());
         }
 
-
+/*
         [Fact]
         public void Creates_blood_consumption_record ()
         {
@@ -27,6 +27,6 @@ namespace HospitalTests.Integration
             //var result = ((OkObjectResult)controller.GetById(1))?.Value as Room;
 
             //Assert.NotNull(result);
-        }
+        }*/
     }
 }

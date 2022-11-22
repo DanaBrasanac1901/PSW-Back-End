@@ -121,31 +121,27 @@ namespace HospitalLibrary.Core.Patient
 
         }
 
-        public bool CheckRegisterValidity(Patient patient)
-        {
-            //if...
-            return true;
-        }
 
-        public bool DoesEmailExist(string email)
+        public object DoesEmailExist(string email)
         {
             foreach (Patient patient in GetAll()) {
-                if (patient.Email.Equals(email)) return true;
+                if (patient.Email.Equals(email)) return patient;
             }
-            return false;
+            return null;
         }
 
-        public bool CredentialsValidity(string email, string password)
+        public object CredentialsValidity(string email, string password)
         {
             foreach (Patient patient in GetAll())
             {
                 if (patient.Email.Equals(email))
                 {
-                   if (patient.Password.Equals(password)) return true;
+                   if (patient.Password.Equals(password)) return patient;
                 }
             }
 
-            return false;
+            return null;
         }
+        
     }
 }
