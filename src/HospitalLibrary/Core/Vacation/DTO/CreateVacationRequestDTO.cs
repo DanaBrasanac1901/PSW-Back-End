@@ -12,8 +12,8 @@ namespace HospitalLibrary.Core.Vacation.DTO
     {
         private IVacationService vacationRequestService;
 
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        public string Start { get; set; }
+        public string End { get; set; }
         public string Description { get; set; }
         public bool Urgency { get; set; }
 

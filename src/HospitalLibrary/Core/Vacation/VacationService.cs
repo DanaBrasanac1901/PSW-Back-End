@@ -17,11 +17,12 @@ namespace HospitalLibrary.Core.Vacation
     public class VacationService : IVacationService
     {
         private readonly IVacationRepository _vacationRequestRepository;
+        private readonly IDoctorRepository _doctorRepository;
         private readonly IAppointmentRepository _appointmentRepository;
-
-        public VacationService(IVacationRepository vacationRequestRepository,IAppointmentRepository appointmentRepository)
+        public VacationService(IVacationRepository vacationRequestRepository, IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository)
         {
             _vacationRequestRepository = vacationRequestRepository;
+            _doctorRepository = doctorRepository;
             _appointmentRepository = appointmentRepository;
         }
 
@@ -97,8 +98,8 @@ namespace HospitalLibrary.Core.Vacation
 
         public void CreateVacationRequest(VacationRequest request)
         {
-            //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje
-            Doctor.Doctor doctor = new Doctor.Doctor();
+            //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje iz repo (skloniti repo iz klase)
+            Doctor.Doctor doctor = _doctorRepository.GetById("DOC1");
             if (doctor.IsAvailable(request.Start, request.End) && !VacationTooClose(request.Start))
                 _vacationRequestRepository.Create(request);
         }
