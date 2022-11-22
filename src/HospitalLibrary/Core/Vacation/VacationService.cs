@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Appointment.DTOS;
+﻿using HospitalLibrary.Core.Appointment;
+using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Enums;
@@ -17,11 +18,12 @@ namespace HospitalLibrary.Core.Vacation
     {
         private readonly IVacationRepository _vacationRequestRepository;
         private readonly IDoctorRepository _doctorRepository;
-
-        public VacationService(IVacationRepository vacationRequestRepository, IDoctorRepository doctorRepository)
+        private readonly IAppointmentRepository _appointmentRepository;
+        public VacationService(IVacationRepository vacationRequestRepository, IDoctorRepository doctorRepository, IAppointmentRepository appointmentRepository)
         {
             _vacationRequestRepository = vacationRequestRepository;
             _doctorRepository = doctorRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         public IEnumerable<VacationRequest> GetAll()
@@ -100,6 +102,49 @@ namespace HospitalLibrary.Core.Vacation
             Doctor.Doctor doctor = _doctorRepository.GetById("DOC1");
             if (doctor.IsAvailable(request.Start, request.End) && !VacationTooClose(request.Start))
                 _vacationRequestRepository.Create(request);
+        }
+
+        public VacationRequest CreateUrgentVacationRequest(CreateUrgenVacationDTO dto)
+        {
+            //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje
+            //Doctor.Doctor doctor = new Doctor.Doctor();
+            VacationRequest request = VacationRequestDTOAdapter.CreateUrgenVacationDTOToVacationRequest(dto);
+            if (CheckIfThereAreAppointmentsInRange(request.Start, request.End, request.DoctorId) == false)
+            {
+                _vacationRequestRepository.Create(request);
+            }
+            return _vacationRequestRepository.GetById(request.Id);
+        }
+
+        public bool CheckIfThereAreAppointmentsInRange(DateTime start,DateTime end,String doctorId)
+        {
+            List<Appointment.Appointment> allApps = _appointmentRepository.GetAll().ToList();
+            //List<Appointment.Appointment> retApps = new List<Appointment.Appointment>();
+            foreach (var app in allApps)
+            {
+                if(app.DoctorId == doctorId && CheckIfAppointmentIsInRange(app,start,end) == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool CheckIfAppointmentIsInRange(Appointment.Appointment app, DateTime start, DateTime end)
+        {
+            if (app.Start < start || app.Start > end)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public void IsUrgentAvailable(VacationRequest request, Doctor.Doctor doctor)
+        {
+            
         }
 
         public void UpdateVacationRequest(VacationRequest vacationRequest)

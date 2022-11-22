@@ -32,7 +32,19 @@ namespace HospitalLibrary.Settings
 
         public DbSet<VacationRequest> VacationRequests { get; set; }
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) {
+            
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<VacationRequest>();
+            //modelBuilder.Entity<VacationRequest>().HasData(
+            //    new VacationRequest(1, new DateTime(2023,1,1), new DateTime(2023, 1, 14), "holidays", false, "DOC1"),
+            //    new VacationRequest(2, new DateTime(2023, 1, 1), new DateTime(2023, 1, 14), "holidays", false, "DOC2"),
+            //    new VacationRequest(3, new DateTime(2023, 1, 1), new DateTime(2023, 1, 14), "holidays", false, "DOC3")
+            //     );
+            base.OnModelCreating(modelBuilder);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

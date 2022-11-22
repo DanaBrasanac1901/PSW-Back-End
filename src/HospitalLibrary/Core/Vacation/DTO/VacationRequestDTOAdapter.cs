@@ -42,5 +42,19 @@ namespace HospitalLibrary.Core.Vacation.DTO
 
         }
 
+        public static VacationRequest CreateUrgenVacationDTOToVacationRequest(CreateUrgenVacationDTO dto)
+        {
+            VacationRequest request = new VacationRequest();
+            request.Id = (int)DateTime.Now.Ticks;
+            request.Start = DateTime.Parse(dto.start);
+            request.End = DateTime.Parse(dto.end);
+            request.Description = dto.description;
+            request.Urgency = true;
+            request.DoctorId = "DOC1";
+            request.RejectionReason = "nista";
+            request.Status = Enums.VacationRequestStatus.Accepted;
+            return request;
+        }
+
     }
 }
