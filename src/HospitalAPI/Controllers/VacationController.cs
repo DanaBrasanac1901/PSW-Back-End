@@ -52,6 +52,8 @@ namespace HospitalAPI.Controllers
 
             _vacationService.CreateVacationRequest(newRequest);
 
+            var created = GetById(newRequest.Id);
+
             return CreatedAtAction("GetById", new { id = newRequest.Id }, newRequest);
         }
     }
