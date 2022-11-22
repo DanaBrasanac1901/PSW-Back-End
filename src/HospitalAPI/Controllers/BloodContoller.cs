@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Core.Blood.DTOS;
+using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -38,7 +39,7 @@ namespace HospitalAPI.Controllers
             }
 
             BloodConsumptionRecord newRecord = BloodDTOAdapter.CreateConsmptionRecordDTOToObject(record);
-            newRecord.Id = _bloodService.GenerateId(0);
+            newRecord.Id = (int)DateTime.Now.Ticks;
 
             _bloodService.CreateBloodConsumptionRecord(newRecord);
 

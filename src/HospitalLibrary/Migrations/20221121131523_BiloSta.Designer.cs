@@ -3,15 +3,17 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121131523_BiloSta")]
+    partial class BiloSta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,6 +253,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("Start")
                         .HasColumnType("timestamp without time zone");
 
@@ -265,6 +270,41 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("VacationRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "holidays",
+                            DoctorId = "DOC1",
+                            End = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RejectionReason = "",
+                            Start = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            Urgency = false
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "holidays",
+                            DoctorId = "DOC2",
+                            End = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RejectionReason = "",
+                            Start = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            Urgency = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "holidays",
+                            DoctorId = "DOC3",
+                            End = new DateTime(2023, 1, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RejectionReason = "",
+                            Start = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Status = 0,
+                            Urgency = false
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Appointment.Appointment", b =>

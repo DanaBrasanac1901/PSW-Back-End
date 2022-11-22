@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Vacation.DTO;
+using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -52,6 +53,32 @@ namespace HospitalAPI.Controllers
             _vacationService.CreateVacationRequest(newRequest);
 
             return CreatedAtAction("GetById", new { id = newRequest.Id }, newRequest);
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult CreateUrgentRequest(CreateUrgenVacationDTO request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var req = _vacationService.CreateUrgentVacationRequest(request);
+            return CreatedAtAction("GetById", new { id = req.Id }, req);
+        }
+
+        [HttpDelete]
+        [Route("[action]/{id}")]
+        public ActionResult DeleteVacationRequest(int id)
+        {
+            var vacation = _vacationService.GetById(id);
+            if (vacation == null)
+            {
+                return NotFound();
+            }
+
+            _vacationService.Cancel(id);
+            return NoContent();
         }
     }
 }
