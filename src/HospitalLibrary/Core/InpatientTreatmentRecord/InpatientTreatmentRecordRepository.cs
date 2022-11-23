@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Settings;
+﻿using HospitalLibrary.Core.Vacation;
+using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,18 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
         {
             _context.InpatientTreatmentRecords.Remove(inpatientTreatmentRecord);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<InpatientTreatmentRecord> GetAllWithStatusTrue()
+        {
+            IEnumerable<InpatientTreatmentRecord> records = GetAll();
+            return records.Where(r => r.Status == true);
+        }
+
+        public IEnumerable<InpatientTreatmentRecord> GetAllByDoctor(string id)
+        {
+            List<InpatientTreatmentRecord> records = _context.InpatientTreatmentRecords.Where(record => record.DoctorID.Equals(id)).ToList();
+            return records;
         }
     }
 }

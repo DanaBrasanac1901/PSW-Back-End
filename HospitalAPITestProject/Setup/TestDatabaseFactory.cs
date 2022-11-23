@@ -54,6 +54,7 @@ namespace HospitalTests.Setup
             context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O});
             context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB});
 
+         
 
 
 

@@ -18,7 +18,7 @@ namespace HospitalLibraryTestProject
     {
 
         [Fact]
-        public void Has_Free_Beds()
+        public void Has_free_beds()
         {
             Room room = CreateRoomWithEquipment();
             
@@ -28,6 +28,15 @@ namespace HospitalLibraryTestProject
         }
 
         [Fact]
+        public void Has_not_free_beds()
+        {
+            Room room = CreateRoomWithoutBeds();
+
+            bool hasBed = room.HasAvaliableBed();
+
+            hasBed.ShouldBe(false);
+        }
+
 
         private Room CreateRoomWithEquipment()
         {

@@ -30,6 +30,8 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord.DTO
         {
             ViewAcceptedPatientsOnTreatmentDTO recordDto = new ViewAcceptedPatientsOnTreatmentDTO();
             recordDto.patientId = record.PatientID;
+            //recordDto.patientName = record.patientName;
+            //recordDto.PatientSurname = record.patientSurname
             recordDto.roomId = record.RoomID;
             recordDto.bedId = record.BedID;
 

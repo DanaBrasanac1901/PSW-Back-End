@@ -23,5 +23,15 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
             Quantity = quantity;
             RoomId = roomId;
         }
+
+        /*public bool Reduce(int quantity)
+        {
+            if(Type != EquipmentType.BED)
+            {
+                Quantity -= quantity;
+                return true;
+            }
+            return false;
+        }*/
     }
 }

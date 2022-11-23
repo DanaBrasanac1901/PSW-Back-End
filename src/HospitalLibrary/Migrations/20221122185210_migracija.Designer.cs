@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221108203213_Blood")]
-    partial class Blood
+    [Migration("20221122185210_migracija")]
+    partial class migracija
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,17 +78,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodConsumptionRecords");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 10.0,
-                            CreatedAt = new DateTime(2022, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = "DOC1",
-                            Reason = "need for surgery",
-                            Type = 0
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
@@ -116,35 +105,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodRequests");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 100.0,
-                            DoctorId = "DOC1",
-                            Due = new DateTime(2022, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reason = "need for patient treatment",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 150.0,
-                            DoctorId = "DOC2",
-                            Due = new DateTime(2022, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reason = "need for patient treatment",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 150.0,
-                            DoctorId = "DOC1",
-                            Due = new DateTime(2022, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reason = "need for transfusion",
-                            Type = 2
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodSupply", b =>
@@ -163,14 +123,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalBlood");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 150.0,
-                            Type = 0
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
@@ -231,38 +183,125 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Feedbacks");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.InpatientTreatmentRecord.Equipment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Equipment");
 
                     b.HasData(
                         new
                         {
-                            ID = 1,
-                            Anonymous = false,
-                            Approved = false,
-                            Date = new DateTime(2022, 8, 27, 8, 15, 0, 0, DateTimeKind.Unspecified),
-                            PatientId = 1,
-                            Text = "neki komentar",
-                            VisibleToPublic = true
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Anonymous = false,
-                            Approved = false,
-                            Date = new DateTime(2022, 9, 13, 14, 53, 0, 0, DateTimeKind.Unspecified),
-                            PatientId = 2,
-                            Text = "neki drugi komentar",
-                            VisibleToPublic = true
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Anonymous = false,
-                            Approved = false,
-                            Date = new DateTime(2022, 10, 10, 11, 22, 0, 0, DateTimeKind.Unspecified),
-                            PatientId = 3,
-                            Text = "neki treci komentar",
-                            VisibleToPublic = true
+                            Id = "1",
+                            Quantity = 1,
+                            RoomId = 1,
+                            Type = 0
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.InpatientTreatmentRecord.InpatientTreatmentRecord", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("AdmissionDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("AdmissionReason")
+                        .HasColumnType("text");
+
+                    b.Property<string>("BedID")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DischargeDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DischargeReason")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DoctorID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PatientID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoomID")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Therapy")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InpatientTreatmentRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AdmissionDate = new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AdmissionReason = "bolesnik",
+                            BedID = "1",
+                            DischargeDate = new DateTime(22, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DischargeReason = "",
+                            DoctorID = "1",
+                            PatientID = "1",
+                            RoomID = "1",
+                            Status = true,
+                            Therapy = "nista"
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Patient.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Allergies")
+                        .HasColumnType("text");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("DoctorID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PatientName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
@@ -282,6 +321,41 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Urgency")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("VacationRequests");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Appointment.Appointment", b =>
@@ -312,9 +386,32 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.InpatientTreatmentRecord.Equipment", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Room.Room", null)
+                        .WithMany("Equipment")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Doctor.Doctor", null)
+                        .WithMany("VacationRequests")
+                        .HasForeignKey("DoctorId");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("VacationRequests");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
+                {
+                    b.Navigation("Equipment");
                 });
 #pragma warning restore 612, 618
         }

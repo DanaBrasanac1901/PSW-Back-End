@@ -31,10 +31,12 @@ namespace HospitalLibrary.Core.Room
         {
             foreach(Equipment e in Equipment)
             {
-                if(e.Type != Enums.EquipmentType.BED && e.Quantity != 1)
-                    return false;
+                if(e.Type == Enums.EquipmentType.BED) {
+                    if (e.Quantity == 1)
+                        return true;
+                }
             }
-            return true;
+            return false;
         }
     }
 }

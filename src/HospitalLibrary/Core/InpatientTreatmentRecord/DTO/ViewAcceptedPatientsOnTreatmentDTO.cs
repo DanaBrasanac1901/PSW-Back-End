@@ -8,6 +8,8 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord.DTO
 {
     public class ViewAcceptedPatientsOnTreatmentDTO
     {
+        public string patientName { get; set; }
+        public string patientSurname { get; set; }
         public string patientId { get; set; }
         public string roomId { get; set; }
         public string bedId { get; set; }
