@@ -72,11 +72,11 @@ namespace HospitalTests.Setup
         private static void InitializePatients(HospitalDbContext context)
         {
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\";");
-            context.Patients.Add(new Patient { Id = 1, PatientName = "Janko Jankovic", Email = "janki@gmail.com", Password="nekibzvzpas", BloodType = BloodType.A, Allergies="", DoctorID="1",Active=true });
-            context.Patients.Add(new Patient { Id = 2, PatientName = "Milan Simic",  Email = "mmilaaan@hotmail.com", Password = "nekibzvzpas123", BloodType = BloodType.O, Allergies = "", DoctorID="1",Active=true });
-            context.Patients.Add(new Patient { Id = 3, PatientName = "Nikola Nikolic", Email = "niknik@live.com",  Password = "nekibzvzpas5454", BloodType = BloodType.AB, Allergies = "", DoctorID="2", Active=true });
-            context.Patients.Add(new Patient { Id = 4, PatientName = "Sanja Medic", Email = "medics@gmail.com", Password = "321sanjinpass", BloodType = BloodType.A, Allergies = "",DoctorID="3", Active=true });
-            context.Patients.Add(new Patient { Id = 5, PatientName = "Mirko Kis", Email = "mkis@gmail.com", Password = "nekimirkovpass", BloodType = BloodType.B, Allergies = "", DoctorID = "1", Active = true });
+            context.Patients.Add(new Patient { Id = 1, Name = "Janko", Surname="Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies="", DoctorID="1",Active=true });
+            context.Patients.Add(new Patient { Id = 2, Name = "Milan", Surname = "Simic",  Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = "", DoctorID="1",Active=true });
+            context.Patients.Add(new Patient { Id = 3, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = "", DoctorID="2", Active=true });
+            context.Patients.Add(new Patient { Id = 4, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = "",DoctorID="3", Active=true });
+            context.Patients.Add(new Patient { Id = 5, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = "", DoctorID = "1", Active = true });
         }
     }
 }

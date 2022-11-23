@@ -39,7 +39,7 @@ namespace HospitalLibrary.Core.Feedback
             feedback.Approved = false;
 
             //change when login gets implemented
-            feedback.PatientId = 0;
+            //feedback.PatientId = 0;
             _feedbackRepository.Create(feedback);
         }
 

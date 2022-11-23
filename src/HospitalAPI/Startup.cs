@@ -14,6 +14,9 @@ using System.Text.Json.Serialization;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.User;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace HospitalAPI
 {
@@ -37,7 +40,23 @@ namespace HospitalAPI
             .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
 
-            
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audence"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration
+                                ["Jwt:Key"]))
+                    };
+            });
+            services.AddMvc();
+            services.AddControllers(); //ovo vec ima
+
             services.AddControllers().AddJsonOptions(x =>
                  x.JsonSerializerOptions.ReferenceHandler = null);
             
@@ -71,6 +90,7 @@ namespace HospitalAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             app.UseCors(builder =>
             {
                 builder
@@ -89,6 +109,7 @@ namespace HospitalAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
