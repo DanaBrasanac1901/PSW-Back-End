@@ -32,27 +32,20 @@ namespace IntegrationLibrary.Report
             _reportRepository.Create(newReport);
 
         }
-/*
-        private bool CheckIfAlreadyExists(ReportDTO reportdto)
-        {
-            bool alreadyExists = false;
-            IEnumerable<Report> allReports = GetAll();
-            foreach (Report report in allReports)
-            {
-                if (report.Id == reportdto.Id)
-                {
-                    alreadyExists = true;
-                }
-            }
 
-            return alreadyExists;
-        }
-*/
 
         public void Update(ReportDTO reportDto)
         {
-            Report report = ReportDtoAdapter.NewReport(reportDto);
-            _reportRepository.Update(report);
+            foreach (Report report in GetAll())
+            {
+                if (report.Id == reportDto.Id)
+                {
+                    report.Period = reportDto.Period;
+                }
+                
+                _reportRepository.Update(report);
+            }
+
         }
         
     }

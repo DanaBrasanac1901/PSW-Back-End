@@ -12,19 +12,12 @@ namespace IntegrationAPI.Controllers
     public class ReportController : Controller
     {
         private readonly IReportService _reportService;
-        private readonly IReportGeneratorService _reportGeneratorService;
             public ReportController(IReportService reportService)
             {
                 _reportService = reportService;
             }
 
-
-            /*  public ReportController(ReportGeneratorService reportGeneratorService)
-            {
-                _reportGeneratorService = reportGeneratorService;
-            }*/
-
-            // GET: api/reports ili bez s?
+             // GET: api/reports ili bez s?
             [HttpGet]
             public ActionResult GetAll()
             {
@@ -56,7 +49,7 @@ namespace IntegrationAPI.Controllers
 
             // PUT api/reports/2 
             [HttpPut("{id}")]
-            public ActionResult Update(ReportDTO reportDto)
+            public ActionResult Update(ReportDTO reportdto)
             {
                 if (!ModelState.IsValid)
                 {
@@ -65,31 +58,15 @@ namespace IntegrationAPI.Controllers
 
                 try
                 {
-                    _reportService.Update(reportDto);
+                    _reportService.Update(reportdto);
                 }
                 catch
                 {
                     return BadRequest();
                 }
 
-                return Ok(reportDto);
-            }
-
-
-            
-            [HttpPost("report")]
-            public PdfDocument GeneratePdf(Guid id)
-            {
-               return  _reportGeneratorService.GeneratePdf(id);
+                return Ok(reportdto);
             }
             
-            //za test KAKO ISTeSTIRATI KAD NIJE U KONTROLERU
-            
-            [HttpPost("report/test")]
-            public PdfDocument GeneratePdf()
-            {
-                return _reportGeneratorService.GeneratePdf();
-               
-            } 
     }
     }

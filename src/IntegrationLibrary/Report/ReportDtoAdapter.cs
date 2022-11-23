@@ -7,11 +7,7 @@ namespace IntegrationLibrary.Report
     {
         public static Report NewReport(ReportDTO reportDto)
         {
-            
-            Report reportTransformed = new Report(reportDto.Period, reportDto.Id);
-            reportTransformed.ConfigurationDate = DateTime.Now;
-            reportTransformed.LastReportGeneration = DateTime.Now;
-            
+            Report reportTransformed = new Report(reportDto.Id, DateTime.Now, reportDto.Period,DateTime.Now);
             return reportTransformed;
         }
     }

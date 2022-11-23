@@ -17,21 +17,82 @@ namespace IntegrationLibrary.Report
         
         private readonly IReportRepository _reportRepository;
         private readonly IBloodBankRepository _bloodBankRepository;
-        
         private readonly IBloodConsuptionRecordRepository _bloodRepository;
+        
         private IEnumerable<Report> _allReports = new List<Report>();
-        private PdfDocument _report;
+        public Report Report=  new Report();
+        public BloodBank.BloodBank BloodBank = new BloodBank.BloodBank();
 
         public ReportGeneratorService(IReportRepository reportRepository, 
             IBloodBankRepository bloodBankRepository, IBloodConsuptionRecordRepository bloodRepository)
         {
             _reportRepository = reportRepository;
             _bloodBankRepository = bloodBankRepository;
-
             _bloodRepository = bloodRepository;
             _allReports = _reportRepository.GetAll();
         }
 
+        
+        protected Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            foreach (Report report in _allReports)
+            {
+                GeneratePdf(report);
+            }
+
+            return Task.CompletedTask;
+        }
+        
+        public PdfDocument GeneratePdf(Report report)
+        {
+
+            foreach (Report matchedReport in _allReports)
+            {
+                if (matchedReport.Id == report.Id)
+                {
+                    Report = matchedReport;
+                }
+            }
+            
+            
+            var renderer = new IronPdf.ChromePdfRenderer
+            {
+                RenderingOptions =
+                {
+                    PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
+                    ViewPortWidth = 1280
+                }
+            };
+
+            string reportHtml = Html(Report);
+            var pdf = renderer.RenderHtmlAsPdf(reportHtml);
+            
+            String pdfName = Report.Id.ToString() + "report.pdf";
+            pdf.SaveAs(pdfName);
+            
+            Report.LastReportGeneration = DateTime.Today;
+            _reportRepository.Update(Report);
+            return pdf;
+            
+        }
+        
+        
+        
+        private string Html(Report report)
+        {
+            if (_bloodBankRepository.GetById(report.Id) != null)
+            {
+                //{bloodBank.Username}
+                return $"<h1>Report </h1> Report for week ";
+            }
+
+            else 
+                return  $"<h1>Bloodbank not found</h1> Report for week ";
+            //+ $" Spent {ConsumptionAmount(bloodBank.Id)} ";
+        }
+        
+        
+        
         public ReportGeneratorService()
         {
         }
@@ -83,84 +144,17 @@ namespace IntegrationLibrary.Report
 
         }
 
-
-        //za test
-        public PdfDocument GeneratePdf()
-        {
-            ChromePdfRenderer renderer = new IronPdf.ChromePdfRenderer
-            {
-                RenderingOptions =
-                {
-                    PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
-                    ViewPortWidth = 1280
-                }
-            };
-
-            PdfDocument pdf = renderer.RenderHtmlAsPdf("<h1>Report</h1> Report for week hellloo ");
-          
-            pdf.SaveAs( "report.pdf");
-            
-            return pdf;
-        }
-        
-        
-        
-        public PdfDocument GeneratePdf(Guid reportId)
-        {
-            var generateReport = _reportRepository.GetById(reportId);
-            var renderer = new IronPdf.ChromePdfRenderer
-            {
-                RenderingOptions =
-                {
-                    PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
-                    ViewPortWidth = 1280
-                }
-            };
-
-            string reportHtml = Html(generateReport.Id);
-            var pdf = renderer.RenderHtmlAsPdf(reportHtml);
-            
-            String pdfName = generateReport.Id.ToString() + "report.pdf";
-            pdf.SaveAs(pdfName);
-            generateReport.LastReportGeneration = DateTime.Today;
-            _reportRepository.Update(generateReport);
-            return pdf;
-            
-        }
-
-
-        private string Html(Guid reportId)
-        {
-            BloodBank.BloodBank bloodBank = _bloodBankRepository.GetById(reportId);
-            return $"<h1>Report {bloodBank.Username}</h1> Report for week " +
-                   $" Spent {ConsumptionAmount(bloodBank.Id)} ";
-        }
-
-     
-
-        protected async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            foreach (Report report in _reportRepository.GetAll())
-            {
-                GeneratePdf(report.Id);
-            }
-        }
-        /// <summary>Triggered when the application host is ready to start the service.</summary>
-        /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
-       
-      
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             //ako se poklopilo datum last generisanja + perioda i danasnji
-            throw new NotImplementedException();
+          //  TodayIsTheDay == true;
+          
+          throw new NotImplementedException();
         }
-
-        /// <summary>Triggered when the application host is performing a graceful shutdown.</summary>
-        /// <param name="cancellationToken">Indicates that the shutdown process should no longer be graceful.</param>
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            //  TodayIsTheDay == false;
             throw new NotImplementedException();
         }
     }
