@@ -11,21 +11,23 @@ namespace HospitalLibrary.Core.Patient
     public class Patient
     {
         private int id;
-        private String name;
-        private String surname;
+        private string name;
+        private string surname;
+        private string email;
         private BloodType bloodType;
-        private String allergies;
-        private String doctorID;
+        private string allergies;
+        private string doctorID;
         private bool active;
        
 
         public Patient() {}
 
-        public Patient(int id, string name, string surname, BloodType bloodType, string allergies, string doctorID, bool active)
+        public Patient(int id, string name, string surname, string email, BloodType bloodType, string allergies, string doctorID, bool active)
         {
             this.Id = id;
             this.Name = name;
             this.Surname = surname;
+            this.email = email;
             this.BloodType = bloodType;
             this.Allergies = allergies;
             this.DoctorID = doctorID;
@@ -36,6 +38,8 @@ namespace HospitalLibrary.Core.Patient
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Surname { get => name; set => name = value; }
+
+        public string Email { get => email; set => email = value; }
         public BloodType BloodType { get => bloodType; set => bloodType = value; }
         public string Allergies { get => allergies; set => allergies = value; }
         public string DoctorID { get => doctorID; set => doctorID = value; }

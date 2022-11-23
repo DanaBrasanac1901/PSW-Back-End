@@ -9,8 +9,9 @@ namespace HospitalLibrary.Core.Feedback
 {
     public class Feedback
     {
-        private int patientId;
-        private String text;
+        private string name;
+        private string surname;
+        private string text;
         private Boolean visibleToPublic;
         private Boolean approved;
         private DateTime date;
@@ -22,8 +23,9 @@ namespace HospitalLibrary.Core.Feedback
         }
         public class FeedbackBuilder
             {
-            internal int patientId;
-            internal String text;
+            internal string name;
+            internal string surname;
+            internal string text;
             internal Boolean visibleToPublic;
             internal Boolean approved;
             internal DateTime date;
