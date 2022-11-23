@@ -8,30 +8,34 @@ namespace HospitalLibrary.Core.User
 {
     internal class UserService : IUserService
     {
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
         public void Create(User user)
         {
-            throw new NotImplementedException();
+            _userRepository.Create(user);
         }
 
         public void Delete(User user)
         {
-            throw new NotImplementedException();
+            _userRepository.Delete(user);
         }
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return _userRepository.GetAll();
         }
 
         public User GetById(int id)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetById(id);
         }
 
         public void Update(User user)
         {
-            throw new NotImplementedException();
+            _userRepository.Update(user);
         }
     }
 }

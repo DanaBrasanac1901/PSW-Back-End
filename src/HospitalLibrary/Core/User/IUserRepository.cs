@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace HospitalLibrary.Core.User
 {
-    internal interface IUserRepository
+    public interface IUserRepository
     {
         IEnumerable<User> GetAll();
         User GetById(int id);

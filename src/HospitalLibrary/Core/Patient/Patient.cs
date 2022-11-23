@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Patient
 {
-    public class Patient : Authorization.User
+    public class Patient 
     {
         private int id;
         private String name;
