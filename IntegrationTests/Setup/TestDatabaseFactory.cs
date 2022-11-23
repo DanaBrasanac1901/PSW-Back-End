@@ -48,19 +48,19 @@ namespace IntegrationTests.Setup
             
             
             context.ReportTable.Add(new Report(
-                new Guid(),
+                new Guid("3E63FA4E-3A3A-4DEB-ACD1-3F784DE9D90B"),
                 DateTime.Now, 
                 IntegrationLibrary.Report.Period.Daily,
                 DateTime.Today));
             
             context.ReportTable.Add(new Report( 
-                new Guid(),
+                new Guid("9A76E313-E764-4B63-8544-5AAC14155C6A"),
                 DateTime.Now, 
                 IntegrationLibrary.Report.Period.Monthly,
                 
                 DateTime.Today));
             context.ReportTable.Add(new Report(
-                new Guid(),
+                new Guid("CB2EA6F8-CCAB-49C9-ABBC-3FC4F8B89A00"),
                 DateTime.Today, 
                 IntegrationLibrary.Report.Period.EveryTwoMonths,
                 DateTime.Today));

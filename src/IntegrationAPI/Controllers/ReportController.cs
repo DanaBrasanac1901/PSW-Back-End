@@ -12,13 +12,14 @@ namespace IntegrationAPI.Controllers
     public class ReportController : Controller
     {
         private readonly IReportService _reportService;
-        private readonly ReportGeneratorService _reportGeneratorService;
+        private readonly IReportGeneratorService _reportGeneratorService;
             public ReportController(IReportService reportService)
             {
                 _reportService = reportService;
             }
 
-          /*  public ReportController(ReportGeneratorService reportGeneratorService)
+
+            /*  public ReportController(ReportGeneratorService reportGeneratorService)
             {
                 _reportGeneratorService = reportGeneratorService;
             }*/
@@ -32,15 +33,12 @@ namespace IntegrationAPI.Controllers
 
             // GET api/reports/2
             [HttpGet("{id:guid}")]
-            public ActionResult GetById(Guid id)
+            public Report GetById(Guid id)
             {
                 var report = _reportService.GetById(id);
-                if (report == null)
-                {
-                    return NotFound();
-                }
+               //Validate if Id == null
 
-                return Ok(report);
+                return report;
             }
 
             // POST api/reports
