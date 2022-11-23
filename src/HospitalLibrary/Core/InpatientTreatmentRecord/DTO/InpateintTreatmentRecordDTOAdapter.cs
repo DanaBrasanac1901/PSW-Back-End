@@ -29,14 +29,34 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord.DTO
         public static ViewAcceptedPatientsOnTreatmentDTO InpatientTreatmentRecordToDTO(InpatientTreatmentRecord record)
         {
             ViewAcceptedPatientsOnTreatmentDTO recordDto = new ViewAcceptedPatientsOnTreatmentDTO();
-            recordDto.patientId = record.PatientID;
+            
             //recordDto.patientName = record.patientName;
             //recordDto.PatientSurname = record.patientSurname
+            
+            recordDto.id=record.Id;
+            recordDto.patientId = record.PatientID;
             recordDto.roomId = record.RoomID;
             recordDto.bedId = record.BedID;
 
             return recordDto;
 
+        }
+
+        public static DischargeTreatmentDTO DischargeToDTO(InpatientTreatmentRecord record)
+        {
+            DischargeTreatmentDTO recordDto = new DischargeTreatmentDTO();
+
+            recordDto.id = record.Id;
+            recordDto.patientId=record.PatientID;
+            recordDto.roomId=record.RoomID;
+            recordDto.bedId=record.BedID;
+            recordDto.therapy=record.Therapy;
+            
+            recordDto.startDate = record.AdmissionDate.ToString("yyyy-MM-dd");
+            recordDto.endDate = DateTime.Now.ToString("yyyy-MM-dd");
+            recordDto.reason=record.DischargeReason;
+               
+            return recordDto;
         }
     }
 }
