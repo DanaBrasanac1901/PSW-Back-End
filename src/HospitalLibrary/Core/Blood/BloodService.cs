@@ -12,44 +12,47 @@ namespace HospitalLibrary.Core.Blood
     public class BloodService : IBloodService
 
     {
-        private readonly IBloodSupplyRepository _bloodSupplyRepository;
+        private readonly IBloodConsuptionRepository _bloodSupplyRepository;
         private readonly IBloodConsuptionRecordRepository _bloodConsumptionRecordRepository;
         private readonly IBloodRequestRepository _bloodRequestRepository;
 
-        public BloodService(IBloodSupplyRepository bloodSupplyRepository, IBloodConsuptionRecordRepository bloodConsumptionRecordRepository, IBloodRequestRepository bloodRequestRepository)
+        public BloodService(IBloodConsuptionRepository bloodSupplyRepository, IBloodConsuptionRecordRepository bloodConsumptionRecordRepository, IBloodRequestRepository bloodRequestRepository)
         {
             _bloodSupplyRepository = bloodSupplyRepository;
             _bloodConsumptionRecordRepository = bloodConsumptionRecordRepository;
             _bloodRequestRepository = bloodRequestRepository;
         }
 
-        public void CreateBloodConsumptionRecord(CreateConsmptionRecordDTO record)
+        public Guid CreateBloodConsumptionRecord(BloodConsumptionRecord record)
         {
-            BloodConsumptionRecord newRecord = BloodDTOAdapter.CreateConsmptionRecordDTOToObject(record);
+            List<BloodSupply> supplies = _bloodSupplyRepository.GetByGroup(record.Type);
 
-            newRecord.Id = GenerateId(0);
-            
-            ReduceBloodAmountAfterConsumption(newRecord.Amount, newRecord.Type);
-            _bloodConsumptionRecordRepository.Create(newRecord);
+            foreach(BloodSupply supply in supplies)
+            {
+                if (supply.ReduceBy(record.Amount))
+                {
+                    _bloodSupplyRepository.Update(supply);
+
+                    record.SourceBank = supply.SourceBank;
+                    _bloodConsumptionRecordRepository.Create(record);
+
+                    return record.SourceBank;
+                }
+            }
+            return new System.Guid("00000000-0000-0000-0000-000000000000");
         }
 
         public void CreateBloodRequest(CreateBloodRequestDTO bloodRequest)
         {
-            //change parameter to DTO received from the front end
             BloodRequest newBloodRequest = BloodDTOAdapter.CreateBloodRequestDTOToObject(bloodRequest);
 
-            bloodRequest.id = GenerateId(0);
+            bloodRequest.id = GenerateId(1);
 
             _bloodRequestRepository.Create(newBloodRequest);
         }
 
-        public void ReduceBloodAmountAfterConsumption(double amount, BloodType type)
-        {
-            
-        }
 
-
-        private int GenerateId(int type)
+        public int GenerateId(int type)
         {
             List<int> ids = new List<int>();
 
@@ -68,6 +71,11 @@ namespace HospitalLibrary.Core.Blood
                 return 0;
             else
                 return ids.Max() + 1;
+        }
+
+        public BloodConsumptionRecord GetById(int id)
+        {
+            return _bloodConsumptionRecordRepository.GetById(id);
         }
     }
 }

@@ -70,6 +70,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Reason")
                         .HasColumnType("text");
 
+                    b.Property<Guid>("SourceBank")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -81,15 +84,14 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            Amount = 10.0,
-                            CreatedAt = new DateTime(2022, 11, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Amount = 2.0,
+                            CreatedAt = new DateTime(2022, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DoctorId = "DOC1",
-                            Reason = "need for surgery",
+                            Reason = "needed for surgery",
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
                             Type = 0
                         });
                 });
-
-           
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
                 {
@@ -116,35 +118,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodRequests");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 100.0,
-                            DoctorId = "DOC1",
-                            Due = new DateTime(2022, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reason = "need for patient treatment",
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 150.0,
-                            DoctorId = "DOC2",
-                            Due = new DateTime(2022, 11, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reason = "need for patient treatment",
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 150.0,
-                            DoctorId = "DOC1",
-                            Due = new DateTime(2022, 11, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Reason = "need for transfusion",
-                            Type = 2
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodSupply", b =>
@@ -157,6 +130,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
 
+                    b.Property<Guid>("SourceBank")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -167,25 +143,68 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 4,
+                            Amount = 10.0,
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            Type = 3
+                        },
+                        new
+                        {
                             Id = 1,
-                            Amount = 150.0,
+                            Amount = 54.0,
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
                             Type = 0
                         },
                         new
                         {
-                            Id = 2,
-                            Amount = 130.0,
-                            Type = 1
+                            Id = 5,
+                            Amount = 23.0,
+                            SourceBank = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Amount = 24.0,
+                            SourceBank = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
+                            Type = 0
                         },
                         new
                         {
                             Id = 3,
-                            Amount = 100.0,
+                            Amount = 15.0,
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
                             Type = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Amount = 34.0,
+                            SourceBank = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 30.0,
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Amount = 40.0,
+                            SourceBank = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Amount = 10.0,
+                            SourceBank = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
+                            Type = 1
                         });
                 });
-
-            
 
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {
@@ -245,38 +264,39 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Feedbacks");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Anonymous = false,
-                            Approved = false,
-                            Date = new DateTime(2022, 8, 27, 8, 15, 0, 0, DateTimeKind.Unspecified),
-                            PatientId = 1,
-                            Text = "neki komentar",
-                            VisibleToPublic = true
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Anonymous = false,
-                            Approved = false,
-                            Date = new DateTime(2022, 9, 13, 14, 53, 0, 0, DateTimeKind.Unspecified),
-                            PatientId = 2,
-                            Text = "neki drugi komentar",
-                            VisibleToPublic = true
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Anonymous = false,
-                            Approved = false,
-                            Date = new DateTime(2022, 10, 10, 11, 22, 0, 0, DateTimeKind.Unspecified),
-                            PatientId = 3,
-                            Text = "neki treci komentar",
-                            VisibleToPublic = true
-                        });
+            modelBuilder.Entity("HospitalLibrary.Core.Patient.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Allergies")
+                        .HasColumnType("text");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("DoctorID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PatientName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
@@ -296,6 +316,41 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Urgency")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("VacationRequests");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Appointment.Appointment", b =>
@@ -326,9 +381,20 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Doctor.Doctor", "Doctor")
+                        .WithMany("VacationRequests")
+                        .HasForeignKey("DoctorId");
+
+                    b.Navigation("Doctor");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("VacationRequests");
                 });
 #pragma warning restore 612, 618
         }

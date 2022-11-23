@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Doctor.DTOS;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,5 +65,58 @@ namespace HospitalLibrary.Core.Doctor
             return true;
         }
 
+        public List<Doctor> GetAllDoctorsForRescheduleForUrgentVacation(Appointment.Appointment appointment)
+        {
+            List<Doctor> doctorList = new List<Doctor>();
+            foreach (var doctor in GetAll())
+            {
+                if (CheckIfDoctorIsBusy(doctor, appointment.Start) == true)
+                {
+                    doctorList.Add(doctor);
+                }
+            }
+            return doctorList;
+        }
+
+        public Boolean CheckIfDoctorIsBusy(Doctor doctor,DateTime start)
+        {
+            foreach (var app in doctor.Appointments)
+            {
+                if (app.Start.Equals(start))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameters)
+        {
+            List<GetAppointmentsUrgentVacationDTO> returnList = new List<GetAppointmentsUrgentVacationDTO>();
+            DoctorAdapter adapter = new DoctorAdapter();
+            List<DateTime> timeRange = adapter.UrgentVacationParametersHandling(parameters);
+            foreach (var app in _doctorRepository.GetById(parameters.id).Appointments.ToList())
+            {
+                if(app.Start >= timeRange[0] && app.Start <= timeRange[1])
+                {
+                    returnList.Add(adapter.AppointmentToGetAppointmentsUrgentVacationDTO(app));
+                }
+            }
+            return returnList;
+        }
+
+        
+
+        public List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime)
+        {
+            List<DoctorToChangeUrgentVacationDTO> returnList = new List<DoctorToChangeUrgentVacationDTO>();
+            DoctorAdapter adapter = new DoctorAdapter();
+            foreach (var doc in _doctorRepository.GetAll())
+            {
+                if (CheckIfDoctorIsBusy(doc, DateTime.Parse( startDate + " " + startTime))== true)
+                    returnList.Add(adapter.DoctorToDoctorToChangeUrgentVacationDTO(doc));
+            }
+            return returnList;
+        }
     }
 }
