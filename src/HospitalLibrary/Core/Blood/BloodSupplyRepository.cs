@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Core.Blood
 {
-    public class BloodSupplyRepository : IBloodSupplyRepository
+    public class BloodSupplyRepository : IBloodConsuptionRepository
     {
 
         private readonly HospitalDbContext _context;
@@ -54,12 +54,12 @@ namespace HospitalLibrary.Core.Blood
             _context.SaveChanges();
         }
 
-        public BloodSupply GetByGroup(BloodType type)
+        public List<BloodSupply> GetByGroup(BloodType type)
         {
-            BloodSupply supply = _context.HospitalBlood.FirstOrDefault(s => s.Type == type);
 
-            return supply;
+            List<BloodSupply> supplies = _context.HospitalBlood.Where(s => s.Type == type).ToList();
+
+            return supplies;
         }
-
     }
 }
