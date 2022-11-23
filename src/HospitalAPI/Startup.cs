@@ -41,7 +41,8 @@ namespace HospitalAPI
             services.AddSingleton(emailConfig);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -53,7 +54,8 @@ namespace HospitalAPI
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration
                                 ["Jwt:Key"]))
                     };
-            });
+                });
+
             services.AddMvc();
             services.AddControllers(); //ovo vec ima
 

@@ -11,8 +11,11 @@ using System.Text;
 
 namespace HospitalAPI.Controllers
 {
-    public class CredentialsController : Controller
+	[Route("api/[controller]")]
+	[ApiController]
+	public class CredentialsController : Controller
     {
+
 		private IConfiguration _config;
 		private IUserService _userService;
 
