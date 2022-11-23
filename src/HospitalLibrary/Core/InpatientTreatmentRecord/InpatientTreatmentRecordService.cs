@@ -75,9 +75,26 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
             List<ViewAcceptedPatientsOnTreatmentDTO> recordsDTO = new List<ViewAcceptedPatientsOnTreatmentDTO>();
 
             foreach (InpatientTreatmentRecord record in records)
-                recordsDTO.Add(InpateintTreatmentRecordDTOAdapter.InpatientTreatmentRecordToDTO(record));
+            {
+                if (record.Status==true)
 
+                recordsDTO.Add(InpateintTreatmentRecordDTOAdapter.InpatientTreatmentRecordToDTO(record));
+            }
             return recordsDTO;
+        }
+
+        public DischargeTreatmentDTO GetRecordForDischarged(string id)
+        {
+            InpatientTreatmentRecord record = _inpatientTreatmentRecordRepository.GetById(id);
+
+            DischargeTreatmentDTO recordDTO = new DischargeTreatmentDTO();
+
+            recordDTO = InpateintTreatmentRecordDTOAdapter.DischargeToDTO(record);
+
+            return recordDTO;
+
+         
+
         }
     }
 }

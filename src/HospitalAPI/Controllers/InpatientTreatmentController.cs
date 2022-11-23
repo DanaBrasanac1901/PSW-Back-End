@@ -60,7 +60,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPut]
-        [Route("[action]/{id}")]
+        [Route("[action]/{id}/{reason}")]
         public ActionResult Discharge(string id, string reason)
         {
             if (!ModelState.IsValid)
@@ -77,7 +77,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPut]
-        [Route("[action]/{id}")]
+        [Route("[action]/{id}/{therapy}")]
         public ActionResult UpdateTherapy(string id, string therapy)
         {
             if (!ModelState.IsValid)
@@ -98,5 +98,11 @@ namespace HospitalAPI.Controllers
             return Ok(_inpatientTreatmentService.GetAllByDoctor(id));   
         }
 
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetRecordForDishcarged(string id)
+        {
+            return Ok(_inpatientTreatmentService.GetRecordForDischarged(id));
+        }
     }
 }
