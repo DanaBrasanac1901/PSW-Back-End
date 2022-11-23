@@ -35,6 +35,7 @@ namespace HospitalLibrary.Settings
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) {
             
         }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
