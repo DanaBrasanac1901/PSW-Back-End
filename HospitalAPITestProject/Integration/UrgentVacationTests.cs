@@ -24,9 +24,9 @@ namespace HospitalAPITestProject.Integration
             return new VacationController(scope.ServiceProvider.GetRequiredService<IVacationService>());
         }
 
-        private static CreateVacationRequestDTO SetUpCreateVacationRequestDTO(IServiceScope scope)
+        private static CreateUrgenVacationDTO SetUpCreateUrgenVacationDTO(IServiceScope scope)
         {
-            return new CreateVacationRequestDTO(scope.ServiceProvider.GetRequiredService<IVacationService>());
+            return new CreateUrgenVacationDTO(scope.ServiceProvider.GetRequiredService<IVacationService>());
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace HospitalAPITestProject.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var record = SetUpCreateVacationRequestDTO(scope);
+            var record = SetUpCreateUrgenVacationDTO(scope);
             var result = ((CreatedAtActionResult)controller.CreateUrgentRequest(record))?.Value as VacationRequest;
 
             Assert.NotNull(result);

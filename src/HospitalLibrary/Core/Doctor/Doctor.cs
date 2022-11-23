@@ -40,7 +40,7 @@ namespace HospitalLibrary.Core.Doctor
             Room = room;
             StartWorkTime = startWorkTime;
             EndWorkTime = endWorkTime;
-            Appointments = new List<Appointment.Appointment>();
+            Appointments = appointments;
             VacationRequests = new List<VacationRequest>();
         } 
 
