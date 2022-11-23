@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.User
 {
-    internal interface IUserService
+    public interface IUserService
     {
+        IEnumerable<User> GetAll();
+        User GetById(int id);
+        void Create(User user);
+        void Update(User user);
+        void Delete(User user);
     }
 }

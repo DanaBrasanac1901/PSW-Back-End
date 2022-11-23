@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.User;
 
 namespace HospitalLibrary.Settings
 {
@@ -28,6 +29,8 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodConsumptionRecord> BloodConsumptionRecords { get; set; }
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
+
+        public DbSet<User> Users { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
