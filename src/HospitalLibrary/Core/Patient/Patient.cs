@@ -14,6 +14,8 @@ namespace HospitalLibrary.Core.Patient
         private string name;
         private string surname;
         private string email;
+        private Gender gender;
+        private int age;
         private BloodType bloodType;
         private string allergies;
         private string doctorID;
@@ -22,12 +24,14 @@ namespace HospitalLibrary.Core.Patient
 
         public Patient() {}
 
-        public Patient(int id, string name, string surname, string email, BloodType bloodType, string allergies, string doctorID, bool active)
+        public Patient(int id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, string allergies, string doctorID, bool active)
         {
             this.Id = id;
             this.Name = name;
             this.Surname = surname;
-            this.email = email;
+            this.Email = email;
+            this.Gender = gender;
+            this.Age = age;
             this.BloodType = bloodType;
             this.Allergies = allergies;
             this.DoctorID = doctorID;
@@ -40,6 +44,8 @@ namespace HospitalLibrary.Core.Patient
         public string Surname { get => name; set => name = value; }
 
         public string Email { get => email; set => email = value; }
+        public Gender Gender { get => gender; set => gender = value; }
+        public int Age { get => age; set => age = value; }
         public BloodType BloodType { get => bloodType; set => bloodType = value; }
         public string Allergies { get => allergies; set => allergies = value; }
         public string DoctorID { get => doctorID; set => doctorID = value; }
