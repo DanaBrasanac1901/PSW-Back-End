@@ -11,12 +11,12 @@ using System.Text;
 
 namespace HospitalAPI.Controllers
 {
-    public class LoginController : Controller
+    public class CredentialsController : Controller
     {
 		private IConfiguration _config;
 		private IUserService _userService;
 
-		public LoginController(IConfiguration config, IUserService userService)
+		public CredentialsController(IConfiguration config, IUserService userService)
 		{
 			_config = config;
 			_userService = userService;
