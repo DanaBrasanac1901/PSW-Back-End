@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Patient
 {
-    public class Patient
+    public class Patient : Authorization.User
     {
         private int id;
-        private String patientName;
+        private String name;
+        private String surname;
         private String email;
         private String password;
         private BloodType bloodType;
@@ -24,7 +25,7 @@ namespace HospitalLibrary.Core.Patient
         public Patient(int id, string patientName, string email, string password, BloodType bloodType, string allergies, string doctorID, bool active)
         {
             this.Id = id;
-            this.PatientName = patientName;
+            this.Name = patientName;
             this.Email = email;
             this.Password = password;
             this.BloodType = bloodType;
@@ -35,7 +36,9 @@ namespace HospitalLibrary.Core.Patient
         }
 
         public int Id { get => id; set => id = value; }
-        public string PatientName { get => patientName; set => patientName = value; }
+        public string Name { get => name; set => name = value; }
+        public string Surname { get => name; set => name = value; }
+
         public string Email { get => email; set => email = value; }
         public string Password { get => password; set => password = value; }
         public BloodType BloodType { get => bloodType; set => bloodType = value; }
