@@ -1,4 +1,5 @@
 using System;
+using IntegrationAPI.DTO;
 using IntegrationLibrary.Report;
 using IronPdf;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,10 @@ namespace IntegrationAPI.Controllers
                 _reportService = reportService;
             }
 
-            public ReportController(ReportGeneratorService reportGeneratorService)
+          /*  public ReportController(ReportGeneratorService reportGeneratorService)
             {
                 _reportGeneratorService = reportGeneratorService;
-            }
+            }*/
 
             // GET: api/reports ili bez s?
             [HttpGet]
@@ -44,41 +45,36 @@ namespace IntegrationAPI.Controllers
 
             // POST api/reports
             [HttpPost]
-            public ActionResult Create(Report report)
+            public IActionResult Create([FromBody] ReportDTO report)
             {
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
-
+                
                 _reportService.Create(report);
-                return CreatedAtAction("GetById", new { id = report.Id }, report);
+                return Ok();
             }
 
-            // PUT api/reports/2
+            // PUT api/reports/2 
             [HttpPut("{id}")]
-            public ActionResult Update(Guid id, Report report)
+            public ActionResult Update(ReportDTO reportDto)
             {
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
-                }
-
-                if (id != report.Id)
-                {
-                    return BadRequest();
                 }
 
                 try
                 {
-                    _reportService.Update(report);
+                    _reportService.Update(reportDto);
                 }
                 catch
                 {
                     return BadRequest();
                 }
 
-                return Ok(report);
+                return Ok(reportDto);
             }
 
 
@@ -89,13 +85,13 @@ namespace IntegrationAPI.Controllers
                return  _reportGeneratorService.GeneratePdf(id);
             }
             
-            //za test
+            //za test KAKO ISTeSTIRATI KAD NIJE U KONTROLERU
             
             [HttpPost("report/test")]
             public PdfDocument GeneratePdf()
             {
                 return _reportGeneratorService.GeneratePdf();
                
-            }
+            } 
     }
     }

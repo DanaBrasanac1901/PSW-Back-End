@@ -1,6 +1,7 @@
 using System;
 using IntegrationAPI;
 using IntegrationAPI.Controllers;
+using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.Report;
 using IntegrationTests.Integration;
 using IntegrationTests.Setup;
@@ -16,10 +17,13 @@ namespace IntegrationTests
     {
         public ConfigurationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
+/*
         private static ReportController SetupController(IServiceScope scope)
         {
             return new ReportController(scope.ServiceProvider.GetRequiredService<ReportGeneratorService>());
-        }
+        } */ 
+
+        public static ReportGeneratorService _reportGeneratorService = new ReportGeneratorService();
 
         [Fact]
         public void Test1()
@@ -30,11 +34,12 @@ namespace IntegrationTests
         [Fact]
         public void Generating_pdf()
         {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-           
-            PdfDocument result = controller.GeneratePdf();
+            /* using var scope = Factory.Services.CreateScope();
+             var controller = SetupController(scope);
 
+             PdfDocument result = controller.GeneratePdf();
+            */
+            PdfDocument result = _reportGeneratorService.GeneratePdf();
             Assert.NotNull(result);
         }  
     /*

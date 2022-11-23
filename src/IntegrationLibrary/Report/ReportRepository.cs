@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 
 namespace IntegrationLibrary.Report
 {
@@ -17,18 +18,17 @@ namespace IntegrationLibrary.Report
 
         public IEnumerable<Report> GetAll()
         {
-            return _context.Reports.ToList();
+            return _context.ReportTable.ToList();
         }
 
         public Report GetById(Guid id)
         {
-            return _context.Reports.Find(id);
+            return _context.ReportTable.Find(id);
         }
 
         public void Create(Report report)
         {
-            report.ConfigurationDate = DateTime.Today;
-            _context.Reports.Add(report);
+            _context.ReportTable.Add(report);
             _context.SaveChanges();
         }
 
@@ -45,6 +45,6 @@ namespace IntegrationLibrary.Report
                 throw;
             }
         }
-
+        
     }
 }

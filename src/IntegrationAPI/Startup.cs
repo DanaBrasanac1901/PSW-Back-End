@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using IntegrationAPI.BBConnection;
 using System.Linq;
 using IntegrationLibrary.Report;
+using IntegrationLibrary.Settings;
 
 namespace IntegrationAPI
 {
@@ -73,7 +74,11 @@ namespace IntegrationAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-
+            using (var sScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var cx = sScope.ServiceProvider.GetService<IntegrationDbContext>();
+                cx?.Database.Migrate();
+            }
 
             if (env.IsDevelopment())
             {

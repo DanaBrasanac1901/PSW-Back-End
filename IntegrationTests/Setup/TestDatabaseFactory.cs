@@ -47,22 +47,19 @@ namespace IntegrationTests.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\";");
             
             
-            context.Reports.Add(new Report(
-                new Guid("e2ddfa02610e48e983824b23ac955632"), 
+            context.ReportTable.Add(new Report(
                 new Guid(),
                 DateTime.Now, 
                 IntegrationLibrary.Report.Period.Daily,
                 DateTime.Today));
             
-            context.Reports.Add(new Report(
-                new Guid("e2ddfa02620e48e983824b23ac955632"), 
+            context.ReportTable.Add(new Report( 
                 new Guid(),
                 DateTime.Now, 
                 IntegrationLibrary.Report.Period.Monthly,
                 
                 DateTime.Today));
-            context.Reports.Add(new Report(
-                new Guid("e2ddfa88610e48e983824b23ac955632") , 
+            context.ReportTable.Add(new Report(
                 new Guid(),
                 DateTime.Today, 
                 IntegrationLibrary.Report.Period.EveryTwoMonths,

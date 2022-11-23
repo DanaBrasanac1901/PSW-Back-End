@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using IntegrationAPI.DTO;
 
 namespace IntegrationLibrary.Report
 {
@@ -7,7 +8,7 @@ namespace IntegrationLibrary.Report
     {
         IEnumerable<Report> GetAll();
         Report GetById(Guid id);
-        void Create(Report report);
-        void Update(Report report);
+        void Create(ReportDTO report);
+        void Update(ReportDTO report);
     }
 }
