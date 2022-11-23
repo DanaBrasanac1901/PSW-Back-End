@@ -40,16 +40,22 @@ namespace HospitalLibrary.Core.Patient
             _patientRepository.Create(patient);
         }
 
+        /*
         public void Register(Patient patient)
         {
             patient.Active = false;
             _patientRepository.Create(patient);
         }
+        */
+
         public void Activate(Patient patient)
         {
             patient.Active = true;
             _patientRepository.Update(patient);
         }
+
+   
+
         public void Update(Patient patient)
         {
             _patientRepository.Update(patient);
@@ -122,6 +128,8 @@ namespace HospitalLibrary.Core.Patient
             return doctorIds;
 
         }
+
+        /*
         public Patient CheckCreditentials(string username, string password)
         {
             foreach(Patient p in GetAll())
@@ -133,5 +141,6 @@ namespace HospitalLibrary.Core.Patient
             }
             return null;
         }
+        */
     }
 }

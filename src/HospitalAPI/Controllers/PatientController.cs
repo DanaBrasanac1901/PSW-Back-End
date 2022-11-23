@@ -50,6 +50,8 @@ namespace HospitalAPI.Controllers
             _patientService.Create(patient);
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
+
+        /*
         [HttpPost("login")]
         public ActionResult Login(Patient patient)
         {
@@ -61,6 +63,9 @@ namespace HospitalAPI.Controllers
             _patientService.CheckCreditentials(patient.Email,patient.Password);
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
+
+        
+
         [HttpPost("validate/{id}")]
         public ActionResult Validate(Patient patient)
         {
@@ -72,6 +77,7 @@ namespace HospitalAPI.Controllers
             _patientService.Activate(patient);
             return Ok(patient);
         }
+
         [HttpPost("register")]
         public ActionResult Register(Patient patient)
         {
@@ -83,6 +89,8 @@ namespace HospitalAPI.Controllers
             _patientService.Register(patient);
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
+
+        */
 
         
 
@@ -140,6 +148,8 @@ namespace HospitalAPI.Controllers
         
         }
 
+        /*
+
         [HttpGet("login/{email}")]
         public ActionResult CheckEmail(string email)
         {
@@ -157,5 +167,8 @@ namespace HospitalAPI.Controllers
 
             return Ok(patient);
         }
+
+        */
     }
+
 }

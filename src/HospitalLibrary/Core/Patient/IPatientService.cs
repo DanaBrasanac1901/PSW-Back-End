@@ -9,9 +9,10 @@ namespace HospitalLibrary.Core.Patient
         void Create(Patient patient);
         void Update(Patient patient);
         void Delete(Patient patient);
-        void Register(Patient patient);
+       // void Register(Patient patient);
         void Activate(Patient patient);
-        Patient CheckCreditentials(string username, string password);
+        
+        //Patient CheckCreditentials(string username, string password);
         IEnumerable<string> GetDoctorsWithLeastPatients();
         int GetMinNumOfPatients(int minNumber);
         int GetMaxNumOfPatients();
