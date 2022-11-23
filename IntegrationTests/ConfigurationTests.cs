@@ -26,7 +26,25 @@ namespace IntegrationTests
         public static ReportGeneratorService _reportGeneratorService = new ReportGeneratorService();
 
         [Fact]
-        public void Test1()
+        public void Create_report()
+        {
+
+        }
+        
+        [Fact]
+        public void Update_report()
+        {
+
+        }
+        
+        [Fact]
+        public void Read_report()
+        {
+
+        }
+        
+        [Fact]
+        public void Get_information_for_report()
         {
 
         }

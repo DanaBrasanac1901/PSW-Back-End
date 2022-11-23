@@ -44,7 +44,7 @@ namespace IntegrationTests.Setup
         {
             context.Database.EnsureCreated();
             
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportTable\";");
             
             
             context.ReportTable.Add(new Report(
