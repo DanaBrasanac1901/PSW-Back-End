@@ -24,7 +24,7 @@ namespace HospitalAPI.Controllers
 
 		[AllowAnonymous] //prevent the auth process to happen when calling
 
-		[HttpPost]
+		[HttpPost("login")]
 		public IActionResult Login([FromBody] User user)
 		{
 			var _user = Authenticate(user);

@@ -105,7 +105,7 @@ namespace HospitalAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
