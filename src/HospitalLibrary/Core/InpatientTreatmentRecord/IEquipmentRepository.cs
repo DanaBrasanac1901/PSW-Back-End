@@ -15,6 +15,6 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
         void Update(Equipment equipment);
         void Delete(Equipment equipment);
         Equipment GetByType(EquipmentType type);
-
+        IEnumerable<string> GetRoomFreeBeds(int id);
     }
 }

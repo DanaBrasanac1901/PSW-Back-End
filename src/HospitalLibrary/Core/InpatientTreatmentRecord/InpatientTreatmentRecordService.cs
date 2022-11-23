@@ -75,10 +75,15 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
             List<ViewAcceptedPatientsOnTreatmentDTO> recordsDTO = new List<ViewAcceptedPatientsOnTreatmentDTO>();
 
             foreach (InpatientTreatmentRecord record in records)
+
             {
                 if (record.Status==true)
 
+                
                 recordsDTO.Add(InpateintTreatmentRecordDTOAdapter.InpatientTreatmentRecordToDTO(record));
+
+
+           
             }
             return recordsDTO;
         }
