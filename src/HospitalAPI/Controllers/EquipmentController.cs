@@ -1,4 +1,5 @@
 using HospitalLibrary.Core.Equipment;
+using HospitalLibrary.Core.InpatientTreatmentRecord;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -21,6 +22,13 @@ namespace HospitalAPI.Controllers
             return Ok(_equipmentService.GetAvailableRoomBeds(id));
         }
 
-        
+        [HttpPut]
+        [Route("[action]/{id}/{status}")]
+        public ActionResult ChangeBedStatus(string id, int status)
+        {
+            return Ok(_equipmentService.ChangeBedStatus(id, status));
+        }
+
+
     }
 }
