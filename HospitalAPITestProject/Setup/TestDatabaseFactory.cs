@@ -72,11 +72,12 @@ namespace HospitalTests.Setup
         private static void InitializePatients(HospitalDbContext context)
         {
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\";");
-            context.Patients.Add(new Patient { Id = 1, Name = "Janko", Surname="Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies="", DoctorID="1",Active=true });
-            context.Patients.Add(new Patient { Id = 2, Name = "Milan", Surname = "Simic",  Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = "", DoctorID="1",Active=true });
+
+           /* context.Patients.Add(new Patient { Id = 1, Name = "Janko", Surname = "Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies =[], DoctorID = "1", Active = true });
+            context.Patients.Add(new Patient { Id = 2, Name = "Milan", Surname = "Simic",  Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = [], DoctorID="1",Active=true });
             context.Patients.Add(new Patient { Id = 3, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = "", DoctorID="2", Active=true });
             context.Patients.Add(new Patient { Id = 4, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = "",DoctorID="3", Active=true });
-            context.Patients.Add(new Patient { Id = 5, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = "", DoctorID = "1", Active = true });
+            context.Patients.Add(new Patient { Id = 5, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = "", DoctorID = "1", Active = true });*/
         }
     }
 }

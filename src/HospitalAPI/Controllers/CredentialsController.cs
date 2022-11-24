@@ -13,7 +13,7 @@ namespace HospitalAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class CredentialsController : Controller
+	public class CredentialsController : ControllerBase
     {
 
 		private IConfiguration _config;
@@ -30,10 +30,13 @@ namespace HospitalAPI.Controllers
 		[HttpPost("login")]
 		public IActionResult Login([FromBody] User user)
 		{
+			Console.WriteLine("u loginu");
 			var _user = Authenticate(user);
 			if (_user != null)
 			{
+				Console.WriteLine("user is not null");
 				var token = Generate(_user);
+				Console.WriteLine(token);
 				return Ok(token);
 			}
 
@@ -48,7 +51,7 @@ namespace HospitalAPI.Controllers
 
 			var claims = new[] //a way to store the data so that you don't have to always access the db
 			{ //these are set-in-stone claims (NameIdentifier, Email, GivenName)
-				new Claim(ClaimTypes.NameIdentifier, user.Name),
+				new Claim(ClaimTypes.Sid, user.Id.ToString()),
 				new Claim(ClaimTypes.Email, user.Email),
 				new Claim(ClaimTypes.GivenName, user.Name),
 				new Claim(ClaimTypes.Surname, user.Surname), 

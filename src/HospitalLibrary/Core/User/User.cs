@@ -8,8 +8,23 @@ namespace HospitalLibrary.Core.User
 {
     public class User
     {
+        public User(int id, string name, string surname, string email,string password, string role)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Surname = surname;
+            this.Email = email;
+            this.Password = password;
+            this.Role = role;
+
+        }
+
+        public User()
+        {
+
+        }
+
         int id;
-        
         string name;
         string surname;
         string email;

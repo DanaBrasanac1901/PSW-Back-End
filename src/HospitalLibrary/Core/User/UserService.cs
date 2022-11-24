@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.User
 {
-    internal class UserService : IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         public UserService(IUserRepository userRepository)
