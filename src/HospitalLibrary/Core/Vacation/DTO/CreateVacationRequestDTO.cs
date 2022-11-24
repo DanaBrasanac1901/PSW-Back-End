@@ -22,6 +22,10 @@ namespace HospitalLibrary.Core.Vacation.DTO
         public CreateVacationRequestDTO(IVacationService vacationRequestService)
         {
             this.vacationRequestService = vacationRequestService;
+            this.Start = DateTime.Now.AddMinutes(Int64.Parse(DateTime.Now.ToString("yyMMddhhmm"))).ToString();
+            this.End = DateTime.Now.AddMinutes(Int64.Parse(DateTime.Now.ToString("yyMMddhhmm"))).AddSeconds(1).ToString();
+            this.Description = "BalkanBoy";
+            this.Urgency = false;
         }
     }
 }

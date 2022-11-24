@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Vacation
         IEnumerable<VacationRequest> GetAll();
         VacationRequest GetById(int id);
         void CreateVacationRequest(VacationRequest vacationRequest);
-        VacationRequest CreateUrgentVacationRequest(CreateUrgenVacationDTO vacationRequest);
+        string CreateUrgentVacationRequest(CreateUrgenVacationDTO vacationRequest);
         void UpdateVacationRequest(VacationRequest vacationRequest);
         void Cancel(int requestId);
         void Disapprove(int requestId);

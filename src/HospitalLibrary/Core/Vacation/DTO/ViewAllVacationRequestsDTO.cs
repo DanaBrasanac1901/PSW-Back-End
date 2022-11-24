@@ -10,13 +10,11 @@ namespace HospitalLibrary.Core.Vacation.DTO
 {
     public class ViewAllVacationRequestsDTO
     {
-        public DateTime Start { get; set; }
-        public DateTime End { get; set; }
-        public string Description { get; set; }
-        public bool Urgency { get; set; }
-
-        public VacationRequestStatus Status { get; set; }
-        public string RejectionReason { get; set; }
+        public int id { get; set; }
+        public string doctorId { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+        public string description { get; set; }
 
         public ViewAllVacationRequestsDTO() { }
     }

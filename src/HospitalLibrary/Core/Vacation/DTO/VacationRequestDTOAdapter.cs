@@ -16,12 +16,12 @@ namespace HospitalLibrary.Core.Vacation.DTO
             string[] startDate = request.Start.Split('-');
             string[] endDate = request.End.Split('-');
 
-            vacationRequest.Start = new DateTime(Int32.Parse(startDate[2]), Int32.Parse(startDate[1]), Int32.Parse(startDate[0]));
-            vacationRequest.End = new DateTime(Int32.Parse(endDate[2]), Int32.Parse(endDate[1]), Int32.Parse(endDate[0]));
+            vacationRequest.Start = DateTime.Parse(request.Start);
+            vacationRequest.End = DateTime.Parse(request.End);
 
 
             vacationRequest.Description = request.Description;
-            vacationRequest.Urgency = request.Urgency;
+            vacationRequest.Urgency = false;
             vacationRequest.RejectionReason = "";
             vacationRequest.Status = Enums.VacationRequestStatus.WaitingForApproval;
 
@@ -31,15 +31,12 @@ namespace HospitalLibrary.Core.Vacation.DTO
         public static ViewAllVacationRequestsDTO VacationRequestToDTO(VacationRequest request)
         {
             ViewAllVacationRequestsDTO requestDTO = new ViewAllVacationRequestsDTO();
-            requestDTO.Start = request.Start;
-            requestDTO.End = request.End;
-            requestDTO.Description = request.Description;
-            requestDTO.Urgency = request.Urgency;
-            requestDTO.Status = request.Status;
-            requestDTO.RejectionReason = request.RejectionReason;
-
+            requestDTO.id = request.Id;
+            requestDTO.start = request.Start.ToString();
+            requestDTO.end = request.End.ToString();
+            requestDTO.description = request.Description;
+            requestDTO.doctorId = request.DoctorId;
             return requestDTO;
-
         }
 
         public static VacationRequest CreateUrgenVacationDTOToVacationRequest(CreateUrgenVacationDTO dto)

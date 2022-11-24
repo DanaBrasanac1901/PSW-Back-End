@@ -15,5 +15,12 @@ namespace HospitalLibrary.Core.Doctor.DTOS
         public GetDoctorsAppointmentsForUrgentVacationDTO()
         {
         }
+
+        public GetDoctorsAppointmentsForUrgentVacationDTO(string id, string vacationStart, string vacationEnd)
+        {
+            this.id = id;
+            this.vacationStart = vacationStart;
+            this.vacationEnd = vacationEnd;
+        }
     }
 }

@@ -3,16 +3,18 @@ using HospitalAPI.Controllers;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Vacation.DTO;
 using HospitalTests.Setup;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace HospitalAPITestProject.Integration
+namespace HospitalTests.Integration
 {
     public class UrgentVacationTests : BaseIntegrationTest
     {
@@ -24,7 +26,7 @@ namespace HospitalAPITestProject.Integration
             return new VacationController(scope.ServiceProvider.GetRequiredService<IVacationService>());
         }
 
-        private static CreateUrgenVacationDTO SetUpCreateUrgenVacationDTO(IServiceScope scope)
+        private static CreateUrgenVacationDTO SetUpCreateVacationRequestDTO(IServiceScope scope)
         {
             return new CreateUrgenVacationDTO(scope.ServiceProvider.GetRequiredService<IVacationService>());
         }
@@ -33,12 +35,10 @@ namespace HospitalAPITestProject.Integration
         public void Create_urgent_vacation_request()
         {
             using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-
-            var record = SetUpCreateUrgenVacationDTO(scope);
-            var result = ((CreatedAtActionResult)controller.CreateUrgentRequest(record))?.Value as VacationRequest;
-
-            Assert.NotNull(result);
+            var controller = SetupController(scope);o
+            var record = SetUpCreateVacationRequestDTO(scope);
+            var result = ((OkObjectResult)controller.CreateUrgentRequest(record))?.Value as string;
+            Assert.Equal("Passed",result);
         }
     }
 }
