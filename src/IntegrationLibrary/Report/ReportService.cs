@@ -28,12 +28,26 @@ namespace IntegrationLibrary.Report
         }
         
 
-        public void Create(ReportDTO report)
+        public void Create(ReportDTO reportDTO)
         {
-            Report newReport = ReportDtoAdapter.NewReport(report);
-            _reportRepository.Create(newReport);
+            Report newReport = ReportDtoAdapter.NewReport(reportDTO);
 
-        }
+            foreach (Report report in GetAll())
+            {
+                if (report.Matches(newReport.Id))
+             {
+                    report.Period = newReport.Period;
+                    Update(reportDTO);
+                    return;
+
+                }
+
+               
+            }
+           
+            _reportRepository.Create(newReport);
+            }
+       
 
 
         public void Update(ReportDTO reportDto)
@@ -41,10 +55,12 @@ namespace IntegrationLibrary.Report
             foreach (Report report in GetAll())
             {
                 if (report.Id == reportDto.Id)
-                {
+             {
                     report.Period = reportDto.Period;
+                    report.ConfigurationDate=DateTime.Now;
+
                 }
-                
+
                 _reportRepository.Update(report);
             }
 

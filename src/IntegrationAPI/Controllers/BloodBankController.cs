@@ -94,11 +94,12 @@ namespace IntegrationAPI.Controllers
         
         [HttpPut] 
         [Route("ConfirmBBAccount/{id:Guid}")]
-        public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromBody] object password)
+       
+        public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromForm] string password)
             {
                 _IbbService.UpdatePassword(id, password.ToString());
                 
-                return Ok("Confirmed"); //?
+                return Ok(); //?
             }
 
         }

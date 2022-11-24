@@ -1,5 +1,7 @@
 using System;
+using AutoMapper;
 using IntegrationAPI.DTO;
+using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.Report;
 using IronPdf;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +14,17 @@ namespace IntegrationAPI.Controllers
     public class ReportController : Controller
     {
         private readonly IReportService _reportService;
-        public ReportController(IReportService reportService)
+        private readonly IMapper _mapper;
+        public ReportController(IReportService reportService, IMapper mapper)
         {
             _reportService = reportService;
+            _mapper = mapper;   
         }
 
         // GET: api/reports ili bez s?
         [HttpGet]
         public ActionResult GetAll()
+
         {
             return Ok(_reportService.GetAll());
         }
@@ -36,8 +41,9 @@ namespace IntegrationAPI.Controllers
 
         // POST api/reports
         [HttpPost]
-        public IActionResult Create([FromBody] ReportDTO report)
+        public IActionResult Create([FromBody] ReporttDTO reportt)
         {
+            var report = _mapper.Map<ReportDTO>(reportt);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -71,4 +77,4 @@ namespace IntegrationAPI.Controllers
     }
 
 }
-    }
+   
