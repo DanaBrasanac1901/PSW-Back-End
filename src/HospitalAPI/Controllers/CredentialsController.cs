@@ -114,7 +114,7 @@ namespace HospitalAPI.Controllers
 					if (token == null)
 					{
 						// If user does not exist or is not confirmed.
-						return View("Index");
+						//return View("Index");
 					}
 					else
 					{
