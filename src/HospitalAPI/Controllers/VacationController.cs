@@ -45,15 +45,11 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             
             VacationRequest newRequest = VacationRequestDTOAdapter.VacationRequestDTOToObject(request);
             newRequest.Id = _vacationService.GenerateId();
 
-
             _vacationService.CreateVacationRequest(newRequest);
-
-            var created = GetById(newRequest.Id);
 
             return CreatedAtAction("GetById", new { id = newRequest.Id }, newRequest);
         }

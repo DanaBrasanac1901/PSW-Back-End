@@ -10,11 +10,11 @@ using Xunit;
 
 namespace HospitalTests.Integration
 {
-    public class VacationTests : BaseIntegrationTest
+    public class NonUrgentVacationTests : BaseIntegrationTest
     {
         private object request;
 
-        public VacationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
+        public NonUrgentVacationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
         private static VacationController SetupController(IServiceScope scope)
         {
             return new VacationController(scope.ServiceProvider.GetRequiredService<IVacationService>());
@@ -31,8 +31,13 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var record = SetUpCreateVacationRequestDTO(scope);
-            var result = ((CreatedAtActionResult)controller.CreateRequest(record))?.Value as VacationRequest;
+            //var request = SetUpCreateVacationRequestDTO(scope);
+
+            var result = ((CreatedAtActionResult)controller.CreateRequest(
+                new CreateVacationRequestDTO { 
+                   Start="02-04-2022", End= "06-04-2022", Description="so tired", Urgency=false
+                }
+                ))?.Value as VacationRequest;
 
             Assert.NotNull(result);
         }

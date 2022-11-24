@@ -44,8 +44,26 @@ namespace HospitalTests.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            
+
+
+            context.Database.ExecuteSqlRaw("truncate table \"VacationRequests\";");
+            context.VacationRequests.Add(new VacationRequest { Id = 5, Start = new DateTime(2023, 1, 1), End = new DateTime(2023, 1, 14), Description = "holidays", Urgency = false, DoctorId = "DOC1" });
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\";");
+            context.Appointments.Add(new Appointment { Id = "APP1", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 11, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+            context.Appointments.Add(new Appointment { Id = "APP2", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 12, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+            context.Appointments.Add(new Appointment { Id = "APP3", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 5, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+            context.Appointments.Add(new Appointment { Id = "APP4", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 12, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Doctors\";");
+            context.Doctors.Add(new Doctor { Id = "DOC1", Name = "Milan", Surname = "Radovic", Email = "radovic@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 16, Appointments = context.Appointments.ToList(), VacationRequests = new System.Collections.Generic.List<VacationRequest>() });
+
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");
+            context.Rooms.Add(new HospitalLibrary.Core.Room.Room { Id = 1, Number = "ROOM1", Floor = 1 });
+
+
             /**
             context.VacationRequests.Add(new VacationRequest { Id = 1, Start = new DateTime(2023, 3, 5), End = new DateTime(2023, 3, 10), Description = "need rest", Urgency = false, DoctorId = "DOC1", Status = VacationRequestStatus.WaitingForApproval });
 
@@ -85,7 +103,7 @@ namespace HospitalTests.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");
             context.Rooms.Add(new HospitalLibrary.Core.Room.Room { Id = 1, Number = "ROOM1", Floor = 1 });
             **/
-            
+
             context.SaveChanges();
         }
     }

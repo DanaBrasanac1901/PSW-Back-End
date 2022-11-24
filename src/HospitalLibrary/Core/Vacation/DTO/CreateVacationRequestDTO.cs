@@ -17,7 +17,10 @@ namespace HospitalLibrary.Core.Vacation.DTO
         public string Description { get; set; }
         public bool Urgency { get; set; }
 
-        public CreateVacationRequestDTO() { }
+        public CreateVacationRequestDTO() {
+            Start = "";
+            End = "";
+        }
 
         public CreateVacationRequestDTO(IVacationService vacationRequestService)
         {
