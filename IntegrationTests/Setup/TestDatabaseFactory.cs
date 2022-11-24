@@ -44,7 +44,7 @@ namespace IntegrationTests.Setup
         {
             context.Database.EnsureCreated();
             
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportTable\";");
+           /* context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportTable\";");
             
             
             context.ReportTable.Add(new Report(
@@ -64,7 +64,7 @@ namespace IntegrationTests.Setup
                 DateTime.Today, 
                 IntegrationLibrary.Report.Period.EveryTwoMonths,
                 DateTime.Today));
-
+*/
             context.SaveChanges();
         }
     }

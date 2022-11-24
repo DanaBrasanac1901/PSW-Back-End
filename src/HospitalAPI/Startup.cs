@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.Vacation;
 
 namespace HospitalAPI
 {
@@ -54,14 +55,16 @@ namespace HospitalAPI
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-            //services.AddScoped<IEmailSend, EmailSend>();
+
+            services.AddScoped<IVacationService, VacationService>();
+            services.AddScoped<IVacationRepository, VacationRepository>();
 
             services.AddScoped<IEmailSendService, EmailSendService>();
 
             services.AddScoped<IBloodConsuptionRecordRepository, BloodConsumptionRecordRepository>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IBloodService, BloodService>();
-            services.AddScoped<IBloodSupplyRepository, BloodSupplyRepository>();
+            services.AddScoped<IBloodConsuptionRepository, BloodSupplyRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

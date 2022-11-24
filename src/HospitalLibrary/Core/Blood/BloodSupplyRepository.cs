@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Core.Blood
 {
-    public class BloodSupplyRepository : IBloodSupplyRepository
+    public class BloodSupplyRepository : IBloodConsuptionRepository
     {
 
         private readonly HospitalDbContext _context;
@@ -51,6 +52,14 @@ namespace HospitalLibrary.Core.Blood
         {
             _context.HospitalBlood.Remove(bloodSupply);
             _context.SaveChanges();
+        }
+
+        public List<BloodSupply> GetByGroup(BloodType type)
+        {
+
+            List<BloodSupply> supplies = _context.HospitalBlood.Where(s => s.Type == type).ToList();
+
+            return supplies;
         }
     }
 }

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using IntegrationAPI;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.DTO;
@@ -9,8 +11,10 @@ using IntegrationTests.Setup;
 using IronPdf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using Nest;
 using Xunit;
+using Xunit.Sdk;
 
 namespace IntegrationTests
 {
@@ -18,14 +22,11 @@ namespace IntegrationTests
     {
         public ConfigurationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
-
+        private Mock<IReportGeneratorService> _reportGeneratorService = new Mock<IReportGeneratorService>();
         private static ReportController SetupController(IServiceScope scope)
         {
             return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>());
-        } 
-
-        public static ReportGeneratorService _reportGeneratorService = new ReportGeneratorService();
-
+        }
         [Fact]
         public void Create_report()
         {
@@ -33,7 +34,8 @@ namespace IntegrationTests
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            Report result = new Report(Period.Daily, new Guid());
+            ReportDTO result = new ReportDTO(Period.Daily, new Guid());
+            controller.Create(result);
             Assert.NotNull(result);
         }
         
@@ -41,14 +43,10 @@ namespace IntegrationTests
         public void Update_report()
         {
             
-            
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            Guid id = new Guid("9A76E313-E764-4B63-8544-5AAC14155C6A");
-            Report result = controller.GetById(id);
-            ReportDTO resultDTO = new ReportDTO(Period.EveryTwoMonths, result.Id);
-            controller.Update(resultDTO);
-            Assert.NotNull(result);
+            ReportDTO resultDto = new ReportDTO(Period.EveryTwoMonths, new Guid("6799e115-a7b0-4d37-be5e-ecbb1929b3a2"));
+            Assert.NotNull(controller.Update(resultDto));
 
         }
         
@@ -70,29 +68,14 @@ namespace IntegrationTests
         [Fact]
         public void Generating_pdf()
         {
-             using var scope = Factory.Services.CreateScope();
-             var controller = SetupController(scope);
 
-            // PdfDocument result = controller.GeneratePdf();
-            
-            PdfDocument result = _reportGeneratorService.GeneratePdf();
-            Assert.NotNull(result);
-        }  
-    /*
-        
-        [Fact]
-        public void Generating_pdf_for_report()
-        {
-            
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-           
-            PdfDocument result = controller.GeneratePdf(new Guid("e2ddfa02620e48e983824b23ac955632"));
-            Assert.NotNull(result);
-        }
-        */
-    
-    
-    
+
+            var report = controller.GetById(new Guid("204932d0-7956-4199-9e0d-cf2903c9903b"));
+            _reportGeneratorService.Verify(result => result.GeneratePdf(report));
+            //Assert
+        }  
+        
     }
 }

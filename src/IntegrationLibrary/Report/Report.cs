@@ -33,5 +33,22 @@ namespace IntegrationLibrary.Report
         public Report()
         {
         }
+        
+        public bool Matches(Report compareReport)
+        {
+            return Id == compareReport.Id;
+        }
+
+        public bool Matches(Guid id)
+        {
+            return Id == id;
+        }
+        public void UpdateReport(Report updateReport)
+        {
+            Period = updateReport.Period;
+            LastReportGeneration = DateTime.Now;
+            ConfigurationDate = DateTime.Now;
+            
+        }
     }
 }

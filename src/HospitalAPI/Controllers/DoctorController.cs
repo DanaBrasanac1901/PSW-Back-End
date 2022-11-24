@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Doctor.DTOS;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers
 {
@@ -112,6 +113,36 @@ namespace HospitalAPI.Controllers
             }
 
             return Ok(doctor);
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}/{vacationStart}/{vacationEnd}")]
+        public ActionResult GetDoctorsAppointmentsForVacation(string id, string vacationStart, string vacationEnd)
+        {
+            GetDoctorsAppointmentsForUrgentVacationDTO dto = new GetDoctorsAppointmentsForUrgentVacationDTO();
+            dto.id = id;
+            dto.vacationStart = vacationStart;
+            dto.vacationEnd = vacationEnd;
+            var apps = _doctorService.GetAppointmentsUrgentVacation(dto);
+            if(apps == null)
+            {
+                return NotFound();
+            }
+            return Ok(apps);
+        }
+
+        [HttpGet]
+        [Route("[action]/{startDate}/{startTime}")]
+        public ActionResult GetDoctorsForRearrange(string startDate,string startTime)
+        {
+            List<DoctorToChangeUrgentVacationDTO> doctors = _doctorService.GetFreeDoctors(startDate, startTime);
+
+            if(doctors == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(doctors);
         }
     }
 }

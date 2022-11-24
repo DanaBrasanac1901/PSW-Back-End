@@ -17,153 +17,120 @@ namespace IntegrationLibrary.Report
         
         private readonly IReportRepository _reportRepository;
         private readonly IBloodBankRepository _bloodBankRepository;
-        
-        private readonly IBloodConsuptionRecordRepository _bloodRepository;
-        private IEnumerable<Report> _allReports = new List<Report>();
-        private PdfDocument _report;
+       // private readonly IBloodConsuptionRecordRepository _bloodRepository;
 
         public ReportGeneratorService(IReportRepository reportRepository, 
-            IBloodBankRepository bloodBankRepository, IBloodConsuptionRecordRepository bloodRepository)
+            IBloodBankRepository bloodBankRepository)
         {
             _reportRepository = reportRepository;
             _bloodBankRepository = bloodBankRepository;
-
-            _bloodRepository = bloodRepository;
-            _allReports = _reportRepository.GetAll();
+           // _bloodRepository = bloodRepository;
+        
         }
 
-        public ReportGeneratorService()
-        {
-        }
-
-        private double ConsumptionAmount(Guid reportId)
-        {
-            
-            //int totalCount = _bloodRepository.GetForBank();
-
-            return   CalculateForPeriod(reportId);
-        }
-
-        private double CalculateForPeriod(Guid reportId)
-        {
-            Report report = _reportRepository.GetById(reportId);
-            double consumption = 0;
-
-            
-            //lista svih bloodConsumptiona
-            foreach (BloodConsumptionRecord bloodConsumption in _bloodRepository.GetAll())
+        //glavna fja
+        public void GeneratePdf()
+        { 
+            foreach (var report in _reportRepository.GetAll())
             {
-                //ako se matchuju id reporta i u recordu
-                if (bloodConsumption.CreatedAt <
-                    report.LastReportGeneration + ConvertPeriodToTimeSpan(report.Period) &&
-                    bloodConsumption.CreatedAt > report.LastReportGeneration)
-                 {
-                   consumption += (bloodConsumption.Amount); 
-                 } 
+                GeneratePdf(report);
             }
-            
-            return consumption;
-
         }
 
-        private TimeSpan ConvertPeriodToTimeSpan(Period period)
+       
+        //odvojeno pozvana za test
+        public bool GeneratePdf(Report report)
         {
-            if (period == Period.Daily)
-            {
-                return TimeSpan.FromDays(1);
-            }
-            else if (period == Period.Monthly)
-            {
-                return TimeSpan.FromDays(30);
-            }
-            else
-            {
-                return TimeSpan.FromDays(240);
-            }
 
-        }
+            var reportForGenerating = _reportRepository.GetById(report.Id);
 
-
-        //za test
-        public PdfDocument GeneratePdf()
-        {
-            ChromePdfRenderer renderer = new IronPdf.ChromePdfRenderer
+            if (reportForGenerating.LastReportGeneration + PeriodConverter.Convert(reportForGenerating.Period) ==
+                DateTime.Today)
             {
-                RenderingOptions =
+                var renderer = new IronPdf.ChromePdfRenderer
                 {
-                    PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
-                    ViewPortWidth = 1280
-                }
-            };
+                    RenderingOptions =
+                    {
+                        PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
+                        ViewPortWidth = 1280
+                    }
+                };
 
-            PdfDocument pdf = renderer.RenderHtmlAsPdf("<h1>Report</h1> Report for week hellloo ");
-          
-            pdf.SaveAs( "report.pdf");
-            
-            return pdf;
+                var reportHtml = Html(reportForGenerating);
+                var pdf = renderer.RenderHtmlAsPdf(reportHtml);
+
+                var pdfName = reportForGenerating.Id + "report.pdf";
+                pdf.SaveAs(pdfName);
+
+                reportForGenerating.LastReportGeneration = DateTime.Today;
+                _reportRepository.Update(reportForGenerating);
+
+                //SALJI DALJE PDF
+                return true;
+            }
+
+            else return false;
         }
-        
-        
-        
-        public PdfDocument GeneratePdf(Guid reportId)
+
+
+
+        private string Html(Report report)
         {
-            var generateReport = _reportRepository.GetById(reportId);
-            var renderer = new IronPdf.ChromePdfRenderer
+            if (_bloodBankRepository.GetById(report.Id) != null)
             {
-                RenderingOptions =
-                {
-                    PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
-                    ViewPortWidth = 1280
-                }
-            };
+                //{bloodBank.Username}
+                return $"<h1>Report </h1> Report for week ";
+                //+ $" Spent {ConsumptionForBank(bloodBank.Id)} ";
+            }
 
-            string reportHtml = Html(generateReport.Id);
-            var pdf = renderer.RenderHtmlAsPdf(reportHtml);
-            
-            String pdfName = generateReport.Id.ToString() + "report.pdf";
-            pdf.SaveAs(pdfName);
-            generateReport.LastReportGeneration = DateTime.Today;
-            _reportRepository.Update(generateReport);
-            return pdf;
-            
+            else 
+                return  $"<h1>Bloodbank not found</h1> Report for week ";
+      
         }
-
-
-        private string Html(Guid reportId)
-        {
-            BloodBank.BloodBank bloodBank = _bloodBankRepository.GetById(reportId);
-            return $"<h1>Report {bloodBank.Username}</h1> Report for week " +
-                   $" Spent {ConsumptionAmount(bloodBank.Id)} ";
-        }
-
      
 
-        protected async Task ExecuteAsync(CancellationToken stoppingToken)
+/*
+       private double ConsumptionForBank(Guid bloodBankId)
         {
-            foreach (Report report in _reportRepository.GetAll())
+            double consumption = 0;
+            List<BloodConsumptionRecord> matchedRecords = new List<BloodConsumptionRecord>();
+            foreach (var bloodConsumption in _bloodRepository.GetAll())
             {
-                GeneratePdf(report.Id);
+                if (bloodConsumption.SourceBank == bloodBankId)
+                {
+                    matchedRecords.Add(bloodConsumption);
+                    consumption =  FindConsumptionForBloodBank(bloodBankId, matchedRecords);
+                }
+               
             }
+
+            return consumption;
         }
-        /// <summary>Triggered when the application host is ready to start the service.</summary>
-        /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
-       
+
+        private double FindConsumptionForBloodBank(Guid bloodBankId, List<BloodConsumptionRecord> matchedRecords)
+        {
+            var report = _reportRepository.GetById(bloodBankId);
+            double consumption = 0;
+            
+            foreach (var bloodConsumptionRecord in matchedRecords)
+            {
+                //ako spada record u period
+                
+                if (bloodConsumptionRecord.CreatedAt <
+                    report.LastReportGeneration + ConvertPeriodToTimeSpan(report.Period) &&
+                    bloodConsumptionRecord.CreatedAt > report.LastReportGeneration)
+                {
+                    consumption += (bloodConsumptionRecord.Amount);
+                }
+            }
+
+            return consumption;
+        } */
+
+
       
-
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            //ako se poklopilo datum last generisanja + perioda i danasnji
-            throw new NotImplementedException();
-        }
-
-        /// <summary>Triggered when the application host is performing a graceful shutdown.</summary>
-        /// <param name="cancellationToken">Indicates that the shutdown process should no longer be graceful.</param>
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+ 
     }
-
+   
   
 }
