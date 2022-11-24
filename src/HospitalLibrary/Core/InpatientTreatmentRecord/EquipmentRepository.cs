@@ -63,7 +63,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
 
         public IEnumerable<string> GetRoomFreeBeds(int id)
         {
-            IEnumerable<string> bedIds = _context.Equipment.Where(e => e.RoomId == id).Select(e => e.Id).ToList();
+            IEnumerable<string> bedIds = _context.Equipment.Where(e => e.RoomId == id && e.Quantity==1).Select(e => e.Id).ToList();
 
             return bedIds;
         }
