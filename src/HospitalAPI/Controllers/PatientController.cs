@@ -103,7 +103,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != patient.Id)
+            if (!id.Equals(patient.Id))
             {
                 return BadRequest();
             }
