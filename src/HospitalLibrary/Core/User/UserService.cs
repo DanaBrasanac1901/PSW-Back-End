@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.User
 {
-    internal class UserService : IUserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         public UserService(IUserRepository userRepository)
@@ -32,10 +32,31 @@ namespace HospitalLibrary.Core.User
         {
             return _userRepository.GetById(id);
         }
+        public User GetByEmail(String email)
+        {
+            foreach (User user in _userRepository.GetAll())
+                if (user.Email == email)
+                    return user;
+            return null;
+        }
 
         public void Update(User user)
         {
             _userRepository.Update(user);
+        }
+
+        public bool Activate(User user)
+        {
+            user.Active = true;
+            try
+            {
+                Update(user);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

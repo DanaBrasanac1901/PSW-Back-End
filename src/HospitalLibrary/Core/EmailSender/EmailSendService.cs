@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
+using HospitalLibrary.Core.User;
 
 
 namespace HospitalLibrary.Core.EmailSender
@@ -39,21 +40,21 @@ namespace HospitalLibrary.Core.EmailSender
         private void Send(MimeMessage mailMessage)
         {
             using var client = new SmtpClient();
-            
-              
-                
-                    client.Connect("smtp.gmail.com", _emailConfig.Port, true);
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
 
-                    client.Send(mailMessage);
-                
-     
-             
-                    client.Disconnect(true);
-                    client.Dispose();
-                
-            
+
+
+            client.Connect("smtp.gmail.com", _emailConfig.Port, true);
+            client.AuthenticationMechanisms.Remove("XOAUTH2");
+            client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
+
+            client.Send(mailMessage);
+
+
+
+            client.Disconnect(true);
+            client.Dispose();
+
+
         }
     }
 }
