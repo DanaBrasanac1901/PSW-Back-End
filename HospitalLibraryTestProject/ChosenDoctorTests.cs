@@ -30,9 +30,9 @@ namespace HospitalLibraryTestProject
             this.doctorRepo.Setup(m => m.GetAll()).Returns(doctors);
 
         }
-
+        
         private void Setting_patient_repository()
-        {
+        {/*
             var patients = new List<Patient>();
             patientRepo = new Mock<IPatientRepository>();
 
@@ -42,7 +42,7 @@ namespace HospitalLibraryTestProject
             patients.Add(new Patient { Id = "8", Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = {"animal fur"}, DoctorID = "3", Active = true });
             patients.Add(new Patient { Id = "9", Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = { "pollen", "dust" }, DoctorID = "1", Active = true });
 
-            this.patientRepo.Setup(m => m.GetAll()).Returns(patients);
+            this.patientRepo.Setup(m => m.GetAll()).Returns(patients);*/
         }
 
         private void Setting_patient_service()

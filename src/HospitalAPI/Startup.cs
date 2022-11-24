@@ -68,8 +68,7 @@ namespace HospitalAPI
             });
 
             services.AddScoped<IPatientService, PatientService>();
-            services.AddScoped<IPatientRepository, PatientRepository>();
-
+            services.AddScoped<IPatientRepository, PatientRepository>();            
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IDoctorService, DoctorService>();
@@ -79,6 +78,7 @@ namespace HospitalAPI
             // services.AddScoped<IEmailSend, EmailSend>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
 
 
             services.AddScoped<IEmailSendService, EmailSendService>();

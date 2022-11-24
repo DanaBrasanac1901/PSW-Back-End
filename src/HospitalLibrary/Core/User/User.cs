@@ -30,6 +30,11 @@ namespace HospitalLibrary.Core.User
         string email;
         string password;
         string role;
+        bool active;
+
+        public User()
+        {
+        }
 
         public int Id { get { return id; } set { id = value; } }
         public string Name { get { return name; } set { name = value; } }
@@ -38,5 +43,6 @@ namespace HospitalLibrary.Core.User
         public string Password { get { return password; } set { password = value; } }
         public string Role { get { return role; } set { role = value; } }
 
+        public bool Active { get => active; set => active = value; }
     }
 }
