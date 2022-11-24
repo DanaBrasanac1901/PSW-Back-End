@@ -2,21 +2,21 @@
 
 namespace IntegrationLibrary.Report
 {
-    public class PeriodConverter
+    public static class PeriodConverter
     {
-        public static TimeSpan Convert(Period period)
+        public static double Convert(Period period)
         {
             if (period == Period.Daily)
             {
-                return TimeSpan.FromDays(1);
+                return 1;
             }
             else if (period == Period.Monthly)
             {
-                return TimeSpan.FromDays(30);
+                return 30;
             }
             else
             {
-                return TimeSpan.FromDays(240);
+                return 240;
             }
 
         }

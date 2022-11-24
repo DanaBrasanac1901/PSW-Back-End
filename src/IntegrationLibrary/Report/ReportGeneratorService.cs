@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Blood;
+using IntegrationAPI.DTO;
 using IntegrationLibrary.BloodBank;
 using IronPdf;
 using Microsoft.EntityFrameworkCore;
@@ -15,25 +16,25 @@ namespace IntegrationLibrary.Report
     public class ReportGeneratorService: IReportGeneratorService
     {
         
-        private readonly IReportRepository _reportRepository;
-        private readonly IBloodBankRepository _bloodBankRepository;
-       // private readonly IBloodConsuptionRecordRepository _bloodRepository;
+        private readonly IReportService _reportService;
+        private readonly IBloodBankService _bloodBankService;
+        private readonly IBloodService _bloodService;
 
-        public ReportGeneratorService(IReportRepository reportRepository, 
-            IBloodBankRepository bloodBankRepository)
+        public ReportGeneratorService(IReportService reportService, 
+            IBloodBankService bloodBankService, IBloodService bloodService)
         {
-            _reportRepository = reportRepository;
-            _bloodBankRepository = bloodBankRepository;
-           // _bloodRepository = bloodRepository;
-        
+            _reportService = reportService;
+            _bloodBankService = bloodBankService;
+            _bloodService = bloodService;
+
         }
 
         //glavna fja
         public void GeneratePdf()
-        { 
-            foreach (var report in _reportRepository.GetAll())
+        {
+            foreach (var report in _reportService.GetAll())
             {
-                GeneratePdf(report);
+               GeneratePdf(report);
             }
         }
 
@@ -42,12 +43,9 @@ namespace IntegrationLibrary.Report
         public bool GeneratePdf(Report report)
         {
 
-            var reportForGenerating = _reportRepository.GetById(report.Id);
-
-            if (reportForGenerating.LastReportGeneration + PeriodConverter.Convert(reportForGenerating.Period) ==
-                DateTime.Today)
+            if (report.LastReportGeneration.AddDays(PeriodConverter.Convert(report.Period)) == DateTime.Today)
             {
-                var renderer = new IronPdf.ChromePdfRenderer
+                var renderer = new ChromePdfRenderer
                 {
                     RenderingOptions =
                     {
@@ -56,16 +54,17 @@ namespace IntegrationLibrary.Report
                     }
                 };
 
-                var reportHtml = Html(reportForGenerating);
+                var reportHtml = Html(report);
                 var pdf = renderer.RenderHtmlAsPdf(reportHtml);
+                //$"report{report.Id}.pdf"
+                pdf.SaveAs("report.pdf");
 
-                var pdfName = reportForGenerating.Id + "report.pdf";
-                pdf.SaveAs(pdfName);
+                report.LastReportGeneration = DateTime.Today;
+                _reportService.Update(ReportDtoAdapter.NewReportDto(report));
 
-                reportForGenerating.LastReportGeneration = DateTime.Today;
-                _reportRepository.Update(reportForGenerating);
-
-                //SALJI DALJE PDF
+                
+                // fja za slanje
+                
                 return true;
             }
 
@@ -76,16 +75,10 @@ namespace IntegrationLibrary.Report
 
         private string Html(Report report)
         {
-            if (_bloodBankRepository.GetById(report.Id) != null)
-            {
-                //{bloodBank.Username}
-                return $"<h1>Report </h1> Report for week ";
+            BloodBank.BloodBank bloodBank = _bloodBankService.GetById(report.Id);
+            
+            return $"<h1>Report </h1> Report for {bloodBank.Username} week {DateTime.Now}";
                 //+ $" Spent {ConsumptionForBank(bloodBank.Id)} ";
-            }
-
-            else 
-                return  $"<h1>Bloodbank not found</h1> Report for week ";
-      
         }
      
 
@@ -94,22 +87,22 @@ namespace IntegrationLibrary.Report
         {
             double consumption = 0;
             List<BloodConsumptionRecord> matchedRecords = new List<BloodConsumptionRecord>();
-            foreach (var bloodConsumption in _bloodRepository.GetAll())
+            foreach (var bloodConsumption in _bloodService.GetAll())
             {
                 if (bloodConsumption.SourceBank == bloodBankId)
                 {
                     matchedRecords.Add(bloodConsumption);
-                    consumption =  FindConsumptionForBloodBank(bloodBankId, matchedRecords);
                 }
                
             }
-
+            
+             consumption =  FindConsumptionForBloodBank(bloodBankId, matchedRecords);
             return consumption;
         }
 
         private double FindConsumptionForBloodBank(Guid bloodBankId, List<BloodConsumptionRecord> matchedRecords)
         {
-            var report = _reportRepository.GetById(bloodBankId);
+            var report = _reportService.GetById(bloodBankId);
             double consumption = 0;
             
             foreach (var bloodConsumptionRecord in matchedRecords)
@@ -117,7 +110,7 @@ namespace IntegrationLibrary.Report
                 //ako spada record u period
                 
                 if (bloodConsumptionRecord.CreatedAt <
-                    report.LastReportGeneration + ConvertPeriodToTimeSpan(report.Period) &&
+                    report.LastReportGeneration.AddDays(PeriodConverter.Convert(report.Period)) &&
                     bloodConsumptionRecord.CreatedAt > report.LastReportGeneration)
                 {
                     consumption += (bloodConsumptionRecord.Amount);
@@ -125,10 +118,10 @@ namespace IntegrationLibrary.Report
             }
 
             return consumption;
-        } */
+        } 
 
 
-      
+      */
  
     }
    
