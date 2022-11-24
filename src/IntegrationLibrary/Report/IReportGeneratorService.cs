@@ -4,9 +4,12 @@ using Microsoft.Extensions.Hosting;
 
 namespace IntegrationLibrary.Report
 {
-    public interface IReportGeneratorService : IHostedService
+    public interface IReportGeneratorService
     { 
-        public PdfDocument GeneratePdf(Report reportId);
-
+        
+        void GeneratePdf();
+        
+        //za test 
+        bool GeneratePdf(Report report);
     }
 }

@@ -17,147 +17,120 @@ namespace IntegrationLibrary.Report
         
         private readonly IReportRepository _reportRepository;
         private readonly IBloodBankRepository _bloodBankRepository;
-        private readonly IBloodConsuptionRecordRepository _bloodRepository;
-        
-        private IEnumerable<Report> _allReports = new List<Report>();
-        public Report Report=  new Report();
-        public BloodBank.BloodBank BloodBank = new BloodBank.BloodBank();
+       // private readonly IBloodConsuptionRecordRepository _bloodRepository;
 
         public ReportGeneratorService(IReportRepository reportRepository, 
-            IBloodBankRepository bloodBankRepository, IBloodConsuptionRecordRepository bloodRepository)
+            IBloodBankRepository bloodBankRepository)
         {
             _reportRepository = reportRepository;
             _bloodBankRepository = bloodBankRepository;
-            _bloodRepository = bloodRepository;
-            _allReports = _reportRepository.GetAll();
+           // _bloodRepository = bloodRepository;
+        
         }
 
-        
-        protected Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            foreach (Report report in _allReports)
+        //glavna fja
+        public void GeneratePdf()
+        { 
+            foreach (var report in _reportRepository.GetAll())
             {
                 GeneratePdf(report);
             }
-
-            return Task.CompletedTask;
         }
-        
-        public PdfDocument GeneratePdf(Report report)
+
+       
+        //odvojeno pozvana za test
+        public bool GeneratePdf(Report report)
         {
 
-            foreach (Report matchedReport in _allReports)
-            {
-                if (matchedReport.Id == report.Id)
-                {
-                    Report = matchedReport;
-                }
-            }
-            
-            
-            var renderer = new IronPdf.ChromePdfRenderer
-            {
-                RenderingOptions =
-                {
-                    PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
-                    ViewPortWidth = 1280
-                }
-            };
+            var reportForGenerating = _reportRepository.GetById(report.Id);
 
-            string reportHtml = Html(Report);
-            var pdf = renderer.RenderHtmlAsPdf(reportHtml);
-            
-            String pdfName = Report.Id.ToString() + "report.pdf";
-            pdf.SaveAs(pdfName);
-            
-            Report.LastReportGeneration = DateTime.Today;
-            _reportRepository.Update(Report);
-            return pdf;
-            
+            if (reportForGenerating.LastReportGeneration + PeriodConverter.Convert(reportForGenerating.Period) ==
+                DateTime.Today)
+            {
+                var renderer = new IronPdf.ChromePdfRenderer
+                {
+                    RenderingOptions =
+                    {
+                        PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
+                        ViewPortWidth = 1280
+                    }
+                };
+
+                var reportHtml = Html(reportForGenerating);
+                var pdf = renderer.RenderHtmlAsPdf(reportHtml);
+
+                var pdfName = reportForGenerating.Id + "report.pdf";
+                pdf.SaveAs(pdfName);
+
+                reportForGenerating.LastReportGeneration = DateTime.Today;
+                _reportRepository.Update(reportForGenerating);
+
+                //SALJI DALJE PDF
+                return true;
+            }
+
+            else return false;
         }
-        
-        
-        
+
+
+
         private string Html(Report report)
         {
             if (_bloodBankRepository.GetById(report.Id) != null)
             {
                 //{bloodBank.Username}
                 return $"<h1>Report </h1> Report for week ";
+                //+ $" Spent {ConsumptionForBank(bloodBank.Id)} ";
             }
 
             else 
                 return  $"<h1>Bloodbank not found</h1> Report for week ";
-            //+ $" Spent {ConsumptionAmount(bloodBank.Id)} ";
+      
         }
-        
-        
-        
-        public ReportGeneratorService()
-        {
-        }
+     
 
-        private double ConsumptionAmount(Guid reportId)
+/*
+       private double ConsumptionForBank(Guid bloodBankId)
         {
-            
-            //int totalCount = _bloodRepository.GetForBank();
-
-            return   CalculateForPeriod(reportId);
-        }
-
-        private double CalculateForPeriod(Guid reportId)
-        {
-            Report report = _reportRepository.GetById(reportId);
             double consumption = 0;
-
-            
-            //lista svih bloodConsumptiona
-            foreach (BloodConsumptionRecord bloodConsumption in _bloodRepository.GetAll())
+            List<BloodConsumptionRecord> matchedRecords = new List<BloodConsumptionRecord>();
+            foreach (var bloodConsumption in _bloodRepository.GetAll())
             {
-                //ako se matchuju id reporta i u recordu
-                if (bloodConsumption.CreatedAt <
-                    report.LastReportGeneration + ConvertPeriodToTimeSpan(report.Period) &&
-                    bloodConsumption.CreatedAt > report.LastReportGeneration)
-                 {
-                   consumption += (bloodConsumption.Amount); 
-                 } 
+                if (bloodConsumption.SourceBank == bloodBankId)
+                {
+                    matchedRecords.Add(bloodConsumption);
+                    consumption =  FindConsumptionForBloodBank(bloodBankId, matchedRecords);
+                }
+               
             }
-            
+
             return consumption;
-
         }
 
-        private TimeSpan ConvertPeriodToTimeSpan(Period period)
+        private double FindConsumptionForBloodBank(Guid bloodBankId, List<BloodConsumptionRecord> matchedRecords)
         {
-            if (period == Period.Daily)
+            var report = _reportRepository.GetById(bloodBankId);
+            double consumption = 0;
+            
+            foreach (var bloodConsumptionRecord in matchedRecords)
             {
-                return TimeSpan.FromDays(1);
-            }
-            else if (period == Period.Monthly)
-            {
-                return TimeSpan.FromDays(30);
-            }
-            else
-            {
-                return TimeSpan.FromDays(240);
+                //ako spada record u period
+                
+                if (bloodConsumptionRecord.CreatedAt <
+                    report.LastReportGeneration + ConvertPeriodToTimeSpan(report.Period) &&
+                    bloodConsumptionRecord.CreatedAt > report.LastReportGeneration)
+                {
+                    consumption += (bloodConsumptionRecord.Amount);
+                }
             }
 
-        }
+            return consumption;
+        } */
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            //ako se poklopilo datum last generisanja + perioda i danasnji
-          //  TodayIsTheDay == true;
-          
-          throw new NotImplementedException();
-        }
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            //  TodayIsTheDay == false;
-            throw new NotImplementedException();
-        }
+      
+ 
     }
-
+   
   
 }
