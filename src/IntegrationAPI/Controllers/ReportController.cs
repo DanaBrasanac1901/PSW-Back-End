@@ -21,6 +21,11 @@ namespace IntegrationAPI.Controllers
             _mapper = mapper;
         }
 
+        public ReportController(IReportService getRequiredService)
+        {
+            _reportService = getRequiredService;
+        }
+
         // GET: api/reports ili bez s?
         [HttpGet]
         public ActionResult GetAll()
@@ -53,6 +58,19 @@ namespace IntegrationAPI.Controllers
             return Ok();
         }
 
+        // test
+        [HttpPost]
+        public IActionResult Create([FromBody] ReportDTO report)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _reportService.Create(report);
+            return Ok();
+        }
+        
         // PUT api/reports/2 
         [HttpPut("{id}")]
         public ActionResult Update(ReportDTO reportdto)
