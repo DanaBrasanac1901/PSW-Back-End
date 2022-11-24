@@ -44,9 +44,9 @@ namespace HospitalTests.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
-            context.Database.EnsureCreated();
+           /** context.Database.EnsureCreated();
             
-            /**
+            
             context.VacationRequests.Add(new VacationRequest { Id = 1, Start = new DateTime(2023, 3, 5), End = new DateTime(2023, 3, 10), Description = "need rest", Urgency = false, DoctorId = "DOC1", Status = VacationRequestStatus.WaitingForApproval });
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\";");
@@ -63,6 +63,7 @@ namespace HospitalTests.Setup
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"HospitalBlood\";");
 
+
             context.Database.ExecuteSqlRaw("truncate table \"BloodConsumptionRecords\";");
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 5, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 6, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
@@ -74,6 +75,9 @@ namespace HospitalTests.Setup
             context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B });
             context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O });
             context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB });
+
+         
+
 
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Doctors\";");

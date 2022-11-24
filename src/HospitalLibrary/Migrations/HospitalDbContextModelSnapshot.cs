@@ -80,6 +80,7 @@ namespace HospitalLibrary.Migrations
 
                     b.ToTable("BloodConsumptionRecords");
 
+
                     b.HasData(
                         new
                         {
@@ -91,6 +92,8 @@ namespace HospitalLibrary.Migrations
                             SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
                             Type = 0
                         });
+
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
@@ -139,6 +142,7 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalBlood");
+
 
                     b.HasData(
                         new
@@ -204,6 +208,8 @@ namespace HospitalLibrary.Migrations
                             SourceBank = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
                             Type = 1
                         });
+
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
@@ -264,6 +270,115 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Feedbacks");
+                });
+
+
+            modelBuilder.Entity("HospitalLibrary.Core.Patient.Patient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Allergies")
+                        .HasColumnType("text");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.InpatientTreatmentRecord.Equipment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Equipment");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Quantity = 1,
+                            RoomId = 1,
+                            Type = 0
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.InpatientTreatmentRecord.InpatientTreatmentRecord", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("AdmissionDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("AdmissionReason")
+                        .HasColumnType("text");
+
+                    b.Property<string>("BedID")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DischargeDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DischargeReason")
+                        .HasColumnType("text");
+
+
+                    b.Property<string>("DoctorID")
+                        .HasColumnType("text");
+
+
+                    b.Property<string>("PatientID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoomID")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Therapy")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+
+
+                    b.ToTable("InpatientTreatmentRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AdmissionDate = new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AdmissionReason = "bolesnik",
+                            BedID = "1",
+                            DischargeDate = new DateTime(22, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DischargeReason = "",
+                            DoctorID = "1",
+                            PatientID = "1",
+                            RoomID = "1",
+                            Status = true,
+                            Therapy = "nista"
+                        });
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Patient.Patient", b =>
@@ -381,22 +496,50 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
+
             modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Doctor.Doctor", "Doctor")
-                        .WithMany("VacationRequests")
+                       .WithMany("VacationRequests")
                         .HasForeignKey("DoctorId");
 
                     b.Navigation("Doctor");
+
                 });
+
+            modelBuilder.Entity("HospitalLibrary.Core.InpatientTreatmentRecord.Equipment", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Room.Room", null)
+                        .WithMany("Equipment")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            //modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
+            //    {
+            //        b.HasOne("HospitalLibrary.Core.Doctor.Doctor", null)
+            //            .WithMany("VacationRequests")
+            //            .HasForeignKey("DoctorId");
+
+            //    });
 
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
                 {
                     b.Navigation("Appointments");
 
                     b.Navigation("VacationRequests");
+
+
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
+                {
+                    b.Navigation("Equipment");
+
                 });
 #pragma warning restore 612, 618
         }
-    }
-}
+    }       
+    
+ }
