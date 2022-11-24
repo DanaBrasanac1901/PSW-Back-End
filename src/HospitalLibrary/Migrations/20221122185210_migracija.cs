@@ -49,7 +49,7 @@ namespace HospitalLibrary.Migrations
                 {
                     table.PrimaryKey("PK_InpatientTreatmentRecords", x => x.Id);
                 });
-
+            /*
             migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
@@ -68,7 +68,7 @@ namespace HospitalLibrary.Migrations
                 {
                     table.PrimaryKey("PK_Patients", x => x.Id);
                 });
-
+            /*
             migrationBuilder.CreateTable(
                 name: "VacationRequests",
                 columns: table => new
@@ -92,7 +92,7 @@ namespace HospitalLibrary.Migrations
                         principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
+                });*/
 
             migrationBuilder.InsertData(
                 table: "Equipment",
@@ -109,10 +109,11 @@ namespace HospitalLibrary.Migrations
                 table: "Equipment",
                 column: "RoomId");
 
+            /*
             migrationBuilder.CreateIndex(
                 name: "IX_VacationRequests_DoctorId",
                 table: "VacationRequests",
-                column: "DoctorId");
+                column: "DoctorId");*/
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

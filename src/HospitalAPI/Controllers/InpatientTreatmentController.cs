@@ -14,10 +14,12 @@ namespace HospitalAPI.Controllers
     public class InpatientTreatmentController : ControllerBase
     {
         private readonly IInpatientTreatmentRecordService _inpatientTreatmentService;
+        private readonly IEquipmentService _equipmentService;
 
-        public InpatientTreatmentController(IInpatientTreatmentRecordService inpatientTreatmentService)
+        public InpatientTreatmentController(IInpatientTreatmentRecordService inpatientTreatmentService, IEquipmentService equipmentService)
         {
             _inpatientTreatmentService = inpatientTreatmentService;
+            _equipmentService = equipmentService;
         }
 
         [HttpGet]
@@ -49,6 +51,8 @@ namespace HospitalAPI.Controllers
 
             _inpatientTreatmentService.Create(newRecord);
 
+            _equipmentService.ChangeBedStatus(newRecord.BedID, 0);
+
             return CreatedAtAction("GetById", new { id = newRecord.Id }, newRecord);
         }
 
@@ -72,6 +76,9 @@ namespace HospitalAPI.Controllers
                 InpatientTreatmentRecord record = _inpatientTreatmentService.GetById(id);
                 record.DischargeReason = reason;
                 _inpatientTreatmentService.Discharge(id);
+
+                _equipmentService.ChangeBedStatus(record.BedID, 1);
+
                 return Ok(record);
             }
         }
