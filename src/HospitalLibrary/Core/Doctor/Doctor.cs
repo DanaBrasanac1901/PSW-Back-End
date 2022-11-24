@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Vacation;
+using HospitalLibrary.Core.Appointment;
 
 
 namespace HospitalLibrary.Core.Doctor
@@ -40,14 +41,13 @@ namespace HospitalLibrary.Core.Doctor
             Room = room;
             StartWorkTime = startWorkTime;
             EndWorkTime = endWorkTime;
-            Appointments = new List<Appointment.Appointment>();
+            Appointments = appointments;
             VacationRequests = new List<VacationRequest>();
         } 
 
         public bool IsAvailable(DateTime start, DateTime end)
         {
             DateTimeRange range = new DateTimeRange(start, end);
-
             bool hasAppointments = HasAppointments(range);
             bool hasVacation = HasVacations(range);
 
@@ -56,13 +56,14 @@ namespace HospitalLibrary.Core.Doctor
 
         private bool HasAppointments(DateTimeRange rangeToCheck)
         {
-            foreach(Appointment.Appointment appointment in this.Appointments)
-            {
-                DateTimeRange appointmentRange = new DateTimeRange(appointment.Start, appointment.Start.AddMinutes(20));
-                if (appointmentRange.OverlapsWith(rangeToCheck)
-                    && appointment.Status==AppointmentStatus.Scheduled)
-                    return true;
-            }
+            if(Appointments != null)
+                foreach(Appointment.Appointment appointment in Appointments)
+                {
+                    DateTimeRange appointmentRange = new DateTimeRange(appointment.Start, appointment.Start.AddMinutes(20));
+                    if (appointmentRange.OverlapsWith(rangeToCheck)
+                        && appointment.Status==AppointmentStatus.Scheduled)
+                        return true;
+                }
 
             return false;
         }

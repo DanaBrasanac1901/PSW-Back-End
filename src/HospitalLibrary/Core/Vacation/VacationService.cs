@@ -91,7 +91,12 @@ namespace HospitalLibrary.Core.Vacation
             List<ViewAllVacationRequestsDTO> requestsDTO = new List<ViewAllVacationRequestsDTO>();
             
             foreach (VacationRequest request in doctorsVacationRequests)
-                requestsDTO.Add(VacationRequestDTOAdapter.VacationRequestToDTO(request));
+            {
+                if(request.Status == VacationRequestStatus.Accepted || 
+                    request.Status == VacationRequestStatus.WaitingForApproval)
+                    requestsDTO.Add(VacationRequestDTOAdapter.VacationRequestToDTO(request));
+            }
+                
 
             return requestsDTO;
         }
@@ -104,22 +109,86 @@ namespace HospitalLibrary.Core.Vacation
                 _vacationRequestRepository.Create(request);
         }
 
-        public VacationRequest CreateUrgentVacationRequest(CreateUrgenVacationDTO dto)
+        public string CreateUrgentVacationRequest(CreateUrgenVacationDTO dto)
         {
-            //pretpostavimo da imamo ulogovanog doktora pa ne mora da se get-uje
-            //Doctor.Doctor doctor = new Doctor.Doctor();
             VacationRequest request = VacationRequestDTOAdapter.CreateUrgenVacationDTOToVacationRequest(dto);
-            if (CheckIfThereAreAppointmentsInRange(request.Start, request.End, request.DoctorId) == false)
+            List<bool> parameters = parametersForUrgentRequest(request);
+            if (parameters[0] == false
+                && parameters[1] == true 
+                && parameters[2] == true
+                && parameters[3] == true)
             {
                 _vacationRequestRepository.Create(request);
             }
-            return _vacationRequestRepository.GetById(request.Id);
+            return ResponseHandler(parameters);
+        }
+
+        public List<bool> parametersForUrgentRequest(VacationRequest request)
+        {
+            List<bool> retList = new List<bool>();
+            if(CheckIfThereAreAppointmentsInRange(request.Start, request.End, request.DoctorId) == false)
+            {
+                retList.Add(false);
+            }
+            else
+            {
+                retList.Add(true);
+            }
+            if (IsUrgentAvailable(request.Start, request.End, request.DoctorId) == true)
+            {
+                retList.Add(true);
+            }
+            else
+            {
+                retList.Add(false);
+            }
+            if (DateIsInFuture(request.Start) == true)
+            {
+                retList.Add(true);
+            }
+            else
+            {
+                retList.Add(false);
+            }
+            if (StartIsBeforeEnd(request.Start, request.End) == true)
+            {
+                retList.Add(true);
+            }
+            else
+            {
+                retList.Add(false);
+            }
+            return retList;
+        }
+
+        public string ResponseHandler(List<bool> parameters)
+        {
+            if (parameters[3] == false)
+            {
+                return "End of the vacation is before start! Pick carefully.";
+            }
+            else if(parameters[2] == false)
+            {
+                return "Cant take vacation in past! Set time span in future.";
+            }
+            else if (parameters[1] == false)
+            {
+                return "You already have vacation in choosen time span!";
+            }
+            else if (parameters[0] == true)
+            {
+                return "You have appointment(s) in choosen time span!";
+            }
+            else
+            {
+                return "Request created.";
+            }
+
         }
 
         public bool CheckIfThereAreAppointmentsInRange(DateTime start,DateTime end,String doctorId)
         {
             List<Appointment.Appointment> allApps = _appointmentRepository.GetAll().ToList();
-            //List<Appointment.Appointment> retApps = new List<Appointment.Appointment>();
             foreach (var app in allApps)
             {
                 if(app.DoctorId == doctorId && CheckIfAppointmentIsInRange(app,start,end) == true)
@@ -142,9 +211,32 @@ namespace HospitalLibrary.Core.Vacation
             }
         }
 
-        public void IsUrgentAvailable(VacationRequest request, Doctor.Doctor doctor)
+        public bool IsUrgentAvailable(DateTime start, DateTime end, String doctorId)
         {
-            
+            foreach (var vacation in _vacationRequestRepository.GetAll())
+            {
+                if(vacation.DoctorId == doctorId && (start >= vacation.Start && start <= vacation.End) && ((start >= vacation.Start && start <= vacation.End)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool DateIsInFuture(DateTime start)
+        {
+            if(start > DateTime.Now)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool StartIsBeforeEnd(DateTime start,DateTime end)
+        {
+            if (start < end)
+                return true;
+            return false;
         }
 
         public void UpdateVacationRequest(VacationRequest vacationRequest)
