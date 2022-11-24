@@ -12,25 +12,34 @@ namespace HospitalLibrary.Core.Blood
     public class BloodService : IBloodService
 
     {
-        private readonly IBloodSupplyRepository _bloodSupplyRepository;
+        private readonly IBloodConsuptionRepository _bloodSupplyRepository;
         private readonly IBloodConsuptionRecordRepository _bloodConsumptionRecordRepository;
         private readonly IBloodRequestRepository _bloodRequestRepository;
 
-        public BloodService(IBloodSupplyRepository bloodSupplyRepository, IBloodConsuptionRecordRepository bloodConsumptionRecordRepository, IBloodRequestRepository bloodRequestRepository)
+        public BloodService(IBloodConsuptionRepository bloodSupplyRepository, IBloodConsuptionRecordRepository bloodConsumptionRecordRepository, IBloodRequestRepository bloodRequestRepository)
         {
             _bloodSupplyRepository = bloodSupplyRepository;
             _bloodConsumptionRecordRepository = bloodConsumptionRecordRepository;
             _bloodRequestRepository = bloodRequestRepository;
         }
 
-        public void CreateBloodConsumptionRecord(BloodConsumptionRecord record)
+        public Guid CreateBloodConsumptionRecord(BloodConsumptionRecord record)
         {
-            BloodSupply supply = _bloodSupplyRepository.GetByGroup(record.Type);
-            if (supply.ReduceBy(record.Amount))
+            List<BloodSupply> supplies = _bloodSupplyRepository.GetByGroup(record.Type);
+
+            foreach(BloodSupply supply in supplies)
             {
-                _bloodSupplyRepository.Update(supply);
-                _bloodConsumptionRecordRepository.Create(record);
-            }    
+                if (supply.ReduceBy(record.Amount))
+                {
+                    _bloodSupplyRepository.Update(supply);
+
+                    record.SourceBank = supply.SourceBank;
+                    _bloodConsumptionRecordRepository.Create(record);
+
+                    return record.SourceBank;
+                }
+            }
+            return new System.Guid("00000000-0000-0000-0000-000000000000");
         }
 
         public void CreateBloodRequest(CreateBloodRequestDTO bloodRequest)

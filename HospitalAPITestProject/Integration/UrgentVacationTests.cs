@@ -35,37 +35,10 @@ namespace HospitalTests.Integration
         public void Create_urgent_vacation_request()
         {
             using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
+            var controller = SetupController(scope);o
             var record = SetUpCreateVacationRequestDTO(scope);
             var result = ((OkObjectResult)controller.CreateUrgentRequest(record))?.Value as string;
             Assert.Equal("Passed",result);
-        }
-
-        public class CustomError : IActionResult
-        {
-            private readonly HttpStatusCode _status;
-            private readonly object _errorMessage;
-
-            public CustomError(HttpStatusCode status, object errorMessage)
-            {
-                _status = status;
-                _errorMessage = errorMessage;
-            }
-
-            public async Task ExecuteResultAsync(ActionContext context)
-            {
-                var objectResult = new ObjectResult(new
-                {
-                    errorMessage = _errorMessage
-                })
-                {
-                    StatusCode = (int)_status,
-                };
-
-                context.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = (string)_errorMessage;
-
-                await objectResult.ExecuteResultAsync(context);
-            }
         }
     }
 }

@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.Vacation.DTO
         public string description { get; set; }
         public string urgency { get; set; }
 
+
         public CreateUrgenVacationDTO() { }
 
         public CreateUrgenVacationDTO(IVacationService vacationService)
@@ -27,5 +28,6 @@ namespace HospitalLibrary.Core.Vacation.DTO
             this.description = "Stojane";
             this.urgency = "true";
         }
+
     }
 }

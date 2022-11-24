@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Blood
 {
-    public interface IBloodSupplyRepository
+    public interface IBloodConsuptionRepository
     {
         IEnumerable<BloodSupply> GetAll();
         BloodSupply GetById(int id);
         void Create(BloodSupply bloodSupply);
         void Update(BloodSupply bloodSupply);
         void Delete(BloodSupply bloodSupply);
-        BloodSupply GetByGroup(BloodType type);
+        List<BloodSupply> GetByGroup(BloodType type);
     }
 }

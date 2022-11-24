@@ -29,6 +29,7 @@ namespace HospitalLibraryTestProject
         {
             var mockChangeDoctorForAppointment = new Mock<IAppointmentService>();
             AppointmentService service = new AppointmentService(CreateAppointments());
+
             var check = service.CheckIfAppointmentExistsForDoctor("DOC1", new DateTime(2022, 11, 16, 12, 20, 0));
             Assert.True(check);
         }

@@ -44,7 +44,14 @@ namespace HospitalTests.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+
             context.Database.EnsureCreated();
+
+           /** context.Database.EnsureCreated();
+            
+            
+            context.VacationRequests.Add(new VacationRequest { Id = 1, Start = new DateTime(2023, 3, 5), End = new DateTime(2023, 3, 10), Description = "need rest", Urgency = false, DoctorId = "DOC1", Status = VacationRequestStatus.WaitingForApproval });
+
 
             //context.Database.ExecuteSqlRaw("truncate table \"HospitalBlood\";");
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
@@ -68,10 +75,23 @@ namespace HospitalTests.Setup
             //context.Doctors.Add(new Doctor { Id = "DOC1", Name = "Milan", Surname = "Radovic", Email = "radovic@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 16, Appointments = new System.Collections.Generic.List<Appointment>(), VacationRequests = new System.Collections.Generic.List<VacationRequest>() });
 
 
+
+
+            context.Database.ExecuteSqlRaw("truncate table \"BloodConsumptionRecords\";");
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 5, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 6, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 7, Amount = 12, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 8, Amount = 13, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+
+
             //context.VacationRequests.Add(new VacationRequest { Id = 49, Start = new DateTime(2023, 1, 1), End = new DateTime(2023, 1, 14), Description = "holidays", Urgency = true, DoctorId = "DOC1" });
 
+
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");
-            //context.Rooms.Add(new HospitalLibrary.Core.Room.Room { Id = 1, Number = "ROOM1", Floor = 1 });
+
+         
+
+
 
             //context.SaveChanges();
         }
