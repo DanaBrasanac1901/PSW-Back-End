@@ -12,7 +12,6 @@ using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.Report;
 using IntegrationTests.Integration;
 using IntegrationTests.Setup;
-using IronPdf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;

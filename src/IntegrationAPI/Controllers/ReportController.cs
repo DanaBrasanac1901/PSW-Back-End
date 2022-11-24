@@ -15,10 +15,9 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IReportService _reportService;
         private readonly IMapper _mapper;
-        public ReportController(IReportService reportService, IMapper mapper)
+        public ReportController(IReportService reportService)
         {
-            _reportService = reportService;
-            _mapper = mapper;   
+            _reportService = reportService; 
         }
 
         // GET: api/reports ili bez s?
@@ -41,9 +40,9 @@ namespace IntegrationAPI.Controllers
 
         // POST api/reports
         [HttpPost]
-        public IActionResult Create([FromBody] ReporttDTO reportt)
+        public IActionResult Create([FromBody] ReportDTO report)
         {
-            var report = _mapper.Map<ReportDTO>(reportt);
+          //  var report = _mapper.Map<ReportDTO>(reportt);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
