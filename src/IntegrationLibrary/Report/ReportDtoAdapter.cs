@@ -7,7 +7,13 @@ namespace IntegrationLibrary.Report
     {
         public static Report NewReport(ReportDTO reportDto)
         {
-            Report reportTransformed = new Report(reportDto.Id, DateTime.Now, reportDto.Period,DateTime.Now);
+            var reportTransformed = new Report(reportDto.Id, DateTime.Now, reportDto.Period,DateTime.Now);
+            return reportTransformed;
+        }
+        
+        public static ReportDTO NewReportDto(Report report)
+        {
+            var reportTransformed = new ReportDTO(report.Period, report.Id);
             return reportTransformed;
         }
     }

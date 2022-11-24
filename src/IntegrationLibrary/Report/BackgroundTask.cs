@@ -26,8 +26,10 @@ namespace IntegrationLibrary.Report
                 {
                     _logger.LogInformation("Generating started {dateTime}", DateTime.Now);
                     var scopedService = scope.ServiceProvider.GetRequiredService<IReportGeneratorService>();
-                  //  scopedService.GeneratePdf();
-                    await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
+                    scopedService.GeneratePdf();
+                    
+                   // await Task.Delay(TimeSpan.FromSeconds(20), stoppingToken);
+                     await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
                 }
 
             }

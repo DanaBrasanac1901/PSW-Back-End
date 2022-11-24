@@ -23,21 +23,16 @@ namespace IntegrationLibrary.Settings
             BloodBank.BloodBank bank2 = new BloodBank.BloodBank() { Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E"), Username = "101A", Password = "fewsfd", Apikey = "dqad", Email = "andykesic123@gmail.com", IsConfirmed = true };
             BloodBank.BloodBank bank3 = new BloodBank.BloodBank() { Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66"), Username = "101A", Password = "fcsde", Apikey = "ads", Email = "andykesic123@gmail.com", IsConfirmed = true };
 
-           Report.Report report1 = new Report.Report( 
-                                               bank3.Id,
-                                                        DateTime.Now, 
-                                                        Report.Period.Daily,
-                                                        DateTime.Today);
             
             Report.Report report2 = new Report.Report(bank1.Id, 
-                                                          DateTime.Now, 
-                                                        Report.Period.Monthly,
-                                                DateTime.Today);
+                new DateTime(2022, 11,23), 
+                                                Report.Period.Daily,
+                                                new DateTime(2022, 11,23));
 
             Report.Report report3 = new Report.Report(bank2.Id , 
-                                                    DateTime.Today, 
+                new DateTime(2022, 10,10), 
                                                     Report.Period.EveryTwoMonths,
-                                        DateTime.Today);
+                                                    new DateTime(2022, 10,17));
 
             
             
@@ -46,7 +41,7 @@ namespace IntegrationLibrary.Settings
             );
             
             modelBuilder.Entity < Report.Report>().HasData(
-                report1, report2, report3
+                report2, report3
             );
             //modelBuilder.Entity<BloodBank.BloodBank>()
             //.Property(b => b.Id)
