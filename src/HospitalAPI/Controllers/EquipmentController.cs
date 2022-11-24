@@ -1,4 +1,4 @@
-using HospitalLibrary.Core.Equipment;
+
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using Microsoft.AspNetCore.Mvc;
 
