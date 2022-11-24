@@ -11,6 +11,7 @@ using IntegrationLibrary.BloodBank;
 using Microsoft.AspNetCore.HttpsPolicy;
 using IntegrationAPI.BBConnection;
 using System.Linq;
+using HospitalLibrary.Core.Blood;
 using IntegrationLibrary.Report;
 using IntegrationLibrary.Settings;
 
@@ -58,12 +59,16 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankRepository,BloodBankRepository>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReportRepository, ReportRepository>();
-           // services.AddScoped<IEmailService, IEmailService>();
+            // services.AddScoped<IEmailService, IEmailService>();
+            
             services.AddScoped<ExceptionMiddleware>();
 
-
             services.AddHostedService<BackgroundTask>();
-          //  services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
+            services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
+            
+
+
+         
 
 
             services.AddScoped<INewsService, NewsService>();
@@ -76,6 +81,7 @@ namespace IntegrationAPI
 
         }
 
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -109,5 +115,7 @@ namespace IntegrationAPI
                 endpoints.MapControllers();
             });
         }
+     
+
     }
 }
