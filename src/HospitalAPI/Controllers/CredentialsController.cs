@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using static System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler;
 
 namespace HospitalAPI.Controllers
 {
@@ -18,11 +19,14 @@ namespace HospitalAPI.Controllers
 
 		private IConfiguration _config;
 		private IUserService _userService;
+		private JwtSecurityTokenHandler tokenHandler;
 
 		public CredentialsController(IConfiguration config, IUserService userService)
 		{
 			_config = config;
 			_userService = userService;
+			tokenHandler=new JwtSecurityTokenHandler();
+
 		}
 
 		[AllowAnonymous] //prevent the auth process to happen when calling
@@ -30,17 +34,15 @@ namespace HospitalAPI.Controllers
 		[HttpPost("login")]
 		public IActionResult Login([FromBody] User user)
 		{
-			Console.WriteLine("u loginu");
+			
 			var _user = Authenticate(user);
 			if (_user != null)
 			{
-				Console.WriteLine("user is not null");
 				var token = Generate(_user);
-				Console.WriteLine(token);
-				return Ok(token);
+				return Ok( tokenHandler.ReadToken(token));
 			}
 
-			return NotFound();
+			return Unauthorized();
 		}
 
 		private string Generate(User user)
@@ -51,7 +53,7 @@ namespace HospitalAPI.Controllers
 
 			var claims = new[] //a way to store the data so that you don't have to always access the db
 			{ //these are set-in-stone claims (NameIdentifier, Email, GivenName)
-				new Claim(ClaimTypes.Sid, user.Id.ToString()),
+				new Claim(ClaimTypes.Sid, user.Id.ToString()), 
 				new Claim(ClaimTypes.Email, user.Email),
 				new Claim(ClaimTypes.GivenName, user.Name),
 				new Claim(ClaimTypes.Surname, user.Surname), 
