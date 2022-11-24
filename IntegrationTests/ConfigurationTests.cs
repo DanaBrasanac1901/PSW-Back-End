@@ -4,7 +4,7 @@ using System.Net;
 
 using System.Collections.Generic;
 using System.Linq;
-
+using AutoMapper;
 using IntegrationAPI;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.DTO;

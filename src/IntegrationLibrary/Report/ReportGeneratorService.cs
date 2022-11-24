@@ -21,11 +21,11 @@ namespace IntegrationLibrary.Report
         private readonly IBloodService _bloodService;
 
         public ReportGeneratorService(IReportService reportService, 
-            IBloodBankService bloodBankService, IBloodService bloodService)
+            IBloodBankService bloodBankService)
         {
             _reportService = reportService;
             _bloodBankService = bloodBankService;
-            _bloodService = bloodService;
+           // _bloodService = bloodService;
 
         }
 
