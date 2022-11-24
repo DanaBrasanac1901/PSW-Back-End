@@ -1,8 +1,10 @@
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Blood;
 using IntegrationLibrary.BloodBank;
 using IronPdf;
 using Microsoft.EntityFrameworkCore;
@@ -15,113 +17,120 @@ namespace IntegrationLibrary.Report
         
         private readonly IReportRepository _reportRepository;
         private readonly IBloodBankRepository _bloodBankRepository;
-       private PdfDocument _report;
+       // private readonly IBloodConsuptionRecordRepository _bloodRepository;
 
         public ReportGeneratorService(IReportRepository reportRepository, 
             IBloodBankRepository bloodBankRepository)
         {
             _reportRepository = reportRepository;
             _bloodBankRepository = bloodBankRepository;
-        }
-         private void ConsumptionAmount(Guid bloodBankId)
-        {
-          //  BloodBank.BloodBank bloodBank = _bloodBankRepository.GetById(bloodBankId);
-            //treba nam info od koje je banke
-            //isfiltriramo po bankama
-            //poziv fje koja na osnovu configuration date i perioda bira dane kad je bilo potrosnje
-            //pozovemo fju koja sabere potrosnju
-            
-          //  IEnumerable<BloodConsumptionRecord> bloodConsumpotion  = _bloodConsuptionRecordRepository.GetAll();
-            
-            //vrati int kolicinu
+           // _bloodRepository = bloodRepository;
+        
         }
 
-        
-        //za test
-        public PdfDocument GeneratePdf()
-        {
-            ChromePdfRenderer renderer = new IronPdf.ChromePdfRenderer
+        //glavna fja
+        public void GeneratePdf()
+        { 
+            foreach (var report in _reportRepository.GetAll())
             {
-                RenderingOptions =
+                GeneratePdf(report);
+            }
+        }
+
+       
+        //odvojeno pozvana za test
+        public bool GeneratePdf(Report report)
+        {
+
+            var reportForGenerating = _reportRepository.GetById(report.Id);
+
+            if (reportForGenerating.LastReportGeneration + PeriodConverter.Convert(reportForGenerating.Period) ==
+                DateTime.Today)
+            {
+                var renderer = new IronPdf.ChromePdfRenderer
                 {
-                    PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
-                    ViewPortWidth = 1280
-                }
-            };
+                    RenderingOptions =
+                    {
+                        PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
+                        ViewPortWidth = 1280
+                    }
+                };
 
-            PdfDocument pdf = renderer.RenderHtmlAsPdf("<h1>Report</h1> Report for week ");
-            pdf.SaveAs("report.pdf");
-            
-            return pdf;
-        }
-        
-        
-        
-        public PdfDocument GeneratePdf(Guid reportId)
-        {
-            var generateReport = _reportRepository.GetById(reportId);
-            var renderer = new IronPdf.ChromePdfRenderer
-            {
-                RenderingOptions =
-                {
-                    PaperSize = IronPdf.Rendering.PdfPaperSize.A2,
-                    ViewPortWidth = 1280
-                }
-            };
+                var reportHtml = Html(reportForGenerating);
+                var pdf = renderer.RenderHtmlAsPdf(reportHtml);
 
-            string reportHtml = Html(generateReport.BloodbankId);
-            var pdf = renderer.RenderHtmlAsPdf(reportHtml);
-            pdf.SaveAs("src/IntegrationAPI/BBConnection/report.pdf");
-            generateReport.LastReportGeneration = DateTime.Today;
-            _reportRepository.Update(generateReport);
-            return pdf;
-            
-        }
+                var pdfName = reportForGenerating.Id + "report.pdf";
+                pdf.SaveAs(pdfName);
 
+                reportForGenerating.LastReportGeneration = DateTime.Today;
+                _reportRepository.Update(reportForGenerating);
 
-        private string Html(Guid bloodBankId)
-        {
-            BloodBank.BloodBank registeredBloodBank = IsBloodBankRegistered(bloodBankId);
-            if (registeredBloodBank == null)
-            {
-                
-                return "<h1>Report</h1> BloodBank not found ";
-                
+                //SALJI DALJE PDF
+                return true;
             }
 
-           //int totalCount = _bloodConsuptionRecordRepository.GetForBank();
-           //CalculateForPeriod(report.LastReportGeneration, report.Period, bloodbankId);
-           return $"<h1>Report {registeredBloodBank.Username}</h1> Report for week  ";
+            else return false;
         }
 
-        private BloodBank.BloodBank IsBloodBankRegistered(Guid bloodBankId)
+
+
+        private string Html(Report report)
         {
-            foreach (BloodBank.BloodBank bloodBank in _bloodBankRepository.GetAll())
+            if (_bloodBankRepository.GetById(report.Id) != null)
             {
-                if (bloodBank.Id != null)
+                //{bloodBank.Username}
+                return $"<h1>Report </h1> Report for week ";
+                //+ $" Spent {ConsumptionForBank(bloodBank.Id)} ";
+            }
+
+            else 
+                return  $"<h1>Bloodbank not found</h1> Report for week ";
+      
+        }
+     
+
+/*
+       private double ConsumptionForBank(Guid bloodBankId)
+        {
+            double consumption = 0;
+            List<BloodConsumptionRecord> matchedRecords = new List<BloodConsumptionRecord>();
+            foreach (var bloodConsumption in _bloodRepository.GetAll())
+            {
+                if (bloodConsumption.SourceBank == bloodBankId)
                 {
-                    return null;
+                    matchedRecords.Add(bloodConsumption);
+                    consumption =  FindConsumptionForBloodBank(bloodBankId, matchedRecords);
+                }
+               
+            }
+
+            return consumption;
+        }
+
+        private double FindConsumptionForBloodBank(Guid bloodBankId, List<BloodConsumptionRecord> matchedRecords)
+        {
+            var report = _reportRepository.GetById(bloodBankId);
+            double consumption = 0;
+            
+            foreach (var bloodConsumptionRecord in matchedRecords)
+            {
+                //ako spada record u period
+                
+                if (bloodConsumptionRecord.CreatedAt <
+                    report.LastReportGeneration + ConvertPeriodToTimeSpan(report.Period) &&
+                    bloodConsumptionRecord.CreatedAt > report.LastReportGeneration)
+                {
+                    consumption += (bloodConsumptionRecord.Amount);
                 }
             }
 
-            return _bloodBankRepository.GetById(bloodBankId);
-        }
+            return consumption;
+        } */
 
-        protected Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+      
+ 
     }
-
+   
   
 }

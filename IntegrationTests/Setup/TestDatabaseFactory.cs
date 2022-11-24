@@ -43,37 +43,28 @@ namespace IntegrationTests.Setup
         private static void InitializeDatabase(IntegrationDbContext context)
         {
             context.Database.EnsureCreated();
-            
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\";");
 
-            context.Reports.Add(new Report(
-                  new Guid("e2ddfa02610e48e983824b23ac955632"),
-                  new Guid(),
-                  DateTime.Now,
-                  IntegrationLibrary.Report.Period.Daily,
-                  DateTime.Today));
-
-            context.Reports.Add(new Report(
-                new Guid("e2ddfa02620e48e983824b23ac955632"),
-                new Guid(),
-                DateTime.Now,
-                IntegrationLibrary.Report.Period.Monthly,
-
-                DateTime.Today));
-            context.Reports.Add(new Report(
-                new Guid("e2ddfa88610e48e983824b23ac955632"),
-                new Guid(),
-                DateTime.Today,
-                IntegrationLibrary.Report.Period.EveryTwoMonths,
-                DateTime.Today));
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"NewsTable\";");
-           
-
-            
-            
-            
+            /* context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportTable\";");
 
 
+         context.ReportTable.Add(new Report(
+             new Guid("3E63FA4E-3A3A-4DEB-ACD1-3F784DE9D90B"),
+             DateTime.Now, 
+             IntegrationLibrary.Report.Period.Daily,
+             DateTime.Today));
+
+         context.ReportTable.Add(new Report( 
+             new Guid("9A76E313-E764-4B63-8544-5AAC14155C6A"),
+             DateTime.Now, 
+             IntegrationLibrary.Report.Period.Monthly,
+
+             DateTime.Today));
+         context.ReportTable.Add(new Report(
+             new Guid("CB2EA6F8-CCAB-49C9-ABBC-3FC4F8B89A00"),
+             DateTime.Today, 
+             IntegrationLibrary.Report.Period.EveryTwoMonths,
+             DateTime.Today));
+*/
             context.SaveChanges();
         }
     }

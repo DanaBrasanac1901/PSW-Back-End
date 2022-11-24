@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using IntegrationAPI.BBConnection;
 using System.Linq;
 using IntegrationLibrary.Report;
+using IntegrationLibrary.Settings;
 
 using IntegrationLibrary.News;
 
@@ -60,6 +61,11 @@ namespace IntegrationAPI
            // services.AddScoped<IEmailService, IEmailService>();
             services.AddScoped<ExceptionMiddleware>();
 
+
+            services.AddHostedService<BackgroundTask>();
+          //  services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
+
+
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<INewsRepository, NewsRepository>();
             //services.AddSingleton<RabbitMQService>();
@@ -80,7 +86,11 @@ namespace IntegrationAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-
+            using (var sScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var cx = sScope.ServiceProvider.GetService<IntegrationDbContext>();
+                cx?.Database.Migrate();
+            }
 
             if (env.IsDevelopment())
             {

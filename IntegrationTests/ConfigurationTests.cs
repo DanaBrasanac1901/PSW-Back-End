@@ -1,7 +1,14 @@
 using System;
+
 using System.Net;
+
+using System.Collections.Generic;
+using System.Linq;
+
 using IntegrationAPI;
 using IntegrationAPI.Controllers;
+using IntegrationAPI.DTO;
+using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.Report;
 using IntegrationTests.Integration;
 using IntegrationTests.Setup;
@@ -11,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Nest;
 using Xunit;
+using Xunit.Sdk;
 
 namespace IntegrationTests
 {
@@ -18,19 +26,54 @@ namespace IntegrationTests
     {
         public ConfigurationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
+        private Mock<IReportGeneratorService> _reportGeneratorService = new Mock<IReportGeneratorService>();
         private static ReportController SetupController(IServiceScope scope)
         {
-            return new ReportController(scope.ServiceProvider.GetRequiredService<ReportGeneratorService>());
+            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>());
         }
 
-        private static ReportController SetupControllerr(IServiceScope scope)
-        {
-            return new ReportController(scope.ServiceProvider.GetRequiredService<SendingReportService>());
-        }
+
+        //private static ReportController SetupControllerr(IServiceScope scope)
+        //{
+        //    return new ReportController(scope.ServiceProvider.GetRequiredService<SendingReportService>());
+        //}
+
 
 
         [Fact]
-        public void Test1()
+        public void Create_report()
+        {
+            
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            ReportDTO result = new ReportDTO(Period.Daily, new Guid());
+            controller.Create(result);
+            Assert.NotNull(result);
+        }
+        
+        [Fact]
+        public void Update_report()
+        {
+            
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            ReportDTO resultDto = new ReportDTO(Period.EveryTwoMonths, new Guid("6799e115-a7b0-4d37-be5e-ecbb1929b3a2"));
+            Assert.NotNull(controller.Update(resultDto));
+
+        }
+        
+        [Fact]
+        public void Read_report()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            ActionResult result = controller.GetAll();
+            Assert.NotNull(result);
+        }
+        
+        [Fact]
+        public void Get_information_for_report()
         {
 
         }
@@ -40,11 +83,11 @@ namespace IntegrationTests
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-           
-            PdfDocument result = controller.GeneratePdf();
 
-            Assert.NotNull(result);
-        }
+            var report = controller.GetById(new Guid("204932d0-7956-4199-9e0d-cf2903c9903b"));
+            _reportGeneratorService.Verify(result => result.GeneratePdf(report));
+            //Assert
+            }
         /*
 
             [Fact]
@@ -58,22 +101,29 @@ namespace IntegrationTests
                 Assert.NotNull(result);
             }
             */
-        [Fact]
-            public void Sends_configuration_pdf()
-        {
-            
+/* [Fact]
+     public void Sends_configuration_pdf()
+ {
 
-          
 
-            var mocSend = new Mock<SendingReportService>();
-            var controller = SetupControllerr((IServiceScope)mocSend.Object);
-             
-               
-           // var response=controller.SendReport(controller.GeneratePdf());
-            //Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
-        }
-    
-    
-    }
+
+     var mocSend = new Mock<SendingReportService>();
+     var controller = SetupControllerr((IServiceScope)mocSend.Object);
+
+
+    // var response=controller.SendReport(controller.GeneratePdf());
+     //Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+
+ using var scope = Factory.Services.CreateScope();
+     var controller = SetupController(scope);
+
+
+ }*/
+
+
+
+ }  
+
 }
+

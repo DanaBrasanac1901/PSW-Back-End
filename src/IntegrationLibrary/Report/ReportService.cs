@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Castle.Core.Configuration;
+using IntegrationAPI.DTO;
 
 namespace IntegrationLibrary.Report
 {
@@ -25,17 +26,30 @@ namespace IntegrationLibrary.Report
         {
             return _reportRepository.GetById(id);
         }
+        
 
-        public void Create(Report report)
+        public void Create(ReportDTO report)
         {
-            _reportRepository.Create(report);
+            Report newReport = ReportDtoAdapter.NewReport(report);
+            _reportRepository.Create(newReport);
+
         }
 
-        public void Update(Report report)
-        {
-            _reportRepository.Update(report);
-        }
 
+        public void Update(ReportDTO reportDto)
+        {
+            foreach (Report report in GetAll())
+            {
+                if (report.Id == reportDto.Id)
+                {
+                    report.Period = reportDto.Period;
+                }
+                
+                _reportRepository.Update(report);
+            }
+
+        }
+        
     }
 
     
