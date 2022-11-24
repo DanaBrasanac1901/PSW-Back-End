@@ -4,13 +4,15 @@ using Castle.Core.Configuration;
 
 namespace IntegrationLibrary.Report
 {
-    public class ReportService: IReportService
-    { 
+    public class ReportService : IReportService
+    {
         private readonly IReportRepository _reportRepository;
+       // private readonly ISendingReportService  _sendingReportService;
       
         public ReportService(IReportRepository reportRepository)
         {
             _reportRepository = reportRepository;
+           // _sendingReportService = sendingReportService;
         }
 
         public IEnumerable<Report> GetAll()

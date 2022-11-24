@@ -12,12 +12,17 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IReportService _reportService;
         private readonly ReportGeneratorService _reportGeneratorService;
+        private readonly SendingReportService _sendingReportService;
             public ReportController(IReportService reportService)
             {
                 _reportService = reportService;
             }
 
-            public ReportController(ReportGeneratorService reportGeneratorService)
+        public ReportController(SendingReportService sendReporService)
+        {
+            _sendingReportService = sendReporService;
+        }
+        public ReportController(ReportGeneratorService reportGeneratorService)
             {
                 _reportGeneratorService = reportGeneratorService;
             }

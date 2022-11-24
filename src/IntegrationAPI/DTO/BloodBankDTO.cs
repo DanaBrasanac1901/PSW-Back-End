@@ -10,5 +10,7 @@ namespace IntegrationAPI.DTO
 
         public string Email { get; set; }
 
+        public string Id { get; set; }
+
     }
 }

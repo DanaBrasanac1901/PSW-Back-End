@@ -9,5 +9,7 @@ namespace IntegrationLibrary.Report
         public PdfDocument GeneratePdf();
         public PdfDocument GeneratePdf(Guid reportId);
 
+
+
     }
 }

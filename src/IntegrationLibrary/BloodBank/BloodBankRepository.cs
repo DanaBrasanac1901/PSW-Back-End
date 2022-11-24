@@ -1,7 +1,7 @@
 ﻿using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Nest;
-using News;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +25,8 @@ namespace IntegrationLibrary.BloodBank
             integrationDbContext.SaveChangesAsync();
 
         }
-        public async void AddNews(Message mm)
-        {
-            integrationDbContext.NewsTable.AddAsync(mm);
-            integrationDbContext.SaveChangesAsync();
-
-        }
+       
+       
 
         public void Delete(BloodBank bb)
         {

@@ -33,8 +33,10 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBloodBanks()
         {
+            
 
             var bloodBanks = _IbbService.GetAll();
+           
             return Ok(bloodBanks);
 
         }
@@ -47,6 +49,7 @@ namespace IntegrationAPI.Controllers
         {
             var bloodBank = _IbbService.GetById(id);
             BloodBankRequestValidator.Validate(bloodBank);
+            
             return Ok(bloodBank);
         }
 

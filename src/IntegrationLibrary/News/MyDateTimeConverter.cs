@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace News
+namespace IntegrationLibrary.News
 {
     public class MyDateTimeConverter : Newtonsoft.Json.JsonConverter
     {

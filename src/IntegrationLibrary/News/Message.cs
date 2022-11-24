@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace News
+namespace IntegrationLibery.News
 {
     public class Message
     {
+        public Guid Id { get; set; }
+
         public string Text { get; set; }
 
        
@@ -15,6 +17,7 @@ namespace News
 
         public Message(string text, DateTime timestamp)
         {
+            this.Id = Guid.NewGuid();
             this.Text = text;
             this.Timestamp = timestamp;
         }

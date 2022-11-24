@@ -13,7 +13,7 @@ using IntegrationAPI.BBConnection;
 using System.Linq;
 using IntegrationLibrary.Report;
 
-using News;
+using IntegrationLibrary.News;
 
 namespace IntegrationAPI
 {
@@ -59,14 +59,14 @@ namespace IntegrationAPI
             services.AddScoped<IReportRepository, ReportRepository>();
            // services.AddScoped<IEmailService, IEmailService>();
             services.AddScoped<ExceptionMiddleware>();
-<<<<<<< HEAD
 
-=======
+            services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<INewsRepository, NewsRepository>();
+            //services.AddSingleton<RabbitMQService>();
+
             services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
-            
->>>>>>> 005aa24c90975718aaebdea0edf6c7a9191dbe09
-
-            //services.AddScoped<RabbitMQService>();
+            services.AddHostedService<RabbitMQService>();
+           
 
         }
 
