@@ -75,8 +75,8 @@ namespace IntegrationAPI
             services.AddScoped<INewsRepository, NewsRepository>();
             //services.AddSingleton<RabbitMQService>();
 
-            services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
-            services.AddHostedService<RabbitMQService>();
+           // services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
+             services.AddHostedService<RabbitMQService>();
            
 
         }
@@ -103,6 +103,7 @@ namespace IntegrationAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
+              
             }
             app.UseCors("default");
             app.UseMiddleware<ExceptionMiddleware>();

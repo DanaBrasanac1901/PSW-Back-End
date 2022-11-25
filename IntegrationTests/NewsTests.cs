@@ -19,7 +19,7 @@ namespace IntegrationTests
 
         private readonly IBloodBankRepository bloodBankRepository;
         public NewsTests(TestDatabaseFactory<Startup> factory) : base(factory)
-        {
+        { 
         }
 
         [Fact]
@@ -29,6 +29,8 @@ namespace IntegrationTests
             var service = Factory.Services.CreateScope().ServiceProvider.GetRequiredService<RabbitMQService>();
             //var fake = new FakeProcessor();
             
+            var service2=Factory.Services.CreateScope().ServiceProvider.GetRequiredService<NewsService>();
+
             var cts = new CancellationTokenSource();
 
             var pp= service.StartAsync(cts.Token);
@@ -37,7 +39,7 @@ namespace IntegrationTests
             var producer = new TestPublisher();
             producer.Publish("hello",m );
 
-           // Assert.Equal(m, );
+            Assert.Equal(m,service2.getById(m.Id));
 
 
 
