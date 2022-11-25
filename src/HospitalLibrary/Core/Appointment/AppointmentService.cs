@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.Appointment
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IAppointmentRepository _appointmentRepositoryMock;
         private readonly IDoctorRepository _doctorRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
@@ -27,6 +28,11 @@ namespace HospitalLibrary.Core.Appointment
             _roomRepository = roomRepository;
             _emailSend = emailSend;
             UpdateFinishedAppointments();
+        }
+
+        public AppointmentService(IAppointmentRepository appointmentRepository) 
+        {
+            _appointmentRepository = appointmentRepository;
         }
 
 
@@ -87,14 +93,12 @@ namespace HospitalLibrary.Core.Appointment
             Appointment app = AppointmentAdapter.CreateAppointmentDTOToAppointment(appointmentDTO);
             app.Doctor = _doctorRepository.GetById(appointmentDTO.doctorId);
             app.Id = DateTime.Now.ToString("yyMMddhhmmssffffff");
-            Boolean checkFlag = IsAvailable(app);
-            Boolean dateFlag = CheckIfAppointmentIsSetInFuture(app.Start);
-            if(checkFlag == false)
+            if(IsAvailable(app) == false)
             {
                 Console.WriteLine("Zauzet termin");
                 return "";
             }
-            else if(dateFlag == false)
+            else if(CheckIfAppointmentIsSetInFuture(app.Start) == false)
             {
                 Console.WriteLine("Termine zakazivati za buducnost");
                 return "";
@@ -110,7 +114,7 @@ namespace HospitalLibrary.Core.Appointment
         {
             Appointment appointment = GetById(appointmentDTO.id);
             Appointment appToSend = AppointmentAdapter.RescheduleAppointmentDTOToAppointment(appointmentDTO, appointment);
-            if (IsAvailable(appToSend) == true && CheckIfAppointmentIsSetInFuture(appToSend.Start))
+            if (IsAvailable(appToSend) == true && CheckIfAppointmentIsSetInFuture(appToSend.Start) == true)
             {
                 _appointmentRepository.Update(appToSend);
             }
@@ -182,6 +186,31 @@ namespace HospitalLibrary.Core.Appointment
             Appointment app = _appointmentRepository.GetById(id);
             RescheduleAppointmentDTO dto = AppointmentAdapter.AppointmentToRescheduleAppointmentDTO(app);
             return dto;
+        }
+
+        public Boolean CheckIfAppointmentExistsForDoctor(string doctorId,DateTime start)
+        {
+            
+            foreach (var app in _appointmentRepository.GetAll())
+            {
+                if(app.DoctorId == doctorId && app.Start == start)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void ChangeDoctorForAppointment(string doctorId, string appointmentId)
+        {
+            var appointment = _appointmentRepository.GetById(appointmentId);
+            
+            if(CheckIfAppointmentExistsForDoctor(doctorId,appointment.Start) == true)
+            {
+                appointment.DoctorId = doctorId;
+                _appointmentRepository.Update(appointment);
+            }
+                
         }
     }
 }

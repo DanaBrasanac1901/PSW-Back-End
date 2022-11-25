@@ -1,7 +1,7 @@
-﻿using HospitalLibrary.Core.Room;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Core.Blood.DTOS;
+using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -16,17 +16,34 @@ namespace HospitalAPI.Controllers
             _bloodService = bloodService;
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetById(int id)
+        {
+            var record = _bloodService.GetById(id);
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(record);
+        }
+
         [HttpPost]
         [Route("[action]")]
-        public ActionResult CreateConsumptionRecord(CreateConsmptionRecordDTO record)
+        public ActionResult CreateConsumptionRecord(BloodConsumptionRecordDTO record)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _bloodService.CreateBloodConsumptionRecord(record);
-            return Ok();
+            BloodConsumptionRecord newRecord = BloodDTOAdapter.CreateConsmptionRecordDTOToObject(record);
+            newRecord.Id = (int)DateTime.Now.Ticks;
+
+            _bloodService.CreateBloodConsumptionRecord(newRecord);
+
+            return CreatedAtAction("GetById", new { id = newRecord.Id }, newRecord);
         }
         
         [HttpPost]

@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Vacation;
+using HospitalLibrary.Core.Appointment;
+
 
 namespace HospitalLibrary.Core.Doctor
 {
@@ -20,6 +23,8 @@ namespace HospitalLibrary.Core.Doctor
         public int StartWorkTime { get; set; }
         [Range(0, 23)]
         public int EndWorkTime { get; set; }
+
+        public virtual ICollection<VacationRequest> VacationRequests { get; set; }
         
         public virtual ICollection<Appointment.Appointment> Appointments{ get; set; }
 
@@ -37,6 +42,49 @@ namespace HospitalLibrary.Core.Doctor
             StartWorkTime = startWorkTime;
             EndWorkTime = endWorkTime;
             Appointments = appointments;
+            VacationRequests = new List<VacationRequest>();
         } 
+
+        public bool IsAvailable(DateTime start, DateTime end)
+        {
+            DateTimeRange range = new DateTimeRange(start, end);
+            bool hasAppointments = HasAppointments(range);
+            bool hasVacation = HasVacations(range);
+
+            return !(hasAppointments || hasVacation);
+        }
+
+        private bool HasAppointments(DateTimeRange rangeToCheck)
+        {
+            if(Appointments != null)
+                foreach(Appointment.Appointment appointment in Appointments)
+                {
+                    DateTimeRange appointmentRange = new DateTimeRange(appointment.Start, appointment.Start.AddMinutes(20));
+                    if (appointmentRange.OverlapsWith(rangeToCheck)
+                        && appointment.Status==AppointmentStatus.Scheduled)
+                        return true;
+                }
+
+            return false;
+        }
+
+        private bool HasVacations(DateTimeRange rangeToCheck)
+        {
+            foreach (VacationRequest vacationRequest in this.VacationRequests)
+            {
+                DateTimeRange existingRequestRange = new DateTimeRange(vacationRequest.Start, vacationRequest.End);
+
+                if(existingRequestRange.OverlapsWith(rangeToCheck) && 
+                    (
+                    vacationRequest.Status == Enums.VacationRequestStatus.WaitingForApproval ||
+                    vacationRequest.Status == Enums.VacationRequestStatus.Accepted
+                    )
+                  )
+                    return true;
+            }
+
+            return false;
+        }
+
     }
 }

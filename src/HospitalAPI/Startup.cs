@@ -13,6 +13,8 @@ using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.Vacation;
+using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -75,6 +77,10 @@ namespace HospitalAPI
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
+            services.AddScoped<IVacationService, VacationService>();
+            services.AddScoped<IVacationRepository, VacationRepository>();
+
             // services.AddScoped<IEmailSend, EmailSend>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -86,6 +92,13 @@ namespace HospitalAPI
             services.AddScoped<IBloodConsuptionRecordRepository, BloodConsumptionRecordRepository>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IBloodService, BloodService>();
+
+            services.AddScoped<IBloodConsuptionRepository, BloodSupplyRepository>();
+            services.AddScoped<IInpatientTreatmentRecordService, InpatientTreatmentRecordService>();
+            services.AddScoped<IInpatientTreatmentRecordRepository, InpatientTreatmentRecordRepository>();
+            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+            services.AddScoped<IEquipmentService, EquipmentService>();
+
             services.AddScoped<IBloodSupplyRepository, BloodSupplyRepository>();
 
         }
