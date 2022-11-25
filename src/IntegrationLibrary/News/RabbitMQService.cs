@@ -36,7 +36,7 @@ namespace IntegrationLibrary.News
             using (var scope = _serviceProvider.CreateScope())
             {
                 var handler = (INewsService)ActivatorUtilities.CreateInstance(scope.ServiceProvider, typeof(NewsService));
-                var _newsService = scope.ServiceProvider.GetRequiredService<INewsService>;
+              //  var _newsService = scope.ServiceProvider.GetRequiredService<INewsService>;
                 var factory = new ConnectionFactory() { HostName = "localhost" };
                 connection = factory.CreateConnection();
                 channel = connection.CreateModel();

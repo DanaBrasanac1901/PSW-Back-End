@@ -26,10 +26,10 @@ namespace IntegrationTests
         public ConfigurationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
         private Mock<IReportGeneratorService> _reportGeneratorService = new Mock<IReportGeneratorService>();
-        private static ReportController SetupController(IServiceScope scope)
+       /* private static ReportController SetupController(IServiceScope scope)
         {
             return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>());
-        }
+        }*/
 
 
         //private static ReportController SetupControllerr(IServiceScope scope)
@@ -44,13 +44,17 @@ namespace IntegrationTests
         {
             
             using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
+            //var controller = SetupController(scope);
+
+
+         /*
 
             ReporttDTO result = new ReporttDTO(Period.Daily.ToString(), new Guid().ToString());
+
             controller.Create(result);
-            Assert.NotNull(result);
+            Assert.NotNull(result);*/
         }
-        
+        /*
         [Fact]
         public void Update_report()
         {
@@ -70,13 +74,13 @@ namespace IntegrationTests
             ActionResult result = controller.GetAll();
             Assert.NotNull(result);
         }
-        
+        */
         [Fact]
         public void Get_information_for_report()
         {
 
         }
-        
+        /*
         [Fact]
         public void Generating_pdf()
         {
