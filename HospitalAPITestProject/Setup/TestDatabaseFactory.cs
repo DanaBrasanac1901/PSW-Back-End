@@ -87,13 +87,14 @@ namespace HospitalTests.Setup
             //context.VacationRequests.Add(new VacationRequest { Id = 49, Start = new DateTime(2023, 1, 1), End = new DateTime(2023, 1, 14), Description = "holidays", Urgency = true, DoctorId = "DOC1" });
 
 
-            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");*/
 
          
 
 
 
-            //context.SaveChanges();
-        }
+            context.SaveChanges();
+       }
+
     }
 }

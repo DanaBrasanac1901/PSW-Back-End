@@ -35,7 +35,7 @@ namespace HospitalTests.Integration
         public void Create_urgent_vacation_request()
         {
             using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);o
+            var controller = SetupController(scope);
             var record = SetUpCreateVacationRequestDTO(scope);
             var result = ((OkObjectResult)controller.CreateUrgentRequest(record))?.Value as string;
             Assert.Equal("Passed",result);
