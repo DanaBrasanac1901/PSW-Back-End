@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Xunit;
 
 namespace HospitalLibraryTestProject
 {
-    public class ChosenDoctorTests
+    public class ChosenDoctosrTests
     {
         private Mock<IDoctorRepository> doctorRepo;
         private Mock<IPatientRepository> patientRepo;
@@ -32,17 +33,17 @@ namespace HospitalLibraryTestProject
         }
         
         private void Setting_patient_repository()
-        {/*
+        {
             var patients = new List<Patient>();
             patientRepo = new Mock<IPatientRepository>();
 
-            patients.Add(new Patient { Id = "5", Name = "Janko", Surname= "Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies = { }, DoctorID = "1", Active = true });
-            patients.Add(new Patient { Id = "6", Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = { }, DoctorID = "1", Active = true });
-            patients.Add(new Patient { Id = "7", Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = { }, DoctorID = "2", Active = true });
-            patients.Add(new Patient { Id = "8", Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = {"animal fur"}, DoctorID = "3", Active = true });
-            patients.Add(new Patient { Id = "9", Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = { "pollen", "dust" }, DoctorID = "1", Active = true });
+            patients.Add(new Patient { Id = "5", Name = "Janko", Surname= "Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = "1", Active = true });
+            patients.Add(new Patient { Id = "6", Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = new List<string>(), DoctorID = "1", Active = true });
+            patients.Add(new Patient { Id = "7", Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = new List<string>(), DoctorID = "2", Active = true });
+            patients.Add(new Patient { Id = "8", Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = "3", Active = true });
+            patients.Add(new Patient { Id = "9", Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = new List<string>(), DoctorID = "1", Active = true });
 
-            this.patientRepo.Setup(m => m.GetAll()).Returns(patients);*/
+            this.patientRepo.Setup(m => m.GetAll()).Returns(patients);
         }
 
         private void Setting_patient_service()
@@ -66,11 +67,18 @@ namespace HospitalLibraryTestProject
         public void Finds_doctors_with_smallest_patient_count()
         {
             Setting_patient_service();
+            List<string> wantedDoctorIds = new List<string>(){ "2", "3", "4"};
+            List<string> result = new List<string>();
 
-            var doctorIdList = patientService.DoctorsWithSimiliarNumOfPatients(0, 1);
+            var doctorList = patientService.DoctorsWithSimiliarNumOfPatients(0, 1);
+           
 
-            Assert.Equal(new List<string>() { "2", "3", "4" }, doctorIdList);
+            foreach(Doctor doctor in doctorList)
+            {
+                result.Add(doctor.Id);
+            }
 
+            Assert.Equal(wantedDoctorIds, result);
 
         }
 

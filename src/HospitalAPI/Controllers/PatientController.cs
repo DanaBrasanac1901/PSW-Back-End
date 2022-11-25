@@ -137,13 +137,13 @@ namespace HospitalAPI.Controllers
         [HttpGet("minimal-patients-doctor")]
         public ActionResult GetDoctorsWithLeastPatients() {
 
-            var doctorIds = _patientService.GetDoctorsWithLeastPatients();
-            if(doctorIds == null)
+            var doctors = _patientService.GetDoctorsWithLeastPatients();
+            if(doctors == null)
             {
                 return NotFound();
             }
 
-            return Ok(doctorIds);
+            return Ok(doctors);
         
         
         }

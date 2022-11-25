@@ -28,10 +28,16 @@ namespace HospitalTests.Integration
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            List<string> resultIds = new List<string>();
 
-            var result = ((OkObjectResult)controller.GetDoctorsWithLeastPatients()).Value as List<String>;           
-           
-            Assert.Equal(new List<string>(){"2","3","4" }, result);
+            var result = ((OkObjectResult)controller.GetDoctorsWithLeastPatients()).Value as List<Doctor>;
+
+            foreach (Doctor doctor in result)
+            {
+                resultIds.Add(doctor.Id);
+            }
+
+            Assert.Equal(new List<string>(){"2","3","4" }, resultIds);
         }
 
 
