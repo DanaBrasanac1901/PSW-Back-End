@@ -29,7 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HospitalAPI\HospitalAPI.csproj" />
     <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="BBConnection\myPDF.pdf" />
   </ItemGroup>
 
 </Project>

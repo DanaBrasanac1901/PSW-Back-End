@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121150528_message")]
+    partial class message
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,8 +39,8 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Timestamp = new DateTime(2022, 11, 24, 15, 49, 15, 6, DateTimeKind.Local).AddTicks(8932),
-                            Id = new Guid("bdf7764b-269f-4559-9ae5-86b6b021d4f7"),
+                            Timestamp = new DateTime(2022, 11, 21, 16, 5, 27, 508, DateTimeKind.Local).AddTicks(5446),
+                            Id = new Guid("7b511c23-ed6e-4999-81a7-4e001474c4c2"),
                             Text = "doniraj krv"
                         });
                 });
@@ -74,7 +76,7 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            Id = new Guid("41021ad9-d16a-49b9-92e6-d75979ea375b"),
                             Apikey = "efwfe",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
@@ -83,7 +85,7 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
+                            Id = new Guid("e21cb335-f629-40fa-bcb0-a7f24f890279"),
                             Apikey = "dqad",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
@@ -92,7 +94,7 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
+                            Id = new Guid("581aab9d-809c-4a5c-94f3-74ffc2e4ce78"),
                             Apikey = "ads",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
@@ -107,6 +109,9 @@ namespace IntegrationLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("BloodbankId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("ConfigurationDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -118,30 +123,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ReportTable");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
-                            ConfigurationDate = new DateTime(2022, 11, 24, 15, 49, 15, 33, DateTimeKind.Local).AddTicks(2779),
-                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
-                            Period = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
-                            ConfigurationDate = new DateTime(2022, 11, 24, 15, 49, 15, 34, DateTimeKind.Local).AddTicks(349),
-                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
-                            Period = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
-                            ConfigurationDate = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
-                            Period = 2
-                        });
+                    b.ToTable("Reports");
                 });
 #pragma warning restore 612, 618
         }
