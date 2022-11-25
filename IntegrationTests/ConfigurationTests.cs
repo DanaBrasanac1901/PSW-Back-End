@@ -46,7 +46,7 @@ namespace IntegrationTests
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            ReportDTO result = new ReportDTO(Period.Daily, new Guid());
+            ReporttDTO result = new ReporttDTO(Period.Daily.ToString(), new Guid().ToString());
             controller.Create(result);
             Assert.NotNull(result);
         }
