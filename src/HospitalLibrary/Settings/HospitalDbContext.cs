@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
+using HospitalLibrary.Core.User;
 
 namespace HospitalLibrary.Settings
 {
@@ -114,6 +115,9 @@ namespace HospitalLibrary.Settings
         }
 
 
+        public DbSet<User> Users { get; set; }
+
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
     }
 }

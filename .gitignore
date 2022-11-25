@@ -547,3 +547,4 @@ $RECYCLE.BIN/
 .DS_Store
 .idea
 src/HospitalAPI/appsettings.json
+*.sln

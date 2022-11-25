@@ -33,13 +33,6 @@ namespace HospitalLibrary.Core.Feedback
 
         public void Create(Feedback feedback)
         {
-            feedback.Date = System.DateTime.Today;
-            feedback.Approved = false;
-
-            //change when login gets implemented
-            feedback.PatientId = 0;
-
-            
             _context.Feedbacks.Add(feedback);
             _context.SaveChanges();
         }

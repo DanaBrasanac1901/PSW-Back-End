@@ -15,6 +15,10 @@ using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
+using HospitalLibrary.Core.User;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace HospitalAPI
 {
@@ -38,7 +42,25 @@ namespace HospitalAPI
             .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
 
-            
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audence"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration
+                                ["Jwt:Key"]))
+                    };
+                });
+
+            services.AddMvc();
+            services.AddControllers(); //ovo vec ima
+
             services.AddControllers().AddJsonOptions(x =>
                  x.JsonSerializerOptions.ReferenceHandler = null);
             
@@ -48,8 +70,7 @@ namespace HospitalAPI
             });
 
             services.AddScoped<IPatientService, PatientService>();
-            services.AddScoped<IPatientRepository, PatientRepository>();
-
+            services.AddScoped<IPatientRepository, PatientRepository>();            
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IDoctorService, DoctorService>();
@@ -60,21 +81,32 @@ namespace HospitalAPI
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();
 
+            // services.AddScoped<IEmailSend, EmailSend>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
+
             services.AddScoped<IEmailSendService, EmailSendService>();
 
             services.AddScoped<IBloodConsuptionRecordRepository, BloodConsumptionRecordRepository>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IBloodService, BloodService>();
+
             services.AddScoped<IBloodConsuptionRepository, BloodSupplyRepository>();
             services.AddScoped<IInpatientTreatmentRecordService, InpatientTreatmentRecordService>();
             services.AddScoped<IInpatientTreatmentRecordRepository, InpatientTreatmentRecordRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
+
+            services.AddScoped<IBloodSupplyRepository, BloodSupplyRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             app.UseCors(builder =>
             {
                 builder
@@ -89,10 +121,11 @@ namespace HospitalAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
