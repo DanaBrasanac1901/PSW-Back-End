@@ -13,11 +13,11 @@ namespace HospitalLibrary.Core.Patient
         void Activate(Patient patient);
         
         //Patient CheckCreditentials(string username, string password);
-        IEnumerable<string> GetDoctorsWithLeastPatients();
+        IEnumerable<Doctor.Doctor> GetDoctorsWithLeastPatients();
         int GetMinNumOfPatients(int minNumber);
         int GetMaxNumOfPatients();
         int NumberOfPatientsByDoctor(string doctorId);
-        IEnumerable<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
+        IEnumerable<Doctor.Doctor> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
      
     }
 }
