@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.Room;
+using HospitalLibrary.Core.User;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -54,10 +55,24 @@ namespace HospitalTests.Setup
             context.Rooms.Add(new Room { Id = 3, Floor = 2, Number = "21" });
             context.Rooms.Add(new Room { Id = 4, Floor = 3, Number = "31" });
 
+            InitializeUsers(context);
             InitializeDoctors(context);
             InitializePatients(context);
 
             context.SaveChanges();
+        }
+
+        private static void InitializeUsers(HospitalDbContext context)
+        {
+            context.Users.Add(new User { Id = 1, Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com",Password = "pass1", Role ="DOCTOR"});
+            context.Users.Add(new User { Id = 2, Name = "Milica", Surname = "Todorovic", Email = "mtodorovic@hotmail.com", Password = "pass2", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 3, Name = "Darko", Surname = "Mitic", Email = "darkomitic@live.com", Password = "pass3", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 4, Name = "Selena", Surname = "Mirkovic", Email = "selmirkovic@gmail.com", Password = "pass4", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 5, Name = "Janko", Surname = "Jankovic", Email = "janki@gmail.com", Password = "pass5", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 6, Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", Password = "pass6", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", Password = "pass7", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", Password = "pass8", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", Password = "pass9", Role = "PATIENT" });
         }
 
         private static void InitializeDoctors(HospitalDbContext context)
