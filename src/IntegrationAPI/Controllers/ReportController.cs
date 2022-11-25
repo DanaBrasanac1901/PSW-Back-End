@@ -21,10 +21,10 @@ namespace IntegrationAPI.Controllers
             _mapper = mapper;
         }
 
-        public ReportController(IReportService getRequiredService)
+      /*  public ReportController(IReportService getRequiredService)
         {
             _reportService = getRequiredService;
-        }
+        }*/
 
         // GET: api/reports ili bez s?
         [HttpGet]
