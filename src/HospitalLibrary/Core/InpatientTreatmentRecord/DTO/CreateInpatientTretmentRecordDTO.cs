@@ -21,6 +21,12 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord.DTO
 
         public CreateInpatientTretmentRecordDTO(IInpatientTreatmentRecordService inpatientTreatmentService)
         {
+            doctorId = "DOC1";
+            bedId = "B1";
+            roomId = "1";
+            Therapy = "terapija neka";
+            AdmissionReason = "bolestan covek";
+
             this.inpatientTreatmentService = inpatientTreatmentService;
         }
 
