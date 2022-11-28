@@ -18,7 +18,7 @@ namespace HospitalLibrary.Core.Appointment
         public virtual Doctor.Doctor Doctor { get; set; }
         public string PatientId { get; set; }
         //line below should be uncommented once Patients have been created
-        //public virtual Patient Patient {get; set;}
+        public virtual Patient.Patient Patient {get; set;}
         public DateTime Start { get; set; }
         public int Duration { get; set; }
         public int RoomId { get; set; }

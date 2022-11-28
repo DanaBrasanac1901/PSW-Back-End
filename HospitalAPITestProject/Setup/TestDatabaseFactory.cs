@@ -64,15 +64,15 @@ namespace HospitalTests.Setup
 
         private static void InitializeUsers(HospitalDbContext context)
         {
-            context.Users.Add(new User { Id = 1, Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com",Password = "pass1", Role ="DOCTOR"});
-            context.Users.Add(new User { Id = 2, Name = "Milica", Surname = "Todorovic", Email = "mtodorovic@hotmail.com", Password = "pass2", Role = "DOCTOR" });
-            context.Users.Add(new User { Id = 3, Name = "Darko", Surname = "Mitic", Email = "darkomitic@live.com", Password = "pass3", Role = "DOCTOR" });
-            context.Users.Add(new User { Id = 4, Name = "Selena", Surname = "Mirkovic", Email = "selmirkovic@gmail.com", Password = "pass4", Role = "DOCTOR" });
-            context.Users.Add(new User { Id = 5, Name = "Janko", Surname = "Jankovic", Email = "janki@gmail.com", Password = "pass5", Role = "PATIENT" });
-            context.Users.Add(new User { Id = 6, Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", Password = "pass6", Role = "PATIENT" });
-            context.Users.Add(new User { Id = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", Password = "pass7", Role = "PATIENT" });
-            context.Users.Add(new User { Id = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", Password = "pass8", Role = "PATIENT" });
-            context.Users.Add(new User { Id = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", Password = "pass9", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 1, IdByRole = 1, Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com",Password = "pass1", Role ="DOCTOR"});
+            context.Users.Add(new User { Id = 2, IdByRole = 2, Name = "Milica", Surname = "Todorovic", Email = "mtodorovic@hotmail.com", Password = "pass2", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 3, IdByRole = 3, Name = "Darko", Surname = "Mitic", Email = "darkomitic@live.com", Password = "pass3", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 4, IdByRole = 4, Name = "Selena", Surname = "Mirkovic", Email = "selmirkovic@gmail.com", Password = "pass4", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 5, IdByRole = 5, Name = "Janko", Surname = "Jankovic", Email = "janki@gmail.com", Password = "pass5", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 6, IdByRole = 6, Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", Password = "pass6", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 7, IdByRole = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", Password = "pass7", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 8, IdByRole = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", Password = "pass8", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 9, IdByRole = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", Password = "pass9", Role = "PATIENT" });
         }
 
         private static void InitializeDoctors(HospitalDbContext context)

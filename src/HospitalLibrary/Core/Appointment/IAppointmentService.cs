@@ -26,5 +26,8 @@ namespace HospitalLibrary.Core.Appointment
 
         RescheduleAppointmentDTO GetAppoitnemtnToReschedule(string id);
 
+        IEnumerable<Appointment> GetAvailableForDoctor();
+        IEnumerable<Appointment> GetAvailableForDoctorAndDate();
+        IEnumerable<Appointment> GetAvailableForDate();
     }
 }

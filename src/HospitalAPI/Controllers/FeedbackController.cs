@@ -56,10 +56,10 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new {ID=feedback.ID}, feedback);
         }
 
-        [HttpPost("verify/{commentID}")]
-        public ActionResult AcceptFeedback(Feedback feedback)
+        [HttpPost("approval-change/{commentID}")]
+        public ActionResult ChangeApproval(Feedback feedback)
         {
-            _feedbackService.AcceptFeedback(feedback);
+            _feedbackService.ChangeApproval(feedback);
             return Ok(feedback);
         }
         [HttpPost("changevisibility/{commentID}")]

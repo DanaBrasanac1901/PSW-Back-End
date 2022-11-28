@@ -183,5 +183,20 @@ namespace HospitalLibrary.Core.Appointment
             RescheduleAppointmentDTO dto = AppointmentAdapter.AppointmentToRescheduleAppointmentDTO(app);
             return dto;
         }
+
+        public IEnumerable<Appointment> GetAvailableForDoctor()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Appointment> GetAvailableForDoctorAndDate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Appointment> GetAvailableForDate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

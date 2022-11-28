@@ -8,9 +8,10 @@ namespace HospitalLibrary.Core.User
 {
     public class User
     {
-        public User(int id, string name, string surname, string email,string password, string role)
+        public User(int id, int idByRole, string name, string surname, string email,string password, string role)
         {
             this.Id = id;
+            this.IdByRole = idByRole;
             this.Name = name;
             this.Surname = surname;
             this.Email = email;
@@ -25,6 +26,7 @@ namespace HospitalLibrary.Core.User
         }
 
         int id;
+        int idByRole;
         string name;
         string surname;
         string email;
@@ -34,6 +36,7 @@ namespace HospitalLibrary.Core.User
 
 
         public int Id { get { return id; } set { id = value; } }
+        public int IdByRole { get { return idByRole; } set { idByRole = value; } }
         public string Name { get { return name; } set { name = value; } }
         public string Surname { get { return surname; } set { surname = value;  } }
         public string Email { get { return email; } set { email = value; } }

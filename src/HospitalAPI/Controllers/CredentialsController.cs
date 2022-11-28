@@ -42,11 +42,11 @@ namespace HospitalAPI.Controllers
 		public IActionResult Login([FromBody] User user)
 		{
 			
-			var _user = Authenticate(user);
+			var _user = _userService.Authenticate(user);
 			if (_user != null)
 			{
 				var token = Generate(_user);
-				return Ok( tokenHandler.ReadToken(token));
+				return Ok(tokenHandler.ReadToken(token));
 			}
 
 			return Unauthorized();
@@ -58,6 +58,7 @@ namespace HospitalAPI.Controllers
 			var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 			//HmacSha256 - hashing algorithm
 
+			
 			var claims = new[] //a way to store the data so that you don't have to always access the db
 			{ //these are set-in-stone claims (NameIdentifier, Email, GivenName)
 				new Claim(ClaimTypes.Sid, user.Id.ToString()), 
@@ -75,17 +76,6 @@ namespace HospitalAPI.Controllers
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
 
-		private User Authenticate(User user)
-		{
-			// UserConstraints -> baza
-			var users = _userService.GetAll();
-			var currentUser = users.FirstOrDefault(o => o.Email.ToLower() ==
-				 user.Email.ToLower() && o.Password == user.Password);
-
-
-			if (currentUser != null) return currentUser;
-			return null;
-		}
 
 		[HttpPost("send-activation")]
 		public ActionResult SendActivationCode(string email)
@@ -132,6 +122,7 @@ namespace HospitalAPI.Controllers
 			}
 			return NotFound();
 		}
+
         [HttpGet("activate-account")]
 		public ActionResult Activate()
 		{

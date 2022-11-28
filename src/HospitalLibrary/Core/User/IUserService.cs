@@ -15,5 +15,7 @@ namespace HospitalLibrary.Core.User
         void Update(User user);
         void Delete(User user);
         bool Activate(User user);
+
+        public User Authenticate(User user);
     }
 }

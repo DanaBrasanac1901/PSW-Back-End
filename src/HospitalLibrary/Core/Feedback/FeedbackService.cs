@@ -52,9 +52,11 @@ namespace HospitalLibrary.Core.Feedback
         {
             _feedbackRepository.Delete(feedback);
         }
-        public void AcceptFeedback(Feedback feedback)
+        public void ChangeApproval(Feedback feedback)
         {
-            feedback.Approved = true;
+            if (feedback.Approved == true)
+                feedback.Approved = false;
+            else feedback.Approved = true;
             _feedbackRepository.Update(feedback);
         }
         public void ChangeVisibility(Feedback feedback)

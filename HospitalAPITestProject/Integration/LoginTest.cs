@@ -25,7 +25,7 @@ namespace HospitalTests.Integration
 
             using var scope = Factory.Services.CreateScope();
             // var controller = SetupController(scope);
-            User user1 = new User { Id = 20, Name = "nema", Surname = "korisnika", Email = "nekinepostojeci@gmail.com", Password = "nekinepostojecipass", Role = "DOCTOR" };
+            User user1 = new User { Id = 20, IdByRole = 20, Name = "nema", Surname = "korisnika", Email = "nekinepostojeci@gmail.com", Password = "nekinepostojecipass", Role = "DOCTOR" };
            //var result = controller.Login(user1);
            // Assert.Null(result);
         }
