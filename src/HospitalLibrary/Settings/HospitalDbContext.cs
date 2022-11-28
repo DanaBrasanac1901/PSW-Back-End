@@ -73,14 +73,6 @@ namespace HospitalLibrary.Settings
                 bloodConsumptionRecord1
                 );
 
-            base.OnModelCreating(modelBuilder);
-
-
-
-
-
-
-
             modelBuilder.Entity<InpatientTreatmentRecord>().HasData(
                 new InpatientTreatmentRecord()
                 {
