@@ -53,98 +53,64 @@ namespace HospitalTests.Setup
         private static void InitializeDatabase(HospitalDbContext context)
         {
 
-            
             context.Database.EnsureCreated();
 
-            /*context.Database.ExecuteSqlRaw("truncate table \"HospitalBlood\";");
-            context.HospitalBlood.Add(new BloodSupply { Id = 1, Amount = 10, Type = BloodType.A,SourceBank = stojan });
-            context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B, SourceBank = stojan });
-            context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O, SourceBank = stojan });
-            context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB, SourceBank = stojan });
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
-            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 1, Amount = 2, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1",SourceBank = stojan });
-            
-            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Doctors\";");
-            context.Doctors.Add(new Doctor { Id = "DOC2", Name = "Milan", Surname = "Radovic", Email = "radovic@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 16});
+            //context.Rooms.Add(new Room { Id = 1, Number = "101A", Floor = 1 });
 
-
-            context.SaveChanges();*/
-
-
-            /*context.Database.EnsureCreated();
-            
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Equipment\";");
-            context.Equipment.Add(new Equipment { Id = "1", Type = EquipmentType.BED, Quantity = 1, RoomId = 1 });
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Equipment\";");
+            /*context.Equipment.Add(new Equipment { Id = "1", Type = EquipmentType.BED, Quantity = 1, RoomId = 1 });
             context.Equipment.Add(new Equipment { Id = "2", Type = EquipmentType.BANDAGES, Quantity = 1, RoomId = 1 });
-            context.Equipment.Add(new Equipment { Id = "3", Type = EquipmentType.MEDICINE, Quantity = 5, RoomId = 1 });
+            context.Equipment.Add(new Equipment { Id = "3", Type = EquipmentType.MEDICINE, Quantity = 5, RoomId = 1 });*/
 
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"InpatientTreatmentRecords\";");
-            context.InpatientTreatmentRecords.Add(new InpatientTreatmentRecord { Id = "ITREC1", DoctorID = "DOC1", PatientID = "PAT1", RoomID = "1", BedID = "B1", AdmissionDate = System.DateTime.Now, Status = true, Therapy = "lekovi", AdmissionReason = "bolestan", DischargeReason = "", DischargeDate = new DateTime(2023, 1, 1) });
-            //context.InpatientTreatmentRecords.Add(new InpatientTreatmentRecord { Id = "ITREC2", DoctorID = "DOC1", PatientID = "PAT2", RoomID = "1", BedID = "B2", AdmissionDate = System.DateTime.Now, Status = true, Therapy = "lekovi", AdmissionReason = "bolestan", DischargeReason = "", DischargeDate = new DateTime(2023, 1, 10) });
-            //context.InpatientTreatmentRecords.Add(new InpatientTreatmentRecord { Id = "ITREC3", DoctorID = "DOC1", PatientID = "PAT3", RoomID = "2", BedID = "B3", AdmissionDate = System.DateTime.Now, Status = true, Therapy = "lekovi", AdmissionReason = "bolestan", DischargeReason = "", DischargeDate = new DateTime(2023, 1, 3) });
-            context.InpatientTreatmentRecords.Add(new InpatientTreatmentRecord { Id = "ITREC4", DoctorID = "DOC1", PatientID = "PAT4", RoomID = "2", BedID = "B4", AdmissionDate = System.DateTime.Now, Status = true, Therapy = "lekovi", AdmissionReason = "bolestan", DischargeReason = "", DischargeDate = new DateTime(2023, 1, 15) });
-
-            /** context.Database.EnsureCreated();
-             
-             
-             context.VacationRequests.Add(new VacationRequest { Id = 1, Start = new DateTime(2023, 3, 5), End = new DateTime(2023, 3, 10), Description = "need rest", Urgency = false, DoctorId = "DOC1", Status = VacationRequestStatus.WaitingForApproval });
-
-
-             //context.Database.ExecuteSqlRaw("truncate table \"HospitalBlood\";");
-             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
-             //context.Database.ExecuteSqlRaw("truncate table \"VacationRequests\";");
-             //context.HospitalBlood.Add(new BloodSupply { Id = 1, Amount = 10, Type = BloodType.A });
-             //context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B });
-             //context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O });
-             //context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB });
-             //context.Database.ExecuteSqlRaw("truncate table \"Appointments\";");
-             //context.Appointments.Add(new Appointment { Id = "APP1", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 11, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
-             //context.Appointments.Add(new Appointment { Id = "APP2", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 12, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
-             //context.Appointments.Add(new Appointment { Id = "APP3", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 5, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
-             //context.Appointments.Add(new Appointment { Id = "APP4", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 12, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
-
-             //context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 9, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-             //context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 10, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-             //context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 11, Amount = 12, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-             //context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 12, Amount = 13, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-
-             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Doctors\";");
-             //context.Doctors.Add(new Doctor { Id = "DOC1", Name = "Milan", Surname = "Radovic", Email = "radovic@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 16, Appointments = new System.Collections.Generic.List<Appointment>(), VacationRequests = new System.Collections.Generic.List<VacationRequest>() });
-
-
-
-
-             //context.Database.ExecuteSqlRaw("truncate table \"BloodConsumptionRecords\";");
-             //context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 5, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-             //context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 6, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-             //context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 7, Amount = 12, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-             //context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 8, Amount = 13, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
-
-
-             //context.VacationRequests.Add(new VacationRequest { Id = 49, Start = new DateTime(2023, 1, 1), End = new DateTime(2023, 1, 14), Description = "holidays", Urgency = true, DoctorId = "DOC1" });
-
-
-             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");*/
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"InpatientTreatmentRecords\";");
+            /*context.InpatientTreatmentRecords.Add(new InpatientTreatmentRecord { Id = "ITREC1", DoctorID = "DOC1", PatientID = "PAT1", RoomID = "1", BedID = "B1", AdmissionDate = System.DateTime.Now, Status = true, Therapy = "lekovi", AdmissionReason = "bolestan", DischargeReason = "", DischargeDate = new DateTime(2023, 1, 1) });
+            context.InpatientTreatmentRecords.Add(new InpatientTreatmentRecord { Id = "ITREC2", DoctorID = "DOC1", PatientID = "PAT2", RoomID = "1", BedID = "B2", AdmissionDate = System.DateTime.Now, Status = true, Therapy = "lekovi", AdmissionReason = "bolestan", DischargeReason = "", DischargeDate = new DateTime(2023, 1, 10) });
+            context.InpatientTreatmentRecords.Add(new InpatientTreatmentRecord { Id = "ITREC3", DoctorID = "DOC1", PatientID = "PAT3", RoomID = "2", BedID = "B3", AdmissionDate = System.DateTime.Now, Status = true, Therapy = "lekovi", AdmissionReason = "bolestan", DischargeReason = "", DischargeDate = new DateTime(2023, 1, 3) });
+            context.InpatientTreatmentRecords.Add(new InpatientTreatmentRecord { Id = "ITREC4", DoctorID = "DOC1", PatientID = "PAT4", RoomID = "2", BedID = "B4", AdmissionDate = System.DateTime.Now, Status = true, Therapy = "lekovi", AdmissionReason = "bolestan", DischargeReason = "", DischargeDate = new DateTime(2023, 1, 15) });*/
 
 
 
 
 
-            //naci bolji nacin za ovo jer truncate ne radi kada imamo foreign keys a brisanje pa pisanje duze traje
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
 
-            //da li uopste pisati integracioni i sta proveravati njime? (da li se napravio blood consumption record u bazi?)
-            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
-            context.Rooms.Add(new Room { Id = 1, Floor = 1, Number = "11" });
-            context.Rooms.Add(new Room { Id = 2, Floor = 1, Number = "12" });
-            context.Rooms.Add(new Room { Id = 3, Floor = 2, Number = "21" });
-            context.Rooms.Add(new Room { Id = 4, Floor = 3, Number = "31" });
+            context.Doctors.Add(new Doctor { Id = "DOC1", Name = "Milan", Surname = "Radovic", Email = "radovic@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 16, Appointments = new System.Collections.Generic.List<Appointment>(), VacationRequests = new System.Collections.Generic.List<VacationRequest>() });
+            //context.Database.ExecuteSqlRaw("truncate table \"HospitalBlood\";");
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
+            //context.Database.ExecuteSqlRaw("truncate table \"VacationRequests\";");
+            /*context.HospitalBlood.Add(new BloodSupply { Id = 1, Amount = 10, Type = BloodType.A });
+            context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B });
+            context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O });
+            context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB });*/
+            //context.Database.ExecuteSqlRaw("truncate table \"Appointments\";");
+            context.Appointments.Add(new Appointment { Id = "APP1", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 11, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+            context.Appointments.Add(new Appointment { Id = "APP2", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 12, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+            context.Appointments.Add(new Appointment { Id = "APP3", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 5, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+            context.Appointments.Add(new Appointment { Id = "APP4", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 12, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
 
-            InitializeUsers(context);
-            InitializeDoctors(context);
-            InitializePatients(context);
+            /*context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 9, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 10, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 11, Amount = 12, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 12, Amount = 13, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });*/
+
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Doctors\";");
+            
+
+
+
+
+            //context.Database.ExecuteSqlRaw("truncate table \"BloodConsumptionRecords\";");
+            /*context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 5, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 6, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 7, Amount = 12, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+            context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 8, Amount = 13, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });*/
+
+
+            //context.VacationRequests.Add(new VacationRequest { Id = 49, Start = new DateTime(2023, 1, 1), End = new DateTime(2023, 1, 14), Description = "holidays", Urgency = true, DoctorId = "DOC1" });
+
+            //context.VacationRequests.Add(new VacationRequest { Id = 1, Start = new DateTime(2023, 3, 5), End = new DateTime(2023, 3, 10), Description = "need rest", Urgency = false, DoctorId = "DOC1", Status = VacationRequestStatus.WaitingForApproval, RejectionReason = "" });
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");
+
 
             context.SaveChanges();
        }
