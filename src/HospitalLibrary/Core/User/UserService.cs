@@ -56,6 +56,7 @@ namespace HospitalLibrary.Core.User
             _userRepository.Update(user);
         }
 
+        //Account activation, but we first need to validate the token from the link
         public bool Activate(string email, string token)
         {
             User user=GetByEmail(email);
@@ -75,28 +76,23 @@ namespace HospitalLibrary.Core.User
             return false;
 
         }
-
-            
-            
-        
-
         private bool TokenValidity(User user, string token)
         {
-            return true;
             // Ovde treba da procita token iz linka i iz baze i da ih uporedi
             // Oba su u stringified JSONu 
             // Izgleda ovako: {"alg":"HS256","typ":"JWT"}.{"exp":1669732404,"iss":"http://localhost:16177","aud":"http://localhost:16177"}
-            // Mozda bi trebalo da se enkriptuje nekako (stavila sam na notion) al kontam da je previse posla (heh) (al kao zapravo)
 
-            //Uporedi prvo da li su isti
-            //Pa onda da li je isteklo trajanje (sto isto nmp kako)
-            //"exp":1669732404 - ovo bi moglo tipa regeksom al blage nemam kako da rastumacim te brojeve
-            // Zato sam i htela da pretvorim u SecurityToken jer onda imas metodu bas za to
+            if (!user.Token.Equals(token)) return false;
+            SecurityToken _token= new JwtSecurityTokenHandler().ReadToken(token);
+            DateTime validUntil = _token.ValidTo;
+            DateTime now=DateTime.Now;
+            if (DateTime.Compare(now, validUntil) > 0) return false;
 
-            //SecurityToken _token = SecurityTokenHandler.ReadToken(token);
-
+            return true;
         }
 
+
+        //Save activation token before sending an email
         public bool SaveTokenToDatabase(string email, SecurityToken token)
         {
             User user = GetByEmail(email);
@@ -114,6 +110,7 @@ namespace HospitalLibrary.Core.User
             }
         }
 
+        //Check if the user is who he claims to be
         public User Authenticate(User user)
         {
             // UserConstraints -> baza
@@ -151,16 +148,23 @@ namespace HospitalLibrary.Core.User
             return token;
         }
 
+        //A separate method, because activation doesn't require claims
+        // It only needs an expiration time
         public SecurityToken GenerateActivationToken(string email)
         {
             User user=GetByEmail(email);
             if (user == null) return null;
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-           
+
+            var claims = new[]
+             { 
+				new Claim(ClaimTypes.Sid, user.Id.ToString())
+            };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Audience"],
+                claims,
                 expires: DateTime.Now.AddMinutes(15),
                 signingCredentials: credentials);
 

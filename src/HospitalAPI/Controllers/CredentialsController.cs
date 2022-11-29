@@ -87,7 +87,7 @@ namespace HospitalAPI.Controllers
                 }
                 else
                 {
-					return NotFound("Something went horribly wrong!");
+					return NotFound("Something went wrong!");
                 }
             }
 			return BadRequest();
