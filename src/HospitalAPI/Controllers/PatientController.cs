@@ -1,5 +1,8 @@
-﻿using HospitalLibrary.Core.Patient;
+﻿using Castle.Core.Internal;
+using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.Patient;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -8,6 +11,7 @@ namespace HospitalAPI.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService _patientService;
+     
 
         public PatientsController(IPatientService patientService)
         {
@@ -22,6 +26,7 @@ namespace HospitalAPI.Controllers
         }
 
         // GET api/patients/2
+       
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -33,7 +38,6 @@ namespace HospitalAPI.Controllers
 
             return Ok(patient);
         }
-
         // POST api/patients
         [HttpPost]
         public ActionResult Create(Patient patient)
@@ -47,6 +51,49 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
+        /*
+        [HttpPost("login")]
+        public ActionResult Login(Patient patient)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _patientService.CheckCreditentials(patient.Email,patient.Password);
+            return CreatedAtAction("GetById", new { id = patient.Id }, patient);
+        }
+
+        
+
+        [HttpPost("validate/{id}")]
+        public ActionResult Validate(Patient patient)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _patientService.Activate(patient);
+            return Ok(patient);
+        }
+
+        [HttpPost("register")]
+        public ActionResult Register(Patient patient)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _patientService.Register(patient);
+            return CreatedAtAction("GetById", new { id = patient.Id }, patient);
+        }
+
+        */
+
+        
+
         // PUT api/patients/2
         [HttpPut("{id}")]
         public ActionResult Update(int id, Patient patient)
@@ -56,7 +103,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != patient.Id)
+            if (!id.Equals(patient.Id))
             {
                 return BadRequest();
             }
@@ -86,5 +133,42 @@ namespace HospitalAPI.Controllers
             _patientService.Delete(patient);
             return NoContent();
         }
+
+        [HttpGet("minimal-patients-doctor")]
+        public ActionResult GetDoctorsWithLeastPatients() {
+
+            var doctorIds = _patientService.GetDoctorsWithLeastPatients();
+            if(doctorIds == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctorIds);
+        
+        
+        }
+
+        /*
+
+        [HttpGet("login/{email}")]
+        public ActionResult CheckEmail(string email)
+        {
+            var patient = _patientService.DoesEmailExist(email);
+            if(patient==null) return NotFound();
+
+            return Ok(patient);
+        }
+
+        [HttpGet("{email}/{password}")]
+        public ActionResult GetUser(string email, string password)
+        {
+            var patient = _patientService.CredentialsValidity(email,password);
+            if (patient == null) return NotFound();
+
+            return Ok(patient);
+        }
+
+        */
     }
+
 }

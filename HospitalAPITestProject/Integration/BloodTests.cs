@@ -20,10 +20,12 @@ namespace HospitalTests.Integration
             return new BloodController(scope.ServiceProvider.GetRequiredService<IBloodService>());
         }
 
+
         private static BloodConsumptionRecordDTO SetUpBloodConsumptionRecordDTO(IServiceScope scope)
         {
             return new BloodConsumptionRecordDTO(scope.ServiceProvider.GetRequiredService<IBloodService>());
         }
+
 
         [Fact]
         public void Creates_blood_consumption_record ()
@@ -36,5 +38,6 @@ namespace HospitalTests.Integration
 
             Assert.NotNull(result);
         }
+
     }
 }

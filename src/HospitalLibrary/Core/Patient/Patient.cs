@@ -7,36 +7,49 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Patient
 {
+
     public class Patient
     {
-        private String patientName;
-        private String email;
-        private String password;
+        private string id;
+        private string name;
+        private string surname;
+        private string email;
+        private Gender gender;
+        private int age;
         private BloodType bloodType;
-        private String allergies;
-        private String doctorID;
+        private List<string> allergies;
+        private string doctorID;
         private bool active;
-        private int id;
+       
 
-        public Patient(string patientName, string email, string password, BloodType bloodType, string allergies, string doctorID, bool active, int id)
+        public Patient() {}
+
+        public Patient(string id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID, bool active)
         {
-            this.PatientName = patientName;
+            this.Id = id;
+            this.Name = name;
+            this.Surname = surname;
             this.Email = email;
-            this.Password = password;
+            this.Gender = gender;
+            this.Age = age;
             this.BloodType = bloodType;
             this.Allergies = allergies;
             this.DoctorID = doctorID;
             this.Active = active;
-            this.Id = id;
+            
         }
 
-        public string PatientName { get => patientName; set => patientName = value; }
+        public string Id { get => id; set => id = value; }
+        public string Name { get => name; set => name = value; }
+        public string Surname { get => surname; set => surname = value; }
+
         public string Email { get => email; set => email = value; }
-        public string Password { get => password; set => password = value; }
+        public Gender Gender { get => gender; set => gender = value; }
+        public int Age { get => age; set => age = value; }
         public BloodType BloodType { get => bloodType; set => bloodType = value; }
-        public string Allergies { get => allergies; set => allergies = value; }
+        public List<string> Allergies { get => allergies; set => allergies = value; }
         public string DoctorID { get => doctorID; set => doctorID = value; }
         public bool Active { get => active; set => active = value; }
-        public int Id { get => id; set => id = value; }
+       
     }
 }
