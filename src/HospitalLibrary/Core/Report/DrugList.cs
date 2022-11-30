@@ -14,6 +14,7 @@ namespace HospitalLibrary.Core.Report
         [Column(TypeName = "jsonb")]
         public Drug Drug { get; set; }
 
+
         public DrugList()
         {
         }

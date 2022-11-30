@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Report;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221130140445_SaVO")]
+    partial class SaVO
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -400,21 +402,23 @@ namespace HospitalLibrary.Migrations
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Report.DrugList", b =>
-
                 {
                     b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Amount")
                         .HasColumnType("text");
 
                     b.Property<Drug>("Drug")
                         .HasColumnType("jsonb");
 
-                b.Property<string>("DrugPrescriptionId")
-                    .HasColumnType("text");
+                    b.Property<string>("DrugPrescriptionId")
+                        .HasColumnType("text");
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.ToTable("DrugLists");
-            });
+                    b.ToTable("DrugLists");
+                });
 
             modelBuilder.Entity("HospitalLibrary.Core.Report.DrugPrescription", b =>
                 {

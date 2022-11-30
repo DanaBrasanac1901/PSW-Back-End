@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report.Services
 {
-    public class DrugApplicationService
+    public class DrugApplicationService : IDrugApplicationService
     {
+        private readonly IDrugRepository _drugRepository;
+
+        public DrugApplicationService(IDrugRepository drugRepository)
+        {
+            _drugRepository = drugRepository;
+        }
+
+        public IEnumerable<Drug> GetAll()
+        {
+            return _drugRepository.GetAll();
+        }
     }
 }

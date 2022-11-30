@@ -8,5 +8,6 @@ namespace HospitalLibrary.Core.Report.Services
 {
     public interface IDrugApplicationService
     {
+        public IEnumerable<Drug> GetAll();
     }
 }

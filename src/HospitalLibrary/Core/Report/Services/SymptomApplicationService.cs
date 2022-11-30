@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report.Services
 {
-    class SymptomApplicationService
+    public class SymptomApplicationService : ISymptomApplicationService
     {
+        private readonly ISymptomRepository _symptomRepository;
+
+        public SymptomApplicationService(ISymptomRepository symptomRepository)
+        {
+            _symptomRepository = symptomRepository;
+        }
+
+        public IEnumerable<Symptom> GetAllSymptoms()
+        {
+            return _symptomRepository.GetAll();
+        }
     }
 }
