@@ -212,6 +212,9 @@ namespace HospitalLibrary.Migrations
                             Type = 1
                         });
 
+                        });
+
+
 
 
 
@@ -592,7 +595,7 @@ namespace HospitalLibrary.Migrations
 
                         });
 
-                }
+                    }
 
 
          }

@@ -1,7 +1,6 @@
 ﻿using IntegrationAPI;
-using IntegrationLibery.News;
-using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.News;
+using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.Report;
 using IntegrationTests.Integration;
 using IntegrationTests.Setup;
@@ -11,6 +10,7 @@ using Nest;
 using System;
 using System.Threading;
 using Xunit;
+using IntegrationLibery.News;
 
 namespace IntegrationTests
 {
