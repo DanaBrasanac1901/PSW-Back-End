@@ -29,6 +29,13 @@ namespace HospitalAPI.Controllers
             return Ok(_appointmentService.GetAll());
         }
 
+        // GET: api/Appointments/patient/id
+        [HttpGet("patient/{id}")]
+        public ActionResult GetForPatient(string patientId)
+        {
+            return Ok(_appointmentService.GetForPatient(patientId));
+        }
+
         // GET api/rooms/2
         [HttpGet("{id}")]
         public ActionResult GetById(string id)

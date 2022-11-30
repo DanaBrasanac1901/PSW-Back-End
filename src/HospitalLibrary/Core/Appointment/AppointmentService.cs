@@ -198,5 +198,10 @@ namespace HospitalLibrary.Core.Appointment
         {
             throw new NotImplementedException();
         }
+
+        public object GetForPatient(string patientId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
