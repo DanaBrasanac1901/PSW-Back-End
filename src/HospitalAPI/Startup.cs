@@ -99,7 +99,6 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
 
-            services.AddScoped<IBloodSupplyRepository, BloodSupplyRepository>();
 
         }
 

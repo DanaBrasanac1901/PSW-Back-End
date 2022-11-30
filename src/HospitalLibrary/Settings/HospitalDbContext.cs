@@ -11,6 +11,7 @@ using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
+using HospitalLibrary.Core.Tender;
 
 namespace HospitalLibrary.Settings
 {
@@ -36,7 +37,7 @@ namespace HospitalLibrary.Settings
         public DbSet<InpatientTreatmentRecord> InpatientTreatmentRecords { get; set; }
         public DbSet<Equipment> Equipment { get; set; }
 
-
+        public DbSet<Tender> Tenders { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
@@ -117,7 +118,6 @@ namespace HospitalLibrary.Settings
 
         public DbSet<User> Users { get; set; }
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
     }
 }
