@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Elasticsearch.Net;
 using IntegrationLibery.News;
 using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.News;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,6 +17,8 @@ using Newtonsoft.Json.Converters;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using static Org.BouncyCastle.Math.EC.ECCurve;
+using IConnection = RabbitMQ.Client.IConnection;
+using IModel = RabbitMQ.Client.IModel;
 
 namespace IntegrationLibrary.News
 {
@@ -36,7 +40,7 @@ namespace IntegrationLibrary.News
             using (var scope = _serviceProvider.CreateScope())
             {
                 var handler = (INewsService)ActivatorUtilities.CreateInstance(scope.ServiceProvider, typeof(NewsService));
-              //  var _newsService = scope.ServiceProvider.GetRequiredService<INewsService>;
+               // var _newsService = scope.ServiceProvider.GetRequiredService<INewsService>;
                 var factory = new ConnectionFactory() { HostName = "localhost" };
                 connection = factory.CreateConnection();
                 channel = connection.CreateModel();

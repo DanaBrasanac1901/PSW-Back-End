@@ -15,7 +15,6 @@ using HospitalLibrary.Core.Blood;
 using IntegrationLibrary.Report;
 using IntegrationLibrary.Settings;
 
-using IntegrationLibrary.News;
 
 namespace IntegrationAPI
 {
@@ -63,7 +62,7 @@ namespace IntegrationAPI
             
             services.AddScoped<ExceptionMiddleware>();
 
-            services.AddHostedService<BackgroundTask>();
+              services.AddHostedService<BackgroundTask>();
             services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
             
 
@@ -71,12 +70,11 @@ namespace IntegrationAPI
          
 
 
-            services.AddScoped<INewsService, NewsService>();
-            services.AddScoped<INewsRepository, NewsRepository>();
+          //  services.AddScoped<INewsService, NewsService>();
+          //  services.AddScoped<INewsRepository, NewsRepository>();
             //services.AddSingleton<RabbitMQService>();
 
-           // services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
-             services.AddHostedService<RabbitMQService>();
+          //  services.AddHostedService<RabbitMQService>();
            
 
         }
@@ -103,7 +101,6 @@ namespace IntegrationAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
-              
             }
             app.UseCors("default");
             app.UseMiddleware<ExceptionMiddleware>();
