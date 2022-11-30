@@ -94,8 +94,8 @@ namespace HospitalAPI.Controllers
 
 		private string Generate(User user)
 		{
-			var token = _userService.GenerateFullToken(user);
+			var token=_userService.GenerateFullToken(user);
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
-	}
+    }
 }

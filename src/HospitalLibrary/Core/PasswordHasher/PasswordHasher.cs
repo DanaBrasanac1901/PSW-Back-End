@@ -64,7 +64,7 @@ namespace HospitalLibrary.Core.PasswordHasher
             {
                 generatedSubkey = deriveBytes.GetBytes(PBKDF2SubkeyLength);
             }
-            Console.WriteLine(ByteArraysEqual(storedSubkey, generatedSubkey));
+            
             return ByteArraysEqual(storedSubkey, generatedSubkey);
         }
 

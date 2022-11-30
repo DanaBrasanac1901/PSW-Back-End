@@ -121,11 +121,14 @@ namespace HospitalLibrary.Core.User
         {
             // UserConstraints -> baza
             var users = _userRepository.GetAll();
-            var currentUser = users.FirstOrDefault(o => o.Email.ToLower() ==
-                 user.Email.ToLower() && o.Password == _passwordHasher.HashPassword(user.Password));
+            foreach(User u in GetAll())
+            {
+                if (u.Email.ToLower().Equals(user.Email.ToLower()))
+                {
+                    if (_passwordHasher.VerifyHashedPassword(u.Password, user.Password)) return u;
+                }
+            }
 
-
-            if (currentUser != null) return currentUser;
             return null;
         }
 
