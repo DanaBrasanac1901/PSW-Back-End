@@ -8,6 +8,7 @@ using HospitalTests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
+using HospitalLibrary.Core.User;
 
 namespace HospitalTests.Integration
 {
@@ -17,7 +18,7 @@ namespace HospitalTests.Integration
 
         private static PatientsController SetupController(IServiceScope scope)
         {
-            return new PatientsController(scope.ServiceProvider.GetRequiredService<IPatientService>());
+            return new PatientsController(scope.ServiceProvider.GetRequiredService<IPatientService>(),scope.ServiceProvider.GetRequiredService<IUserService>());
 
         }
         [Fact]

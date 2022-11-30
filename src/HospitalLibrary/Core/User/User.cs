@@ -25,6 +25,16 @@ namespace HospitalLibrary.Core.User
 
         }
 
+        public User(RegisterDTO regDTO, int roleID) //samo pacijent moze da se registruje
+        {
+            this.Role = "PATIENT";
+            this.idByRole= roleID;
+            this.name = regDTO.Name;
+            this.surname = regDTO.Surname;
+            this.email = regDTO.Email;
+            this.password = regDTO.Password;
+        }
+
         int id;
         int idByRole;
         string name;

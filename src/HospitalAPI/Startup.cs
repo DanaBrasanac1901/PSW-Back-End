@@ -117,6 +117,8 @@ namespace HospitalAPI
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }

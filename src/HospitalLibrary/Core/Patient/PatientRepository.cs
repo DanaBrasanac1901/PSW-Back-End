@@ -49,5 +49,6 @@ namespace HospitalLibrary.Core.Patient
             _context.Patients.Remove(patient);
             _context.SaveChanges();
         }
+
     }
 }

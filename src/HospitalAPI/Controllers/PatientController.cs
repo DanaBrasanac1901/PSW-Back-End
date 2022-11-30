@@ -1,6 +1,7 @@
 ﻿using Castle.Core.Internal;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.User;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -11,11 +12,12 @@ namespace HospitalAPI.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService _patientService;
-     
+        private readonly IUserService _userService;
 
-        public PatientsController(IPatientService patientService)
+        public PatientsController(IPatientService patientService,IUserService userService)
         {
             _patientService = patientService;
+            _userService = userService;
         }
 
         // GET: api/patients
@@ -77,20 +79,30 @@ namespace HospitalAPI.Controllers
             _patientService.Activate(patient);
             return Ok(patient);
         }
+        */
 
         [HttpPost("register")]
-        public ActionResult Register(Patient patient)
+        public ActionResult Register(RegisterDTO regDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            Patient patient = new Patient(regDTO);
             _patientService.Register(patient);
+
+            Patient createdPatient = _patientService.GetByEmail(patient.Email);
+            if(createdPatient != null)
+            {
+                User newUser=new User(regDTO,createdPatient.Id);
+                _userService.Create(newUser);
+            }
+            
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
-        */
+        
 
         
 

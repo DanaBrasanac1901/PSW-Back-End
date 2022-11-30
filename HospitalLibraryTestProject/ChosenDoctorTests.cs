@@ -37,11 +37,11 @@ namespace HospitalLibraryTestProject
             var patients = new List<Patient>();
             patientRepo = new Mock<IPatientRepository>();
 
-            patients.Add(new Patient { Id = "5", Name = "Janko", Surname= "Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = "1", Active = true });
-            patients.Add(new Patient { Id = "6", Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = new List<string>(), DoctorID = "1", Active = true });
-            patients.Add(new Patient { Id = "7", Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = new List<string>(), DoctorID = "2", Active = true });
-            patients.Add(new Patient { Id = "8", Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = "3", Active = true });
-            patients.Add(new Patient { Id = "9", Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = new List<string>(), DoctorID = "1", Active = true });
+            patients.Add(new Patient { Id = 5, Name = "Janko", Surname= "Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = "1" });
+            patients.Add(new Patient { Id = 6, Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = new List<string>(), DoctorID = "1"});
+            patients.Add(new Patient { Id = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = new List<string>(), DoctorID = "2"});
+            patients.Add(new Patient { Id = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = "3" });
+            patients.Add(new Patient { Id = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = new List<string>(), DoctorID = "1" });
 
             this.patientRepo.Setup(m => m.GetAll()).Returns(patients);
         }

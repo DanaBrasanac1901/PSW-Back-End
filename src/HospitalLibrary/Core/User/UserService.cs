@@ -30,6 +30,7 @@ namespace HospitalLibrary.Core.User
             string newPass=_passwordHasher.HashPassword(user.Password);
             user.Password = newPass;
             _userRepository.Create(user);
+            
         }
 
         public void Delete(User user)

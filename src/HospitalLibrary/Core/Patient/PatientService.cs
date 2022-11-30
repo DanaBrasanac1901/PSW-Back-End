@@ -33,6 +33,14 @@ namespace HospitalLibrary.Core.Patient
         {
             return _patientRepository.GetById(id);
         }
+        public Patient GetByEmail(string email)
+        {
+            foreach(Patient p in GetAll())
+            {
+                if (p.Email.Equals(email)) return p;
+            }
+            return null;
+        }
 
         public void Create(Patient patient)
         {
@@ -40,19 +48,14 @@ namespace HospitalLibrary.Core.Patient
             _patientRepository.Create(patient);
         }
 
-        /*
+
         public void Register(Patient patient)
         {
-            patient.Active = false;
             _patientRepository.Create(patient);
         }
-        */
 
-        public void Activate(Patient patient)
-        {
-            patient.Active = true;
-            _patientRepository.Update(patient);
-        }
+
+        
 
    
 
