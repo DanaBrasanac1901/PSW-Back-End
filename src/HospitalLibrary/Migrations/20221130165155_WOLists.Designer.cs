@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221130143100_druglist")]
-    partial class druglist
+    [Migration("20221130165155_WOLists")]
+    partial class WOLists
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -401,22 +401,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Drugs");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Report.DrugList", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<Drug>("Drug")
-                        .HasColumnType("jsonb");
-
-                    b.Property<string>("DrugPrescriptionId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DrugLists");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Report.DrugPrescription", b =>
                 {
                     b.Property<string>("Id")
@@ -424,6 +408,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<ICollection<Drug>>("Drugs")
                         .HasColumnType("jsonb");
+
+                    b.Property<string>("ReportId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -439,9 +426,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DoctorId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DrugPrescriptionId")
                         .HasColumnType("text");
 
                     b.Property<string>("PatientId")
@@ -461,25 +445,6 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Report.Symptom", b =>
                 {
                     b.ToTable("Symptoms");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Report.SymptomList", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ReportId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Severity")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Symptom")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SymptomLists");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>

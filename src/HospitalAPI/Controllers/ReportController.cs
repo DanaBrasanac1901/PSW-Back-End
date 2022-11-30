@@ -1,4 +1,5 @@
 using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.DTO;
 using HospitalLibrary.Core.Report.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +7,6 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class ReportController : ControllerBase
     {
         private readonly IReportApplicationService _reportApplicationService;
@@ -57,13 +57,13 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult CreateReport(Report report)
+        public ActionResult CreateReport(ReportToCreateDTO dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _reportApplicationService.Create(report);
+            _reportApplicationService.Create(dto);
            
             return Ok();
         }

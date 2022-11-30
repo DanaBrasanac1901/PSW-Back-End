@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Report.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +10,18 @@ namespace HospitalLibrary.Core.Report.Services
     public class ReportApplicationService : IReportApplicationService
     {
         private readonly IReportRepository _reportRepository;
-
+        
         public ReportApplicationService(IReportRepository reportRepository)
         {
             _reportRepository = reportRepository;
         }
 
-        public void Create(Report report)
+        public void Create(ReportToCreateDTO dto)
         {
-            _reportRepository.Create(report);
+            Report report = ReportAdapter.ReportToCreateDTOToReport(dto);
+            //DrugPrescription drugPrescription = 
+            //pozove drugprescription da napravi
+            //_reportRepository.Create(report);
         }
 
         public void Delete(Report report)

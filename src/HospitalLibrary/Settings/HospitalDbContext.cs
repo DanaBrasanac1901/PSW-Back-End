@@ -43,9 +43,7 @@ namespace HospitalLibrary.Settings
 
         public DbSet<DrugPrescription> DrugPrescriptions { get; set; }
 
-        public DbSet<DrugList> DrugLists { get; set; }
-
-        public DbSet<SymptomList> SymptomLists { get; set; }
+       
 
         public DbSet<Symptom> Symptoms { get; set; }
 
@@ -117,9 +115,9 @@ namespace HospitalLibrary.Settings
                   }
             );
 
-            modelBuilder.Entity<DrugList>()
-                .Property(b => b.Drug)
-                .HasColumnType("jsonb");
+            
+
+            
 
             base.OnModelCreating(modelBuilder);
         }

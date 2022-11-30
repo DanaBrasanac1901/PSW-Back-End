@@ -8,14 +8,20 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report
 {
-    public class DrugPrescription
+    public class Report
     {
         public string Id { get; set; }
+        public string PatientId { get; set; }
+        public string DoctorId { get; set; }
+        public string ReportDescription { get; set; }
 
         [Column(TypeName = "jsonb")]
-        public  virtual ICollection<Drug> Drugs { get; set; }
+        public virtual ICollection<Symptom> Symptoms { get; set; }
 
-        public DrugPrescription()
+        
+        public DateTime DayAndTimeOfMaking { get; set; }
+
+        public Report()
         {
         }
     }

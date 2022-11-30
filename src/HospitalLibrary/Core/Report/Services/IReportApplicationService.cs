@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Report.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace HospitalLibrary.Core.Report.Services
     {
         IEnumerable<Report> GetAll();
         Report GetById(string id);
-        void Create(Report report);
+        void Create(ReportToCreateDTO report);
         void Update(Report report);
         void Delete(Report report);
 
