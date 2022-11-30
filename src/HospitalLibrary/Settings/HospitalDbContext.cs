@@ -11,6 +11,7 @@ using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
+using HospitalLibrary.Core.Consiliums;
 
 namespace HospitalLibrary.Settings
 {
@@ -38,6 +39,8 @@ namespace HospitalLibrary.Settings
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Consilium> Consiliums {get; set;}
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
@@ -50,7 +53,8 @@ namespace HospitalLibrary.Settings
             Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
             Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
-
+               
+            /*
             BloodSupply supplyABank1 = new BloodSupply(1, BloodType.A, 54, bank1Id);
             BloodSupply supplyBBank1 = new BloodSupply(2, BloodType.B, 30, bank1Id);
             BloodSupply supplyABBank1 = new BloodSupply(3, BloodType.AB, 15, bank1Id);
@@ -65,7 +69,7 @@ namespace HospitalLibrary.Settings
                 supply0Bank1, supplyABank1, supplyABank2, supplyABank3, supplyABBank1,
                 supplyABBank3, supplyBBank1, supplyBBank2, supplyBBank3
             );
-
+            */
 
             BloodConsumptionRecord bloodConsumptionRecord1 = new BloodConsumptionRecord(1, 2, BloodType.A, "needed for surgery", new DateTime(2022, 11, 22), "DOC1", bank1Id);
 
@@ -103,6 +107,8 @@ namespace HospitalLibrary.Settings
 
                   }
             );
+
+           
             base.OnModelCreating(modelBuilder);
         }
 
