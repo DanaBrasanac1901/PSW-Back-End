@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221125013458_Dana")]
-    partial class Dana
+    [Migration("20221130161518_Anja-Migration")]
+    partial class AnjaMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("PatientId")
                         .HasColumnType("text");
 
+                    b.Property<int?>("PatientId1")
+                        .HasColumnType("integer");
+
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
@@ -48,6 +51,8 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId1");
 
                     b.HasIndex("RoomId");
 
@@ -191,11 +196,10 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Patient.Patient", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("Age")
                         .HasColumnType("integer");
@@ -214,6 +218,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Jmbg")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -258,6 +265,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
+                    b.Property<int>("IdByRole")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -268,6 +278,9 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Surname")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Token")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -281,6 +294,10 @@ namespace HospitalLibrary.Migrations
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId");
 
+                    b.HasOne("HospitalLibrary.Core.Patient.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId1");
+
                     b.HasOne("HospitalLibrary.Core.Room.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
@@ -288,6 +305,8 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
 
                     b.Navigation("Room");
                 });

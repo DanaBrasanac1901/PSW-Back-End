@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class Dana : Migration
+    public partial class AnjaMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,7 +80,8 @@ namespace HospitalLibrary.Migrations
                 name: "Patients",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Surname = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
@@ -89,7 +90,7 @@ namespace HospitalLibrary.Migrations
                     BloodType = table.Column<int>(type: "integer", nullable: false),
                     Allergies = table.Column<List<string>>(type: "text[]", nullable: true),
                     DoctorID = table.Column<string>(type: "text", nullable: true),
-                    Active = table.Column<bool>(type: "boolean", nullable: false)
+                    Jmbg = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -116,12 +117,14 @@ namespace HospitalLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    IdByRole = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
                     Surname = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
                     Password = table.Column<string>(type: "text", nullable: true),
                     Role = table.Column<string>(type: "text", nullable: true),
-                    Active = table.Column<bool>(type: "boolean", nullable: false)
+                    Active = table.Column<bool>(type: "boolean", nullable: false),
+                    Token = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,6 +161,7 @@ namespace HospitalLibrary.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     DoctorId = table.Column<string>(type: "text", nullable: true),
                     PatientId = table.Column<string>(type: "text", nullable: true),
+                    PatientId1 = table.Column<int>(type: "integer", nullable: true),
                     Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     Duration = table.Column<int>(type: "integer", nullable: false),
                     RoomId = table.Column<int>(type: "integer", nullable: false),
@@ -173,6 +177,12 @@ namespace HospitalLibrary.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_Appointments_Patients_PatientId1",
+                        column: x => x.PatientId1,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Appointments_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
@@ -184,6 +194,11 @@ namespace HospitalLibrary.Migrations
                 name: "IX_Appointments_DoctorId",
                 table: "Appointments",
                 column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_PatientId1",
+                table: "Appointments",
+                column: "PatientId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_RoomId",
@@ -214,13 +229,13 @@ namespace HospitalLibrary.Migrations
                 name: "HospitalBlood");
 
             migrationBuilder.DropTable(
-                name: "Patients");
-
-            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
+
+            migrationBuilder.DropTable(
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

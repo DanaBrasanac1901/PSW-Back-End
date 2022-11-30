@@ -42,18 +42,16 @@ namespace HospitalAPI.Controllers
 			return Unauthorized();
 		}
 
-		private string Generate(User user)
-		{
-			var token=_userService.GenerateFullToken(user);
-			return new JwtSecurityTokenHandler().WriteToken(token);
-		}
+		
 
-
+		[AllowAnonymous]
 		[HttpPost("send-activation")]
-		public ActionResult SendActivationCode(string email)
+		public ActionResult SendActivationCode(RegisterDTO regDTO)
 		{
+
 			if (!ModelState.IsValid) return BadRequest();
 
+			string email = regDTO.Email;
 			var token = _userService.GenerateActivationToken(email);
 			
 			if (token!=null)
@@ -92,5 +90,12 @@ namespace HospitalAPI.Controllers
             }
 			return BadRequest();
         }
-    }
+
+
+		private string Generate(User user)
+		{
+			var token = _userService.GenerateFullToken(user);
+			return new JwtSecurityTokenHandler().WriteToken(token);
+		}
+	}
 }

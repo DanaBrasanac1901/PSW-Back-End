@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace HospitalLibrary.Core.User
 {
     public class User
     {
-        public User(int id, int idByRole, string name, string surname, string email,string password, string role)
+        public User(int id, int idByRole, string name, string surname, string email,string password, string role, string token)
         {
             this.Id = id;
             this.IdByRole = idByRole;
@@ -17,6 +18,7 @@ namespace HospitalLibrary.Core.User
             this.Email = email;
             this.Password = password;
             this.Role = role;
+            this.Token = token;
 
         }
 
@@ -35,6 +37,7 @@ namespace HospitalLibrary.Core.User
             this.password = regDTO.Password;
         }
 
+        [Key]
         int id;
         int idByRole;
         string name;
