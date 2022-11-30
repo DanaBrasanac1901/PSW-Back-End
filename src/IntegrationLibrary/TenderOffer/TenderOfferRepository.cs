@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Settings;
+﻿using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,9 +8,9 @@ namespace HospitalLibrary.Core.TenderOffer
 {
     public class TenderOfferRepository : ITenderOfferRepository
     {
-        private readonly HospitalDbContext _context;
+        private readonly IntegrationDbContext _context;
 
-        public TenderOfferRepository(HospitalDbContext context)
+        public TenderOfferRepository(IntegrationDbContext context)
         {
             _context = context;
         }

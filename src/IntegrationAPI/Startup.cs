@@ -14,7 +14,8 @@ using System.Linq;
 using HospitalLibrary.Core.Blood;
 using IntegrationLibrary.Report;
 using IntegrationLibrary.Settings;
-
+using HospitalLibrary.Core.Tender;
+using HospitalLibrary.Core.TenderOffer;
 
 namespace IntegrationAPI
 {
@@ -58,8 +59,12 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankRepository,BloodBankRepository>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<ITenderOfferService, TenderOfferService>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
             // services.AddScoped<IEmailService, IEmailService>();
-            
+
             services.AddScoped<ExceptionMiddleware>();
 
               services.AddHostedService<BackgroundTask>();
