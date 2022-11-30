@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Report
+namespace IntegrationLibrary.Report.SendingReport
 {
     public interface ISendingReportService
     {

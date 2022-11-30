@@ -26,17 +26,12 @@ namespace IntegrationTests
         public ConfigurationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
         private Mock<IReportGeneratorService> _reportGeneratorService = new Mock<IReportGeneratorService>();
-       /* private static ReportController SetupController(IServiceScope scope)
+      /*  private static ReportController SetupController(IServiceScope scope)
         {
             return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>());
-        }*/
-
-
-        //private static ReportController SetupControllerr(IServiceScope scope)
-        //{
-        //    return new ReportController(scope.ServiceProvider.GetRequiredService<SendingReportService>());
-        //}
-
+        }
+        kako kontroler namestiti da prima dva servisa
+        */
 
 
         [Fact]
@@ -44,25 +39,21 @@ namespace IntegrationTests
         {
             
             using var scope = Factory.Services.CreateScope();
-            //var controller = SetupController(scope);
+         //   var controller = SetupController(scope);
 
-
-         /*
-
-            ReporttDTO result = new ReporttDTO(Period.Daily.ToString(), new Guid().ToString());
-
-            controller.Create(result);
-            Assert.NotNull(result);*/
+            ReportDTO result = new ReportDTO(Period.Daily, new Guid());
+           // controller.Create(result);
+            Assert.NotNull(result);
         }
-        /*
+        
         [Fact]
         public void Update_report()
         {
             
             using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
+           // var controller = SetupController(scope);
             ReportDTO resultDto = new ReportDTO(Period.EveryTwoMonths, new Guid("6799e115-a7b0-4d37-be5e-ecbb1929b3a2"));
-            Assert.NotNull(controller.Update(resultDto));
+          //  Assert.NotNull(controller.Update(resultDto));
 
         }
         
@@ -70,25 +61,25 @@ namespace IntegrationTests
         public void Read_report()
         {
             using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-            ActionResult result = controller.GetAll();
-            Assert.NotNull(result);
+           // var controller = SetupController(scope);
+         //   ActionResult result = controller.GetAll();
+         //   Assert.NotNull(result);
         }
-        */
+        
         [Fact]
         public void Get_information_for_report()
         {
 
         }
-        /*
+        
         [Fact]
         public void Generating_pdf()
         {
             using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
+          //  var controller = SetupController(scope);
 
-            var report = controller.GetById(new Guid("204932d0-7956-4199-9e0d-cf2903c9903b"));
-            _reportGeneratorService.Verify(result => result.GeneratePdf(report));
+          //  var report = controller.GetById(new Guid("204932d0-7956-4199-9e0d-cf2903c9903b"));
+          //  _reportGeneratorService.Verify(result => result.GeneratePdf(report));
             //Assert
             }
         /*
