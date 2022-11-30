@@ -8,7 +8,7 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TenderOffersController : ControllerBase
+    public class TenderOffersController : Controller
     {
         private readonly ITenderOfferService _tenderOfferService;
      

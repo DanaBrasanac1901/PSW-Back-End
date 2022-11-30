@@ -1,4 +1,6 @@
-﻿using IntegrationLibery.News;
+﻿using HospitalLibrary.Core.Tender;
+using HospitalLibrary.Core.TenderOffer;
+using IntegrationLibery.News;
 using IntegrationLibrary.BloodBank;
 
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +19,10 @@ namespace IntegrationLibrary.Settings
 
         public DbSet<Message> NewsTable { get; set; }
 
-        
-        
+
+        public DbSet<Tender> Tenders { get; set; }
+
+        public DbSet<TenderOffer> TenderOffers { get; set; }
 
         public DbSet<Report.Report> ReportTable { get; set; }
 
@@ -62,7 +66,7 @@ namespace IntegrationLibrary.Settings
             modelBuilder.Entity < Report.Report>().HasData(
                 report2, report3
             );
-
+            modelBuilder.Entity<TenderOffer>().HasNoKey();
             //modelBuilder.Entity<BloodBank.BloodBank>()
             //.Property(b => b.Id)
             //.ValueGeneratedOnAdd();
