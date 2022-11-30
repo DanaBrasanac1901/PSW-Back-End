@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Report
         public string DrugPrescriptionId { get; set; }
         [Column(TypeName = "jsonb")]
         public Drug Drug { get; set; }
-        
+
 
         public DrugList()
         {

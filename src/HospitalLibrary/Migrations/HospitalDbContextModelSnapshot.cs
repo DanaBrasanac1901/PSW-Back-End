@@ -400,6 +400,7 @@ namespace HospitalLibrary.Migrations
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Report.DrugList", b =>
+
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -407,13 +408,13 @@ namespace HospitalLibrary.Migrations
                     b.Property<Drug>("Drug")
                         .HasColumnType("jsonb");
 
-                    b.Property<string>("DrugPrescriptionId")
-                        .HasColumnType("text");
+                b.Property<string>("DrugPrescriptionId")
+                    .HasColumnType("text");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("DrugLists");
-                });
+                b.ToTable("DrugLists");
+            });
 
             modelBuilder.Entity("HospitalLibrary.Core.Report.DrugPrescription", b =>
                 {
