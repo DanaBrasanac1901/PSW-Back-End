@@ -53,19 +53,7 @@ namespace IntegrationAPI.Controllers
             _reportService.Create(report);
             return Ok();
         }
-
-        // test
-        [HttpPost]
-        public IActionResult Create([FromBody] ReportDTO report)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _reportService.Create(report);
-            return Ok();
-        }
+        
         
         // PUT api/reports/2 
         [HttpPut("{id}")]
