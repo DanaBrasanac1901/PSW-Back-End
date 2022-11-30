@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DoctorModel = HospitalLibrary.Core.Doctor.Doctor;  // namespace used like a type, had to add an alias - anja
+
 namespace HospitalLibrary.Core.Appointment
 {
     public class AppointmentService : IAppointmentService
@@ -199,9 +201,21 @@ namespace HospitalLibrary.Core.Appointment
             throw new NotImplementedException();
         }
 
-        public object GetForPatient(string patientId)
+        public IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId)
         {
-            throw new NotImplementedException();
+            IEnumerable<Appointment> appointments=_appointmentRepository.GetAllByPatient(patientId);
+            IEnumerable<AppointmentPatientDTO> result = new List<AppointmentPatientDTO>();
+            foreach(Appointment appt in appointments)
+            {
+                AppointmentPatientDTO dto = new AppointmentPatientDTO(appt);
+                DoctorModel doctor = _doctorRepository.GetById(appt.DoctorId);
+                dto.DoctorName = doctor.Name + ' ' + doctor.Surname;
+
+                result.Append(dto);
+            }
+
+            return result;
+            
         }
     }
 }

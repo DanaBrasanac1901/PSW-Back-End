@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.User;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using HospitalLibrary.Core.EmailSender;
 
 namespace HospitalAPI.Controllers
 {
@@ -13,11 +14,13 @@ namespace HospitalAPI.Controllers
     {
         private readonly IPatientService _patientService;
         private readonly IUserService _userService;
+        private IEmailSendService _emailSendService;
 
-        public PatientsController(IPatientService patientService,IUserService userService)
+        public PatientsController(IPatientService patientService,IUserService userService, IEmailSendService emailSendService)
         {
             _patientService = patientService;
             _userService = userService;
+            _emailSendService = emailSendService;
         }
 
         // GET: api/patients
@@ -53,34 +56,6 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
-        /*
-        [HttpPost("login")]
-        public ActionResult Login(Patient patient)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _patientService.CheckCreditentials(patient.Email,patient.Password);
-            return CreatedAtAction("GetById", new { id = patient.Id }, patient);
-        }
-
-        
-
-        [HttpPost("validate/{id}")]
-        public ActionResult Validate(Patient patient)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _patientService.Activate(patient);
-            return Ok(patient);
-        }
-        */
-
         [HttpPost("register")]
         public ActionResult Register(RegisterDTO regDTO)
         {
@@ -98,11 +73,31 @@ namespace HospitalAPI.Controllers
                 User newUser=new User(regDTO,createdPatient.Id);
                 _userService.Create(newUser);
             }
+
+           if(!SendActivationEmail(createdPatient.Email)) return BadRequest();
             
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
         
+        private bool SendActivationEmail(string email)
+        {
+
+            var token = _userService.GenerateActivationToken(email);
+
+            if (token != null)
+            {
+                _userService.SaveTokenToDatabase(email, token);
+
+                var lnkHref = Url.Action("Activate", "Credentials", new { email = email, code = token }, "http");
+                string subject = "HealthcareMD Activation Link";
+                string body = "Your activation link: " + lnkHref;
+                _emailSendService.SendEmail(new Message(new string[] { email, "tibbers707@gmail.com" }, subject, body));
+                return true;
+            }
+
+            return false;
+        }
 
         
 

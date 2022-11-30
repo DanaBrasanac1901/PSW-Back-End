@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Appointment.DTOS
 {
-    internal class AppointmentPatientDTO
+    public class AppointmentPatientDTO
     {
         public string Id { get; set; }
         public string DoctorName { get; set; }
         public string RoomNumber { get; set; }
         public string StartDate { get; set; }
         public string StartTime { get; set; }
-        public AppointmentStatus Status { get; set; }
+        public string Status { get; set; }
 
         public AppointmentPatientDTO() { }
 
         public AppointmentPatientDTO(Appointment appt)
         {
-
+            Id=appt.Id;
+            StartDate = appt.Start.Date.ToString();
+            StartTime = appt.Start.TimeOfDay.ToString();
+            Status=appt.Status.ToString();
         }
     }
 }
