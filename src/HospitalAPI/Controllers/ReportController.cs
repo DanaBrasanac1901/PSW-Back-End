@@ -1,6 +1,87 @@
-﻿namespace HospitalAPI.Controllers
+﻿using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace HospitalAPI.Controllers
 {
-    public class ReportController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ReportController:ControllerBase
     {
+        private readonly IReportApplicationService _reportApplicationService;
+
+        public ReportController(IReportApplicationService reportApplicationService)
+        {
+            _reportApplicationService = reportApplicationService;
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetAll()
+        {
+            return Ok(_reportApplicationService.GetAll());
+        }
+
+        [HttpGet("{id}")]
+        [Route("[action]")]
+        public ActionResult GetById(string id)
+        {
+            var report = _reportApplicationService.GetById(id);
+            if (report == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(report);
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult CreateReport(Report report)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _reportApplicationService.Create(report);
+           
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Update(Report report)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _reportApplicationService.Update(report);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok(report);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(string id)
+        {
+            var report = _reportApplicationService.GetById(id);
+            if (report == null)
+            {
+                return NotFound();
+            }
+
+            _reportApplicationService.Delete(report);
+            return NoContent();
+        }
+
+
+
+
     }
 }
