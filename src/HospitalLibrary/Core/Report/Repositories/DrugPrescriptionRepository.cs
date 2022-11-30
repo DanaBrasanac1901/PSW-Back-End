@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report
 {
-    public class DrugPrescriptionRepository
+    public class DrugPrescriptionRepository:IDrugPrescriptionRepository
     {
 
         private readonly HospitalDbContext _context;

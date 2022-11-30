@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report
 {
-    public interface IDrugPrescriptionReposiotory
+    public interface IDrugPrescriptionRepository
     {
         IEnumerable<DrugPrescription> GetAll();
         DrugPrescription GetById(string id);

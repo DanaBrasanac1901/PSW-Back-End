@@ -14,6 +14,7 @@ namespace HospitalLibrary.Core.Report.Services
         void Create(ReportToCreateDTO report);
         void Update(Report report);
         void Delete(Report report);
+        bool IsSymptomExist(ICollection<Symptom> symptoms, string id);
 
     }
 }

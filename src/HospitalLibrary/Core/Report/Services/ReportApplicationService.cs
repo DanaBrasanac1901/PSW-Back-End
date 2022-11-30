@@ -10,10 +10,14 @@ namespace HospitalLibrary.Core.Report.Services
     public class ReportApplicationService : IReportApplicationService
     {
         private readonly IReportRepository _reportRepository;
+        private readonly ISymptomRepository _symptomRepository;
         
-        public ReportApplicationService(IReportRepository reportRepository)
+        public ReportApplicationService(IReportRepository reportRepository,ISymptomRepository symptomRepository)
         {
             _reportRepository = reportRepository;
+            _symptomRepository = symptomRepository;
+            
+            
         }
 
         public void Create(ReportToCreateDTO dto)
@@ -42,6 +46,17 @@ namespace HospitalLibrary.Core.Report.Services
         public void Update(Report report)
         {
             _reportRepository.Update(report);
+        }
+
+        public bool IsSymptomExist(ICollection<Symptom> symptoms,string id)
+        {
+            var report = _reportRepository.GetById(id);
+            ICollection<Symptom> symptom = report.Symptoms;
+            foreach (var symp in symptom)
+            {
+                if(!symptoms.Contains(symp)) return false;
+            }
+            return true;
         }
     }
 }
