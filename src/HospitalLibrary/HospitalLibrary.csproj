@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Core\Authorization\" />
     <Folder Include="Core\Report\Repositories\" />
-    <Folder Include="Core\Report\Services\" />
     <Folder Include="GraphicalEditor\Model\" />
     <Folder Include="GraphicalEditor\Service\" />
     <Folder Include="GraphicalEditor\Repository\" />

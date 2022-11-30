@@ -8,8 +8,22 @@ using System.Threading.Tasks;
 namespace HospitalLibrary.Core.Report
 {
     [Keyless]
-    public class Symptom
+    public class Symptom : ValueObject
     {
         public string Name { get; }
+
+        public Symptom()
+        {
+        }
+
+        public Symptom(string name)
+        {
+            Name = name;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Name;
+        }
     }
 }
