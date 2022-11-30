@@ -116,6 +116,11 @@ namespace HospitalLibrary.Settings
 
                   }
             );
+
+            modelBuilder.Entity<DrugList>()
+                .Property(b => b.Drug)
+                .HasColumnType("jsonb");
+
             base.OnModelCreating(modelBuilder);
         }
 

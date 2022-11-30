@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ namespace HospitalLibrary.Core.Report
     {
         public string Id { get; set; }
         public string DrugPrescriptionId { get; set; }
-        public string Drug { get; set; }
+        [Column(TypeName = "jsonb")]
+        public Drug Drug { get; set; }
         public string Amount { get; set; }
 
         public DrugList()

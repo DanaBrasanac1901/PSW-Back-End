@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Report
     [Keyless]
     public class Drug
     {
-        public string Name;
-        public string CompanyName;
+        public string Name { get; }
+        public string CompanyName { get; }
     }
 }
