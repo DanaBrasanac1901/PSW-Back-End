@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221129000040_osamosam")]
-    partial class osamosam
+    [Migration("20221129235359_milos")]
+    partial class milos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

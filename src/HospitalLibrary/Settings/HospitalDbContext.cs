@@ -11,6 +11,7 @@ using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
+using HospitalLibrary.Core.Report;
 
 namespace HospitalLibrary.Settings
 {
@@ -37,6 +38,18 @@ namespace HospitalLibrary.Settings
         public DbSet<Equipment> Equipment { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Report> Reports { get; set; }
+
+        public DbSet<DrugPrescription> DrugPrescriptions { get; set; }
+
+        public DbSet<DrugList> DrugLists { get; set; }
+
+        public DbSet<SymptomList> SymptomLists { get; set; }
+
+        public DbSet<Symptom> Symptoms { get; set; }
+
+        public DbSet<Drug> Drugs { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)

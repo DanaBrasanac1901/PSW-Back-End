@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report
@@ -12,7 +13,9 @@ namespace HospitalLibrary.Core.Report
         public string PatientId { get; set; }
         public string DoctorId { get; set; }
         public string ReportDescription { get; set; }
-        public ICollection<Symptom> Symptoms { get; set; }
+       
+        [JsonIgnore]
+        public virtual ICollection<Symptom> Symptoms { get; set; }
 
         public string DrugPrescriptionId { get; set; }
         public DateTime DayAndTimeOfMaking { get; set; }
