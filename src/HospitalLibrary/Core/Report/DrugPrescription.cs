@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -11,7 +12,7 @@ namespace HospitalLibrary.Core.Report
     {
         public string Id { get; set; }
 
-        [JsonIgnore]
+        [Column(TypeName = "jsonb")]
         public  virtual ICollection<Drug> Drugs { get; set; }
 
         public DrugPrescription()
