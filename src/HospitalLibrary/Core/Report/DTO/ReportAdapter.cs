@@ -16,15 +16,17 @@ namespace HospitalLibrary.Core.Report.DTO
             report.DoctorId = dto.doctorId;
             report.ReportDescription = dto.description;
             report.DayAndTimeOfMaking = DateTime.Parse(dto.DATOfMaking);
+            report.Symptoms = (ICollection<Symptom>)dto.symptoms;
             return report;
         }
 
-        public static DrugPrescription CreateDrugPrescription(string reportId)
+        public static DrugPrescription CreateDrugPrescription(string reportId, ReportToCreateDTO dto)
         {
             DrugPrescription drugPrescription = new DrugPrescription();
             drugPrescription.Id = DateTime.Now.AddMilliseconds(1).ToString("yyMMddhhmmssffffff");
             drugPrescription.ReportId = reportId;
-            return null;
+            drugPrescription.Drugs = (ICollection<Drug>)dto.drugs;
+            return drugPrescription;
         }
     }
 }

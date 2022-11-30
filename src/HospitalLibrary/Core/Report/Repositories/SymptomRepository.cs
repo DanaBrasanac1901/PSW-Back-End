@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report
 {
-    public class SymptomRepository
+    public class SymptomRepository : ISymptomRepository
     {
         private readonly HospitalDbContext _context;
 

@@ -10,16 +10,20 @@ namespace HospitalLibrary.Core.Report.Services
     public class ReportApplicationService : IReportApplicationService
     {
         private readonly IReportRepository _reportRepository;
+        private readonly IDrugPrescriptionReposiotory _drugPrescriptionReposiotory;
         
-        public ReportApplicationService(IReportRepository reportRepository)
+        public ReportApplicationService(IReportRepository reportRepository, IDrugPrescriptionReposiotory drugPrescriptionReposiotory)
         {
             _reportRepository = reportRepository;
+            _drugPrescriptionReposiotory = drugPrescriptionReposiotory;
         }
 
         public void Create(ReportToCreateDTO dto)
         {
             Report report = ReportAdapter.ReportToCreateDTOToReport(dto);
-            //DrugPrescription drugPrescription = 
+            DrugPrescription drugPrescription = ReportAdapter.CreateDrugPrescription(report.Id, dto);
+            _reportRepository.Create(report);
+            _drugPrescriptionReposiotory.Create(drugPrescription);
             //pozove drugprescription da napravi
             //_reportRepository.Create(report);
         }
