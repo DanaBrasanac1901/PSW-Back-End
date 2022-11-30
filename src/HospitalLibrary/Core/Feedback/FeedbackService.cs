@@ -35,6 +35,11 @@ namespace HospitalLibrary.Core.Feedback
 
         public void Create(Feedback feedback)
         {
+            feedback.Date = System.DateTime.Today;
+            feedback.Approved = false;
+
+            //change when login gets implemented
+            //feedback.PatientId = 0;
             _feedbackRepository.Create(feedback);
         }
 

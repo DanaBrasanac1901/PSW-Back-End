@@ -37,5 +37,10 @@ namespace HospitalLibrary.Core.Room
         {
             _roomRepository.Delete(room);
         }
+
+        public IEnumerable<int> GetRoomsWithFreeBeds()
+        {
+           return  _roomRepository.GetAllWithFreeBeds();
+        }
     }
 }

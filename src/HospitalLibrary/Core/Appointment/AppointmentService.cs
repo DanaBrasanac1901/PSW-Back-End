@@ -188,12 +188,6 @@ namespace HospitalLibrary.Core.Appointment
             return dto;
         }
 
-        //public IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctorInSpecificDateRange(string id)
-        //{
-        //    List<Appointment> doctorsApointments = _appointmentRepository.GetAll().ToList();
-            
-        //}
-
         public Boolean CheckIfAppointmentExistsForDoctor(string doctorId,DateTime start)
         {
             

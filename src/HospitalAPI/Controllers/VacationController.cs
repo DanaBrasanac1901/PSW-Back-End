@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Vacation.DTO;
 using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Features;
+using System.Net;
 
 namespace HospitalAPI.Controllers
 {
@@ -60,14 +63,21 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult CreateUrgentRequest(CreateUrgenVacationDTO request)
+        public IActionResult CreateUrgentRequest(CreateUrgenVacationDTO request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var req = _vacationService.CreateUrgentVacationRequest(request);
-            return CreatedAtAction("GetById", new { id = req.Id }, req);
+            if (req == "Request created.")
+                return Ok("Passed");
+            else
+            {
+                return new CustomError(HttpStatusCode.BadRequest,req);
+            }
+                //return new CustomError(HttpStatusCode.InternalServerError, req);
+                
         }
 
         [HttpDelete]
@@ -82,6 +92,33 @@ namespace HospitalAPI.Controllers
 
             _vacationService.Cancel(id);
             return NoContent();
+        }
+
+        public class CustomError : IActionResult
+        {
+            private readonly HttpStatusCode _status;
+            private readonly object _errorMessage;
+
+            public CustomError(HttpStatusCode status, object errorMessage)
+            {
+                _status = status;
+                _errorMessage = errorMessage;
+            }
+
+            public async Task ExecuteResultAsync(ActionContext context)
+            {
+                var objectResult = new ObjectResult(new
+                {
+                    errorMessage = _errorMessage
+                })
+                {
+                    StatusCode = (int)_status,
+                };
+
+                context.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = (string)_errorMessage;
+
+                await objectResult.ExecuteResultAsync(context);
+            }
         }
     }
 }

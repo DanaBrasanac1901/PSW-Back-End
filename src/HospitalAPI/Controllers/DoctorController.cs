@@ -1,7 +1,11 @@
 ﻿using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Doctor.DTOS;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers
 {
@@ -133,16 +137,45 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]/{startDate}/{startTime}")]
-        public ActionResult GetDoctorsForRearrange(string startDate,string startTime)
+        public IActionResult GetDoctorsForRearrange(string startDate,string startTime)
         {
             List<DoctorToChangeUrgentVacationDTO> doctors = _doctorService.GetFreeDoctors(startDate, startTime);
 
             if(doctors == null)
             {
-                return BadRequest();
+                return new CustomError(HttpStatusCode.BadRequest,"There are no available doctors, please choose another date span.");
             }
 
             return Ok(doctors);
+        }
+
+        
+
+        public class CustomError : IActionResult
+        {
+            private readonly HttpStatusCode _status;
+            private readonly string _errorMessage;
+
+            public CustomError(HttpStatusCode status, string errorMessage)
+            {
+                _status = status;
+                _errorMessage = errorMessage;
+            }
+
+            public async Task ExecuteResultAsync(ActionContext context)
+            {
+                var objectResult = new ObjectResult(new
+                {
+                    errorMessage = _errorMessage
+                })
+                {
+                    StatusCode = (int)_status,
+                };
+
+                context.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = _errorMessage;
+
+                await objectResult.ExecuteResultAsync(context);
+            }
         }
     }
 }

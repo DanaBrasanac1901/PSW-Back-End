@@ -40,6 +40,10 @@ namespace HospitalLibrary.Core.Vacation
             this.RejectionReason = "nista";
         }
 
-        
+        public VacationRequest(int id, DateTime start, DateTime end, string description, bool urgency, string doctorId, string rejectionReason, VacationRequestStatus status) : this(id, start, end, description, urgency, doctorId)
+        {
+            RejectionReason = rejectionReason;
+            Status = status;
+        }
     }
 }
