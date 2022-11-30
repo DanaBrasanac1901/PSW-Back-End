@@ -35,7 +35,6 @@ namespace HospitalLibrary.Core.User
         bool active;
         string token;
 
-
         public int Id { get { return id; } set { id = value; } }
         public int IdByRole { get { return idByRole; } set { idByRole = value; } }
         public string Name { get { return name; } set { name = value; } }

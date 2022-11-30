@@ -8,8 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using HospitalLibrary.Core.EmailSender;
 using static Microsoft.IdentityModel.Tokens.SecurityTokenHandler;
-
-
+using HospitalLibrary.Core.PasswordHasher;
 
 namespace HospitalLibrary.Core.User
 {
@@ -18,14 +17,18 @@ namespace HospitalLibrary.Core.User
         private readonly IUserRepository _userRepository;
         private IConfiguration _config;
         private IEmailSendService _emailSendService;
-        public UserService(IConfiguration config,IUserRepository userRepository, IEmailSendService emailSendService)
+        private IPasswordHasher _passwordHasher;
+        public UserService(IConfiguration config,IUserRepository userRepository, IEmailSendService emailSendService, IPasswordHasher passwordHasher)
         {
             _userRepository = userRepository;
             _config = config;
             _emailSendService = emailSendService;
+            _passwordHasher = passwordHasher;
         }
         public void Create(User user)
         {
+            string newPass=_passwordHasher.HashPassword(user.Password);
+            user.Password = newPass;
             _userRepository.Create(user);
         }
 
@@ -55,6 +58,8 @@ namespace HospitalLibrary.Core.User
         {
             _userRepository.Update(user);
         }
+
+        
 
         //Account activation, but we first need to validate the token from the link
         public bool Activate(string email, string token)
@@ -116,7 +121,7 @@ namespace HospitalLibrary.Core.User
             // UserConstraints -> baza
             var users = _userRepository.GetAll();
             var currentUser = users.FirstOrDefault(o => o.Email.ToLower() ==
-                 user.Email.ToLower() && o.Password == user.Password);
+                 user.Email.ToLower() && o.Password == _passwordHasher.HashPassword(user.Password));
 
 
             if (currentUser != null) return currentUser;

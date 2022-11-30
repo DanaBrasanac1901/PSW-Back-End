@@ -17,6 +17,7 @@ using HospitalLibrary.Core.User;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HospitalLibrary.Core.PasswordHasher;
 
 namespace HospitalAPI
 {
@@ -78,8 +79,7 @@ namespace HospitalAPI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
-
-
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IEmailSendService, EmailSendService>();
 
             services.AddScoped<IBloodConsuptionRecordRepository, BloodConsumptionRecordRepository>();
