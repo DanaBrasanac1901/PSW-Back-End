@@ -19,6 +19,8 @@ using HospitalLibrary.Core.User;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HospitalLibrary.Core.TenderOffer;
+using HospitalLibrary.Core.Tender;
 
 namespace HospitalAPI
 {
@@ -98,7 +100,10 @@ namespace HospitalAPI
             services.AddScoped<IInpatientTreatmentRecordRepository, InpatientTreatmentRecordRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
-
+            services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
+            services.AddScoped<ITenderOfferService, TenderOfferService>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
 
         }
 

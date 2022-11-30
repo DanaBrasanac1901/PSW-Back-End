@@ -12,6 +12,7 @@ using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
 using HospitalLibrary.Core.Tender;
+using HospitalLibrary.Core.TenderOffer;
 
 namespace HospitalLibrary.Settings
 {
@@ -39,6 +40,7 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Tender> Tenders { get; set; }
 
+        public DbSet<TenderOffer> TenderOffers { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
@@ -79,7 +81,7 @@ namespace HospitalLibrary.Settings
 
 
 
-
+            modelBuilder.Entity<TenderOffer>().HasNoKey();
 
 
 
