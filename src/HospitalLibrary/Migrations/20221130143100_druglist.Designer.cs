@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221130083632_ValjdaZadnja")]
-    partial class ValjdaZadnja
+    [Migration("20221130143100_druglist")]
+    partial class druglist
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -404,9 +404,6 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Report.DrugList", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Amount")
                         .HasColumnType("text");
 
                     b.Property<Drug>("Drug")
