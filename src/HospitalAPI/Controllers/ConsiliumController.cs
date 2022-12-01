@@ -26,10 +26,11 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-           
             Consilium consilium = _consiliumService.Create(consiliumDto);
-
-            return Ok(consilium);
+        
+            return CreatedAtAction("GetById", new { id = consilium.Id }, consilium);
         }
+
+
     }
 }

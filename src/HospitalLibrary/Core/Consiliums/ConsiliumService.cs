@@ -21,10 +21,12 @@ namespace HospitalLibrary.Core.Consiliums
             
             return _consiliumRepository.GetAll();
         }
-        public void Create(CreateConsiliumDTO consiliumDto)
+        public Consilium Create(CreateConsiliumDTO consiliumDto)
         {
             
             _consiliumRepository.Create(consilium);
+
+            return Consilium;
         }
         public void Update(Consilium consilium)
         {
