@@ -27,6 +27,7 @@ namespace HospitalLibrary.Core.User
         }
         public void Create(User user)
         {
+            
             string newPass=_passwordHasher.HashPassword(user.Password);
             user.Password = newPass;
             _userRepository.Create(user);
@@ -68,9 +69,12 @@ namespace HospitalLibrary.Core.User
             User user=GetByEmail(email);
             if (TokenValidity(user, token))
             {
-                user.Active = true;
+                
                 try
                 {
+                    user.Active = true;
+                    user.Token = null;
+
                     Update(user);
                     return true;
                 }

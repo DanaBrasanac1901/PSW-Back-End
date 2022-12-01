@@ -65,16 +65,18 @@ namespace HospitalAPI.Controllers
             }
 
             Patient patient = new Patient(regDTO);
+
+            if (_userService.GetByEmail(patient.Email) != null) return BadRequest("Exists");
             _patientService.Register(patient);
 
             Patient createdPatient = _patientService.GetByEmail(patient.Email);
-            if(createdPatient != null)
+            if (createdPatient != null)
             {
-                User newUser=new User(regDTO,createdPatient.Id);
+                User newUser = new User(regDTO, createdPatient.Id);
                 _userService.Create(newUser);
             }
 
-           if(!SendActivationEmail(createdPatient.Email)) return BadRequest();
+           if(!SendActivationEmail(createdPatient.Email)) return BadRequest("Email");
             
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
