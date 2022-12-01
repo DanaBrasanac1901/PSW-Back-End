@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Doctor.DTOS;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Vacation;
 using System;
 using System.Collections.Generic;
@@ -130,5 +131,6 @@ namespace HospitalLibrary.Core.Doctor
             }
             return returnList;
         }
+
     }
 }

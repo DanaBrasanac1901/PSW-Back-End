@@ -1,7 +1,9 @@
-﻿using HospitalLibrary.Core.Appointment;
+﻿using Castle.Core.Internal;
+using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Room;
 //using HospitalLibrary.Core.Repository;
 using System;
@@ -28,6 +30,13 @@ namespace HospitalLibrary.Core.Appointment
             _roomRepository = roomRepository;
             _emailSend = emailSend;
             UpdateFinishedAppointments();
+        }
+
+
+        public AppointmentService(IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository)
+        {
+            _appointmentRepository = appointmentRepository;
+            _doctorRepository = doctorRepository;
         }
 
         public AppointmentService(IAppointmentRepository appointmentRepository) 
@@ -188,21 +197,7 @@ namespace HospitalLibrary.Core.Appointment
             return dto;
         }
 
-        public IEnumerable<Appointment> GetAvailableForDoctor()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Appointment> GetAvailableForDoctorAndDate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Appointment> GetAvailableForDate()
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public Boolean CheckIfAppointmentExistsForDoctor(string doctorId,DateTime start)
         {
             
@@ -227,5 +222,94 @@ namespace HospitalLibrary.Core.Appointment
             }
                 
         }
+
+        //ovo je za obicno zakazivanje za pacijenta
+
+        public List<Doctor.Doctor> getDoctorsBySpecialty(Specialty specialty)
+        {
+            List<Doctor.Doctor> doctorsWithSpecialty = new List<Doctor.Doctor>();
+            IEnumerable<Doctor.Doctor> allDoctors = _doctorRepository.GetAll();
+            foreach (Doctor.Doctor doctor in allDoctors)
+            {
+                if (doctor.Specialty == specialty)
+                {
+                    doctorsWithSpecialty.Add(doctor);
+                }
+            }
+
+            return doctorsWithSpecialty;
+        }
+
+        public IEnumerable<Doctor.Doctor> GetDoctorsByDateAndSpecialty(DateTime date, Specialty specialty)
+        {
+            List<Doctor.Doctor> specializedDoctors = getDoctorsBySpecialty(specialty);
+            foreach(Doctor.Doctor doctor in specializedDoctors)
+            {
+                if (!isDoctorFreeOnDate(doctor, date))
+                {
+                    specializedDoctors.Remove(doctor);
+                }
+            }
+
+            return specializedDoctors;
+        }
+
+        /// 
+        /// implementirati -> gledati radno vreme vacation  i appointments da lli postoje
+     
+        public bool isDoctorFreeOnDate(Doctor.Doctor doctor, DateTime date)
+        {
+            return true;
+        }
+
+
+        //ovo je za zakazivanje s prioritetima za pacijenta
+        public IEnumerable<Appointment> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority)
+        {
+            IEnumerable<Appointment> idealAppointments = FindIdealAppointments(dateRange, doctor);
+            if (idealAppointments.IsNullOrEmpty())
+            {
+                if(priority == "DOCTOR")
+                {
+                    DateTimeRange newDateRange = GetNewDateRange(dateRange);
+                    return AppointmentsWithDoctorPriority(newDateRange, doctor);
+                }
+                else if(priority == "DATE")
+                {
+                    return AppointmentsWithDatePriority(dateRange, doctor.Specialty);
+
+                }
+
+
+            }
+
+
+            return null; 
+        }
+
+        public DateTimeRange GetNewDateRange(DateTimeRange dateRange)
+        {
+            DateTime newStart = dateRange.Start.AddDays(-5);
+            DateTime newEnd = dateRange.End.AddDays(5);
+            return new DateTimeRange(newStart, newEnd);
+        }
+
+        public IEnumerable<Appointment> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
+        {
+
+            return null;
+        }
+
+        public IEnumerable<Appointment> AppointmentsWithDoctorPriority(DateTimeRange dateRange, Doctor.Doctor doctor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Appointment> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
