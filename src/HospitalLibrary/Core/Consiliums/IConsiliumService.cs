@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Consiliums.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace HospitalLibrary.Core.Consiliums
     public interface IConsiliumService
     {   
         IEnumerable<Consilium> GetAll();
-        void Create(Consilium consilium);
+        Consilium Create(CreateConsiliumDTO consiliumDto);
         void Update(Consilium consilium);
     }
 }

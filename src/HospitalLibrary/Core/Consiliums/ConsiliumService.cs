@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Consiliums.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace HospitalLibrary.Core.Consiliums
             
             return _consiliumRepository.GetAll();
         }
-        public void Create(Consilium consilium)
+        public void Create(CreateConsiliumDTO consiliumDto)
         {
             
             _consiliumRepository.Create(consilium);

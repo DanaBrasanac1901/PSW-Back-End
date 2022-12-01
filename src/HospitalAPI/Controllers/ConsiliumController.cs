@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Consiliums;
 using HospitalLibrary.Core.Consiliums.DTO;
 using System;
-using HospitalLibrary.Core.Consiliums;
 
 namespace HospitalAPI.Controllers
 {
@@ -18,5 +17,19 @@ namespace HospitalAPI.Controllers
         }
 
 
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult CreateConsilium(CreateConsiliumDTO consiliumDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+           
+            Consilium consilium = _consiliumService.Create(consiliumDto);
+
+            return Ok(consilium);
+        }
     }
 }
