@@ -84,10 +84,6 @@ namespace HospitalLibrary.Core.User
         }
         private bool TokenValidity(User user, string token)
         {
-            // Ovde treba da procita token iz linka i iz baze i da ih uporedi
-            // Oba su u stringified JSONu 
-            // Izgleda ovako: {"alg":"HS256","typ":"JWT"}.{"exp":1669732404,"iss":"http://localhost:16177","aud":"http://localhost:16177"}
-
             if (!user.Token.Equals(token)) return false;
             SecurityToken _token= new JwtSecurityTokenHandler().ReadToken(token);
             DateTime validUntil = _token.ValidTo;
@@ -99,12 +95,12 @@ namespace HospitalLibrary.Core.User
 
 
         //Save activation token before sending an email
-        public bool SaveTokenToDatabase(string email, SecurityToken token)
+        public bool SaveTokenToDatabase(string email, string token)
         {
             User user = GetByEmail(email);
             if (user == null) return false; // ovo ne bi trebalo da se desi al ipak proveri
 
-            user.Token = token.ToString();
+            user.Token = token;
             try
             {
                 Update(user);
@@ -156,7 +152,7 @@ namespace HospitalLibrary.Core.User
 
         //A separate method, because activation doesn't require claims
         // It only needs an expiration time
-        public SecurityToken GenerateActivationToken(string email)
+        public string GenerateActivationToken(string email)
         {
             User user=GetByEmail(email);
             if (user == null) return null;
@@ -176,7 +172,7 @@ namespace HospitalLibrary.Core.User
 
 
 
-            return token;
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

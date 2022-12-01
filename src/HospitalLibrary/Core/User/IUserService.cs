@@ -16,11 +16,12 @@ namespace HospitalLibrary.Core.User
         void Update(User user);
         void Delete(User user);
         bool Activate(string email, string token);
-        bool SaveTokenToDatabase(string email, SecurityToken token);
+        bool SaveTokenToDatabase(string email, string token);
 
         public User Authenticate(User user);
         public SecurityToken GenerateFullToken(User user);
-        public SecurityToken GenerateActivationToken(string email);
+        public string GenerateActivationToken(string email);
+
 
     }
 }
