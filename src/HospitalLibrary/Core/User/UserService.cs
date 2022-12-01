@@ -27,6 +27,7 @@ namespace HospitalLibrary.Core.User
         }
         public void Create(User user)
         {
+            
             string newPass=_passwordHasher.HashPassword(user.Password);
             user.Password = newPass;
             _userRepository.Create(user);
@@ -68,9 +69,12 @@ namespace HospitalLibrary.Core.User
             User user=GetByEmail(email);
             if (TokenValidity(user, token))
             {
-                user.Active = true;
+                
                 try
                 {
+                    user.Active = true;
+                    user.Token = null;
+
                     Update(user);
                     return true;
                 }
@@ -86,9 +90,14 @@ namespace HospitalLibrary.Core.User
         {
             if (!user.Token.Equals(token)) return false;
             SecurityToken _token= new JwtSecurityTokenHandler().ReadToken(token);
+
+            TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
             DateTime validUntil = _token.ValidTo;
-            DateTime now=DateTime.Now;
-            if (DateTime.Compare(now, validUntil) > 0) return false;
+            DateTime localizedValid = TimeZoneInfo.ConvertTime(validUntil, tz);
+            var unlocalized = DateTime.UtcNow;
+            
+            DateTime localizedNow = TimeZoneInfo.ConvertTime(unlocalized, tz);
+            if (DateTime.Compare(localizedNow, localizedValid) > 0) return false;
 
             return true;
         }
@@ -119,7 +128,7 @@ namespace HospitalLibrary.Core.User
             var users = _userRepository.GetAll();
             var currentUser = users.FirstOrDefault(o => o.Email.ToLower() ==
                 user.Email.ToLower());
-
+            if (currentUser == null) return null;
             if (_passwordHasher.VerifyHashedPassword(currentUser.Password, user.Password)) return currentUser;
 
             return null;
@@ -159,6 +168,10 @@ namespace HospitalLibrary.Core.User
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+            var unlocalized = DateTime.UtcNow.AddMinutes(15);
+            TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time");
+            DateTime localizedTime = TimeZoneInfo.ConvertTime(unlocalized, tz);
+
             var claims = new[]
              { 
 				new Claim(ClaimTypes.Sid, user.Id.ToString())
@@ -167,7 +180,7 @@ namespace HospitalLibrary.Core.User
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(15),
+                expires: localizedTime,
                 signingCredentials: credentials);
 
 

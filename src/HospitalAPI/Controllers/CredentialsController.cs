@@ -81,7 +81,7 @@ namespace HospitalAPI.Controllers
 				
                 if (response)
                 {
-                    return Ok(token);
+					return Redirect("http://localhost:4200/login");
                 }
                 else
                 {
