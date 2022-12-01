@@ -29,5 +29,6 @@ namespace HospitalLibrary.Core.Appointment
         IEnumerable<Appointment> GetAvailableForDoctor();
         IEnumerable<Appointment> GetAvailableForDoctorAndDate();
         IEnumerable<Appointment> GetAvailableForDate();
+        void ChangeDoctorForAppointment(string doctorId,string appointmentId);
     }
 }

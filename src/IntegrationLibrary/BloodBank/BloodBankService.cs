@@ -34,7 +34,7 @@ namespace IntegrationLibrary.BloodBank
             bb.Password =  Guid.NewGuid().ToString();
             bb.IsConfirmed = false;
             bloodBankRepository.Create(bb);
-           SendEmail(bb.Id);
+            SendEmail(bb.Id);
 
 
         }
@@ -101,12 +101,13 @@ namespace IntegrationLibrary.BloodBank
             Email emailConf = ConfigureEmail(id);
 
             string path = id.ToString();
+            string p = "http://localhost:4200/verify-registration/";
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(emailConf.From));
             email.To.Add(MailboxAddress.Parse(emailConf.To));
             email.Subject = "Confirm Your registration in our hospital";
-            //'/'
-            email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "Please" };
+            
+            email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "Please go to verify your account " +p+id};
 
 
             using var smtp = new SmtpClient();

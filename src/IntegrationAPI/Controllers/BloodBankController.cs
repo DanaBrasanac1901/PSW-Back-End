@@ -9,9 +9,9 @@ using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using IntegrationAPI.Exceptions;
 using System.Linq;
 using Nest;
+using IntegrationAPI.Exceptions.Validation;
 
 namespace IntegrationAPI.Controllers
 {
@@ -33,8 +33,10 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllBloodBanks()
         {
+            
 
             var bloodBanks = _IbbService.GetAll();
+           
             return Ok(bloodBanks);
 
         }
@@ -47,6 +49,7 @@ namespace IntegrationAPI.Controllers
         {
             var bloodBank = _IbbService.GetById(id);
             BloodBankRequestValidator.Validate(bloodBank);
+            
             return Ok(bloodBank);
         }
 
@@ -91,11 +94,12 @@ namespace IntegrationAPI.Controllers
         
         [HttpPut] 
         [Route("ConfirmBBAccount/{id:Guid}")]
-        public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromBody] object password)
+       
+        public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromForm] string password)
             {
                 _IbbService.UpdatePassword(id, password.ToString());
                 
-                return Ok("Confirmed"); //?
+                return Ok(); //?
             }
 
         }

@@ -10,6 +10,12 @@ using Microsoft.OpenApi.Models;
 using IntegrationLibrary.BloodBank;
 using Microsoft.AspNetCore.HttpsPolicy;
 using IntegrationAPI.BBConnection;
+using System.Linq;
+using HospitalLibrary.Core.Blood;
+using IntegrationLibrary.Report;
+using IntegrationLibrary.Settings;
+
+using IntegrationLibrary.News;
 
 namespace IntegrationAPI
 {
@@ -51,12 +57,31 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository,BloodBankRepository>();
-           // services.AddScoped<IEmailService, IEmailService>();
-            services.AddScoped<ExceptionMiddleware>();
+            services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IReportRepository, ReportRepository>();
+            // services.AddScoped<IEmailService, IEmailService>();
             
+            services.AddScoped<ExceptionMiddleware>();
+
+            services.AddHostedService<BackgroundTask>();
+            services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
+            
+
+
+         
+
+
+            services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<INewsRepository, NewsRepository>();
+            //services.AddSingleton<RabbitMQService>();
+
+           // services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
+             services.AddHostedService<RabbitMQService>();
+           
 
         }
 
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -67,13 +92,18 @@ namespace IntegrationAPI
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             });
-
+            using (var sScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var cx = sScope.ServiceProvider.GetService<IntegrationDbContext>();
+                cx?.Database.Migrate();
+            }
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
+              
             }
             app.UseCors("default");
             app.UseMiddleware<ExceptionMiddleware>();
@@ -86,5 +116,7 @@ namespace IntegrationAPI
                 endpoints.MapControllers();
             });
         }
+     
+
     }
 }

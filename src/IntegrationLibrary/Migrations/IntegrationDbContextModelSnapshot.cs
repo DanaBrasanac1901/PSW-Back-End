@@ -19,6 +19,30 @@ namespace IntegrationLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("IntegrationLibery.News.Message", b =>
+                {
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.HasKey("Timestamp");
+
+                    b.ToTable("NewsTable");
+
+                    b.HasData(
+                        new
+                        {
+                            Timestamp = new DateTime(2022, 11, 24, 15, 49, 15, 6, DateTimeKind.Local).AddTicks(8932),
+                            Id = new Guid("bdf7764b-269f-4559-9ae5-86b6b021d4f7"),
+                            Text = "doniraj krv"
+                        });
+                });
+
             modelBuilder.Entity("IntegrationLibrary.BloodBank.BloodBank", b =>
                 {
                     b.Property<Guid>("Id")
@@ -50,7 +74,7 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("220c2ea9-54fc-47ad-b231-f6efad8b020f"),
+                            Id = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
                             Apikey = "efwfe",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
@@ -59,7 +83,7 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c85daacb-b094-4181-8311-2b9ddc865c85"),
+                            Id = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
                             Apikey = "dqad",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
@@ -68,12 +92,55 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d59911e4-5bbc-4054-a55e-cc6c05c789e7"),
+                            Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
                             Apikey = "ads",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
                             Password = "fcsde",
                             Username = "101A"
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Report.Report", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ConfigurationDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("LastReportGeneration")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Period")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReportTable");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
+                            ConfigurationDate = new DateTime(2022, 11, 24, 15, 49, 15, 33, DateTimeKind.Local).AddTicks(2779),
+                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Period = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            ConfigurationDate = new DateTime(2022, 11, 24, 15, 49, 15, 34, DateTimeKind.Local).AddTicks(349),
+                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Period = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
+                            ConfigurationDate = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Period = 2
                         });
                 });
 #pragma warning restore 612, 618

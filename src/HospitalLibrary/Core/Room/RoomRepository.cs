@@ -49,5 +49,19 @@ namespace HospitalLibrary.Core.Room
             _context.Rooms.Remove(room);
             _context.SaveChanges();
         }
+        
+        public IEnumerable<int> GetAllWithFreeBeds()
+        {
+            List<Room> allrooms = _context.Rooms.ToList();
+            List<int> roomsWithFreeBeds = new List<int>();
+            foreach(Room r in allrooms)
+            {
+                if (r.HasAvaliableBed())
+                    roomsWithFreeBeds.Add(r.Id); 
+            }
+
+            return roomsWithFreeBeds;
+        }
+
     }
 }

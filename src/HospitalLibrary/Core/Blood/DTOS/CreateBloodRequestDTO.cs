@@ -13,9 +13,9 @@ namespace HospitalLibrary.Core.Blood.DTOS
 
         public string doctorId { get; set; }
 
-        public BloodType type { get; set; }
+        public string type { get; set; }
 
-        public double amount { get; set; }
+        public int amount { get; set; }
 
         public string reason { get; set; }
 
