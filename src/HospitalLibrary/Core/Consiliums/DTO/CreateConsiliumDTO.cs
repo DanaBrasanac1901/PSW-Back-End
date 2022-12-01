@@ -8,13 +8,21 @@ namespace HospitalLibrary.Core.Consiliums.DTO
 {
     public class CreateConsiliumDTO
     {
-        public string topic { get; set; }
-        public int duration { get; set; }
-        public string startDate { get; set; }
-        public string doctorIds { get; set; }
+        public string Topic { get; set; }
+        public int Duration { get; set; }
+        public string StartDate { get; set; }
+        public string DoctorIds { get; set; }
 
         public CreateConsiliumDTO()
         {
+        }
+
+        public CreateConsiliumDTO(string topic, int duration, string startDate, string doctorIds)
+        {
+            Topic = topic;
+            Duration = duration;
+            StartDate = startDate;
+            DoctorIds = doctorIds;
         }
     }
 }

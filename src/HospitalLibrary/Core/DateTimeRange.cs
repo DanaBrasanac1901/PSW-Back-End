@@ -26,5 +26,21 @@ namespace HospitalLibrary.Core
             else
                 return false;
         }
+
+        public string GetStartString()
+        {
+            return ConvertToString(Start);
+        }
+
+        public string GetEndString()
+        {
+            return ConvertToString(End);
+        }
+
+        private string ConvertToString(DateTime d)
+        {
+
+            return d.Date.ToString() + "/" + d.Month.ToString() + "/" + d.Year.ToString() + " " + d.Hour.ToString() + ":" + d.Minute.ToString();
+        }
     }
 }

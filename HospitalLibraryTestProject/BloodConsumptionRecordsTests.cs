@@ -36,10 +36,6 @@ namespace HospitalLibraryTestProject
         }
 
 
-
-
-
-
         private IBloodConsuptionRepository  CreateBloodSuppliesRepo()
         {
             var stubRepo = new Mock<IBloodConsuptionRepository>();
