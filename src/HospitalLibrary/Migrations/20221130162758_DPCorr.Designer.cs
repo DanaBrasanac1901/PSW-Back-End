@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;

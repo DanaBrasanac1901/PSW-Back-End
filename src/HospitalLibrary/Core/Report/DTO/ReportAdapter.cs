@@ -8,24 +8,24 @@ namespace HospitalLibrary.Core.Report.DTO
 {
     public class ReportAdapter
     {
-        public static Report ReportToCreateDTOToReport(ReportToCreateDTO dto)
+        public static Report.Model.Report ReportToCreateDTOToReport(ReportToCreateDTO dto)
         {
-            Report report = new Report();
+            Report.Model.Report report = new Report.Model.Report();
             report.Id =  DateTime.Now.ToString("yyMMddhhmmssffffff");
             report.PatientId = dto.patientId;
             report.DoctorId = dto.doctorId;
             report.ReportDescription = dto.description;
             report.DayAndTimeOfMaking = DateTime.Parse(dto.DATOfMaking);
-            report.Symptoms = (ICollection<Symptom>)dto.symptoms;
+            report.Symptoms = (ICollection<Report.Model.Symptom>)dto.symptoms;
             return report;
         }
 
-        public static DrugPrescription CreateDrugPrescription(string reportId, ReportToCreateDTO dto)
+        public static Report.Model.DrugPrescription CreateDrugPrescription(string reportId, ReportToCreateDTO dto)
         {
-            DrugPrescription drugPrescription = new DrugPrescription();
+            Report.Model.DrugPrescription drugPrescription = new Report.Model.DrugPrescription();
             drugPrescription.Id = DateTime.Now.AddMilliseconds(1).ToString("yyMMddhhmmssffffff");
             drugPrescription.ReportId = reportId;
-            drugPrescription.Drugs = (ICollection<Drug>)dto.drugs;
+            drugPrescription.Drugs = (ICollection<Report.Model.Drug>)dto.drugs;
             return drugPrescription;
         }
     }

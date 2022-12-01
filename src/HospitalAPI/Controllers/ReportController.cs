@@ -2,6 +2,7 @@ using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.DTO;
 using HospitalLibrary.Core.Report.Services;
 using Microsoft.AspNetCore.Mvc;
+using HospitalLibrary.Core.Report.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -21,6 +22,11 @@ namespace HospitalAPI.Controllers
             _reportApplicationService = reportApplicationService;
         }
 
+        public ReportController(IReportApplicationService reportApplicationService)
+        {
+            _reportApplicationService = reportApplicationService;
+        }
+
         [HttpGet]
         [Route("[action]")]
         public ActionResult GetAllDrugs()
@@ -36,14 +42,14 @@ namespace HospitalAPI.Controllers
         }
 
 
-
+        [HttpGet]
+        [Route("[action]")]
         public ActionResult GetAll()
         {
             return Ok(_reportApplicationService.GetAll());
         }
 
         [HttpGet("{id}")]
-        [Route("[action]")]
         public ActionResult GetById(string id)
         {
             var report = _reportApplicationService.GetById(id);

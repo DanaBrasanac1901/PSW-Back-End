@@ -12,6 +12,7 @@ using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
 using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Model;
 
 namespace HospitalLibrary.Settings
 {

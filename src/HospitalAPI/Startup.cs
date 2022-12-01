@@ -21,6 +21,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HospitalLibrary.Core.Report.Services;
 using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Repositories;
 
 namespace HospitalAPI
 {
@@ -101,14 +102,15 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
 
-            services.AddTransient<IDrugApplicationService, DrugApplicationService>();
-            services.AddScoped<IDrugRepository, DrugRepository>();
-            services.AddTransient<IReportApplicationService, ReportApplicationService>();
-            services.AddTransient<ISymptomApplicationService, SymptomApplicationService>();
-            services.AddScoped<ISymptomRepository, SymptomRepository>();
-            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IDrugApplicationService, DrugApplicationService>();
+            services.AddTransient<IDrugRepository, DrugRepository>();
+            services.AddScoped<IReportApplicationService, ReportApplicationService>();
+            services.AddScoped<ISymptomApplicationService, SymptomApplicationService>();
+            services.AddTransient<ISymptomRepository, SymptomRepository>();
+            services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddScoped<IDrugApplicationService, DrugApplicationService>();
+            services.AddTransient<IDrugPrescriptionRepository, DrugPrescriptionRepository>();
             
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

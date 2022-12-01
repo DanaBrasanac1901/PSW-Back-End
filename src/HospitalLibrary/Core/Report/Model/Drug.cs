@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Report
+namespace HospitalLibrary.Core.Report.Model
 {
     [Keyless]
     public class Drug : ValueObject

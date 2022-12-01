@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Report.Model;
 
-namespace HospitalLibrary.Core.Report
+namespace HospitalLibrary.Core.Report.Repositories
 {
-    public interface IDrugPrescriptionReposiotory
+    public interface IDrugPrescriptionRepository
     {
         IEnumerable<DrugPrescription> GetAll();
         DrugPrescription GetById(string id);

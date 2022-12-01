@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Report.Model;
 
-namespace HospitalLibrary.Core.Report
+namespace HospitalLibrary.Core.Report.Repositories
 {
-    public class DrugPrescriptionRepository
+    public class DrugPrescriptionRepository : IDrugPrescriptionRepository
     {
 
         private readonly HospitalDbContext _context;

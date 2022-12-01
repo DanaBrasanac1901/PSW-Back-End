@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Report
+namespace HospitalLibrary.Core.Report.Model
 {
     public class Report
     {

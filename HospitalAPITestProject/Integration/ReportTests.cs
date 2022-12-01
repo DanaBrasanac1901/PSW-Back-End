@@ -19,9 +19,7 @@ namespace HospitalAPITestProject.Integration
         public ReportTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
         private static ReportController SetupController(IServiceScope scope)
         {
-            return new ReportController(scope.ServiceProvider.GetRequiredService<IDrugApplicationService>() 
-                ,scope.ServiceProvider.GetRequiredService<ISymptomApplicationService>()
-                ,scope.ServiceProvider.GetRequiredService<IReportApplicationService>());
+            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportApplicationService>());
         }
 
         private static ReportToCreateDTO SetUpReportToCreateDTO(IServiceScope scope)

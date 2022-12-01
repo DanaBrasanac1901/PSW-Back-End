@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Model;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HospitalLibrary.Migrations

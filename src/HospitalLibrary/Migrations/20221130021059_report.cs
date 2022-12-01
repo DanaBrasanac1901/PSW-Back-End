@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Model;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HospitalLibrary.Migrations

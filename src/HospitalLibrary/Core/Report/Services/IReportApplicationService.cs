@@ -9,11 +9,11 @@ namespace HospitalLibrary.Core.Report.Services
 {
     public interface IReportApplicationService
     {
-        IEnumerable<Report> GetAll();
-        Report GetById(string id);
+        IEnumerable<Report.Model.Report> GetAll();
+        Report.Model.Report GetById(string id);
         void Create(ReportToCreateDTO report);
-        void Update(Report report);
-        void Delete(Report report);
+        void Update(Report.Model.Report report);
+        void Delete(Report.Model.Report report);
 
     }
 }

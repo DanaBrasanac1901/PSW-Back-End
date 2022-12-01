@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Report
+namespace HospitalLibrary.Core.Report.Repositories
 {
     public class ReportRepository : IReportRepository
     {
@@ -17,23 +17,23 @@ namespace HospitalLibrary.Core.Report
             _context = context;
         }
 
-        public IEnumerable<Report> GetAll()
+        public IEnumerable<Report.Model.Report> GetAll()
         {
             return _context.Reports.ToList();
         }
 
-        public Report GetById(string id)
+        public Report.Model.Report GetById(string id)
         {
             return _context.Reports.Find(id);
         }
         
-        public void Create(Report report)
+        public void Create(Report.Model.Report report)
         {
             _context.Reports.Add(report);
             _context.SaveChanges();
         }
 
-        public void Update(Report report)
+        public void Update(Report.Model.Report report)
         {
             _context.Entry(report).State = EntityState.Modified;
 
@@ -47,7 +47,7 @@ namespace HospitalLibrary.Core.Report
             }
         }
 
-        public void Delete(Report report)
+        public void Delete(Report.Model.Report report)
         {
             _context.Reports.Remove(report);
             _context.SaveChanges();

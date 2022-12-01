@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Report.Model;
+using HospitalLibrary.Core.Report.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
