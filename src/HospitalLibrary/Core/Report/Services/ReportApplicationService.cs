@@ -13,12 +13,23 @@ namespace HospitalLibrary.Core.Report.Services
     {
         private readonly IReportRepository _reportRepository;
         private readonly IDrugPrescriptionRepository _drugPrescriptionReposiotory;
-        
-        public ReportApplicationService(IReportRepository reportRepository, IDrugPrescriptionRepository drugPrescriptionReposiotory)
+        private readonly ISymptomRepository _symptomRepository;
+
+        public ReportApplicationService(IReportRepository reportRepository, IDrugPrescriptionRepository drugPrescriptionReposiotory,
+            ISymptomRepository symptomRepository)
         {
             _reportRepository = reportRepository;
             _drugPrescriptionReposiotory = drugPrescriptionReposiotory;
+            _symptomRepository = symptomRepository;
         }
+
+        public ReportApplicationService(IReportRepository reportRepository,
+            ISymptomRepository symptomRepository)
+        {
+            _reportRepository = reportRepository;
+            _symptomRepository = symptomRepository;
+        }
+
 
         public void Create(ReportToCreateDTO dto)
         {
@@ -48,6 +59,17 @@ namespace HospitalLibrary.Core.Report.Services
         public void Update(Report.Model.Report report)
         {
             _reportRepository.Update(report);
+        }
+
+        public bool IsSymptomExist(ICollection<Symptom> symptoms,string id)
+        {
+            var report = _reportRepository.GetById(id);
+            ICollection<Symptom> symptom = report.Symptoms;
+            foreach (var symp in symptom)
+            {
+                if(!symptoms.Contains(symp)) return false;
+            }
+            return true;
         }
     }
 }

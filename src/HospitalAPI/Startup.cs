@@ -23,6 +23,7 @@ using HospitalLibrary.Core.Report.Services;
 using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.Repositories;
 
+
 namespace HospitalAPI
 {
     public class Startup
@@ -101,6 +102,7 @@ namespace HospitalAPI
             services.AddScoped<IInpatientTreatmentRecordRepository, InpatientTreatmentRecordRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
+
 
             services.AddScoped<IDrugApplicationService, DrugApplicationService>();
             services.AddTransient<IDrugRepository, DrugRepository>();

@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Report.DTO;
+using HospitalLibrary.Core.Report.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,12 @@ namespace HospitalLibrary.Core.Report.Services
         IEnumerable<Report.Model.Report> GetAll();
         Report.Model.Report GetById(string id);
         void Create(ReportToCreateDTO report);
+
         void Update(Report.Model.Report report);
         void Delete(Report.Model.Report report);
+
+        bool IsSymptomExist(ICollection<Symptom> symptoms, string id);
+
 
     }
 }

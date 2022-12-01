@@ -9,6 +9,7 @@ using HospitalLibrary.Core.Report.Model;
 
 namespace HospitalLibrary.Core.Report.Repositories
 {
+
     public class DrugPrescriptionRepository : IDrugPrescriptionRepository
     {
 

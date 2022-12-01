@@ -24,5 +24,15 @@ namespace HospitalLibrary.Core.Report.Model
         public Report()
         {
         }
+
+        public Report(string id, string patientId, string doctorId, string reportDescription, ICollection<Symptom> symptoms, DateTime dayAndTimeOfMaking)
+        {
+            Id = id;
+            PatientId = patientId;
+            DoctorId = doctorId;
+            ReportDescription = reportDescription;
+            Symptoms = symptoms;
+            DayAndTimeOfMaking = dayAndTimeOfMaking;
+        }
     }
 }

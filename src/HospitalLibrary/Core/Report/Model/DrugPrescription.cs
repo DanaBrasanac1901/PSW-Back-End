@@ -18,5 +18,12 @@ namespace HospitalLibrary.Core.Report.Model
         public DrugPrescription()
         {
         }
+
+        public DrugPrescription(string id, string reportId, ICollection<Drug> drugs)
+        {
+            Id = id;
+            ReportId = reportId;
+            Drugs = drugs;
+        }
     }
 }
