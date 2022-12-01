@@ -38,6 +38,17 @@ namespace HospitalAPI.Controllers
 
             return Ok(tenderOffer);
         }
+        [HttpGet("Tender/{id}")]
+        public ActionResult GetByTender(int id)
+        {
+            var tenderOffer = _tenderOfferService.GetByTender(id);
+            if (tenderOffer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(tenderOffer);
+        }
         // POST api/tenderOffers
         [HttpPost]
         public ActionResult Create(TenderOffer tenderOffer)

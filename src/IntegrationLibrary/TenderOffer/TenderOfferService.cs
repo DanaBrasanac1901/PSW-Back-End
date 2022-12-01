@@ -52,6 +52,14 @@ namespace HospitalLibrary.Core.TenderOffer
             _tenderOfferRepository.Delete(tenderOffer);
         }
 
-   
+        public TenderOffer GetByTender(int id)
+        {
+            foreach(TenderOffer TO in _tenderOfferRepository.GetAll())
+            {
+                if(TO.TenderId == id)
+                    return TO;
+            }
+            return null;
+        }
     }
 }
