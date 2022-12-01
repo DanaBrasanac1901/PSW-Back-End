@@ -144,6 +144,7 @@ namespace HospitalLibrary.Core.User
             var claims = new[] //a way to store the data so that you don't have to always access the db
 			{ //these are set-in-stone claims (NameIdentifier, Email, GivenName)
 				new Claim(ClaimTypes.Sid, user.Id.ToString()),
+                new Claim(ClaimTypes.PrimaryGroupSid, user.IdByRole.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.Name),
                 new Claim(ClaimTypes.Surname, user.Surname),
