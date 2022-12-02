@@ -25,6 +25,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             StartDate = appt.Start.Date.ToString();
             StartTime = appt.Start.TimeOfDay.ToString();
             Status=appt.Status.ToString();
+            RoomNumber = appt.RoomId.ToString();
         }
     }
 }
