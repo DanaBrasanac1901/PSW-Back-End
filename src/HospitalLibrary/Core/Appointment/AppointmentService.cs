@@ -204,14 +204,14 @@ namespace HospitalLibrary.Core.Appointment
         public IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId)
         {
             IEnumerable<Appointment> appointments=_appointmentRepository.GetAllByPatient(patientId);
-            IEnumerable<AppointmentPatientDTO> result = new List<AppointmentPatientDTO>();
+            List<AppointmentPatientDTO> result = new List<AppointmentPatientDTO>();
             foreach(Appointment appt in appointments)
             {
                 AppointmentPatientDTO dto = new AppointmentPatientDTO(appt);
                 DoctorModel doctor = _doctorRepository.GetById(appt.DoctorId);
                 dto.DoctorName = doctor.Name + ' ' + doctor.Surname;
 
-                result.Append(dto);
+                result.Add(dto);
             }
 
             return result;
