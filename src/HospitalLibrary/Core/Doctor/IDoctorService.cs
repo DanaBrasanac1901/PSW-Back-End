@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Doctor.DTOS;
+using HospitalLibrary.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,9 @@ namespace HospitalLibrary.Core.Doctor
         void Delete(Doctor doctor);
         DoctorsShiftDTO GetDoctorsShiftById(string id);
         Boolean IsAvailable(string id, DateTime time);
+        //List<Doctor> GetAllDoctorsForRescheduleForUrgentVacation(Appointment.Appointment appointment);
+        List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameter);
+        List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime);
+
     }
 }

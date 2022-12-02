@@ -142,5 +142,13 @@ namespace HospitalAPI.Controllers
             }
             return Ok(appointment);
         }
+
+        [HttpPost]
+        [Route("[action]/{doctorId}/{appointmentId}")]
+        public ActionResult ChangeDoctorForAppointment(string doctorId, string appointmentId)
+        {
+            _appointmentService.ChangeDoctorForAppointment(doctorId, appointmentId);
+            return Ok();
+        }
     }
 }

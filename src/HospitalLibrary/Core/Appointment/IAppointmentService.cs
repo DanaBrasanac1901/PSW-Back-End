@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Appointment.DTOS;
+using HospitalLibrary.Core.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -22,13 +23,28 @@ namespace HospitalLibrary.Core.Appointment
 
         Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc);
 
-       void UpdateFinishedAppointments();
+        void UpdateFinishedAppointments();
 
         RescheduleAppointmentDTO GetAppoitnemtnToReschedule(string id);
 
-        IEnumerable<Appointment> GetAvailableForDoctor();
-        IEnumerable<Appointment> GetAvailableForDoctorAndDate();
-        IEnumerable<Appointment> GetAvailableForDate();
+        void ChangeDoctorForAppointment(string doctorId,string appointmentId);
+
+        //bez prioriteta
+        IEnumerable<Doctor.Doctor> GetDoctorsByDateAndSpecialty(DateTime date, Specialty specialty);
+
+        List<Doctor.Doctor> getDoctorsBySpecialty(Specialty specialty);
+
+        bool isDoctorFreeOnDate(Doctor.Doctor doctor, DateTime date);
+
+        //sa prioritetom
+
+        IEnumerable<Appointment> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority);
+
+        IEnumerable<Appointment> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor);
+
+        IEnumerable<Appointment> AppointmentsWithDoctorPriority(DateTimeRange dateRange, Doctor.Doctor doctor);
+
+        IEnumerable<Appointment> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty);
         IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId);
     }
 }

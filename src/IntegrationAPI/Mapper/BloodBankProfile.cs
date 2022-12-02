@@ -10,6 +10,8 @@ namespace IntegrationAPI.Mapper
     {
         public BloodBankProfile(){
             CreateMap<BloodBank, BloodBankDTO>().ReverseMap();
+            CreateMap<ReportDTO, ReporttDTO>().ReverseMap();
          }
+        
     }
 }

@@ -86,5 +86,12 @@ namespace HospitalAPI.Controllers
             _patientService.Delete(patient);
             return NoContent();
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetAllWithFreeBeds()
+        {
+            return Ok(_patientService.GetRoomsWithFreeBeds());
+        }
     }
 }

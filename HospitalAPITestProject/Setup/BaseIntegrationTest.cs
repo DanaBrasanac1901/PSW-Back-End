@@ -1,6 +1,7 @@
 ﻿using HospitalAPI;
 using Xunit;
 
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace HospitalTests.Setup
 {
     public class BaseIntegrationTest : IClassFixture<TestDatabaseFactory<Startup>>
