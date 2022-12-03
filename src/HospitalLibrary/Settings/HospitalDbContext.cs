@@ -11,6 +11,7 @@ using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
+using Npgsql;
 
 namespace HospitalLibrary.Settings
 {
@@ -41,7 +42,7 @@ namespace HospitalLibrary.Settings
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
-
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<Specialty>();
 
         }
 
@@ -76,7 +77,7 @@ namespace HospitalLibrary.Settings
 
             base.OnModelCreating(modelBuilder);
 
-
+            modelBuilder.HasPostgresEnum<Specialty>();
 
 
 
