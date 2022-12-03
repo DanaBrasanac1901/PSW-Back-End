@@ -11,6 +11,7 @@ namespace HospitalLibrary.Core.Appointment
         void Update(Appointment appointment);
         void Delete(Appointment appointment);
         IEnumerable<Appointment> GetAllByDoctor(string id);
+        IEnumerable<Appointment> GetAllByPatient(string id);
         Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc);
     }
 }

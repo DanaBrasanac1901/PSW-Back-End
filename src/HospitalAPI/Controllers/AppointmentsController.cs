@@ -29,6 +29,14 @@ namespace HospitalAPI.Controllers
             return Ok(_appointmentService.GetAll());
         }
 
+        // GET: api/Appointments/patient/id
+        [HttpPost("patient")]
+        public ActionResult GetForPatient(AppointmentPatientDTO dto)
+        {
+            // This SHOULD be a get but this is the only way i can force swagger to recognize my DTO in schemas
+            return Ok(_appointmentService.GetForPatient(dto.DoctorName));
+        }
+
         // GET api/rooms/2
         [HttpGet("{id}")]
         public ActionResult GetById(string id)

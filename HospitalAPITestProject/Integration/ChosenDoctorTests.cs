@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 using HospitalLibrary.Core.User;
+using HospitalLibrary.Core.EmailSender;
 
 namespace HospitalTests.Integration
 {
@@ -19,7 +20,7 @@ namespace HospitalTests.Integration
 
         private static PatientsController SetupController(IServiceScope scope)
         {
-            return new PatientsController(scope.ServiceProvider.GetRequiredService<IPatientService>(),scope.ServiceProvider.GetRequiredService<IUserService>());
+            return new PatientsController(scope.ServiceProvider.GetRequiredService<IPatientService>(), scope.ServiceProvider.GetRequiredService<IUserService>(), scope.ServiceProvider.GetRequiredService<IEmailSendService>());
 
         }
 
