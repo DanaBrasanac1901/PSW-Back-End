@@ -45,5 +45,7 @@ namespace HospitalLibrary.Core.Appointment
         IEnumerable<Appointment> AppointmentsWithDoctorPriority(DateTimeRange dateRange, Doctor.Doctor doctor);
 
         IEnumerable<Appointment> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty);
+
+        IEnumerable<DateTime> GenerateAvailableAppointments(Doctor.Doctor doctor, DateTime date);
     }
 }

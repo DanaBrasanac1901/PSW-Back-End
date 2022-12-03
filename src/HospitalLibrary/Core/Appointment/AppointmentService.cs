@@ -5,6 +5,7 @@ using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Room;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 //using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -308,6 +309,28 @@ namespace HospitalLibrary.Core.Appointment
         public IEnumerable<Appointment> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
         {
             throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<DateTime> GenerateAvailableAppointments(Doctor.Doctor doctor, DateTime date)
+        {
+            DateTime startingPoint = new DateTime(date.Year, date.Month, date.Day, doctor.StartWorkTime, 0, 0);
+            DateTime endPoint = new DateTime(date.Year, date.Month, date.Day, doctor.EndWorkTime, 0, 0);
+            List<DateTime> termini = new List<DateTime>();
+
+            //fali provera i za godisnji valjda? to mogu odmah za datum 
+            while (startingPoint < endPoint)
+            {
+                //da li ova funkcija vraca da je true ako postoji ili ako ne postoji
+                if(CheckIfAppointmentExistsForDoctor(doctor.Id, startingPoint))
+                {
+                    termini.Add(startingPoint);
+                }
+
+                startingPoint.AddMinutes(20);
+            }
+
+            return termini;
         }
 
 
