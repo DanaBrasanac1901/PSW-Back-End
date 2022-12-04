@@ -29,26 +29,6 @@ namespace HospitalLibrary.Core.Appointment
 
         void ChangeDoctorForAppointment(string doctorId,string appointmentId);
 
-        //bez prioriteta
-        IEnumerable<Doctor.Doctor> GetDoctorsByDateAndSpecialty(DateTime date, Specialty specialty);
-
-        List<Doctor.Doctor> getDoctorsBySpecialty(Specialty specialty);
-
-        bool isDoctorFreeOnDate(Doctor.Doctor doctor, DateTime date);
-
-        //sa prioritetom
-
-        IEnumerable<Appointment> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority);
-
-        IEnumerable<Appointment> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor);
-
-        IEnumerable<Appointment> AppointmentsWithDoctorPriority(DateTimeRange dateRange, Doctor.Doctor doctor);
-
-        IEnumerable<Appointment> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty);
-
-        IEnumerable<DateTime> GenerateAvailableAppointments(Doctor.Doctor doctor, DateTime date);
-
-        IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId);
 
     }
 }

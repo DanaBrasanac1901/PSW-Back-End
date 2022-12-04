@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using DoctorModel = HospitalLibrary.Core.Doctor.Doctor;  // namespace used like a type, had to add an alias - anja
+
 
 namespace HospitalLibrary.Core.Appointment
 {
@@ -25,6 +25,7 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
         private string _email;
+
         public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
             IRoomRepository roomRepository, IEmailSendService emailSend)
         {
@@ -33,13 +34,6 @@ namespace HospitalLibrary.Core.Appointment
             _roomRepository = roomRepository;
             _emailSend = emailSend;
             UpdateFinishedAppointments();
-        }
-
-
-        public AppointmentService(IAppointmentRepository appointmentRepository, IDoctorRepository doctorRepository)
-        {
-            _appointmentRepository = appointmentRepository;
-            _doctorRepository = doctorRepository;
         }
 
         public AppointmentService(IAppointmentRepository appointmentRepository) 
@@ -62,7 +56,8 @@ namespace HospitalLibrary.Core.Appointment
         {
             return _appointmentRepository.GetById(id);
         }
-
+        /// 
+        /// implementirati -> gledati radno vreme vacation  i appointments da lli postoje
         public Boolean IsAvailable(Appointment app)
         {
             Doctor.Doctor doc = app.Doctor;
@@ -225,134 +220,5 @@ namespace HospitalLibrary.Core.Appointment
             }
                 
         }
-
-        //ovo je za obicno zakazivanje za pacijenta
-
-        public List<Doctor.Doctor> getDoctorsBySpecialty(Specialty specialty)
-        {
-            List<Doctor.Doctor> doctorsWithSpecialty = new List<Doctor.Doctor>();
-            IEnumerable<Doctor.Doctor> allDoctors = _doctorRepository.GetAll();
-            foreach (Doctor.Doctor doctor in allDoctors)
-            {
-                if (doctor.Specialty == specialty)
-                {
-                    doctorsWithSpecialty.Add(doctor);
-                }
-            }
-
-            return doctorsWithSpecialty;
-        }
-
-        public IEnumerable<Doctor.Doctor> GetDoctorsByDateAndSpecialty(DateTime date, Specialty specialty)
-        {
-            List<Doctor.Doctor> specializedDoctors = getDoctorsBySpecialty(specialty);
-            foreach(Doctor.Doctor doctor in specializedDoctors)
-            {
-                if (!isDoctorFreeOnDate(doctor, date))
-                {
-                    specializedDoctors.Remove(doctor);
-                }
-            }
-
-            return specializedDoctors;
-        }
-
-        /// 
-        /// implementirati -> gledati radno vreme vacation  i appointments da lli postoje
-     
-        public bool isDoctorFreeOnDate(Doctor.Doctor doctor, DateTime date)
-        {
-            return true;
-        }
-
-
-        //ovo je za zakazivanje s prioritetima za pacijenta
-        public IEnumerable<Appointment> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority)
-        {
-            IEnumerable<Appointment> idealAppointments = FindIdealAppointments(dateRange, doctor);
-            if (idealAppointments.IsNullOrEmpty())
-            {
-                if(priority == "DOCTOR")
-                {
-                    DateTimeRange newDateRange = GetNewDateRange(dateRange);
-                    return AppointmentsWithDoctorPriority(newDateRange, doctor);
-                }
-                else if(priority == "DATE")
-                {
-                    return AppointmentsWithDatePriority(dateRange, doctor.Specialty);
-
-                }
-
-
-            }
-
-
-            return null; 
-        }
-
-        public DateTimeRange GetNewDateRange(DateTimeRange dateRange)
-        {
-            DateTime newStart = dateRange.Start.AddDays(-5);
-            DateTime newEnd = dateRange.End.AddDays(5);
-            return new DateTimeRange(newStart, newEnd);
-        }
-
-        public IEnumerable<Appointment> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
-        {
-
-            return null;
-        }
-
-        public IEnumerable<Appointment> AppointmentsWithDoctorPriority(DateTimeRange dateRange, Doctor.Doctor doctor)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Appointment> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId)
-        {
-            IEnumerable<Appointment> appointments=_appointmentRepository.GetAllByPatient(patientId);
-            List<AppointmentPatientDTO> result = new List<AppointmentPatientDTO>();
-            foreach(Appointment appt in appointments)
-            {
-                AppointmentPatientDTO dto = new AppointmentPatientDTO(appt);
-                DoctorModel doctor = _doctorRepository.GetById(appt.DoctorId);
-                dto.DoctorName = doctor.Name + ' ' + doctor.Surname;
-
-                 result.Add(dto);
-            }
-
-            return result;
-
-        }
-
-        public IEnumerable<DateTime> GenerateAvailableAppointments(Doctor.Doctor doctor, DateTime date)
-        {
-            DateTime startingPoint = new DateTime(date.Year, date.Month, date.Day, doctor.StartWorkTime, 0, 0);
-            DateTime endPoint = new DateTime(date.Year, date.Month, date.Day, doctor.EndWorkTime, 0, 0);
-            List<DateTime> termini = new List<DateTime>();
-
-            //fali provera i za godisnji valjda? to mogu odmah za datum 
-            while (startingPoint < endPoint)
-            {
-                //da li ova funkcija vraca da je true ako postoji ili ako ne postoji
-                if(CheckIfAppointmentExistsForDoctor(doctor.Id, startingPoint))
-                {
-                    termini.Add(startingPoint);
-                }
-
-                startingPoint.AddMinutes(20);
-            }
-
-            return termini;
-        }
-
-
-
-
     }
 }

@@ -14,12 +14,13 @@ namespace HospitalAPI.Controllers
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IDoctorService _doctorService;
+        private readonly IAvailableAppointmentService _availableAppointmentService;
   
-        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
+        public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
         {
             _appointmentService = appointmentService;
             _doctorService = doctorService;
-            
+            _availableAppointmentService = availableAppointmentService;
         }
 
         // GET: api/appointments
@@ -34,7 +35,7 @@ namespace HospitalAPI.Controllers
         public ActionResult GetForPatient(AppointmentPatientDTO dto)
         {
             // This SHOULD be a get but this is the only way i can force swagger to recognize my DTO in schemas
-            return Ok(_appointmentService.GetForPatient(dto.DoctorName));
+            return Ok(_availableAppointmentService.GetForPatient(dto.DoctorName));
         }
 
         // GET api/rooms/2
