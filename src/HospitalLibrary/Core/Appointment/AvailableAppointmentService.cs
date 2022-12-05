@@ -50,11 +50,16 @@ namespace HospitalLibrary.Core.Appointment
         {
             List<Doctor.Doctor> specializedDoctors = GetDoctorsBySpecialty(specialty);
             foreach (Doctor.Doctor doctor in specializedDoctors)
-
-                if (GetDoctorsAvailableAppointmentsForDate(doctor,date).IsNullOrEmpty())
+            {
+                List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
+                GetDoctorsAvailableAppointmentsForDate(doctor, date, appointments);
+                if (appointments.IsNullOrEmpty())
                 {
                     specializedDoctors.Remove(doctor);
                 }
+
+
+            }
 
             return specializedDoctors;
         }
@@ -75,11 +80,11 @@ namespace HospitalLibrary.Core.Appointment
             return doctorsWithSpecialty;
         }
 
-        //ovo je za zakazivanje s prioritetima za pacijenta, osnovna fja, ne mora da bude ovako
-        public IEnumerable<DateTime> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority)
+        //ovo je za zakazivanje s prioritetima za pacijenta, osnovna fja
+        public IEnumerable<AppointmentPatientDTO> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority)
         {
-            IEnumerable<DateTime> idealAppointments = FindIdealAppointments(dateRange, doctor);
-            if (idealAppointments.Any<DateTime>())
+            IEnumerable<AppointmentPatientDTO> idealAppointments = FindIdealAppointments(dateRange, doctor);
+            if (!idealAppointments.Any <AppointmentPatientDTO>())
             {
                 if (priority == "DOCTOR")
                 {
@@ -98,19 +103,15 @@ namespace HospitalLibrary.Core.Appointment
 
         //kada su oba uslova ispunjena, i lekar i datumi 
         //koristimo i kad nije idealno n ego kad je lekar prioritet jer samo trazimo s novim rangeom
-        public IEnumerable<DateTime> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
+        public IEnumerable<AppointmentPatientDTO> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
         {
-            List<DateTime> allAppointments = new List<DateTime>();
-            DateTime startingPoint = dateRange.Start;
-            while (startingPoint < dateRange.End)
+            List<AppointmentPatientDTO> allAppointments = new List<AppointmentPatientDTO>();
+            DateTime dateIterator = dateRange.Start;
+
+            while (dateIterator < dateRange.End)
             {
-                List <DateTime> appointmentsOnDay = GetDoctorsAvailableAppointmentsForDate(doctor, startingPoint);
-               foreach( DateTime app in appointmentsOnDay)
-                {
-                    allAppointments.Add(app);
-                }
-                appointmentsOnDay.Clear();
-                startingPoint.AddDays(1);
+               GetDoctorsAvailableAppointmentsForDate(doctor, dateIterator, allAppointments);
+               dateIterator = dateIterator.AddDays(1);
             }
             return allAppointments;
         }
@@ -124,33 +125,46 @@ namespace HospitalLibrary.Core.Appointment
         }
 
         //nisu oba ispunjena, nadje se za isti daterange lekari sa istom specijalnoscu
-        public IEnumerable<DateTime> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
+        public IEnumerable<AppointmentPatientDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
         {
-            //ovo bas zavisi od toga kako uradimo na frontu
-            throw new NotImplementedException();
-        }
+            DateTime dateIterator = dateRange.Start;
+            List < Doctor.Doctor > doctors = GetDoctorsBySpecialty(specialty);
+            List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
 
-        public List<DateTime> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date)
-        {
-            DateTime startingPoint = new DateTime(date.Year, date.Month, date.Day, doctor.StartWorkTime, 0, 0);
-            DateTime endPoint = new DateTime(date.Year, date.Month, date.Day, doctor.EndWorkTime, 0, 0);
-            List<DateTime> termini = new List<DateTime>();
-
-            while (startingPoint < endPoint)
+            while (dateIterator < dateRange.End)
             {
-                DateTime timeSlotEndPoint = startingPoint;
-                timeSlotEndPoint.AddMinutes(20);
-                if (doctor.IsAvailable(startingPoint, timeSlotEndPoint))
+               foreach(Doctor.Doctor doctor in doctors)
                 {
-                    termini.Add(startingPoint);
+                    GetDoctorsAvailableAppointmentsForDate(doctor, dateIterator, appointments);
                 }
 
-                startingPoint.AddMinutes(20);
-
+                dateIterator = dateIterator.AddDays(1);
             }
-
-            return termini;
+            return appointments;
         }
 
+        public void GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date, List<AppointmentPatientDTO> termini)
+        {
+            DateTime timeIterator = new DateTime(date.Year, date.Month, date.Day, doctor.StartWorkTime, 0, 0);
+            DateTime endPoint = new DateTime(date.Year, date.Month, date.Day, doctor.EndWorkTime, 0, 0);
+
+            while (timeIterator < endPoint)
+            {
+                GeneratingDTOs(doctor, date, timeIterator, termini);
+                timeIterator = timeIterator.AddMinutes(20);
+            }
+
+        }
+
+        private static void GeneratingDTOs(DoctorModel doctor, DateTime date, DateTime startTime, List<AppointmentPatientDTO> termini)
+        {
+            DateTime timeSlotEnd = startTime.AddMinutes(20);
+            if (doctor.IsAvailable(startTime, timeSlotEnd))
+            {
+                //DateTime.Now.ToString("dddd, dd MMMM yyyy") primer Friday, 29 May 2015
+                termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name+' '+doctor.Surname, StartDate = date.ToString("dddd, dd MMMM yyyy"), StartTime = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+            }
+           
+        }
     }
 }
