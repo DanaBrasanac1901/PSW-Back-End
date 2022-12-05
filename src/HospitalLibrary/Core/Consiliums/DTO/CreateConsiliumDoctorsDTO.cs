@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Consiliums.DTO
 {
-    public class CreateConsiliumDTO
+    public class CreateConsiliumDoctorsDTO
     {
         public string Topic { get; set; }
         public int Duration { get; set; }
         public string StartDate { get; set; }
         public string DoctorIds { get; set; }
 
-        public CreateConsiliumDTO()
+        public CreateConsiliumDoctorsDTO()
         {
         }
 
-        public CreateConsiliumDTO(string topic, int duration, string startDate, string doctorIds)
+        public CreateConsiliumDoctorsDTO(string topic, int duration, string startDate, string doctorIds)
         {
             Topic = topic;
             Duration = duration;

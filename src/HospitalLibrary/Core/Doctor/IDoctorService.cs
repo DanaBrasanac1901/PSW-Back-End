@@ -19,5 +19,7 @@ namespace HospitalLibrary.Core.Doctor
         //List<Doctor> GetAllDoctorsForRescheduleForUrgentVacation(Appointment.Appointment appointment);
         List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameter);
         List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime);
+        bool AreAvailableForConsilium(string doctorIds, DateTimeRange consiliumInterval);
+        List<Doctor> GetByIds(string doctorIds);
     }
 }

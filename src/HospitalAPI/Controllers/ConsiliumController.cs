@@ -18,7 +18,7 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult CreateConsilium(CreateConsiliumDTO consiliumDto)
+        public ActionResult CreateConsiliumWithDoctors(CreateConsiliumDoctorsDTO consiliumDto)
         {
             if (!ModelState.IsValid)
             {
@@ -29,7 +29,5 @@ namespace HospitalAPI.Controllers
         
             return CreatedAtAction("GetById", new { id = consilium.Id }, consilium);
         }
-
-
     }
 }

@@ -13,5 +13,6 @@ namespace HospitalLibrary.Core.Doctor
         void Create(Doctor doctor);
         void Update(Doctor doctor);
         void Delete(Doctor doctor);
+        List<Doctor> GetByIds(string doctorIds);
     }
 }

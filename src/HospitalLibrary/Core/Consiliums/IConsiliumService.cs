@@ -10,7 +10,8 @@ namespace HospitalLibrary.Core.Consiliums
     public interface IConsiliumService
     {   
         IEnumerable<Consilium> GetAll();
-        Consilium Create(CreateConsiliumDTO consiliumDto);
+        Consilium Create(CreateConsiliumDoctorsDTO consiliumDto);
         void Update(Consilium consilium);
+        List<DateTime> GetPotentialAppointmentTimes(ConsiliumAppointmentInfoDTO consiliumAppointmentInfo);
     }
 }

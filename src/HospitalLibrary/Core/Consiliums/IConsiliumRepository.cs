@@ -13,5 +13,6 @@ namespace HospitalLibrary.Core.Consiliums
         void Create(Consilium consilium);
         void Update(Consilium consilium);
         void Delete(Consilium consilium);
+
     }
 }

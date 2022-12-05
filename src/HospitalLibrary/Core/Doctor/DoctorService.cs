@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Doctor.DTOS;
+﻿using HospitalLibrary.Core.Consiliums.DTO;
+using HospitalLibrary.Core.Doctor.DTOS;
 using HospitalLibrary.Core.Vacation;
 using System;
 using System.Collections.Generic;
@@ -117,8 +118,6 @@ namespace HospitalLibrary.Core.Doctor
             return ReturnListGetAppointmentsUrgentVacation(_doctorRepository.GetById(parameters.id).Appointments, timeRange);
         }
 
-        
-
         public List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime)
         {
             List<DoctorToChangeUrgentVacationDTO> returnList = new List<DoctorToChangeUrgentVacationDTO>();
@@ -129,6 +128,24 @@ namespace HospitalLibrary.Core.Doctor
                     returnList.Add(adapter.DoctorToDoctorToChangeUrgentVacationDTO(doc));
             }
             return returnList;
+        }
+
+        public bool AreAvailableForConsilium(string doctorIds, DateTimeRange consiliumInterval)
+        {
+            List<Doctor> neededDoctors = _doctorRepository.GetByIds(doctorIds);
+
+            foreach(Doctor doctor in neededDoctors)
+            {
+                if (!doctor.IsAvailable(consiliumInterval.Start, consiliumInterval.End))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public List<Doctor> GetByIds(string doctorIds)
+        {
+            return _doctorRepository.GetByIds(doctorIds);
         }
     }
 }
