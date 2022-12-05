@@ -21,11 +21,9 @@ namespace HospitalLibrary.Core.Appointment
 
         IEnumerable<DateTime> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor);
 
-        IEnumerable<DateTime> AppointmentsWithDoctorPriority(DateTimeRange dateRange, Doctor.Doctor doctor);
-
         IEnumerable<DateTime> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty);
 
-        IEnumerable<DateTime> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date);
+        List<DateTime> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date);
 
         //anjino
 

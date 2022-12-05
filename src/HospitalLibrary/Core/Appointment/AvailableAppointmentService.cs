@@ -44,6 +44,7 @@ namespace HospitalLibrary.Core.Appointment
 
         }
 
+
         //ovo je za obicno zakazivanje za pacijenta, prikaz svih lekara te specijalizacije koji su slobodni tog dana
         public IEnumerable<Doctor.Doctor> GetDoctorsByDateAndSpecialty(DateTime date, Specialty specialty)
         {
@@ -74,7 +75,7 @@ namespace HospitalLibrary.Core.Appointment
             return doctorsWithSpecialty;
         }
 
-        //ovo je za zakazivanje s prioritetima za pacijenta, osnovna fja
+        //ovo je za zakazivanje s prioritetima za pacijenta, osnovna fja, ne mora da bude ovako
         public IEnumerable<DateTime> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority)
         {
             IEnumerable<DateTime> idealAppointments = FindIdealAppointments(dateRange, doctor);
@@ -83,35 +84,38 @@ namespace HospitalLibrary.Core.Appointment
                 if (priority == "DOCTOR")
                 {
                     DateTimeRange newDateRange = GetNewDateRange(dateRange);
-                    return AppointmentsWithDoctorPriority(newDateRange, doctor);
+                    return FindIdealAppointments(newDateRange, doctor);
                 }
                 else if (priority == "DATE")
                 {
                     return AppointmentsWithDatePriority(dateRange, doctor.Specialty);
 
                 }
-
-
             }
-
-
             return null;
         }
 
 
         //kada su oba uslova ispunjena, i lekar i datumi 
+        //koristimo i kad nije idealno n ego kad je lekar prioritet jer samo trazimo s novim rangeom
         public IEnumerable<DateTime> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
         {
-
-            return null;
+            List<DateTime> allAppointments = new List<DateTime>();
+            DateTime startingPoint = dateRange.Start;
+            while (startingPoint < dateRange.End)
+            {
+                List <DateTime> appointmentsOnDay = GetDoctorsAvailableAppointmentsForDate(doctor, startingPoint);
+               foreach( DateTime app in appointmentsOnDay)
+                {
+                    allAppointments.Add(app);
+                }
+                appointmentsOnDay.Clear();
+                startingPoint.AddDays(1);
+            }
+            return allAppointments;
         }
 
-        //nisu oba ispunjena, mora da se nadje za istog doktora sa prosirenim datumima
-        public IEnumerable<DateTime> AppointmentsWithDoctorPriority(DateTimeRange dateRange, Doctor.Doctor doctor)
-        {
-            throw new NotImplementedException();
-        }
-
+      
         public DateTimeRange GetNewDateRange(DateTimeRange dateRange)
         {
             DateTime newStart = dateRange.Start.AddDays(-5);
@@ -122,10 +126,11 @@ namespace HospitalLibrary.Core.Appointment
         //nisu oba ispunjena, nadje se za isti daterange lekari sa istom specijalnoscu
         public IEnumerable<DateTime> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
         {
+            //ovo bas zavisi od toga kako uradimo na frontu
             throw new NotImplementedException();
         }
 
-        public IEnumerable<DateTime> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date)
+        public List<DateTime> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date)
         {
             DateTime startingPoint = new DateTime(date.Year, date.Month, date.Day, doctor.StartWorkTime, 0, 0);
             DateTime endPoint = new DateTime(date.Year, date.Month, date.Day, doctor.EndWorkTime, 0, 0);
