@@ -17,6 +17,7 @@ using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Vacation;
+using HospitalLibrary.Core.Consiliums;
 using System;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 
@@ -93,6 +94,9 @@ namespace HospitalTests.Setup
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 10, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 11, Amount = 12, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 12, Amount = 13, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Consiliums\";");
+            context.Consiliums.Add(new Consilium { Id = 1, Topic = "Okuplanje", Duration = 60, Finished = false, Specialties = "0,1", FromTo = new HospitalLibrary.Core.DateTimeRange(new DateTime(2022,12,10),new DateTime(2022,12,15))});
 
            
             
