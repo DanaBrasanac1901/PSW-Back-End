@@ -42,8 +42,8 @@ namespace HospitalAPI.Controllers
             return Ok(_availableAppointmentService.GetForPatient(dto.DoctorName));
         }
 
-        [HttpGet("doctors/{date}/{specialty}")]
-        public ActionResult GetSpecialtyDoctorsForDate(DateTime date, Specialty specialty)
+        [HttpPost("doctors/{specialty}")]
+        public ActionResult SpecialtyDoctorsForDate(DateTime date, Specialty specialty)
         {
             var doctors = _availableAppointmentService.GetDoctorsByDateAndSpecialty(date, specialty);
             if(doctors == null)
@@ -54,10 +54,10 @@ namespace HospitalAPI.Controllers
 
         }
 
-        [HttpGet("suggestions/{dateRange}/{doctor}/{priority}")]
-        public ActionResult AppointmentsWithSuggestions(DateTimeRange dateRange, Doctor doctor, string priority)
+        [HttpPost("suggestions/{priority}")]
+        public ActionResult AppointmentsWithSuggestions(AvailableAppointmentsDTO dto, string priority)
         {
-            var appointments = _availableAppointmentService.FindAppointmentsWithSuggestions(dateRange, doctor, priority);
+            var appointments = _availableAppointmentService.FindAppointmentsWithSuggestions(dto.DateRange, dto.Doctor, priority);
             if(appointments == null)
             {
                 return NotFound();
@@ -65,11 +65,11 @@ namespace HospitalAPI.Controllers
             return Ok(appointments);
         }
 
-        [HttpGet("regular/{date}/{doctor}")]
-        public ActionResult DateDoctorAppointments(DateTime date, Doctor doctor)
+        [HttpPost("regularAppointments")]
+        public ActionResult DateDoctorAppointments(AvailableAppointmentsDTO dto)
         {
             List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
-            _availableAppointmentService.GetDoctorsAvailableAppointmentsForDate(doctor, date, appointments);
+            _availableAppointmentService.GetDoctorsAvailableAppointmentsForDate(dto.Doctor, dto.Date, appointments);
             if (appointments.IsNullOrEmpty())
             {
                 return NotFound();

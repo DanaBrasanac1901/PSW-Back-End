@@ -37,7 +37,7 @@ namespace IntegrationTests
             Message m = new Message("fefe",DateTime.Now);
 
             var producer = new TestPublisher();
-            producer.Publish("hello",m );
+            producer.Publish("hello", m );
 
             Assert.Equal(m,service2.getById(m.Id));
 

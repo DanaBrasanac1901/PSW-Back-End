@@ -45,7 +45,21 @@ namespace HospitalLibrary.Core.Doctor
             EndWorkTime = endWorkTime;
             Appointments = appointments;
             VacationRequests = new List<VacationRequest>();
-        } 
+        }
+
+        public Doctor(string id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments)
+        {
+            Id = id;
+            Name = name;
+            Surname = surname;
+            Email = email;
+            RoomId = roomId;
+            Room = room;
+            StartWorkTime = startWorkTime;
+            EndWorkTime = endWorkTime;
+            Appointments = appointments;
+            VacationRequests = new List<VacationRequest>();
+        }
 
         public bool IsAvailable(DateTime start, DateTime end)
         {
