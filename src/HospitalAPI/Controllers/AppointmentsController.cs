@@ -5,6 +5,10 @@ using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Globalization;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core;
+using System.Collections.Generic;
+using Castle.Core.Internal;
 
 namespace HospitalAPI.Controllers
 {
@@ -37,6 +41,43 @@ namespace HospitalAPI.Controllers
             // This SHOULD be a get but this is the only way i can force swagger to recognize my DTO in schemas
             return Ok(_availableAppointmentService.GetForPatient(dto.DoctorName));
         }
+
+        [HttpGet("doctors/{date}/{specialty}")]
+        public ActionResult GetSpecialtyDoctorsForDate(DateTime date, Specialty specialty)
+        {
+            var doctors = _availableAppointmentService.GetDoctorsByDateAndSpecialty(date, specialty);
+            if(doctors == null)
+            {
+                return NotFound();
+            }
+            return Ok(doctors);
+
+        }
+
+        [HttpGet("suggestions/{dateRange}/{doctor}/{priority}")]
+        public ActionResult AppointmentsWithSuggestions(DateTimeRange dateRange, Doctor doctor, string priority)
+        {
+            var appointments = _availableAppointmentService.FindAppointmentsWithSuggestions(dateRange, doctor, priority);
+            if(appointments == null)
+            {
+                return NotFound();
+            }
+            return Ok(appointments);
+        }
+
+        [HttpGet("regular/{date}/{doctor}")]
+        public ActionResult DateDoctorAppointments(DateTime date, Doctor doctor)
+        {
+            List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
+            _availableAppointmentService.GetDoctorsAvailableAppointmentsForDate(doctor, date, appointments);
+            if (appointments.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            return Ok(appointments);
+        }
+
+
 
         // GET api/rooms/2
         [HttpGet("{id}")]
