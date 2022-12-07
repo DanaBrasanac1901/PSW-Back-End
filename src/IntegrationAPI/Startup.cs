@@ -16,6 +16,7 @@ using IntegrationLibrary.Report;
 using IntegrationLibrary.Settings;
 using HospitalLibrary.Core.Tender;
 using HospitalLibrary.Core.TenderOffer;
+using HospitalLibrary.Core.EmailSender;
 
 namespace IntegrationAPI
 {
@@ -38,6 +39,10 @@ namespace IntegrationAPI
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
             services.AddAutoMapper(typeof(Startup));
             //services.AddControllersWithViews();
+            var emailConfig = Configuration
+          .GetSection("EmailConfiguration")
+          .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
 
             services.AddCors((setup) =>
             {
@@ -47,6 +52,7 @@ namespace IntegrationAPI
                 });
 
             });
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -63,7 +69,7 @@ namespace IntegrationAPI
             services.AddScoped<ITenderOfferService, TenderOfferService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
-            // services.AddScoped<IEmailService, IEmailService>();
+            services.AddScoped<IEmailSendService, EmailSendService>();
 
             services.AddScoped<ExceptionMiddleware>();
 

@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.Tender;
 using Microsoft.AspNetCore.Builder;
 using Org.BouncyCastle.Crypto.Tls;
 using System;
@@ -12,17 +13,16 @@ namespace HospitalLibrary.Core.TenderOffer
     public class TenderOfferService : ITenderOfferService
     {
         private readonly ITenderOfferRepository _tenderOfferRepository;
-        private readonly IAppointmentRepository _appointmentRepository;
-        private readonly IDoctorRepository _doctorRepository;
+        private readonly ITenderService _tenderService;
 
         public TenderOfferService(ITenderOfferRepository tenderOfferRepository)
         {
             _tenderOfferRepository = tenderOfferRepository;
         }
-        public TenderOfferService(ITenderOfferRepository tenderOfferRepository, IDoctorRepository doctorRepository)
+        public TenderOfferService(ITenderOfferRepository tenderOfferRepository, ITenderService tenderService)
         {
+            _tenderService = tenderService;
             _tenderOfferRepository = tenderOfferRepository;
-            _doctorRepository = doctorRepository;
         }
 
         public IEnumerable<TenderOffer> GetAll()
@@ -60,6 +60,11 @@ namespace HospitalLibrary.Core.TenderOffer
                     return TO;
             }
             return null;
+        }
+
+        public void AcceptTender(TenderOffer offer)
+        {
+            _tenderService.Delete(_tenderService.GetById(offer.TenderId));
         }
     }
 }

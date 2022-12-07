@@ -1,9 +1,14 @@
-﻿using Castle.Core.Internal;
+﻿using AutoMapper;
+using Castle.Core.Internal;
 using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Tender;
+using HospitalLibrary.Core.TenderOffer;
+using IntegrationLibrary.BloodBank;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using Nest;
 using System;
-
 namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -11,12 +16,11 @@ namespace HospitalAPI.Controllers
     public class TendersController : Controller
     {
         private readonly ITenderService _tenderService;
-     
-
         public TendersController(ITenderService tenderService)
         {
             _tenderService = tenderService;
         }
+
 
         // GET: api/tenders
         [HttpGet]

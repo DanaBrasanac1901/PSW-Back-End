@@ -10,7 +10,6 @@ namespace HospitalLibrary.Core.Tender
 
     public class Tender
     {
-        public Tender() {}
 
         public Tender(double amountOfA, double amountOfB, double amountOfAB, double amountOfO, string hospitalName, DateTime expiration, int id)
         {
