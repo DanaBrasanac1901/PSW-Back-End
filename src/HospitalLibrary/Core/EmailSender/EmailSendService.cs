@@ -20,11 +20,19 @@ namespace HospitalLibrary.Core.EmailSender
             _emailConfig = emailConfig;
         }
 
-        public void SendEmail(Message message)
+        public bool SendEmail(Message message)
         {
-            var emailMessage = CreateEmailMessage(message);
+            try
+            {
+                var emailMessage = CreateEmailMessage(message);
 
-            Send(emailMessage);
+                Send(emailMessage);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         private MimeMessage CreateEmailMessage(Message message)
         {
