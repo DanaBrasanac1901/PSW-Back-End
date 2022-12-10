@@ -59,7 +59,7 @@ namespace HospitalLibrary.Core.Feedback
 
         public Feedback GetById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Feedbacks.Find(id);
         }
     }
 }

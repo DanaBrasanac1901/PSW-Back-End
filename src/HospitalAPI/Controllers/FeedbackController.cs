@@ -57,15 +57,17 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("approval-change/{commentID}")]
-        public ActionResult ChangeApproval(Feedback feedback)
+        public ActionResult ChangeApproval(int commentID)
         {
-            _feedbackService.ChangeApproval(feedback);
+            _feedbackService.ChangeApproval(commentID);
+            var feedback = _feedbackService.GetById(commentID);
             return Ok(feedback);
         }
         [HttpPost("changevisibility/{commentID}")]
-        public ActionResult ChangeVisibility(Feedback feedback)
+        public ActionResult ChangeVisibility(int commentID)
         {
-            _feedbackService.ChangeVisibility(feedback);
+            _feedbackService.ChangeVisibility(commentID);
+            var feedback = _feedbackService.GetById(commentID);
             return Ok(feedback);
         }
 

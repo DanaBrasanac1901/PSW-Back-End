@@ -11,8 +11,8 @@ namespace HospitalLibrary.Core.Feedback
         void Update(Feedback feedback);
         void Delete(Feedback feedback);
         Feedback GetById(int id);
-        void ChangeApproval(Feedback feedback);
-        void ChangeVisibility(Feedback feedback);
+        void ChangeApproval(int feedbackId);
+        void ChangeVisibility(int feedbackId);
         
     }
 }
