@@ -10,8 +10,8 @@ namespace HospitalLibrary.Core.Report.Model
     [Keyless]
     public class Drug : ValueObject
     {
-        public string Name { get; }
-        public string CompanyName { get; }
+        public string Name { get; private set; }
+        public string CompanyName { get; private set; }
 
         public Drug()
         {

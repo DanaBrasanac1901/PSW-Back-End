@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221210122938_RepAppId")]
+    partial class RepAppId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -404,44 +406,6 @@ namespace HospitalLibrary.Migrations
 
                     b.ToTable("Drugs");
                 });
-
-
-            modelBuilder.Entity("HospitalLibrary.Core.Report.Model.DrugList", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DrugsList");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "aspirin",
-                            CompanyName = "Galenika",
-                            Name = "Aspirin"
-                        },
-                        new
-                        {
-                            Id = "brufen",
-                            CompanyName = "Galenika",
-                            Name = "Brufen"
-                        },
-                        new
-                        {
-                            Id = "ginko",
-                            CompanyName = "Galenika",
-                            Name = "Ginko"
-                        });
-                });
-
 
             modelBuilder.Entity("HospitalLibrary.Core.Report.Model.DrugPrescription", b =>
                 {

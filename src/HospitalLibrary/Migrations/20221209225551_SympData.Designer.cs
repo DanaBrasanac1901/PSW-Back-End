@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221209225551_SympData")]
+    partial class SympData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -405,44 +407,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Drugs");
                 });
 
-
-            modelBuilder.Entity("HospitalLibrary.Core.Report.Model.DrugList", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DrugsList");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "aspirin",
-                            CompanyName = "Galenika",
-                            Name = "Aspirin"
-                        },
-                        new
-                        {
-                            Id = "brufen",
-                            CompanyName = "Galenika",
-                            Name = "Brufen"
-                        },
-                        new
-                        {
-                            Id = "ginko",
-                            CompanyName = "Galenika",
-                            Name = "Ginko"
-                        });
-                });
-
-
             modelBuilder.Entity("HospitalLibrary.Core.Report.Model.DrugPrescription", b =>
                 {
                     b.Property<string>("Id")
@@ -462,9 +426,6 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Report.Model.Report", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("AppointmentId")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("DayAndTimeOfMaking")
@@ -493,36 +454,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("text");
 
                     b.ToTable("Symptoms");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Report.Model.SymptomList", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SymptomList");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "Glavobolja",
-                            Name = "Glavobolja"
-                        },
-                        new
-                        {
-                            Id = "Kijavica",
-                            Name = "Kijavica"
-                        },
-                        new
-                        {
-                            Id = "Dijareja",
-                            Name = "Dijareja"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>

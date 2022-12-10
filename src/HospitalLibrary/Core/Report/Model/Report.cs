@@ -13,12 +13,11 @@ namespace HospitalLibrary.Core.Report.Model
         public string Id { get; set; }
         public string PatientId { get; set; }
         public string DoctorId { get; set; }
+        public string AppointmentId { get; set; }
         public string ReportDescription { get; set; }
 
         [Column(TypeName = "jsonb")]
         public virtual ICollection<Symptom> Symptoms { get; set; }
-
-        
         public DateTime DayAndTimeOfMaking { get; set; }
 
         public Report()

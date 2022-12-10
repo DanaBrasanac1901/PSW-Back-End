@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Report.Services
+namespace HospitalLibrary.Core.Report.Repositories
 {
-    public interface ISymptomApplicationService
+    public interface ISymptomListRepository
     {
-        public IEnumerable<SymptomDTO> GetAllSymptoms();
+        public List<SymptomList> GetAllSymptoms();
     }
 }

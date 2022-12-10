@@ -15,6 +15,7 @@ namespace HospitalAPI.Controllers
         private readonly ISymptomApplicationService _symptomApplicationService;
         private readonly IDrugListApplicationService _drugListApplicationService;
 
+
         public ReportController(IDrugApplicationService drugApplicationService, ISymptomApplicationService symptomApplicationService
         ,IReportApplicationService reportApplicationService, IDrugListApplicationService drugListApplicationService)
         {
@@ -23,6 +24,7 @@ namespace HospitalAPI.Controllers
             _reportApplicationService = reportApplicationService;
             _drugListApplicationService= drugListApplicationService;
         }
+
 
 
         [HttpGet]
