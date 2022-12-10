@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace HospitalLibrary.Core.Consiliums.DTO
 {
     public class ConsiliumAppointmentInfoDTO
@@ -15,11 +16,13 @@ namespace HospitalLibrary.Core.Consiliums.DTO
 
         public int Duration { get; set; }
         public string DoctorIds { get; set; }
+        public string Specialties { get; set; }
+
 
         public ConsiliumAppointmentInfoDTO() { }
         public ConsiliumAppointmentInfoDTO(DateTimeRange appointmentTime, int duration=0, string doctorIds="")
         {
-            // Start = appointmentTime.GetStartString();
+           // Start = appointmentTime.GetStartString();
             //End = appointmentTime.GetEndString();
             Start = appointmentTime.Start;
             End = appointmentTime.End;

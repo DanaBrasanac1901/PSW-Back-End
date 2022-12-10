@@ -64,5 +64,10 @@ namespace HospitalLibrary.Core.Doctor
 
             return doctors;
         }
+
+        public List<Doctor> GetBySpecialty(int specialty)
+        {
+            return _context.Doctors.Where(doctor => doctor.Specialty == specialty).ToList();
+        }
     }
 }

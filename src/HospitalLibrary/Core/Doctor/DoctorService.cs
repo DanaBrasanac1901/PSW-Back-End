@@ -112,10 +112,40 @@ namespace HospitalLibrary.Core.Doctor
             return returnList;
         }
 
+        public List<Doctor> GetAvailableBySpecialty(int specialty, DateTimeRange consiliumInterval)
+        {
+            List<Doctor> doctorsBySpecialty = _doctorRepository.GetBySpecialty(specialty);
+
+            List<Doctor> availableDoctors = new List<Doctor>();
+            foreach(Doctor doctor in doctorsBySpecialty)
+            {
+                if (doctor.IsAvailable(consiliumInterval.Start, consiliumInterval.End))
+                    availableDoctors.Add(doctor);
+            }
+            return availableDoctors;
+        }
+
         public List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameters)
         {
             List<DateTime> timeRange = adapter.UrgentVacationParametersHandling(parameters);
             return ReturnListGetAppointmentsUrgentVacation(_doctorRepository.GetById(parameters.id).Appointments, timeRange);
+        }
+
+        public List<Doctor> AvailableByEachSpecialty(string specialties, DateTimeRange consiliumInterval)
+        {
+            string[] requiredSpecialties = specialties.Split(',');
+
+            List<Doctor> availableDoctors = new List<Doctor>();
+            
+            foreach(string specialty in requiredSpecialties)
+            {
+                int currentSpecialty = Int32.Parse(specialty);
+                List<Doctor> availableBySpecialty = GetAvailableBySpecialty(currentSpecialty, consiliumInterval);
+                if (availableBySpecialty.Count == 0)
+                    return null;
+                availableDoctors.AddRange(availableBySpecialty);
+            }
+            return availableDoctors;
         }
 
         public List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime)

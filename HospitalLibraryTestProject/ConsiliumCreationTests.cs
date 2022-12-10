@@ -22,7 +22,7 @@ namespace HospitalLibraryTestProject
             ConsiliumService consiliumService = new ConsiliumService(CreateConsiliumRepository(), doctorService, roomService); 
             ConsiliumAppointmentInfoDTO consiliumAppointmentInfo = new ConsiliumAppointmentInfoDTO(new DateTimeRange(new DateTime(2022, 12, 14), new DateTime(2022, 12, 18)), 45, "DOC1,DOC2"); 
 
-            List<DateTime> potentialConsiliumAppointments = consiliumService.GetPotentialAppointmentTimes(consiliumAppointmentInfo);
+            List<DateTime> potentialConsiliumAppointments = consiliumService.GetPotentialAppointmentTimesForDoctors(consiliumAppointmentInfo);
 
             Assert.NotEmpty(potentialConsiliumAppointments);
         }
@@ -35,7 +35,7 @@ namespace HospitalLibraryTestProject
             
             ConsiliumAppointmentInfoDTO consiliumAppointmentInfo = new ConsiliumAppointmentInfoDTO(new DateTimeRange(new DateTime(2022, 12, 15), new DateTime(2022, 12, 16)), 45, "DOC1,DOC2");
 
-            List<DateTime> potentialConsiliumAppointments = consiliumService.GetPotentialAppointmentTimes(consiliumAppointmentInfo);
+            List<DateTime> potentialConsiliumAppointments = consiliumService.GetPotentialAppointmentTimesForDoctors(consiliumAppointmentInfo);
 
             Assert.Empty(potentialConsiliumAppointments);
         }
@@ -62,6 +62,59 @@ namespace HospitalLibraryTestProject
 
             Assert.False(available);
         }
+
+        [Fact]
+        public void Has_available_for_specialty()
+        {
+           
+            DoctorService doctorService = new DoctorService(CreateDoctorRepository());
+            DateTimeRange consiliumInterval = new DateTimeRange(new DateTime(2022, 12, 15, 15, 45, 0), new DateTime(2022, 12, 15, 15, 55, 0));
+
+
+            List<Doctor> doctors = doctorService.GetAvailableBySpecialty(0, consiliumInterval);
+
+            Assert.NotEmpty(doctors);
+        }
+
+        [Fact]
+        public void Doesnt_have_available_for_specialty()
+        {
+
+            DoctorService doctorService = new DoctorService(CreateDoctorRepository());
+            DateTimeRange consiliumInterval = new DateTimeRange(new DateTime(2022, 12, 15, 15, 45, 0), new DateTime(2022, 12, 15, 15, 55, 0));
+
+
+            List<Doctor> doctors = doctorService.GetAvailableBySpecialty(0, consiliumInterval);
+
+            Assert.Empty(doctors);
+        }
+
+        [Fact]
+        public void Has_available_for_each_specialty()
+        {
+
+            DoctorService doctorService = new DoctorService(CreateDoctorRepository());
+            DateTimeRange consiliumInterval = new DateTimeRange(new DateTime(2022, 12, 15, 15, 45, 0), new DateTime(2022, 12, 15, 15, 55, 0));
+            string specialties = "0,2";
+
+            List<Doctor> availableByEachSpecialty = doctorService.AvailableByEachSpecialty(specialties, consiliumInterval);
+
+            Assert.NotNull(availableByEachSpecialty);
+        }
+
+        [Fact]
+        public void Doesnt_have_available_for_each_specialty()
+        {
+
+            DoctorService doctorService = new DoctorService(CreateDoctorRepository());
+            DateTimeRange consiliumInterval = new DateTimeRange(new DateTime(2022, 12, 15, 15, 45, 0), new DateTime(2022, 12, 15, 15, 55, 0));
+            string specialties = "0,2";
+
+            List<Doctor> availableByEachSpecialty = doctorService.AvailableByEachSpecialty(specialties, consiliumInterval);
+
+            Assert.Null(availableByEachSpecialty);
+        }
+
 
         private IDoctorRepository CreateDoctorRepository()
         {
