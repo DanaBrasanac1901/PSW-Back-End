@@ -11,6 +11,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
     public class AppointmentPatientDTO
     {
         public string Id { get; set; }
+        public string DoctorId { get; set; }
         public string DoctorName { get; set; }
         public string RoomNumber { get; set; }
         public string StartDate { get; set; }
@@ -22,6 +23,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
         public AppointmentPatientDTO(Appointment appt)
         {
             Id=appt.Id;
+            DoctorId=appt.DoctorId;
             StartDate = appt.Start.Date.ToString();
             StartTime = appt.Start.TimeOfDay.ToString();
             Status=appt.Status.ToString();

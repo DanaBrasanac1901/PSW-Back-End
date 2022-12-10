@@ -132,5 +132,21 @@ namespace HospitalLibrary.Core.Doctor
             return returnList;
         }
 
+        public List<Doctor> GetBySpecialty(string specialty)
+        {
+            Specialty spec;
+            bool isSuccesful=Specialty.TryParse(specialty,out spec);
+            List<Doctor> returnList = new List<Doctor>();
+
+            if (isSuccesful)
+            {
+                foreach (Doctor doctor in GetAll())
+                {
+                    if (doctor.Specialty.Equals(spec)) returnList.Add(doctor);
+                }
+            }
+
+            return returnList;
+        }
     }
 }

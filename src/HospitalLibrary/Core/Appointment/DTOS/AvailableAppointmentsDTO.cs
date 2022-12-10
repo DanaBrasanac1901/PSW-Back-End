@@ -21,9 +21,9 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             Doctor = doctor;
         }
 
-        public AvailableAppointmentsDTO(DateTime date, Doctor.Doctor doctor)
+        public AvailableAppointmentsDTO(string date, Doctor.Doctor doctor)
         {
-            Date = date;
+            Date = DateTime.Parse(date);
             Doctor = doctor;
         }
 

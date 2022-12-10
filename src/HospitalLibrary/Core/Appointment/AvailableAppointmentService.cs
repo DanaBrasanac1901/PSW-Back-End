@@ -154,6 +154,8 @@ namespace HospitalLibrary.Core.Appointment
                 timeIterator = timeIterator.AddMinutes(20);
             }
 
+
+
         }
 
         private static void GeneratingDTOs(DoctorModel doctor, DateTime date, DateTime startTime, List<AppointmentPatientDTO> termini)

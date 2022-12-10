@@ -66,8 +66,11 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("regularAppointments")]
-        public ActionResult DateDoctorAppointments(AvailableAppointmentsDTO dto)
+        public ActionResult DateDoctorAppointments(AppointmentPatientDTO _dto)
         {
+            Doctor doctor=_doctorService.GetById(_dto.DoctorId);
+            AvailableAppointmentsDTO dto = new AvailableAppointmentsDTO(_dto.StartDate, doctor);
+
             List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
             _availableAppointmentService.GetDoctorsAvailableAppointmentsForDate(dto.Doctor, dto.Date, appointments);
             if (appointments.IsNullOrEmpty())
