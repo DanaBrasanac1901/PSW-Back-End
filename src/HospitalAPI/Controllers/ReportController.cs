@@ -13,25 +13,23 @@ namespace HospitalAPI.Controllers
         private readonly IReportApplicationService _reportApplicationService;
         private readonly IDrugApplicationService _drugApplicationService;
         private readonly ISymptomApplicationService _symptomApplicationService;
+        private readonly IDrugListApplicationService _drugListApplicationService;
 
         public ReportController(IDrugApplicationService drugApplicationService, ISymptomApplicationService symptomApplicationService
-        ,IReportApplicationService reportApplicationService)
+        ,IReportApplicationService reportApplicationService, IDrugListApplicationService drugListApplicationService)
         {
             _drugApplicationService = drugApplicationService;
             _symptomApplicationService = symptomApplicationService;
             _reportApplicationService = reportApplicationService;
+            _drugListApplicationService= drugListApplicationService;
         }
 
-        public ReportController(IReportApplicationService reportApplicationService)
-        {
-            _reportApplicationService = reportApplicationService;
-        }
 
         [HttpGet]
         [Route("[action]")]
         public ActionResult GetAllDrugs()
         {
-            return Ok(_drugApplicationService.GetAll());
+            return Ok(_drugListApplicationService.GetAllDrugList());
         }
 
         [HttpGet]

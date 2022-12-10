@@ -50,6 +50,8 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Drug> Drugs { get; set; }
 
+        public DbSet<DrugList> DrugsList { get; set; }
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
@@ -116,9 +118,18 @@ namespace HospitalLibrary.Settings
                   }
             );
 
-            
+            DrugList drug1 = new DrugList("aspirin", "Aspirin", "Galenika");
+            DrugList drug2 = new DrugList("brufen", "Brufen", "Galenika");
+            DrugList drug3 = new DrugList("ginko", "Ginko", "Galenika");
+            modelBuilder.Entity<DrugList>().HasData(
+                drug1,drug2,drug3
+             );
 
-            
+
+
+
+
+
 
             base.OnModelCreating(modelBuilder);
         }
