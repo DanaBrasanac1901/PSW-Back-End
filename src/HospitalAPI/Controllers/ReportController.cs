@@ -13,7 +13,8 @@ namespace HospitalAPI.Controllers
         private readonly IReportApplicationService _reportApplicationService;
         private readonly IDrugApplicationService _drugApplicationService;
         private readonly ISymptomApplicationService _symptomApplicationService;
-
+        //OBRISAN JEDAN KONSTRUKTOR
+        //SREDI INTEGRACIONI
         public ReportController(IDrugApplicationService drugApplicationService, ISymptomApplicationService symptomApplicationService
         ,IReportApplicationService reportApplicationService)
         {
@@ -22,10 +23,7 @@ namespace HospitalAPI.Controllers
             _reportApplicationService = reportApplicationService;
         }
 
-        public ReportController(IReportApplicationService reportApplicationService)
-        {
-            _reportApplicationService = reportApplicationService;
-        }
+        
 
         [HttpGet]
         [Route("[action]")]

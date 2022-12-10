@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Report.Model
     [Keyless]
     public class Symptom : ValueObject
     {
-        public string Name { get; }
+        public string Name { get; private set; }
 
         public Symptom()
         {

@@ -44,11 +44,13 @@ namespace HospitalLibrary.Settings
 
         public DbSet<DrugPrescription> DrugPrescriptions { get; set; }
 
-       
+
 
         public DbSet<Symptom> Symptoms { get; set; }
 
         public DbSet<Drug> Drugs { get; set; }
+
+        public DbSet<SymptomList> SymptomList { get; set;}
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
@@ -116,9 +118,24 @@ namespace HospitalLibrary.Settings
                   }
             );
 
-            
+            modelBuilder.Entity<SymptomList>().HasData(
+                new SymptomList()
+                {
+                    Id= "Glavobolja",
+                    Name = "Glavobolja"
+                },
+                new SymptomList()
+                {
+                    Id = "Kijavica",
+                    Name = "Kijavica"
+                },
+                new SymptomList()
+                {
+                    Id = "Dijareja",
+                    Name = "Dijareja"
+                }
+                );
 
-            
 
             base.OnModelCreating(modelBuilder);
         }

@@ -112,6 +112,8 @@ namespace HospitalAPI
             services.AddTransient<IReportRepository, ReportRepository>();
             services.AddScoped<IDrugApplicationService, DrugApplicationService>();
             services.AddTransient<IDrugPrescriptionRepository, DrugPrescriptionRepository>();
+
+            services.AddTransient<ISymptomListRepository, SymptomListRepository>();
             
         }
 

@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221209222005_PrivateSet")]
+    partial class PrivateSet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -426,9 +428,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<string>("AppointmentId")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("DayAndTimeOfMaking")
                         .HasColumnType("timestamp without time zone");
 
@@ -455,36 +454,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("text");
 
                     b.ToTable("Symptoms");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Report.Model.SymptomList", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SymptomList");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "Glavobolja",
-                            Name = "Glavobolja"
-                        },
-                        new
-                        {
-                            Id = "Kijavica",
-                            Name = "Kijavica"
-                        },
-                        new
-                        {
-                            Id = "Dijareja",
-                            Name = "Dijareja"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
