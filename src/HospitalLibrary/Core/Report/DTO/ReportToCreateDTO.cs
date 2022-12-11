@@ -11,22 +11,28 @@ namespace HospitalLibrary.Core.Report.DTO
     public class ReportToCreateDTO
     {
         public IReportApplicationService _reportApplicationService;
-        public string patientId {get;set;}
+        public string patientId { get; set;}
         public string doctorId { get; set; }
+        public string appointmentId { get; set; }
         public string description { get; set; }
-        public string DATOfMaking { get; set; }
-        public List<Symptom> symptoms { get; set; }
-        public List<Drug> drugs { get; set; }
+        public string datOfMaking { get; set; }
+        public List<SymptomDTO> symptoms { get; set; }
+        public List<DrugDTO> drugs { get; set; }
+
+        public ReportToCreateDTO()
+        {
+
+        }
 
         public ReportToCreateDTO(IReportApplicationService reportApplicationService)
         {
             _reportApplicationService = reportApplicationService;
-            patientId = "PAT1";
-            doctorId = "DOC1";
-            description = "Descripcija";
-            DATOfMaking = DateTime.Now.ToString();
-            symptoms = symptomsList();
-            drugs = drugsList();
+            //patientId = "PAT1";
+            //doctorId = "DOC1";
+            //description = "Descripcija";
+            //datOfMaking = DateTime.Now.ToString();
+            //symptoms = symptomsList();
+            //drugs = drugsList();
         }
 
         private List<Symptom> symptomsList()

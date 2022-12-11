@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Report.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,20 @@ namespace HospitalLibrary.Core.Report.DTO
             report.PatientId = dto.patientId;
             report.DoctorId = dto.doctorId;
             report.ReportDescription = dto.description;
-            report.DayAndTimeOfMaking = DateTime.Parse(dto.DATOfMaking);
-            report.Symptoms = (ICollection<Report.Model.Symptom>)dto.symptoms;
+            report.DayAndTimeOfMaking = DateTime.Now;
+            report.Symptoms = CreateSymptoms(dto.symptoms);
             return report;
+        }
+
+        public static ICollection<Symptom> CreateSymptoms(List<SymptomDTO> dtos)
+        {
+            ICollection<Symptom> retList = new List<Symptom>();
+            foreach (var dto in dtos)
+            {
+                retList.Add(new Symptom(dto.name));
+            }
+
+            return retList;
         }
 
         public static Report.Model.DrugPrescription CreateDrugPrescription(string reportId, ReportToCreateDTO dto)
@@ -25,8 +37,19 @@ namespace HospitalLibrary.Core.Report.DTO
             Report.Model.DrugPrescription drugPrescription = new Report.Model.DrugPrescription();
             drugPrescription.Id = DateTime.Now.AddMilliseconds(1).ToString("yyMMddhhmmssffffff");
             drugPrescription.ReportId = reportId;
-            drugPrescription.Drugs = (ICollection<Report.Model.Drug>)dto.drugs;
+            drugPrescription.Drugs = CreateDrugs(dto.drugs);
             return drugPrescription;
+        }
+
+        public static ICollection<Drug> CreateDrugs(List<DrugDTO> dtos)
+        {
+            ICollection<Drug> retList = new List<Drug>();
+            foreach (var dto in dtos)
+            {
+                retList.Add(new Drug(dto.name,dto.companyName));
+            }
+
+            return retList;
         }
     }
 }
