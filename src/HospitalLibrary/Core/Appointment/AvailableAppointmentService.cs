@@ -16,7 +16,6 @@ namespace HospitalLibrary.Core.Appointment
     public class AvailableAppointmentService : IAvailableAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
-        private readonly IAppointmentRepository _appointmentRepositoryMock;
         private readonly IDoctorRepository _doctorRepository;
         private readonly IRoomRepository _roomRepository;
 
@@ -44,27 +43,24 @@ namespace HospitalLibrary.Core.Appointment
 
         }
 
-
-        //ovo je za obicno zakazivanje za pacijenta, prikaz svih lekara te specijalizacije koji su slobodni tog dana
+        //prosledjujemo samo slobodne lekare tog dana i te specijalnosti
         public IEnumerable<Doctor.Doctor> GetDoctorsByDateAndSpecialty(DateTime date, Specialty specialty)
         {
             List<Doctor.Doctor> specializedDoctors = GetDoctorsBySpecialty(specialty);
             foreach (Doctor.Doctor doctor in specializedDoctors)
             {
-                List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
-                GetDoctorsAvailableAppointmentsForDate(doctor, date, appointments);
+                IEnumerable<AppointmentPatientDTO> appointments = GetDoctorsAvailableAppointmentsForDate(doctor, date);
                 if (appointments.IsNullOrEmpty())
                 {
                     specializedDoctors.Remove(doctor);
                 }
-
 
             }
 
             return specializedDoctors;
         }
 
-
+        //ovo je za obicno zakazivanje za pacijenta, prikaz svih lekara neke specijalizacije
         public List<Doctor.Doctor> GetDoctorsBySpecialty(Specialty specialty)
         {
             List<Doctor.Doctor> doctorsWithSpecialty = new List<Doctor.Doctor>();
@@ -110,13 +106,13 @@ namespace HospitalLibrary.Core.Appointment
 
             while (dateIterator < dateRange.End)
             {
-               GetDoctorsAvailableAppointmentsForDate(doctor, dateIterator, allAppointments);
-               dateIterator = dateIterator.AddDays(1);
+                allAppointments.AddRange(GetDoctorsAvailableAppointmentsForDate(doctor, dateIterator));
+                dateIterator = dateIterator.AddDays(1);
             }
             return allAppointments;
         }
 
-      
+        //samo prosirimo range kad nije uslob ispunjen
         public DateTimeRange GetNewDateRange(DateTimeRange dateRange)
         {
             DateTime newStart = dateRange.Start.AddDays(-5);
@@ -124,18 +120,18 @@ namespace HospitalLibrary.Core.Appointment
             return new DateTimeRange(newStart, newEnd);
         }
 
-        //nisu oba ispunjena, nadje se za isti daterange lekari sa istom specijalnoscu
+        //nisu oba ispunjena, nadju se za isti daterange lekari sa istom specijalnoscu
         public IEnumerable<AppointmentPatientDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
         {
             DateTime dateIterator = dateRange.Start;
-            List < Doctor.Doctor > doctors = GetDoctorsBySpecialty(specialty);
+            List <Doctor.Doctor> doctors = GetDoctorsBySpecialty(specialty);
             List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
 
             while (dateIterator < dateRange.End)
             {
                foreach(Doctor.Doctor doctor in doctors)
                 {
-                    GetDoctorsAvailableAppointmentsForDate(doctor, dateIterator, appointments);
+                    appointments.AddRange(GetDoctorsAvailableAppointmentsForDate(doctor, dateIterator));
                 }
 
                 dateIterator = dateIterator.AddDays(1);
@@ -143,21 +139,23 @@ namespace HospitalLibrary.Core.Appointment
             return appointments;
         }
 
-        public void GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date, List<AppointmentPatientDTO> termini)
+        //klasika idemo po terminima fiksno vreme je 20 min sve dok ne dodjemo do kraja radnog vremena
+        public IEnumerable<AppointmentPatientDTO> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date)
         {
             DateTime timeIterator = new DateTime(date.Year, date.Month, date.Day, doctor.StartWorkTime, 0, 0);
             DateTime endPoint = new DateTime(date.Year, date.Month, date.Day, doctor.EndWorkTime, 0, 0);
-
+            List<AppointmentPatientDTO> termini = new List<AppointmentPatientDTO>();
+            
             while (timeIterator < endPoint)
             {
                 GeneratingDTOs(doctor, date, timeIterator, termini);
                 timeIterator = timeIterator.AddMinutes(20);
             }
 
-
-
+            return termini;
         }
 
+        //cisto pravljenje dto
         private static void GeneratingDTOs(DoctorModel doctor, DateTime date, DateTime startTime, List<AppointmentPatientDTO> termini)
         {
             DateTime timeSlotEnd = startTime.AddMinutes(20);

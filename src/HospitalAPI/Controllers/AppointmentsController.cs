@@ -70,9 +70,8 @@ namespace HospitalAPI.Controllers
         {
             Doctor doctor=_doctorService.GetById(_dto.DoctorId);
             AvailableAppointmentsDTO dto = new AvailableAppointmentsDTO(_dto.StartDate, doctor);
+            var appointments = _availableAppointmentService.GetDoctorsAvailableAppointmentsForDate(dto.Doctor, dto.Date);
 
-            List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
-            _availableAppointmentService.GetDoctorsAvailableAppointmentsForDate(dto.Doctor, dto.Date, appointments);
             if (appointments.IsNullOrEmpty())
             {
                 return NotFound();
