@@ -19,18 +19,6 @@ namespace HospitalLibrary.Core.Feedback
             return _context.Feedbacks.ToList();
         }
 
-        private int getIdOfLast()
-        {
-            List<Feedback> feedbacks = (List<Feedback>)GetAll() ;
-            return ++feedbacks.Last().ID;
-
-        }
-
-        public Feedback GetByPatientId(int id)
-        {
-            return _context.Feedbacks.Find(id);
-        }
-
         public void Create(Feedback feedback)
         {
             _context.Feedbacks.Add(feedback);

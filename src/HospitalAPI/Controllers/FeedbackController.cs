@@ -21,18 +21,7 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_feedbackService.GetAll());
         }
-        
-        [HttpGet("patient/{id}")]
-        public ActionResult GetByPatientId(int id)
-        {
-            var feedback=_feedbackService.GetByPatientId(id);
-            if (feedback == null)
-            {
-                return NotFound();
-            }
-            return Ok(feedback);
-        }
-
+       
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -56,19 +45,19 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new {ID=feedback.ID}, feedback);
         }
 
-        [HttpPost("approval-change/{commentID}")]
-        public ActionResult ChangeApproval(int commentID)
+        [HttpPost("changeApproval/{feedbackId}")]
+        public ActionResult ChangeApproval(int feedbackId)
         {
-            _feedbackService.ChangeApproval(commentID);
-            var feedback = _feedbackService.GetById(commentID);
-            return Ok(feedback);
+            _feedbackService.ChangeApproval(feedbackId);
+            return Ok();
         }
-        [HttpPost("changevisibility/{commentID}")]
-        public ActionResult ChangeVisibility(int commentID)
+
+
+        [HttpPost("changeVisibility/{feedbackId}")]
+        public ActionResult ChangeVisibility(int feedbackId)
         {
-            _feedbackService.ChangeVisibility(commentID);
-            var feedback = _feedbackService.GetById(commentID);
-            return Ok(feedback);
+            _feedbackService.ChangeVisibility(feedbackId);
+            return Ok();
         }
 
         [HttpPut("{id}")]
