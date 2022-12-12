@@ -1,6 +1,12 @@
 using System;
 using System.Linq;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.Tender;
+using HospitalLibrary.Core.TenderOffer;
+using HospitalLibrary.Settings;
 using IntegrationAPI;
+using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.Report;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -43,7 +49,7 @@ namespace IntegrationTests.Setup
         private static void InitializeDatabase(IntegrationDbContext context)
         {
             context.Database.EnsureCreated();
-
+            context.Database.EnsureDeleted(); 
             /* context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportTable\";");
 
 
@@ -66,6 +72,17 @@ namespace IntegrationTests.Setup
              DateTime.Today));
 */
             context.SaveChanges();
+        }
+        private static void InitializeBloodbanks(IntegrationDbContext context)
+        {
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\";");
+            BloodBank bb = new BloodBank();
+            bb.Email = "example1@gmail.com";
+            bb.Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66");
+            context.BloodBankTable.Add(bb);
+            BloodBank bb2 = new BloodBank();
+            bb2.Email = "example2@gmail.com";
+            context.BloodBankTable.Add(bb);
         }
     }
 }

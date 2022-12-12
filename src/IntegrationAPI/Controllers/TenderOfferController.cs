@@ -166,7 +166,7 @@ namespace HospitalAPI.Controllers
             
             _tenderService.Delete(_tenderService.GetById(id));
             NotifyLosers(email,date);
-            return Ok();
+            return Redirect("");
         }
     }
 
