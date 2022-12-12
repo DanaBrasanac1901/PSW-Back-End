@@ -71,5 +71,25 @@ namespace HospitalLibrary.Core.Report.Services
             }
             return true;
         }
+
+        private Report.Model.Report GetReportByAppointmentId(string appointmentId)
+        {
+            foreach (var report in _reportRepository.GetAll())
+            {
+                if(report.AppointmentId == appointmentId)
+                {
+                    return report;
+                }
+            }
+            return null;
+        }
+
+        public ReportToShowDTO GetReportToShow(string id)
+        {
+
+            return ReportAdapter.ReportToReportToShowDTO(GetReportByAppointmentId(id));
+        }
+
+        
     }
 }

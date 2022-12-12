@@ -14,15 +14,17 @@ namespace HospitalAPI.Controllers
         private readonly IDrugApplicationService _drugApplicationService;
         private readonly ISymptomApplicationService _symptomApplicationService;
         private readonly IDrugListApplicationService _drugListApplicationService;
-
+        private readonly IDrugPrescriptionApplicationService _drugPrescriptionApplicationService;
 
         public ReportController(IDrugApplicationService drugApplicationService, ISymptomApplicationService symptomApplicationService
-        ,IReportApplicationService reportApplicationService, IDrugListApplicationService drugListApplicationService)
+        ,IReportApplicationService reportApplicationService, IDrugListApplicationService drugListApplicationService
+        ,IDrugPrescriptionApplicationService drugPrescriptionApplicationService)
         {
             _drugApplicationService = drugApplicationService;
             _symptomApplicationService = symptomApplicationService;
             _reportApplicationService = reportApplicationService;
             _drugListApplicationService= drugListApplicationService;
+            _drugPrescriptionApplicationService = drugPrescriptionApplicationService;
         }
 
 
@@ -104,6 +106,22 @@ namespace HospitalAPI.Controllers
 
             _reportApplicationService.Delete(report);
             return NoContent();
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetReportById(string id)
+        {
+            var report = _reportApplicationService.GetReportToShow(id);
+            return Ok(report);
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetPrescriptionById(string id)
+        {
+            var drugPres = _drugPrescriptionApplicationService.GetDrugPrescriptionToShow(id);
+            return Ok(drugPres);
         }
 
     }

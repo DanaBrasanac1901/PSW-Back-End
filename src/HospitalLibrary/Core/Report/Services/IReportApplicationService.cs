@@ -19,6 +19,8 @@ namespace HospitalLibrary.Core.Report.Services
 
         bool IsSymptomExist(ICollection<Symptom> symptoms, string id);
 
+        ReportToShowDTO GetReportToShow(string id);
 
+        
     }
 }

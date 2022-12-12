@@ -118,7 +118,7 @@ namespace HospitalAPI
 
 
             services.AddScoped<ISymptomListRepository, SymptomListRepository>();
-
+            services.AddScoped<IDrugPrescriptionApplicationService, DrugPrescriptionApplicationService>();
             
         }
 

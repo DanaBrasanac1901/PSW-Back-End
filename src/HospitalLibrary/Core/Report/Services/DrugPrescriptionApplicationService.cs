@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Report.Model;
+﻿using HospitalLibrary.Core.Report.DTO;
+using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Core.Report.Repositories;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,23 @@ namespace HospitalLibrary.Core.Report.Services
             }
             return true;  
             
+        }
+
+        private DrugPrescription GetDrugPrescriptionByReportId(string reportId)
+        {
+            foreach (var drugPrescription in _drugPrescriptionRepository.GetAll())
+            {
+                if (drugPrescription.ReportId == reportId)
+                {
+                    return drugPrescription;
+                }
+            }
+            return null;
+        }
+
+        public DrugPrescriptionToShowDTO GetDrugPrescriptionToShow(string id)
+        {
+            return ReportAdapter.DrugPrescriptionToDrugPrescriptionToShowDTO(GetDrugPrescriptionByReportId(id));
         }
     }
 }

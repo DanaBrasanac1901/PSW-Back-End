@@ -18,6 +18,7 @@ namespace HospitalLibrary.Core.Report.DTO
             report.ReportDescription = dto.description;
             report.DayAndTimeOfMaking = DateTime.Now;
             report.Symptoms = CreateSymptoms(dto.symptoms);
+            report.AppointmentId = dto.appointmentId;
             return report;
         }
 
@@ -50,6 +51,51 @@ namespace HospitalLibrary.Core.Report.DTO
             }
 
             return retList;
+        }
+
+        private static List<SymptomDTO> CreateSymptomsDTO(ICollection<Symptom> symptoms)
+        {
+            List<SymptomDTO> dtos = new List<SymptomDTO>();
+            foreach (var symptom in symptoms)
+            {
+                SymptomDTO dto = new SymptomDTO();
+                dto.name = symptom.Name;
+                dtos.Add(dto);
+            }
+            return dtos;
+        }
+
+        public static ReportToShowDTO ReportToReportToShowDTO(Report.Model.Report report)
+        {
+            ReportToShowDTO dto = new ReportToShowDTO();
+            dto.id = report.Id;
+            dto.patientId = report.PatientId;
+            dto.description = report.ReportDescription;
+            dto.symptoms = CreateSymptomsDTO(report.Symptoms);
+            dto.appointmentId = report.AppointmentId;
+            return dto;
+        }
+
+        private static List<DrugDTO> CreateDrugdDTO(ICollection<Drug> drugs)
+        {
+            List<DrugDTO> dtos = new List<DrugDTO>();
+            foreach (var drug in drugs)
+            {
+                DrugDTO dto = new DrugDTO();
+                dto.name = drug.Name;
+                dto.companyName = drug.CompanyName;
+                dtos.Add(dto);
+            }
+            return dtos;
+        }
+
+        public static DrugPrescriptionToShowDTO DrugPrescriptionToDrugPrescriptionToShowDTO(DrugPrescription drugPrescription)
+        {
+            DrugPrescriptionToShowDTO dto = new DrugPrescriptionToShowDTO();
+            dto.id = drugPrescription.Id;
+            dto.reportId = drugPrescription.ReportId;
+            dto.drugs = CreateDrugdDTO(drugPrescription.Drugs);
+            return dto;
         }
     }
 }

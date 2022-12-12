@@ -27,5 +27,7 @@ namespace HospitalLibrary.Core.Appointment
         RescheduleAppointmentDTO GetAppoitnemtnToReschedule(string id);
 
         void ChangeDoctorForAppointment(string doctorId,string appointmentId);
+
+        AppointmentForReportDTO GetAppointmentForReport(string appId);
     }
 }

@@ -28,7 +28,7 @@ namespace HospitalAPI.Controllers
         // GET api/patients/2
        
         [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        public ActionResult GetById(string id)
         {
             var patient = _patientService.GetById(id);
             if (patient == null)
@@ -122,7 +122,7 @@ namespace HospitalAPI.Controllers
 
         // DELETE api/patients/2
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             var patient = _patientService.GetById(id);
             if (patient == null)
@@ -146,6 +146,22 @@ namespace HospitalAPI.Controllers
             return Ok(doctorIds);
         
         
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetPatientsForSpecificDoctor(string id)
+        {
+            var patients = _patientService.GetPatientsForDoctor(id);
+            return Ok(patients);
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetPatientForReport(string id)
+        {
+            var patient = _patientService.GetPatientForReport(id);
+            return Ok(patient);
         }
 
         /*

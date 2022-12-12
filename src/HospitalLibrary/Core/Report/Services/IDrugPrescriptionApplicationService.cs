@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Report.Model;
+﻿using HospitalLibrary.Core.Report.DTO;
+using HospitalLibrary.Core.Report.Model;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Report.Services
@@ -12,5 +13,7 @@ namespace HospitalLibrary.Core.Report.Services
         void Update(DrugPrescription drugPrescription);
 
         bool IsDrugExist(ICollection<Drug> drugs, string id);
+
+        DrugPrescriptionToShowDTO GetDrugPrescriptionToShow(string id);
     }
 }
