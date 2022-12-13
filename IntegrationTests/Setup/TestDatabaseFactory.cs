@@ -48,8 +48,8 @@ namespace IntegrationTests.Setup
         
         private static void InitializeDatabase(IntegrationDbContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.Database.EnsureDeleted(); 
             /* context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportTable\";");
 
 
@@ -75,7 +75,6 @@ namespace IntegrationTests.Setup
         }
         private static void InitializeBloodbanks(IntegrationDbContext context)
         {
-            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\";");
             BloodBank bb = new BloodBank();
             bb.Email = "example1@gmail.com";
             bb.Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66");
