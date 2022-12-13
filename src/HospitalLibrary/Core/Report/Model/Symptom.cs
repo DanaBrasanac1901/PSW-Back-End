@@ -15,11 +15,14 @@ namespace HospitalLibrary.Core.Report.Model
         public Symptom()
         {
         }
+        
 
         public Symptom(string name)
         {
             Name = name;
         }
+
+        
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

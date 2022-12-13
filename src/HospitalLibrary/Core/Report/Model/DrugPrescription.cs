@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Report.Model
         public string Id { get; set; }
         public string ReportId { get; set; }
         [Column(TypeName = "jsonb")]
-        public  virtual ICollection<Drug> Drugs { get; set; }
+        public  ICollection<Drug> Drugs { get; set; }
 
         public DrugPrescription()
         {

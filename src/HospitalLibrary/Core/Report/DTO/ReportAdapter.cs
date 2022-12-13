@@ -17,12 +17,12 @@ namespace HospitalLibrary.Core.Report.DTO
             report.DoctorId = dto.doctorId;
             report.ReportDescription = dto.description;
             report.DayAndTimeOfMaking = DateTime.Now;
-            report.Symptoms = CreateSymptoms(dto.symptoms);
+            //report.Symptoms = CreateSymptoms(dto.symptoms);
             report.AppointmentId = dto.appointmentId;
             return report;
         }
 
-        public static ICollection<Symptom> CreateSymptoms(List<SymptomDTO> dtos)
+        public static Symptom[] CreateSymptoms(List<SymptomDTO> dtos)
         {
             ICollection<Symptom> retList = new List<Symptom>();
             foreach (var dto in dtos)
@@ -30,7 +30,7 @@ namespace HospitalLibrary.Core.Report.DTO
                 retList.Add(new Symptom(dto.name));
             }
 
-            return retList;
+            return (Symptom[])retList;
         }
 
         public static Report.Model.DrugPrescription CreateDrugPrescription(string reportId, ReportToCreateDTO dto)
@@ -60,6 +60,7 @@ namespace HospitalLibrary.Core.Report.DTO
             {
                 SymptomDTO dto = new SymptomDTO();
                 dto.name = symptom.Name;
+                dto.isChecked = false;
                 dtos.Add(dto);
             }
             return dtos;
@@ -71,7 +72,7 @@ namespace HospitalLibrary.Core.Report.DTO
             dto.id = report.Id;
             dto.patientId = report.PatientId;
             dto.description = report.ReportDescription;
-            dto.symptoms = CreateSymptomsDTO(report.Symptoms);
+            //dto.symptoms = CreateSymptomsDTO(report.Symptoms);
             dto.appointmentId = report.AppointmentId;
             return dto;
         }
@@ -84,6 +85,7 @@ namespace HospitalLibrary.Core.Report.DTO
                 DrugDTO dto = new DrugDTO();
                 dto.name = drug.Name;
                 dto.companyName = drug.CompanyName;
+                dto.isChecked = false;
                 dtos.Add(dto);
             }
             return dtos;

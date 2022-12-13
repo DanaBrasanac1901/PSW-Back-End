@@ -17,14 +17,14 @@ namespace HospitalLibrary.Core.Report.Model
         public string ReportDescription { get; set; }
 
         [Column(TypeName = "jsonb")]
-        public virtual ICollection<Symptom> Symptoms { get; set; }
+        public Symptom[] Symptoms { get; set; }
         public DateTime DayAndTimeOfMaking { get; set; }
 
         public Report()
         {
         }
 
-        public Report(string id, string patientId, string doctorId, string reportDescription, ICollection<Symptom> symptoms, DateTime dayAndTimeOfMaking)
+        public Report(string id, string patientId, string doctorId, string reportDescription, Symptom[] symptoms, DateTime dayAndTimeOfMaking)
         {
             Id = id;
             PatientId = patientId;

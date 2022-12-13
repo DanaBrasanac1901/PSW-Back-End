@@ -22,7 +22,8 @@ namespace HospitalAPITestProject.Integration
             return new ReportController(scope.ServiceProvider.GetRequiredService<IDrugApplicationService>(),
                 scope.ServiceProvider.GetRequiredService<ISymptomApplicationService>(),
                 scope.ServiceProvider.GetRequiredService<IReportApplicationService>(),
-                scope.ServiceProvider.GetRequiredService<IDrugListApplicationService>());
+                scope.ServiceProvider.GetRequiredService<IDrugListApplicationService>(),
+                scope.ServiceProvider.GetRequiredService<IDrugPrescriptionApplicationService>());
         }
 
         private static ReportToCreateDTO SetUpReportToCreateDTO(IServiceScope scope)

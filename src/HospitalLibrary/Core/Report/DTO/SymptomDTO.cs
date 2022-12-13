@@ -9,6 +9,7 @@ namespace HospitalLibrary.Core.Report.DTO
     public class SymptomDTO
     {
         public string name { get; set; }
+        public Boolean isChecked { get; set; }
 
         public SymptomDTO()
         {

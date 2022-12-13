@@ -63,12 +63,12 @@ namespace HospitalLibrary.Core.Report.Services
 
         public bool IsSymptomExist(ICollection<Symptom> symptoms,string id)
         {
-            var report = _reportRepository.GetById(id);
-            ICollection<Symptom> symptom = report.Symptoms;
-            foreach (var symp in symptom)
-            {
-                if(!symptoms.Contains(symp)) return false;
-            }
+            //var report = _reportRepository.GetById(id);
+            //ICollection<Symptom> symptom = report.Symptoms;
+            //foreach (var symp in symptom)
+            //{
+            //    if(!symptoms.Contains(symp)) return false;
+            //}
             return true;
         }
 

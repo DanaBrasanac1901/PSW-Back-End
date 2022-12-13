@@ -19,6 +19,7 @@ namespace HospitalLibrary.Core.Report.Repositories
 
         public IEnumerable<Report.Model.Report> GetAll()
         {
+
             return _context.Reports.ToList();
         }
 
