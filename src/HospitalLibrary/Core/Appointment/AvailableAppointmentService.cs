@@ -162,7 +162,7 @@ namespace HospitalLibrary.Core.Appointment
             if (doctor.IsAvailable(startTime, timeSlotEnd))
             {
                 //DateTime.Now.ToString("dddd, dd MMMM yyyy") primer Friday, 29 May 2015
-                termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name+' '+doctor.Surname, StartDate = date.ToString("dddd, dd MMMM yyyy"), StartTime = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+                termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name+' '+doctor.Surname,DoctorId=doctor.Id, StartDate = date.ToString("dddd, dd MMMM yyyy"), StartTime = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
             }
            
         }

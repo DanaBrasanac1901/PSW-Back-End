@@ -35,11 +35,10 @@ namespace HospitalAPI.Controllers
         }
 
         // GET: api/Appointments/patient/id
-        [HttpPost("patient")]
-        public ActionResult GetForPatient(AppointmentPatientDTO dto)
+        [HttpGet("patient/{id}")]
+        public ActionResult GetForPatient(string id)
         {
-            // This SHOULD be a get but this is the only way i can force swagger to recognize my DTO in schemas
-            return Ok(_availableAppointmentService.GetForPatient(dto.DoctorName));
+            return Ok(_availableAppointmentService.GetForPatient(id));
         }
 
         [HttpPost("doctors/{specialty}")]
@@ -57,6 +56,7 @@ namespace HospitalAPI.Controllers
         [HttpPost("suggestions/{priority}")]
         public ActionResult AppointmentsWithSuggestions(AvailableAppointmentsDTO dto, string priority)
         {
+
             var appointments = _availableAppointmentService.FindAppointmentsWithSuggestions(dto.DateRange, dto.Doctor, priority);
             if(appointments == null)
             {
@@ -106,6 +106,8 @@ namespace HospitalAPI.Controllers
             Appointment appointment = new Appointment();
             return NoContent();
         }
+
+
 
         // PUT api/appointments/2
         [HttpPut("{id}")]
@@ -193,6 +195,20 @@ namespace HospitalAPI.Controllers
         {
             _appointmentService.ChangeDoctorForAppointment(doctorId, appointmentId);
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("patientSchedule")]
+        public ActionResult PatientSchedule(AppointmentPatientDTO dto)
+        {
+            CreateAppointmentDTO appointmentDTO = new CreateAppointmentDTO { appointmentDuration = 20,doctorId=dto.DoctorId,patientId=dto.PatientId,startDate=dto.StartDate,startTime=dto.StartTime,status="Scheduled" };
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _appointmentService.Create(appointmentDTO);
+            Appointment appointment = new Appointment();
+            return NoContent();
         }
     }
 }
