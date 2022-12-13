@@ -74,7 +74,7 @@ namespace HospitalLibrary.Core.Appointment
             return true;
         }
 
-        public Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
+        public static Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
         {
             DateTime dateTimeNow = DateTime.Now;
             if (dateTimeNow.Year > dateToCheck.Year)

@@ -17,7 +17,6 @@ namespace HospitalLibrary.Core.Appointment
 
         Boolean IsAvailable(Appointment appointment);
 
-        Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck);
 
         IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id);
 

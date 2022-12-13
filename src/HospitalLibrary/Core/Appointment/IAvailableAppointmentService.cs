@@ -17,16 +17,16 @@ namespace HospitalLibrary.Core.Appointment
 
         //sa prioritetom
 
-        IEnumerable<AppointmentPatientDTO> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority);
+        IEnumerable<AvailableAppointmentsDTO> FindAppointmentsWithSuggestions(AvailableAppointmentsDTO dto, string priority);
 
-        IEnumerable<AppointmentPatientDTO> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor);
+        IEnumerable<AvailableAppointmentsDTO> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor);
 
-        IEnumerable<AppointmentPatientDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty);
+        IEnumerable<AvailableAppointmentsDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty);
 
-        IEnumerable<AppointmentPatientDTO> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date);
+        IEnumerable<AvailableAppointmentsDTO> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date);
 
        //anjino
 
-       IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId);
+       IEnumerable<AvailableAppointmentsDTO> GetForPatient(string patientId);
     }
 }

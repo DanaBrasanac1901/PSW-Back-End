@@ -26,13 +26,13 @@ namespace HospitalLibrary.Core.Appointment
         }
 
 
-        public IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId)
+        public IEnumerable<AvailableAppointmentsDTO> GetForPatient(string patientId)
         {
             IEnumerable<Appointment> appointments = _appointmentRepository.GetAllByPatient(patientId);
-            List<AppointmentPatientDTO> result = new List<AppointmentPatientDTO>();
+            List<AvailableAppointmentsDTO> result = new List<AvailableAppointmentsDTO>();
             foreach (Appointment appt in appointments)
             {
-                AppointmentPatientDTO dto = new AppointmentPatientDTO(appt);
+                AvailableAppointmentsDTO dto = new AvailableAppointmentsDTO(appt);
                 DoctorModel doctor = _doctorRepository.GetById(appt.DoctorId);
                 dto.DoctorName = doctor.Name + ' ' + doctor.Surname;
 
@@ -49,7 +49,7 @@ namespace HospitalLibrary.Core.Appointment
             List<Doctor.Doctor> specializedDoctors = GetDoctorsBySpecialty(specialty);
             foreach (Doctor.Doctor doctor in specializedDoctors)
             {
-                IEnumerable<AppointmentPatientDTO> appointments = GetDoctorsAvailableAppointmentsForDate(doctor, date);
+                IEnumerable<AvailableAppointmentsDTO> appointments = GetDoctorsAvailableAppointmentsForDate(doctor, date);
                 if (appointments.IsNullOrEmpty())
                 {
                     specializedDoctors.Remove(doctor);
@@ -77,19 +77,21 @@ namespace HospitalLibrary.Core.Appointment
         }
 
         //ovo je za zakazivanje s prioritetima za pacijenta, osnovna fja
-        public IEnumerable<AppointmentPatientDTO> FindAppointmentsWithSuggestions(DateTimeRange dateRange, Doctor.Doctor doctor, string priority)
+        public IEnumerable<AvailableAppointmentsDTO> FindAppointmentsWithSuggestions(AvailableAppointmentsDTO dto, string priority)
         {
-            IEnumerable<AppointmentPatientDTO> idealAppointments = FindIdealAppointments(dateRange, doctor);
-            if (!idealAppointments.Any <AppointmentPatientDTO>())
+            dto.Date = DateTime.Parse(dto.DateString);
+            dto.DateRange = new DateTimeRange(dto.Date, dto.Date);
+            IEnumerable<AvailableAppointmentsDTO> idealAppointments = FindIdealAppointments(dto.DateRange, dto.Doctor);
+            if (!idealAppointments.Any <AvailableAppointmentsDTO>())
             {
                 if (priority == "DOCTOR")
                 {
-                    DateTimeRange newDateRange = GetNewDateRange(dateRange);
-                    return FindIdealAppointments(newDateRange, doctor);
+                    DateTimeRange newDateRange = GetNewDateRange(dto.DateRange);
+                    return FindIdealAppointments(newDateRange, dto.Doctor);
                 }
                 else if (priority == "DATE")
                 {
-                    return AppointmentsWithDatePriority(dateRange, doctor.Specialty);
+                    return AppointmentsWithDatePriority(dto.DateRange, dto.Doctor.Specialty);
 
                 }
             }
@@ -99,9 +101,9 @@ namespace HospitalLibrary.Core.Appointment
 
         //kada su oba uslova ispunjena, i lekar i datumi 
         //koristimo i kad nije idealno n ego kad je lekar prioritet jer samo trazimo s novim rangeom
-        public IEnumerable<AppointmentPatientDTO> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
+        public IEnumerable<AvailableAppointmentsDTO> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
         {
-            List<AppointmentPatientDTO> allAppointments = new List<AppointmentPatientDTO>();
+            List<AvailableAppointmentsDTO> allAppointments = new List<AvailableAppointmentsDTO>();
             DateTime dateIterator = dateRange.Start;
 
             while (dateIterator < dateRange.End)
@@ -116,18 +118,22 @@ namespace HospitalLibrary.Core.Appointment
         public DateTimeRange GetNewDateRange(DateTimeRange dateRange)
         {
             DateTime newStart = dateRange.Start.AddDays(-5);
+            if (DateTime.Compare(newStart, DateTime.Now)<0) //spreci da se nalaze termini u proslosti
+            {
+                newStart=DateTime.Now;
+            }
             DateTime newEnd = dateRange.End.AddDays(5);
             return new DateTimeRange(newStart, newEnd);
         }
 
         //nisu oba ispunjena, nadju se za isti daterange lekari sa istom specijalnoscu
-        public IEnumerable<AppointmentPatientDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
+        public IEnumerable<AvailableAppointmentsDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
         {
             DateTime dateIterator = dateRange.Start;
             List <Doctor.Doctor> doctors = GetDoctorsBySpecialty(specialty);
-            List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
+            List<AvailableAppointmentsDTO> appointments = new List<AvailableAppointmentsDTO>();
 
-            while (dateIterator < dateRange.End)
+            while (dateIterator <= dateRange.End)
             {
                foreach(Doctor.Doctor doctor in doctors)
                 {
@@ -140,13 +146,14 @@ namespace HospitalLibrary.Core.Appointment
         }
 
         //klasika idemo po terminima fiksno vreme je 20 min sve dok ne dodjemo do kraja radnog vremena
-        public IEnumerable<AppointmentPatientDTO> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date)
+        public IEnumerable<AvailableAppointmentsDTO> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date)
         {
+
             DateTime timeIterator = new DateTime(date.Year, date.Month, date.Day, doctor.StartWorkTime, 0, 0);
             DateTime endPoint = new DateTime(date.Year, date.Month, date.Day, doctor.EndWorkTime, 0, 0);
-            List<AppointmentPatientDTO> termini = new List<AppointmentPatientDTO>();
+            List<AvailableAppointmentsDTO> termini = new List<AvailableAppointmentsDTO>();
             
-            while (timeIterator < endPoint)
+            while (timeIterator <= endPoint)
             {
                 GeneratingDTOs(doctor, date, timeIterator, termini);
                 timeIterator = timeIterator.AddMinutes(20);
@@ -156,15 +163,23 @@ namespace HospitalLibrary.Core.Appointment
         }
 
         //cisto pravljenje dto
-        private static void GeneratingDTOs(DoctorModel doctor, DateTime date, DateTime startTime, List<AppointmentPatientDTO> termini)
+        private static void GeneratingDTOs(DoctorModel doctor, DateTime date, DateTime startTime, List<AvailableAppointmentsDTO> termini)
         {
             DateTime timeSlotEnd = startTime.AddMinutes(20);
             if (doctor.IsAvailable(startTime, timeSlotEnd))
             {
                 //DateTime.Now.ToString("dddd, dd MMMM yyyy") primer Friday, 29 May 2015
-                termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name+' '+doctor.Surname,DoctorId=doctor.Id, StartDate = date.ToString("dddd, dd MMMM yyyy"), StartTime = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+                if (DateTime.Compare(date.Date, DateTime.Now.Date) == 0) //ako je isti dan proveri vreme
+                {
+                    if (DateTime.Compare(startTime, DateTime.Now) > 0) //ako je startTime u buducnosti onda dodaj, u suprotnom iskuliraj
+                    {
+                        termini.Add(new AvailableAppointmentsDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+                    }
+                } else //ako nije samo dodaj
+                     termini.Add(new AvailableAppointmentsDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+
             }
-           
+
         }
     }
 }
