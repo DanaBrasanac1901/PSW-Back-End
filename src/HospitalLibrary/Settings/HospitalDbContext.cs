@@ -11,6 +11,8 @@ using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
+using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -37,6 +39,21 @@ namespace HospitalLibrary.Settings
         public DbSet<Equipment> Equipment { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Report> Reports { get; set; }
+
+        public DbSet<DrugPrescription> DrugPrescriptions { get; set; }
+
+
+
+        public DbSet<Symptom> Symptoms { get; set; }
+
+        public DbSet<Drug> Drugs { get; set; }
+
+
+        public DbSet<DrugList> DrugsList { get; set; }
+
+        public DbSet<SymptomList> SymptomList { get; set;}
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
@@ -103,6 +120,35 @@ namespace HospitalLibrary.Settings
 
                   }
             );
+
+
+            DrugList drug1 = new DrugList("aspirin", "Aspirin", "Galenika");
+            DrugList drug2 = new DrugList("brufen", "Brufen", "Galenika");
+            DrugList drug3 = new DrugList("ginko", "Ginko", "Galenika");
+            modelBuilder.Entity<DrugList>().HasData(
+                drug1,drug2,drug3
+             );
+
+            modelBuilder.Entity<SymptomList>().HasData(
+                new SymptomList()
+                {
+                    Id= "Glavobolja",
+                    Name = "Glavobolja"
+                },
+                new SymptomList()
+                {
+                    Id = "Kijavica",
+                    Name = "Kijavica"
+                },
+                new SymptomList()
+                {
+                    Id = "Dijareja",
+                    Name = "Dijareja"
+                }
+                );
+
+
+
             base.OnModelCreating(modelBuilder);
         }
 
