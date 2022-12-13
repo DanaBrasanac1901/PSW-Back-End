@@ -13,14 +13,14 @@ namespace HospitalAPI.Controllers
 	public class CredentialsController : ControllerBase
     {
 
-		private IConfiguration _config;
+
 		private IUserService _userService;
 		private JwtSecurityTokenHandler tokenHandler;
 		private IEmailSendService _emailSendService;
 
-		public CredentialsController(IConfiguration config, IUserService userService, IEmailSendService emailSendService)
+		public CredentialsController(IUserService userService, IEmailSendService emailSendService)
 		{
-			_config = config;
+			
 			_userService = userService;
 			tokenHandler=new JwtSecurityTokenHandler();
 			_emailSendService = emailSendService;
