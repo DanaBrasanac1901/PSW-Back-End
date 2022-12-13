@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Consiliums
     {
         IEnumerable<Consilium> GetAll();
         Consilium GetById(int id);
-        void Create(Consilium consilium);
+        void Create(Consilium consilium, List<ConsiliumAppointment> appointments);
         void Update(Consilium consilium);
         void Delete(Consilium consilium);
 

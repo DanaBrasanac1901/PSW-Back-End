@@ -67,7 +67,7 @@ namespace HospitalLibrary.Core.Doctor
 
         public List<Doctor> GetBySpecialty(int specialty)
         {
-            return _context.Doctors.Where(doctor => doctor.Specialty == specialty).ToList();
+            return _context.Doctors.Where(doctor => doctor.Specialty == (Enums.Specialty)specialty).ToList();
         }
     }
 }

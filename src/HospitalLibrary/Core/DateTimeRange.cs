@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core
@@ -41,6 +42,17 @@ namespace HospitalLibrary.Core
         {
 
             return d.Date.ToString() + "/" + d.Month.ToString() + "/" + d.Year.ToString() + " " + d.Hour.ToString() + ":" + d.Minute.ToString();
+        }
+
+        public string Serialize(DateTimeRange range)
+        {
+            return JsonSerializer.Serialize(this);
+        }
+
+        DateTimeRange Deserialize(string json)
+        {
+
+            return JsonSerializer.Deserialize<DateTimeRange>(json);
         }
     }
 }

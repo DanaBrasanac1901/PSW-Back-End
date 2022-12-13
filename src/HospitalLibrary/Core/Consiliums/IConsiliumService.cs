@@ -9,10 +9,11 @@ namespace HospitalLibrary.Core.Consiliums
 {
     public interface IConsiliumService
     {   
-        IEnumerable<Consilium> GetAll();
-        Consilium Create(CreateConsiliumDoctorsDTO consiliumDto);
+        IEnumerable<ShowConsiliumDTO> GetAll();
+        Consilium Create(CreateConsiliumDTO consiliumDto);
         void Update(Consilium consilium);
-        List<DateTime> GetPotentialAppointmentTimesForDoctors(ConsiliumAppointmentInfoDTO consiliumAppointmentInfo);
-        List<DateTime> GetPotentialAppointmentTimesForSpecialties(ConsiliumAppointmentInfoDTO consiliumAppointmentInfo);
+        List<string> GetPotentialAppointmentTimesForDoctors(CreateConsiliumDTO consiliumAppointmentInfo);
+        List<string> GetPotentialAppointmentTimesForSpecialties(CreateConsiliumDTO consiliumAppointmentInfo);
+        List<ConsiliumAppointment> CreateConsiliumAppointments(Consilium consilium);
     }
 }

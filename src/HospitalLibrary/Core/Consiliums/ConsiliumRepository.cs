@@ -28,9 +28,11 @@ namespace HospitalLibrary.Core.Consiliums
             return _context.Consiliums.Find(id);
         }
 
-        public void Create(Consilium consilium)
+        public void Create(Consilium consilium, List<ConsiliumAppointment> appointments)
         {
             _context.Consiliums.Add(consilium);
+            _context.ConsiliumAppointments.AddRange(appointments);
+
             _context.SaveChanges();
         }
 

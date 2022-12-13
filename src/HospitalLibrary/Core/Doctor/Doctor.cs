@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Appointment;
-
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalLibrary.Core.Doctor
 {
@@ -23,6 +23,8 @@ namespace HospitalLibrary.Core.Doctor
         public int StartWorkTime { get; set; }
         [Range(0, 23)]
         public int EndWorkTime { get; set; }
+
+        public Specialty Specialty { get; set; }
 
         public virtual ICollection<VacationRequest> VacationRequests { get; set; }
         
