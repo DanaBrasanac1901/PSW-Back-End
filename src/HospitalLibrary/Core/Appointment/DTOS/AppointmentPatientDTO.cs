@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Appointment.DTOS
 {
-    public class AvailableAppointmentsDTO
+    public class AppointmentPatientDTO
     {
         public string PatientId { get; set; }
         public string DoctorId { get; set; }
@@ -21,22 +21,22 @@ namespace HospitalLibrary.Core.Appointment.DTOS
         public string DateString { get; set; }
         public string TimeString { get; set; }
 
-        public AvailableAppointmentsDTO() { }
+        public AppointmentPatientDTO() { }
 
-        public AvailableAppointmentsDTO(DateTimeRange dateTimeRange, Doctor.Doctor doctor)
+        public AppointmentPatientDTO(DateTimeRange dateTimeRange, Doctor.Doctor doctor)
         {
             DateRange = dateTimeRange;
             Doctor = doctor;
         }
 
-        public AvailableAppointmentsDTO(string date, Doctor.Doctor doctor)
+        public AppointmentPatientDTO(string date, Doctor.Doctor doctor)
         {
             Date = DateTime.Parse(date);
             Doctor = doctor;
             DateRange=new DateTimeRange(Date,Date);
         }
 
-        public AvailableAppointmentsDTO(Appointment appointment)
+        public AppointmentPatientDTO(Appointment appointment)
         {
             DateRange = new DateTimeRange(Date, Date);
             PatientId = appointment.PatientId;
@@ -64,7 +64,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
                                             startDate = _datetime.ToShortDateString(),
                                             startTime = cleanedTime[0].Value,
                                             status = "Scheduled",
-                                            roomId = int.Parse(RoomNumber)
+                                            roomId = int.Parse(RoomNumber),
                                             };
             return dto;
         }

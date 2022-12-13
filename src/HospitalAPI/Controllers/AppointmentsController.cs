@@ -164,20 +164,9 @@ namespace HospitalAPI.Controllers
             return Ok(_availableAppointmentService.GetForPatient(id));
         }
 
-        [HttpPost("doctors/{specialty}")]
-        public ActionResult SpecialtyDoctorsForDate(DateTime date, Specialty specialty)
-        {
-            var doctors = _availableAppointmentService.GetDoctorsByDateAndSpecialty(date, specialty);
-            if (doctors == null)
-            {
-                return NotFound();
-            }
-            return Ok(doctors);
 
-        }
-
-        [HttpPost("suggestions/{priority}")]
-        public ActionResult AppointmentsWithSuggestions(AvailableAppointmentsDTO dto, string priority)
+        [HttpPost("patient/suggestions/{priority}")]
+        public ActionResult AppointmentsWithSuggestions(AppointmentPatientDTO dto, string priority)
         {
             Doctor doctor = _doctorService.GetById(dto.DoctorId);
             dto.Doctor = doctor; 
@@ -190,8 +179,8 @@ namespace HospitalAPI.Controllers
             return Ok(appointments);
         }
 
-        [HttpPost("regularAppointments")]
-        public ActionResult DateDoctorAppointments(AvailableAppointmentsDTO dto)
+        [HttpPost("patient/regularAppointments")]
+        public ActionResult DateDoctorAppointments(AppointmentPatientDTO dto)
         {
             Doctor doctor = _doctorService.GetById(dto.DoctorId);
             dto.Doctor=doctor;
@@ -207,8 +196,8 @@ namespace HospitalAPI.Controllers
 
 
         [HttpPost]
-        [Route("patientSchedule")]
-        public ActionResult PatientSchedule(AvailableAppointmentsDTO dto)
+        [Route("patient/schedule")]
+        public ActionResult PatientSchedule(AppointmentPatientDTO dto)
         {
             DateTime _datetime=DateTime.Parse(dto.DateString+' '+dto.TimeString);
             CreateAppointmentDTO createDTO = dto.toCreateDTO();

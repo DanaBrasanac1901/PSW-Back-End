@@ -26,13 +26,13 @@ namespace HospitalLibrary.Core.Appointment
         }
 
 
-        public IEnumerable<AvailableAppointmentsDTO> GetForPatient(string patientId)
+        public IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId)
         {
             IEnumerable<Appointment> appointments = _appointmentRepository.GetAllByPatient(patientId);
-            List<AvailableAppointmentsDTO> result = new List<AvailableAppointmentsDTO>();
+            List<AppointmentPatientDTO> result = new List<AppointmentPatientDTO>();
             foreach (Appointment appt in appointments)
             {
-                AvailableAppointmentsDTO dto = new AvailableAppointmentsDTO(appt);
+                AppointmentPatientDTO dto = new AppointmentPatientDTO(appt);
                 DoctorModel doctor = _doctorRepository.GetById(appt.DoctorId);
                 dto.DoctorName = doctor.Name + ' ' + doctor.Surname;
 
@@ -49,7 +49,7 @@ namespace HospitalLibrary.Core.Appointment
             List<Doctor.Doctor> specializedDoctors = GetDoctorsBySpecialty(specialty);
             foreach (Doctor.Doctor doctor in specializedDoctors)
             {
-                IEnumerable<AvailableAppointmentsDTO> appointments = GetDoctorsAvailableAppointmentsForDate(doctor, date);
+                IEnumerable<AppointmentPatientDTO> appointments = GetDoctorsAvailableAppointmentsForDate(doctor, date);
                 if (appointments.IsNullOrEmpty())
                 {
                     specializedDoctors.Remove(doctor);
@@ -77,12 +77,12 @@ namespace HospitalLibrary.Core.Appointment
         }
 
         //ovo je za zakazivanje s prioritetima za pacijenta, osnovna fja
-        public IEnumerable<AvailableAppointmentsDTO> FindAppointmentsWithSuggestions(AvailableAppointmentsDTO dto, string priority)
+        public IEnumerable<AppointmentPatientDTO> FindAppointmentsWithSuggestions(AppointmentPatientDTO dto, string priority)
         {
             dto.Date = DateTime.Parse(dto.DateString);
             dto.DateRange = new DateTimeRange(dto.Date, dto.Date);
-            IEnumerable<AvailableAppointmentsDTO> idealAppointments = FindIdealAppointments(dto.DateRange, dto.Doctor);
-            if (!idealAppointments.Any <AvailableAppointmentsDTO>())
+            IEnumerable<AppointmentPatientDTO> idealAppointments = FindIdealAppointments(dto.DateRange, dto.Doctor);
+            if (!idealAppointments.Any <AppointmentPatientDTO>())
             {
                 if (priority == "DOCTOR")
                 {
@@ -101,9 +101,9 @@ namespace HospitalLibrary.Core.Appointment
 
         //kada su oba uslova ispunjena, i lekar i datumi 
         //koristimo i kad nije idealno n ego kad je lekar prioritet jer samo trazimo s novim rangeom
-        public IEnumerable<AvailableAppointmentsDTO> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
+        public IEnumerable<AppointmentPatientDTO> FindIdealAppointments(DateTimeRange dateRange, Doctor.Doctor doctor)
         {
-            List<AvailableAppointmentsDTO> allAppointments = new List<AvailableAppointmentsDTO>();
+            List<AppointmentPatientDTO> allAppointments = new List<AppointmentPatientDTO>();
             DateTime dateIterator = dateRange.Start;
 
             while (dateIterator < dateRange.End)
@@ -127,11 +127,11 @@ namespace HospitalLibrary.Core.Appointment
         }
 
         //nisu oba ispunjena, nadju se za isti daterange lekari sa istom specijalnoscu
-        public IEnumerable<AvailableAppointmentsDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
+        public IEnumerable<AppointmentPatientDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty)
         {
             DateTime dateIterator = dateRange.Start;
             List <Doctor.Doctor> doctors = GetDoctorsBySpecialty(specialty);
-            List<AvailableAppointmentsDTO> appointments = new List<AvailableAppointmentsDTO>();
+            List<AppointmentPatientDTO> appointments = new List<AppointmentPatientDTO>();
 
             while (dateIterator <= dateRange.End)
             {
@@ -146,12 +146,12 @@ namespace HospitalLibrary.Core.Appointment
         }
 
         //klasika idemo po terminima fiksno vreme je 20 min sve dok ne dodjemo do kraja radnog vremena
-        public IEnumerable<AvailableAppointmentsDTO> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date)
+        public IEnumerable<AppointmentPatientDTO> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date)
         {
 
             DateTime timeIterator = new DateTime(date.Year, date.Month, date.Day, doctor.StartWorkTime, 0, 0);
             DateTime endPoint = new DateTime(date.Year, date.Month, date.Day, doctor.EndWorkTime, 0, 0);
-            List<AvailableAppointmentsDTO> termini = new List<AvailableAppointmentsDTO>();
+            List<AppointmentPatientDTO> termini = new List<AppointmentPatientDTO>();
             
             while (timeIterator <= endPoint)
             {
@@ -163,7 +163,7 @@ namespace HospitalLibrary.Core.Appointment
         }
 
         //cisto pravljenje dto
-        private static void GeneratingDTOs(DoctorModel doctor, DateTime date, DateTime startTime, List<AvailableAppointmentsDTO> termini)
+        private static void GeneratingDTOs(DoctorModel doctor, DateTime date, DateTime startTime, List<AppointmentPatientDTO> termini)
         {
             DateTime timeSlotEnd = startTime.AddMinutes(20);
             if (doctor.IsAvailable(startTime, timeSlotEnd))
@@ -173,10 +173,10 @@ namespace HospitalLibrary.Core.Appointment
                 {
                     if (DateTime.Compare(startTime, DateTime.Now) > 0) //ako je startTime u buducnosti onda dodaj, u suprotnom iskuliraj
                     {
-                        termini.Add(new AvailableAppointmentsDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+                        termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
                     }
                 } else //ako nije samo dodaj
-                     termini.Add(new AvailableAppointmentsDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+                     termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
 
             }
 
