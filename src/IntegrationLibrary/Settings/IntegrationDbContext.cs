@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Tender;
+﻿
 using HospitalLibrary.Core.TenderOffer;
 using IntegrationLibery.News;
 using IntegrationLibrary.BloodBank;
@@ -20,7 +20,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<Message> NewsTable { get; set; }
 
 
-        public DbSet<Tender> Tenders { get; set; }
+        public DbSet<HospitalLibrary.Core.Tender.Tender> Tenders { get; set; }
 
         public DbSet<TenderOffer> TenderOffers { get; set; }
 
