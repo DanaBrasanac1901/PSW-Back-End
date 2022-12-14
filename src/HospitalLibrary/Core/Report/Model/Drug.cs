@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report.Model
 {
-    [Keyless]
+    [Owned]
     public class Drug : ValueObject
     {
         public string Name { get; private set; }

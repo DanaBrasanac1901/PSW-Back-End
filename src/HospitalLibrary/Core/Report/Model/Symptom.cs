@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report.Model
 {
-    [Keyless]
+    [Owned]
     public class Symptom : ValueObject
     {
         public string Name { get; private set; }
@@ -28,5 +28,8 @@ namespace HospitalLibrary.Core.Report.Model
         {
             yield return Name;
         }
+
+       
+
     }
 }

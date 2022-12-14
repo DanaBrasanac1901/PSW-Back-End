@@ -5,15 +5,17 @@ using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221214004900_VO")]
+    partial class VO
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -394,6 +396,17 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Report.Model.Drug", b =>
+                {
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.ToTable("Drugs");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Report.Model.DrugList", b =>
                 {
                     b.Property<string>("Id")
@@ -624,30 +637,6 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Report.Model.Report", b =>
                 {
-                    b.OwnsMany("HospitalLibrary.Core.Report.Model.Drug", "Drugs", b1 =>
-                        {
-                            b1.Property<string>("ReportId")
-                                .HasColumnType("text");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
-                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                            b1.Property<string>("CompanyName")
-                                .HasColumnType("text");
-
-                            b1.Property<string>("Name")
-                                .HasColumnType("text");
-
-                            b1.HasKey("ReportId", "Id");
-
-                            b1.ToTable("Drugs");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ReportId");
-                        });
-
                     b.OwnsMany("HospitalLibrary.Core.Report.Model.Symptom", "Symptoms", b1 =>
                         {
                             b1.Property<string>("ReportId")
@@ -668,8 +657,6 @@ namespace HospitalLibrary.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("ReportId");
                         });
-
-                    b.Navigation("Drugs");
 
                     b.Navigation("Symptoms");
                 });

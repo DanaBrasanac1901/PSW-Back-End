@@ -16,15 +16,17 @@ namespace HospitalLibrary.Core.Report.Model
         public string AppointmentId { get; set; }
         public string ReportDescription { get; set; }
 
-        [Column(TypeName = "jsonb")]
-        public Symptom[] Symptoms { get; set; }
+        //[Column(TypeName = "jsonb")]
+        public ICollection<Symptom> Symptoms { get; set; }
         public DateTime DayAndTimeOfMaking { get; set; }
+
+        public ICollection<Drug> Drugs { get; set; }
 
         public Report()
         {
         }
 
-        public Report(string id, string patientId, string doctorId, string reportDescription, Symptom[] symptoms, DateTime dayAndTimeOfMaking)
+        public Report(string id, string patientId, string doctorId, string reportDescription, ICollection<Symptom> symptoms, DateTime dayAndTimeOfMaking, ICollection<Drug> drugs)
         {
             Id = id;
             PatientId = patientId;
@@ -32,6 +34,8 @@ namespace HospitalLibrary.Core.Report.Model
             ReportDescription = reportDescription;
             Symptoms = symptoms;
             DayAndTimeOfMaking = dayAndTimeOfMaking;
+            Drugs = drugs;
         }
+
     }
 }

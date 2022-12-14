@@ -52,7 +52,7 @@ namespace HospitalLibraryTestProject
             var drugs=new List<Drug>();
             var drug1 = new Drug("brufen 200mg", "Galenika");
             drugs.Add(drug1);
-            var rep1 = new Report("RET1", "PAT1", "DOC1", "description", null, new DateTime(2022, 11, 27, 12, 0, 0));
+            var rep1 = new Report("RET1", "PAT1", "DOC1", "description", null,new DateTime(2022, 11, 27, 12, 0, 0),null); ; ;
             var presc1 = new DrugPrescription("PRESC1", "RET1", drugs);
             reports.Add(rep1);
             drugPrescriptions.Add(presc1);

@@ -73,7 +73,7 @@ namespace HospitalAPI.Controllers
             }
             _reportApplicationService.Create(dto);
            
-            return Ok("Passed");
+            return Ok(dto);
         }
 
         [HttpPut("{id}")]
