@@ -34,5 +34,6 @@ namespace IntegrationLibrary.News
         {
             return integrationDbContext.NewsTable.FirstOrDefault(x => x.Id == id);
         }
+       
     }
 }

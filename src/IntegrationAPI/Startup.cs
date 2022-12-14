@@ -17,6 +17,7 @@ using IntegrationLibrary.Settings;
 using HospitalLibrary.Core.Tender;
 using HospitalLibrary.Core.TenderOffer;
 using HospitalLibrary.Core.EmailSender;
+using IntegrationLibrary.News;
 
 namespace IntegrationAPI
 {
@@ -80,12 +81,12 @@ namespace IntegrationAPI
 
          
 
-
-          //  services.AddScoped<INewsService, NewsService>();
-          //  services.AddScoped<INewsRepository, NewsRepository>();
+            
+           // services.AddScoped<INewsService, NewsService>();
+           // services.AddScoped<INewsRepository, NewsRepository>();
             //services.AddSingleton<RabbitMQService>();
 
-          //  services.AddHostedService<RabbitMQService>();
+           // services.AddHostedService<RabbitMQService>();
            
 
         }

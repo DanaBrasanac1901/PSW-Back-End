@@ -46,13 +46,8 @@
     <Compile Remove="Migrations\20221101111943_init4.Designer.cs" />
     <Compile Remove="Migrations\20221031115922_init22.cs" />
     <Compile Remove="Migrations\20221031115922_init22.Designer.cs" />
-    <Compile Remove="Migrations\IntegrationDbContextModelSnapshot.cs" />
     <Compile Remove="Migrations\20221104042827_ new boolean column.cs" />
     <Compile Remove="Migrations\20221030170202_intial.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations" />
   </ItemGroup>
 
 </Project>
