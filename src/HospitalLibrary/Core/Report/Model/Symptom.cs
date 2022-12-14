@@ -20,6 +20,7 @@ namespace HospitalLibrary.Core.Report.Model
         public Symptom(string name)
         {
             Name = name;
+            Validation(name);
         }
 
         
@@ -29,7 +30,13 @@ namespace HospitalLibrary.Core.Report.Model
             yield return Name;
         }
 
-       
+        private void Validation(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new Exception("Cannot be empty string");
+            }
 
+        }
     }
 }

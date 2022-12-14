@@ -21,6 +21,7 @@ namespace HospitalLibrary.Core.Report.Model
         {
             Name = name;
             CompanyName = companyName;
+            Validation(name, companyName);
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
@@ -28,5 +29,17 @@ namespace HospitalLibrary.Core.Report.Model
             yield return Name;
             yield return CompanyName;
         }
+
+        private void Validation(string name,string companyName)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new Exception("Cannot be empty string");
+            }
+            if (string.IsNullOrWhiteSpace(companyName))
+            {
+                throw new Exception("Cannot be empty string");
+        }   }
+
     }
 }
