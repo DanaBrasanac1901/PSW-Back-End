@@ -55,20 +55,32 @@ namespace HospitalLibrary.Core.Appointment.DTOS
 
             DateTime _datetime = DateTime.Parse(DateString + ' ' + TimeString);
 
-            string pattern = @"\d{2}:\d{2}";
-            Regex rg = new Regex(pattern);
-            MatchCollection cleanedTime = rg.Matches(_datetime.TimeOfDay.ToString());
-
+           
             CreateAppointmentDTO dto = new CreateAppointmentDTO 
                                           { appointmentDuration = 20,
                                             doctorId = DoctorId, 
                                             patientId = PatientId,
                                             startDate = _datetime.ToShortDateString(),
-                                            startTime = cleanedTime[0].Value,
+                                            startTime = TimeString,
                                             status = "Scheduled",
                                             roomId = int.Parse(RoomNumber),
                                             };
             return dto;
+        }
+
+        public int getStartHour()
+        {
+            
+            string[] all = TimeString.Split(":");
+            return Int16.Parse(all[0]);
+            
+
+        }
+
+        public int getStartMinutes()
+        {
+            string[] all = TimeString.Split(":");
+            return Int16.Parse(all[1]);
         }
 
 

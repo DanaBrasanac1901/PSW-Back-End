@@ -174,12 +174,31 @@ namespace HospitalLibrary.Core.Appointment
                 {
                     if (DateTime.Compare(startTime, DateTime.Now) > 0) //ako je startTime u buducnosti onda dodaj, u suprotnom iskuliraj
                     {
-                        termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+                        termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("H:mm"), RoomNumber = doctor.RoomId.ToString() });
                     }
                 } else //ako nije samo dodaj
-                     termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("hh:mm tt"), RoomNumber = doctor.RoomId.ToString() });
+                     termini.Add(new AppointmentPatientDTO { DoctorName = doctor.Name + ' ' + doctor.Surname, DoctorId = doctor.Id, DateString = date.ToString("dddd, dd MMMM yyyy"), TimeString = startTime.ToString("H:mm"), RoomNumber = doctor.RoomId.ToString() });
 
             }
+
+        }
+
+        public bool CheckAvailability(AppointmentPatientDTO dto)
+        {
+            //Uzima sve appointmente iz baze za lekara, provera za svaki da li se poklapa sa nasim, ako nijedan nije kao nas available = true
+            IEnumerable < Appointment > doctorApps = _appointmentRepository.GetAllByDoctor(dto.DoctorId);
+            foreach(Appointment app in doctorApps)
+            {
+                if (app.Start.Date == dto.Date.Date)
+                {
+                    if(app.Start.Hour == dto.getStartHour() && app.Start.Minute == dto.getStartMinutes())
+                    {
+                        return false;
+                    }
+                }
+
+            }
+            return true;
 
         }
     }

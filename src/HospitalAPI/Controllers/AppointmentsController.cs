@@ -179,6 +179,18 @@ namespace HospitalAPI.Controllers
             return Ok(appointments);
         }
 
+        [HttpPost("patient/AppAvailability")]
+        public ActionResult CheckIfAvailable(AppointmentPatientDTO dto)
+        {
+            bool available = _availableAppointmentService.CheckAvailability(dto);
+            if (available)
+            {
+                return Ok();
+            }
+            return NoContent();
+
+        }
+
         [HttpPost("patient/regularAppointments")]
         public ActionResult DateDoctorAppointments(AppointmentPatientDTO dto)
         {

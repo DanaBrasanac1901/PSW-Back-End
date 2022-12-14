@@ -24,9 +24,13 @@ namespace HospitalLibrary.Core.Appointment
         IEnumerable<AppointmentPatientDTO> AppointmentsWithDatePriority(DateTimeRange dateRange, Specialty specialty);
 
         IEnumerable<AppointmentPatientDTO> GetDoctorsAvailableAppointmentsForDate(Doctor.Doctor doctor, DateTime date);
+      
+        bool CheckAvailability(AppointmentPatientDTO appointmentPatientDTO);
 
-       //anjino
 
-       IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId);
+        //anjino
+
+        IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId);
+      
     }
 }
