@@ -187,13 +187,15 @@ namespace HospitalLibrary.Core.Appointment
         {
             //Uzima sve appointmente iz baze za lekara, provera za svaki da li se poklapa sa nasim, ako nijedan nije kao nas available = true
             IEnumerable < Appointment > doctorApps = _appointmentRepository.GetAllByDoctor(dto.DoctorId);
-            foreach(Appointment app in doctorApps)
+            dto.Date = DateTime.Parse(dto.DateString + ' ' + dto.TimeString);
+
+            foreach (Appointment app in doctorApps)
             {
                 if (DateTime.Compare(app.Start.Date, dto.Date.Date)==0)
                 {
                     if(app.Start.Hour == dto.getStartHour() && app.Start.Minute == dto.getStartMinutes())
                     {
-                        return false;
+                        if (app.Status != AppointmentStatus.Cancelled) return false;
                     }
                 }
 
