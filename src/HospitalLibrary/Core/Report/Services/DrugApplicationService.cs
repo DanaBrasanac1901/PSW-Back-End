@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Report.Model;
+﻿using HospitalLibrary.Core.Report.DTO;
+using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Core.Report.Repositories;
 using System;
 using System.Collections.Generic;
@@ -21,5 +22,7 @@ namespace HospitalLibrary.Core.Report.Services
         {
             return _drugRepository.GetAll();
         }
+
+      
     }
 }

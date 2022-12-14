@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Report.Model;
+﻿using HospitalLibrary.Core.Report.DTO;
+using HospitalLibrary.Core.Report.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace HospitalLibrary.Core.Report.Services
     public interface IDrugApplicationService
     {
         public IEnumerable<Drug> GetAll();
+      
     }
 }

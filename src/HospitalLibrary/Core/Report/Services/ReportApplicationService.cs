@@ -83,11 +83,28 @@ namespace HospitalLibrary.Core.Report.Services
             }
             return null;
         }
+        public ICollection<Drug> GetDrugFromReport(string reportId)
+        {
+            foreach (var drug in _reportRepository.GetAll())
+            {
+                if (drug.Id == reportId)
+                {
+                    return drug.Drugs;
+                }
+             
+            }
+            return null;
+        }
 
         public ReportToShowDTO GetReportToShow(string id)
         {
 
             return ReportAdapter.ReportToReportToShowDTO(GetReportByAppointmentId(id));
+        }
+
+        public DrugPrescriptionToShowDTO GetDrugToShow(string id)
+        {
+            return ReportAdapter.DrugPrescriptionToDrugPrescriptionToShowDTO(GetById(id));
         }
 
         

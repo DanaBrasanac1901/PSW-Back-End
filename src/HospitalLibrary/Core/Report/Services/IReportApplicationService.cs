@@ -21,6 +21,11 @@ namespace HospitalLibrary.Core.Report.Services
 
         ReportToShowDTO GetReportToShow(string id);
 
-        
+        ICollection<Drug> GetDrugFromReport(string reportId);
+
+        DrugPrescriptionToShowDTO GetDrugToShow(string id);
+
+
+
     }
 }

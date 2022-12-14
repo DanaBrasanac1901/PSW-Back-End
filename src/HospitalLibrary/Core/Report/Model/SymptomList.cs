@@ -15,5 +15,16 @@ namespace HospitalLibrary.Core.Report.Model
         {
 
         }
+
+        public SymptomList(string id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public SymptomList(string name)
+        {
+            Name = name;
+        }
     }
 }
