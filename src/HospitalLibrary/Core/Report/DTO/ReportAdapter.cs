@@ -95,7 +95,7 @@ namespace HospitalLibrary.Core.Report.DTO
         public static DrugPrescriptionToShowDTO DrugPrescriptionToDrugPrescriptionToShowDTO(Report.Model.Report report)
         {
             DrugPrescriptionToShowDTO dto = new DrugPrescriptionToShowDTO();
-            dto.id = report.Id;
+            dto.reportId = report.Id;
             dto.drugs = CreateDrugdDTO(report.Drugs);
             return dto;
         }
