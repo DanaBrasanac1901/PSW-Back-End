@@ -5,7 +5,7 @@ namespace HospitalLibrary.Core.Patient
     public interface IPatientService
     {
         IEnumerable<Patient> GetAll();
-        Patient GetById(int id);
+        Patient GetById(string id);
         void Create(Patient patient);
         void Update(Patient patient);
         void Delete(Patient patient);
@@ -18,6 +18,6 @@ namespace HospitalLibrary.Core.Patient
         int GetMaxNumOfPatients();
         int NumberOfPatientsByDoctor(string doctorId);
         IEnumerable<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
-     
+        void ChangePatientStatus(string patientId);
     }
 }

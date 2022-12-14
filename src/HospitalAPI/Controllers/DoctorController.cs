@@ -128,7 +128,7 @@ namespace HospitalAPI.Controllers
             dto.vacationStart = vacationStart;
             dto.vacationEnd = vacationEnd;
             var apps = _doctorService.GetAppointmentsUrgentVacation(dto);
-            if(apps == null)
+            if (apps == null)
             {
                 return NotFound();
             }
@@ -137,19 +137,32 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]/{startDate}/{startTime}")]
-        public IActionResult GetDoctorsForRearrange(string startDate,string startTime)
+        public IActionResult GetDoctorsForRearrange(string startDate, string startTime)
         {
             List<DoctorToChangeUrgentVacationDTO> doctors = _doctorService.GetFreeDoctors(startDate, startTime);
 
-            if(doctors == null)
+            if (doctors == null)
             {
-                return new CustomError(HttpStatusCode.BadRequest,"There are no available doctors, please choose another date span.");
+                return new CustomError(HttpStatusCode.BadRequest, "There are no available doctors, please choose another date span.");
             }
 
             return Ok(doctors);
         }
 
-        
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult getFreeSpecialtyDoctors(CheckDateSpecialtyDTO dto)
+        {
+            var ret = _doctorService.GetFreeSpecialtyDoctors(dto.AppointmentDate, dto.Specialty);
+            return Ok(ret);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult getSpecialtyDoctors(int specialty)
+        {
+            return Ok(_doctorService.GetSpecialtyDoctors(specialty));
+        }
 
         public class CustomError : IActionResult
         {

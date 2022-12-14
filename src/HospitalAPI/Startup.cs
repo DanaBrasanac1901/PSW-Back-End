@@ -19,6 +19,7 @@ using HospitalLibrary.Core.User;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HospitalLibrary.Core.PatientAppointmentCancelation;
 
 namespace HospitalAPI
 {
@@ -99,7 +100,8 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
 
-            
+            services.AddScoped<IPatientAppointmentCancelationRepository, PatientAppointmentCancelationRepository>();
+            services.AddScoped<IPatientAppointmentCancelationService, PatientAppointmentCancelationService>();
 
         }
 

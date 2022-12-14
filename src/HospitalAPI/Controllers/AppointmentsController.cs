@@ -142,5 +142,17 @@ namespace HospitalAPI.Controllers
             _appointmentService.ChangeDoctorForAppointment(doctorId, appointmentId);
             return Ok();
         }
+
+        [HttpPost]
+        [Route("PatientCancelsApp")]
+        public ActionResult PatientCancelsAppointment(string appointmentId)
+        {
+            if (string.IsNullOrEmpty(appointmentId))
+            {
+                return NotFound();
+            }
+            _appointmentService.PatientCancelsAppointment(appointmentId);
+            return Ok();
+        }
     }
 }

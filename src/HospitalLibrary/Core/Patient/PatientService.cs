@@ -29,7 +29,7 @@ namespace HospitalLibrary.Core.Patient
             return _patientRepository.GetAll();
         }
 
-        public Patient GetById(int id)
+        public Patient GetById(string id)
         {
             return _patientRepository.GetById(id);
         }
@@ -142,5 +142,18 @@ namespace HospitalLibrary.Core.Patient
             return null;
         }
         */
+        public void ChangePatientStatus(string patientId)
+        {
+            Patient patient = _patientRepository.GetById(patientId);
+            if (patient.IsBlocked)
+            {
+                patient.IsBlocked = false;
+            }
+            else
+            {
+                patient.IsBlocked = true;
+            }
+            _patientRepository.Update(patient);
+        }
     }
 }
