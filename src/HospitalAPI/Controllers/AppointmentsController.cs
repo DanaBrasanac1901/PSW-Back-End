@@ -187,7 +187,7 @@ namespace HospitalAPI.Controllers
             {
                 return Ok();
             }
-            return NoContent();
+            return NotFound();
 
         }
 
