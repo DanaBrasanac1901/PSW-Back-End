@@ -11,35 +11,35 @@ namespace HospitalLibrary.Core.Consiliums.DTO
     {
         public DateTime Start {
             get {
-                string[] startStrSplit = StartStr.Split(' ');
-                string[] dateStrSplit = startStrSplit[0].Split('/');
+                //string[] startStrSplit = StartStr.Split(' ');
+                string[] dateStrSplit = StartStr.Split('/');
 
                 int day = Int32.Parse(dateStrSplit[0]);
                 int month = Int32.Parse(dateStrSplit[1]);
                 int year = Int32.Parse(dateStrSplit[2]);
 
-                string[] timeStrSplit = startStrSplit[1].Split(':');
-                int hours = Int32.Parse(timeStrSplit[0]);
-                int minutes = Int32.Parse(timeStrSplit[1]);
+                //string[] timeStrSplit = startStrSplit[1].Split(':');
+                //int hours = Int32.Parse(timeStrSplit[0]);
+                //int minutes = Int32.Parse(timeStrSplit[1]);
 
-                return new DateTime(year, month, day, hours, minutes, 0);
+                return new DateTime(year, month, day, 0, 0, 0);
             }
         }
         public DateTime End {
             get
             {
-                string[] startStrSplit = StartStr.Split(' ');
-                string[] dateStrSplit = startStrSplit[0].Split('/');
+                //string[] startStrSplit = EndStr.Split(' ');
+                string[] dateStrSplit = EndStr.Split('/');
 
                 int day = Int32.Parse(dateStrSplit[0]);
                 int month = Int32.Parse(dateStrSplit[1]);
                 int year = Int32.Parse(dateStrSplit[2]);
 
-                string[] timeStrSplit = startStrSplit[1].Split(':');
-                int hours = Int32.Parse(timeStrSplit[0]);
-                int minutes = Int32.Parse(timeStrSplit[1]);
+                //string[] timeStrSplit = startStrSplit[1].Split(':');
+                //int hours = Int32.Parse(timeStrSplit[0]);
+                //int minutes = Int32.Parse(timeStrSplit[1]);
 
-                return new DateTime(year, month, day, hours, minutes, 0);
+                return new DateTime(year, month, day, 0, 0, 0);
             }
         }
 

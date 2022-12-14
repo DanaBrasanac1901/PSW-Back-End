@@ -18,7 +18,7 @@ namespace HospitalLibrary.Core.Consiliums.DTO
 
         public ShowConsiliumDTO(Consilium consilium)
         {
-            Start = consilium.FromTo.GetStartString();
+            Start = consilium.FromTo.Day.ToString() + '/' + consilium.FromTo.Month.ToString() + '/' + consilium.FromTo.Year.ToString() + ' ' + consilium.FromTo.Hour.ToString() + ':' + consilium.FromTo.Minute.ToString();
             Duration = consilium.Duration;
             RoomId = consilium.RoomId;
             Topic = consilium.Topic;

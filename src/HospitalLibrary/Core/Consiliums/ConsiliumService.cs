@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Consiliums
         private readonly IRoomService _roomService;
 
 
-        public ConsiliumService(IConsiliumRepository consiliumRepository, Doctor.DoctorService doctorService, Room.RoomService roomService)
+        public ConsiliumService(IConsiliumRepository consiliumRepository, Doctor.IDoctorService doctorService, Room.IRoomService roomService)
         {
             _consiliumRepository = consiliumRepository;
             _doctorService = doctorService;
@@ -34,7 +34,7 @@ namespace HospitalLibrary.Core.Consiliums
         }
 
 
-        public Consilium Create(CreateConsiliumDTO consiliumDto)
+        public Consilium Create(PotentialAppointmentsDTO consiliumDto)
         {
             Consilium consilium = consiliumDto.ConvertToConsilium();
 
@@ -50,16 +50,14 @@ namespace HospitalLibrary.Core.Consiliums
             _consiliumRepository.Update(consilium);
         }
 
-        public List<string> GetPotentialAppointmentTimesForDoctors(CreateConsiliumDTO consiliumAppointmentInfo)
+        public List<PotentialAppointmentsDTO> GetPotentialAppointmentTimesForDoctors(CreateConsiliumDTO consiliumAppointmentInfo)
         {
             List<Doctor.Doctor> neededDoctors = new List<Doctor.Doctor>((IEnumerable<Doctor.Doctor>)_doctorService.GetByIds(consiliumAppointmentInfo.DoctorIds));
             
             int start_time = GetStartTime(neededDoctors);
             int end_time = GetEndTime(neededDoctors);
 
-            List<string> potentialConsiliumTimes = new List<string>();
-
-            //ovo ce se brisati, treba dto da se sredi
+            List<PotentialAppointmentsDTO> potentialConsiliumTimes = new List<PotentialAppointmentsDTO>();
 
             for (DateTime day = consiliumAppointmentInfo.Start; day <= consiliumAppointmentInfo.End; day = day.AddDays(1))
             {
@@ -74,10 +72,12 @@ namespace HospitalLibrary.Core.Consiliums
                 {
                     DateTime currentEnd = start.AddMinutes(consiliumAppointmentInfo.Duration);
                     DateTimeRange potentialTime = new DateTimeRange(start, currentEnd);
-
-                    if (_doctorService.AreAvailableForConsilium(consiliumAppointmentInfo.DoctorIds, potentialTime) && ConsiliumRoomAvailable(potentialTime))
-                        potentialConsiliumTimes.Add(start.Day.ToString()+'/'+start.Month.ToString() + '/'+start.Year.ToString() + ' '+start.Hour.ToString() + ':'+start.Minute.ToString());
-
+                    //&& ConsiliumRoomAvailable(potentialTime)
+                    if (_doctorService.AreAvailableForConsilium(neededDoctors, potentialTime))
+                    {
+                        PotentialAppointmentsDTO appointment = new PotentialAppointmentsDTO(consiliumAppointmentInfo.Topic, start, currentEnd, consiliumAppointmentInfo.Duration, neededDoctors, "");
+                        potentialConsiliumTimes.Add(appointment);
+                    }
                     start = start.AddMinutes(consiliumAppointmentInfo.Duration);
                 }
             }
@@ -85,10 +85,10 @@ namespace HospitalLibrary.Core.Consiliums
             return potentialConsiliumTimes;
         }
 
-        public List<string> GetPotentialAppointmentTimesForSpecialties(CreateConsiliumDTO consiliumAppointmentInfo)
+        public List<PotentialAppointmentsDTO> GetPotentialAppointmentTimesForSpecialties(CreateConsiliumDTO consiliumAppointmentInfo)
         {
             int numOfDoctors = -1;
-            List<string> potentialTimes = new List<string>();
+            List<PotentialAppointmentsDTO> potentialTimes = new List<PotentialAppointmentsDTO>();
 
             for (DateTime day = consiliumAppointmentInfo.Start; day <= consiliumAppointmentInfo.End; day = day.AddDays(1))
             {
@@ -110,18 +110,13 @@ namespace HospitalLibrary.Core.Consiliums
 
                     if (availableDoctors == null)
                         continue;
-
-                    if (availableDoctors.Count > numOfDoctors && ConsiliumRoomAvailable(potentialTime))
+                    if (availableDoctors.Count > numOfDoctors)
                     {
                         numOfDoctors = availableDoctors.Count;
-                        potentialTimes = new List<string>();
-                        potentialTimes.Add(start.Day.ToString() + '/' + start.Month.ToString() + '/' + start.Year.ToString() + ' ' + start.Hour.ToString() + ':' + start.Minute.ToString());
-
+                        potentialTimes = new List<PotentialAppointmentsDTO>();
                     }
-                    else if(availableDoctors.Count == numOfDoctors && ConsiliumRoomAvailable(potentialTime))
-                    {
-                        potentialTimes.Add(start.Day.ToString() + '/' + start.Month.ToString() + '/' + start.Year.ToString() + ' ' + start.Hour.ToString() + ':' + start.Minute.ToString());
-                    }
+                    PotentialAppointmentsDTO appointment = new PotentialAppointmentsDTO(consiliumAppointmentInfo.Topic, start, currentEnd, consiliumAppointmentInfo.Duration, availableDoctors, consiliumAppointmentInfo.Specialties);
+                    potentialTimes.Add(appointment);                
                 }
             }
             return potentialTimes;
@@ -156,7 +151,8 @@ namespace HospitalLibrary.Core.Consiliums
         {
             foreach(Consilium consilium in _consiliumRepository.GetAll())
             {
-                if (consilium.FromTo.OverlapsWith(potentialTime))
+                DateTimeRange consiliumTime = new DateTimeRange(consilium.FromTo, consilium.FromTo.AddMinutes(consilium.Duration));
+                if (consiliumTime.OverlapsWith(potentialTime))
                     return false;
             }
 
@@ -171,6 +167,7 @@ namespace HospitalLibrary.Core.Consiliums
             foreach(string doctorId in doctorIds)
             {
                 ConsiliumAppointment appointment = new ConsiliumAppointment(1, doctorId, consilium.Id);
+                appointments.Add(appointment);
             }
 
 

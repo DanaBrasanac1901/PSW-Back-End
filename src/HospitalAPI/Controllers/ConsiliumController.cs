@@ -28,33 +28,33 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult CreateConsiliumWithDoctors(CreateConsiliumDTO consiliumDto)
+        public ActionResult CreateConsiliumWithDoctors(PotentialAppointmentsDTO consiliumDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Consilium consilium = _consiliumService.Create(consiliumDto);
+            Consilium consilium = _consiliumService.Create(consiliumDTO);
         
             return CreatedAtAction("GetById", new { id = consilium.Id }, consilium);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("[action]")]
         public ActionResult GetPotentialConsiliumTimesDoctors(CreateConsiliumDTO consiliumDTO)
         {
-            List<string> potentialTimes = _consiliumService.GetPotentialAppointmentTimesForDoctors(consiliumDTO);
+            List<PotentialAppointmentsDTO> potentialTimes = _consiliumService.GetPotentialAppointmentTimesForDoctors(consiliumDTO);
 
             return Ok(potentialTimes);
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("[action]")]
         public ActionResult GetPotentialConsiliumTimesSpecialties(CreateConsiliumDTO consiliumDTO)
         {
-            List<string> potentialTimes = _consiliumService.GetPotentialAppointmentTimesForSpecialties(consiliumDTO);
+            List<PotentialAppointmentsDTO> potentialTimes = _consiliumService.GetPotentialAppointmentTimesForSpecialties(consiliumDTO);
 
             return Ok(potentialTimes);
         }

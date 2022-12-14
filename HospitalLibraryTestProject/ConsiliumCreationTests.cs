@@ -39,7 +39,7 @@ namespace HospitalLibraryTestProject
 
             Assert.Empty(potentialConsiliumAppointments);
         }*/
-
+        /*
         [Fact]
         public void Doctors_available()
         {
@@ -74,7 +74,7 @@ namespace HospitalLibraryTestProject
             List<Doctor> doctors = doctorService.GetAvailableBySpecialty(0, consiliumInterval);
 
             Assert.NotEmpty(doctors);
-        }
+        }*/
 
         [Fact]
         public void Doesnt_have_available_for_specialty()

@@ -160,9 +160,8 @@ namespace HospitalLibrary.Core.Doctor
             return returnList;
         }
 
-        public bool AreAvailableForConsilium(string doctorIds, DateTimeRange consiliumInterval)
+        public bool AreAvailableForConsilium(List<Doctor> neededDoctors, DateTimeRange consiliumInterval)
         {
-            List<Doctor> neededDoctors = _doctorRepository.GetByIds(doctorIds);
 
             foreach(Doctor doctor in neededDoctors)
             {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Consiliums
 {
-    class ConsiliumRepository  : IConsiliumRepository
+    public class ConsiliumRepository  : IConsiliumRepository
     {
         private readonly HospitalDbContext _context;
 
@@ -64,7 +64,7 @@ namespace HospitalLibrary.Core.Consiliums
 
             foreach (Consilium consilium in consiliums)
             {
-                if (currentTime > consilium.FromTo.End)
+                if (currentTime > consilium.FromTo.AddMinutes(consilium.Duration))
                 {
                     consilium.Finished = true;
                     Update(consilium);

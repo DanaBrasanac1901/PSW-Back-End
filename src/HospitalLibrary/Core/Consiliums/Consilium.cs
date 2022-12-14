@@ -18,7 +18,7 @@ namespace HospitalLibrary.Core.Consiliums
         public string DoctorIds { get; set; }
 
         [Column(TypeName = "jsonb")]
-        public DateTimeRange FromTo { get; set; }
+        public DateTime FromTo { get; set; }
        
 
         public bool Finished { get; set; }
@@ -35,7 +35,7 @@ namespace HospitalLibrary.Core.Consiliums
             DoctorIds = doctorIds;
             Specialties = specilaties;
             Finished = false;
-            FromTo = new DateTimeRange(start, start.AddMinutes(duration));
+            FromTo = start;
             CreatedBy = createdBy;
             RoomId = 999;
         }         
