@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Nest;
 using IntegrationAPI.Exceptions.Validation;
+using IntegrationLibery.News;
 
 namespace IntegrationAPI.Controllers
 {
@@ -40,8 +41,17 @@ namespace IntegrationAPI.Controllers
             return Ok(bloodBanks);
 
         }
+        [HttpGet]
+        [Route("News")]
+        public async Task<IActionResult> GetNews()
+        {
 
 
+            var bloodBanks = _IbbService.getNews();
+
+            return Ok(bloodBanks);
+
+        }
         [HttpGet]
         [Route("{id:Guid}")]
         [ActionName("GetbyId")]
@@ -53,6 +63,17 @@ namespace IntegrationAPI.Controllers
             return Ok(bloodBank);
         }
 
+
+        [HttpGet]
+        [Route("News/{id:Guid}")]
+        [ActionName("GetbyId")]
+        public  Message GetByIdNews([FromRoute] Guid id)
+        {
+            var bloodBank = _IbbService.getByIdNews(id);
+           // BloodBankRequestValidator.Validate(bloodBank);
+
+            return bloodBank;
+        }
 
         [HttpPost]
 
@@ -67,6 +88,21 @@ namespace IntegrationAPI.Controllers
             
            
             return Ok(_mapper.Map<BloodBankDTO>(_IbbService.GetById(bank1.Id)));
+        }
+
+        [HttpPost]
+        [Route("News")]
+        public async Task<IActionResult> AddNews([FromBody] NewsDTO DTO)
+        {
+
+            Message bank1 = new Message();
+            bank1 = _mapper.Map<Message>(DTO);
+            bank1.Id=Guid.NewGuid();
+            //BloodBankRequestValidator.Validate(bank1);
+            _IbbService.addNews(bank1);
+
+
+            return Ok(bank1);
         }
 
         [HttpPut]

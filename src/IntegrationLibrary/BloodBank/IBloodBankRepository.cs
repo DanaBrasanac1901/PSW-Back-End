@@ -1,4 +1,5 @@
 ﻿
+using IntegrationLibery.News;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,11 @@ namespace IntegrationLibrary.BloodBank
         void Create(BloodBank bb);
         void Update(BloodBank bb);
         void Delete(BloodBank bb);
-      
+        void addNews(Message mess);
+        IEnumerable<Message> getNews();
+        Message getByIdNews(Guid id);
+
+
 
     }
 }

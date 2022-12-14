@@ -70,7 +70,7 @@ namespace IntegrationTests.Setup
              DateTime.Today, 
              IntegrationLibrary.Report.Period.EveryTwoMonths,
              DateTime.Today));
-*/
+*/          
             context.SaveChanges();
         }
         private static void InitializeBloodbanks(IntegrationDbContext context)
