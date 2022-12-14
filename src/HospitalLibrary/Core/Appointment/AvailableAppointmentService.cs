@@ -185,8 +185,6 @@ namespace HospitalLibrary.Core.Appointment
 
         public bool CheckAvailability(AppointmentPatientDTO dto)
         {
-            dto.Date = DateTime.Parse(dto.DateString + ' ' + dto.TimeString);
-            
             //Uzima sve appointmente iz baze za lekara, provera za svaki da li se poklapa sa nasim, ako nijedan nije kao nas available = true
             IEnumerable < Appointment > doctorApps = _appointmentRepository.GetAllByDoctor(dto.DoctorId);
             dto.Date = DateTime.Parse(dto.DateString + ' ' + dto.TimeString);
