@@ -78,7 +78,7 @@ namespace HospitalLibrary.Core.Report.DTO
             return dto;
         }
 
-        private static List<DrugDTO> CreateDrugdDTO(ICollection<Drug> drugs)
+        public static List<DrugDTO> CreateDrugdDTO(ICollection<Drug> drugs)
         {
             List<DrugDTO> dtos = new List<DrugDTO>();
             foreach (var drug in drugs)
@@ -92,12 +92,11 @@ namespace HospitalLibrary.Core.Report.DTO
             return dtos;
         }
 
-        public static DrugPrescriptionToShowDTO DrugPrescriptionToDrugPrescriptionToShowDTO(DrugPrescription drugPrescription)
+        public static DrugPrescriptionToShowDTO DrugPrescriptionToDrugPrescriptionToShowDTO(Report.Model.Report report)
         {
             DrugPrescriptionToShowDTO dto = new DrugPrescriptionToShowDTO();
-            dto.id = drugPrescription.Id;
-            dto.reportId = drugPrescription.ReportId;
-            dto.drugs = CreateDrugdDTO(drugPrescription.Drugs);
+            dto.id = report.Id;
+            dto.drugs = CreateDrugdDTO(report.Drugs);
             return dto;
         }
     }

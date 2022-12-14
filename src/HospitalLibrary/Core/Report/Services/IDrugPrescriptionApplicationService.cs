@@ -14,6 +14,6 @@ namespace HospitalLibrary.Core.Report.Services
 
         bool IsDrugExist(ICollection<Drug> drugs, string id);
 
-        DrugPrescriptionToShowDTO GetDrugPrescriptionToShow(string id);
+        //DrugPrescriptionToShowDTO GetDrugPrescriptionToShow(string id);
     }
 }

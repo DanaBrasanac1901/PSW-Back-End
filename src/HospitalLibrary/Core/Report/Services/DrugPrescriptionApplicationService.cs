@@ -75,9 +75,9 @@ namespace HospitalLibrary.Core.Report.Services
             return null;
         }
 
-        public DrugPrescriptionToShowDTO GetDrugPrescriptionToShow(string id)
-        {
-            return ReportAdapter.DrugPrescriptionToDrugPrescriptionToShowDTO(GetDrugPrescriptionByReportId(id));
-        }
+        //public DrugPrescriptionToShowDTO GetDrugPrescriptionToShow(string id)
+        //{
+        //    return ReportAdapter.DrugPrescriptionToDrugPrescriptionToShowDTO(GetDrugPrescriptionByReportId(id));
+        //}
     }
 }

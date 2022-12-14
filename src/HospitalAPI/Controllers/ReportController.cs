@@ -116,13 +116,23 @@ namespace HospitalAPI.Controllers
             return Ok(report);
         }
 
+        //[HttpGet]
+        //[Route("[action]/{id}")]
+        //public ActionResult GetPrescriptionById(string id)
+        //{
+        //    var drugPres = _drugPrescriptionApplicationService.GetDrugPrescriptionToShow(id);
+        //    return Ok(drugPres);
+        //}
+
         [HttpGet]
         [Route("[action]/{id}")]
-        public ActionResult GetPrescriptionById(string id)
+        public ActionResult GetDrugFromReport(string id)
         {
-            var drugPres = _drugPrescriptionApplicationService.GetDrugPrescriptionToShow(id);
+            var drugPres = _reportApplicationService.GetDrugToShow(id);
             return Ok(drugPres);
         }
+
+
 
     }
 }
