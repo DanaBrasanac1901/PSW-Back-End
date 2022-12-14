@@ -12,8 +12,7 @@ namespace HospitalLibrary.Core.Consiliums
         IEnumerable<ShowConsiliumDTO> GetAll();
         Consilium Create(PotentialAppointmentsDTO consiliumDto);
         void Update(Consilium consilium);
-        List<PotentialAppointmentsDTO> GetPotentialAppointmentTimesForDoctors(CreateConsiliumDTO consiliumAppointmentInfo);
-        List<PotentialAppointmentsDTO> GetPotentialAppointmentTimesForSpecialties(CreateConsiliumDTO consiliumAppointmentInfo);
-        List<ConsiliumAppointment> CreateConsiliumAppointments(Consilium consilium);
+        List<PotentialAppointmentsDTO> GetPotentialAppointmentTimesForDoctors(ConsiliumRequestDTO consiliumAppointmentInfo);
+        List<PotentialAppointmentsDTO> GetPotentialAppointmentTimesForSpecialties(ConsiliumRequestDTO consiliumAppointmentInfo);
     }
 }

@@ -39,9 +39,6 @@ namespace HospitalLibrary.Core.Consiliums.DTO
         public Consilium ConvertToConsilium()
         {
             
-
-            
-
             return new Consilium(0, Topic, Duration, StringToDateTime(Start), DoctorIds, Specialties, "DOC1");
         }
 

@@ -19,7 +19,7 @@ namespace HospitalLibrary.Core.Consiliums
 
         public IEnumerable<Consilium> GetAll()
         {
-            UpdateFinishedConsiliums();
+            //UpdateFinishedConsiliums();
             return _context.Consiliums.ToList();
         }
 
@@ -28,12 +28,44 @@ namespace HospitalLibrary.Core.Consiliums
             return _context.Consiliums.Find(id);
         }
 
-        public void Create(Consilium consilium, List<ConsiliumAppointment> appointments)
+        public Consilium Create(Consilium consilium)
         {
-            _context.Consiliums.Add(consilium);
-            _context.ConsiliumAppointments.AddRange(appointments);
+            try
+            {
+                _context.Consiliums.Add(consilium);
 
-            _context.SaveChanges();
+                _context.SaveChanges();
+
+                Consilium lastAdded = _context.Consiliums.OrderByDescending(cons => cons.Id).FirstOrDefault();
+
+                List<ConsiliumAppointment> appointments = CreateConsiliumAppointments(lastAdded);
+
+                _context.ConsiliumAppointments.AddRange(appointments);
+
+                _context.SaveChanges();
+                
+
+                return lastAdded;
+            }
+            catch (Exception) {
+                return null;
+            }
+           
+        }
+
+        public List<ConsiliumAppointment> CreateConsiliumAppointments(Consilium consilium)
+        {
+
+            string[] doctorIds = consilium.DoctorIds.Split(',');
+            List<ConsiliumAppointment> appointments = new List<ConsiliumAppointment>();
+            foreach (string doctorId in doctorIds)
+            {
+                ConsiliumAppointment appointment = new ConsiliumAppointment(doctorId, consilium.Id);
+                appointments.Add(appointment);
+            }
+
+
+            return appointments;
         }
 
         public void Update(Consilium consilium)
@@ -56,6 +88,7 @@ namespace HospitalLibrary.Core.Consiliums
             _context.SaveChanges();
         }
 
+        /*
         private void UpdateFinishedConsiliums()
         {
             List<Consilium> consiliums = (List<Consilium>) GetAll();
@@ -64,12 +97,12 @@ namespace HospitalLibrary.Core.Consiliums
 
             foreach (Consilium consilium in consiliums)
             {
-                if (currentTime > consilium.FromTo.AddMinutes(consilium.Duration))
+                if (currentTime > consilium.Start.AddMinutes(consilium.Duration))
                 {
                     consilium.Finished = true;
                     Update(consilium);
                 }
             }
-        }
+        }*/
     }
 }

@@ -36,13 +36,15 @@ namespace HospitalAPI.Controllers
             }
 
             Consilium consilium = _consiliumService.Create(consiliumDTO);
-        
-            return CreatedAtAction("GetById", new { id = consilium.Id }, consilium);
+
+            if (consilium != null)
+                return Ok(consilium);
+            else return StatusCode(500);
         }
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult GetPotentialConsiliumTimesDoctors(CreateConsiliumDTO consiliumDTO)
+        public ActionResult GetPotentialConsiliumTimesDoctors(ConsiliumRequestDTO consiliumDTO)
         {
             List<PotentialAppointmentsDTO> potentialTimes = _consiliumService.GetPotentialAppointmentTimesForDoctors(consiliumDTO);
 
@@ -52,7 +54,7 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult GetPotentialConsiliumTimesSpecialties(CreateConsiliumDTO consiliumDTO)
+        public ActionResult GetPotentialConsiliumTimesSpecialties(ConsiliumRequestDTO consiliumDTO)
         {
             List<PotentialAppointmentsDTO> potentialTimes = _consiliumService.GetPotentialAppointmentTimesForSpecialties(consiliumDTO);
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Consiliums.DTO
 {
-    public class CreateConsiliumDTO
+    public class ConsiliumRequestDTO
     {
         public DateTime Start {
             get {
@@ -51,8 +51,8 @@ namespace HospitalLibrary.Core.Consiliums.DTO
         public string Specialties { get; set; }
 
 
-        public CreateConsiliumDTO() { }
-        public CreateConsiliumDTO(string topic, string start, string end, int duration=0, string doctorIds="", string specialties="")
+        public ConsiliumRequestDTO() { }
+        public ConsiliumRequestDTO(string topic, string start, string end, int duration=0, string doctorIds="", string specialties="")
         {
             Topic = topic;
             StartStr = start;

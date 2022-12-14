@@ -108,7 +108,7 @@ namespace HospitalLibrary.Settings
                   }
             );
             */
-
+            /*
             Consilium consilium1 = new Consilium(1, "proba dal radi", 45, new DateTime(2023, 3, 10, 10, 30, 0), "DOC1, DOC2", "", "DOC1");
 
             modelBuilder.Entity<Consilium>().HasData(
@@ -125,7 +125,7 @@ namespace HospitalLibrary.Settings
 
 
 
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);*/
         }
 
 

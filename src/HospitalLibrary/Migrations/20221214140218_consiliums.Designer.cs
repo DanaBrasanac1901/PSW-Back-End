@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221214140218_consiliums")]
+    partial class consiliums
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,14 +151,14 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Finished")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime>("FromTo")
+                        .HasColumnType("jsonb");
+
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Specialties")
                         .HasColumnType("text");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Topic")
                         .HasColumnType("text");
@@ -164,6 +166,20 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Consiliums");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedBy = "DOC1",
+                            DoctorIds = "DOC1, DOC2",
+                            Duration = 45,
+                            Finished = false,
+                            FromTo = new DateTime(2023, 3, 10, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            RoomId = 999,
+                            Specialties = "",
+                            Topic = "proba dal radi"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Consiliums.ConsiliumAppointment", b =>
@@ -186,6 +202,20 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("ConsiliumAppointments");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConsiliumId = 1,
+                            DoctorId = "DOC1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConsiliumId = 1,
+                            DoctorId = "DOC2"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Doctor.Doctor", b =>
