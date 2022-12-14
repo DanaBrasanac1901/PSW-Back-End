@@ -189,7 +189,7 @@ namespace HospitalLibrary.Core.Appointment
             IEnumerable < Appointment > doctorApps = _appointmentRepository.GetAllByDoctor(dto.DoctorId);
             foreach(Appointment app in doctorApps)
             {
-                if (app.Start.Date == dto.Date.Date)
+                if (DateTime.Compare(app.Start.Date, dto.Date.Date)==0)
                 {
                     if(app.Start.Hour == dto.getStartHour() && app.Start.Minute == dto.getStartMinutes())
                     {
