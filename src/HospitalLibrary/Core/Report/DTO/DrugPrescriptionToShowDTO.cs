@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Report.DTO
 {
     public class DrugPrescriptionToShowDTO
     {
-        public string id { get; set; }
+        public string reportId { get; set; }
         public List<DrugDTO> drugs { get; set; }
 
         public DrugPrescriptionToShowDTO()
