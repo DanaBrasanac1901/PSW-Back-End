@@ -211,14 +211,13 @@ namespace HospitalAPI.Controllers
         [Route("patient/schedule")]
         public ActionResult PatientSchedule(AppointmentPatientDTO dto)
         {
-            DateTime _datetime=DateTime.Parse(dto.DateString+' '+dto.TimeString);
+            
             CreateAppointmentDTO createDTO = dto.toCreateDTO();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             _appointmentService.Create(createDTO);
-            Appointment appointment = new Appointment();
             return NoContent();
         }
     }
