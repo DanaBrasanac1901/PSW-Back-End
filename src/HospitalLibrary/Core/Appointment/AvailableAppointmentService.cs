@@ -79,8 +79,9 @@ namespace HospitalLibrary.Core.Appointment
         //ovo je za zakazivanje s prioritetima za pacijenta, osnovna fja
         public IEnumerable<AppointmentPatientDTO> FindAppointmentsWithSuggestions(AppointmentPatientDTO dto, string priority)
         {
-            dto.Date = DateTime.Parse(dto.DateString);
-            dto.DateRange = new DateTimeRange(dto.Date, dto.Date);
+            DateTime startDate = DateTime.Parse(dto.StartDateString);
+            DateTime endDate=DateTime.Parse(dto.EndDateString);
+            dto.DateRange = new DateTimeRange(startDate, endDate);
             IEnumerable<AppointmentPatientDTO> idealAppointments = FindIdealAppointments(dto.DateRange, dto.Doctor);
             if (!idealAppointments.Any <AppointmentPatientDTO>())
             {
@@ -95,7 +96,7 @@ namespace HospitalLibrary.Core.Appointment
 
                 }
             }
-            return null;
+            return idealAppointments;
         }
 
 

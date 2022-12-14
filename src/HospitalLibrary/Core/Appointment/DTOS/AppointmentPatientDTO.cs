@@ -19,6 +19,8 @@ namespace HospitalLibrary.Core.Appointment.DTOS
 
         public DateTime Date { get; set; }
         public string DateString { get; set; }
+        public string StartDateString { get; set; }
+        public string EndDateString { get; set; }
         public string TimeString { get; set; }
 
         public AppointmentPatientDTO() { }
