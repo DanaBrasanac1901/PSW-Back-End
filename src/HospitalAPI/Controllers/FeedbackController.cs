@@ -11,9 +11,9 @@ namespace HospitalAPI.Controllers
     {
         private readonly IFeedbackService _feedbackService;
 
-        public FeedbackController(HospitalDbContext hospitalDb)
+        public FeedbackController(IFeedbackService feedbackService)
         {
-            _feedbackService = new FeedbackServiceInjector().Inject(hospitalDb);
+            _feedbackService = feedbackService;
         }
 
         [HttpGet]

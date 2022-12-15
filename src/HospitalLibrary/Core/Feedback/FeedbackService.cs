@@ -12,9 +12,9 @@ namespace HospitalLibrary.Core.Feedback
     {
         private readonly IFeedbackRepository _feedbackRepository;
 
-        public FeedbackService(HospitalDbContext hospitalDb)
+        public FeedbackService(IFeedbackRepository feedbackRepository)
         {
-           _feedbackRepository=new FeedbackRepositoryInjector(hospitalDb).Inject();
+           _feedbackRepository= feedbackRepository;
 
         }
 
