@@ -10,14 +10,12 @@ namespace HospitalLibrary.Core.Consiliums
     {
         private readonly IConsiliumRepository _consiliumRepository;
         private readonly Doctor.IDoctorService _doctorService;
-        private readonly IRoomService _roomService;
 
 
-        public ConsiliumService(IConsiliumRepository consiliumRepository, Doctor.IDoctorService doctorService, Room.IRoomService roomService)
+        public ConsiliumService(IConsiliumRepository consiliumRepository, Doctor.IDoctorService doctorService)
         {
             _consiliumRepository = consiliumRepository;
             _doctorService = doctorService;
-            _roomService = roomService;
         }
 
         public IEnumerable<ShowConsiliumDTO> GetAll()
