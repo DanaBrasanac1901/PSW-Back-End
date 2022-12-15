@@ -28,7 +28,7 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult CreateConsiliumWithDoctors(PotentialAppointmentsDTO consiliumDTO)
+        public ActionResult Create(PotentialAppointmentsDTO consiliumDTO)
         {
             if (!ModelState.IsValid)
             {

@@ -47,14 +47,17 @@ namespace HospitalTests.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=admin;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
         }
         
         private static void InitializeDatabase(HospitalDbContext context)
         {
 
             context.Database.EnsureCreated();
+            
 
+            context.SaveChanges();
+            /*
            // context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");
             context.Rooms.Add(new Room { Id = 1, Number = "101A", Floor = 1 });
 
@@ -85,8 +88,8 @@ namespace HospitalTests.Setup
             context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB });
            // context.Database.ExecuteSqlRaw("truncate table \"Appointments\";");
             context.Appointments.Add(new Appointment { Id = "APP1", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 11, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
-            context.Appointments.Add(new Appointment { Id = "APP2", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 12, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
-            context.Appointments.Add(new Appointment { Id = "APP3", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 5, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+            context.Appointments.Add(new Appointment { Id = "APP2", DoctorId = "DOC2", PatientId = "PAT1", Start = new DateTime(2022, 12, 28, 13, 0, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
+            context.Appointments.Add(new Appointment { Id = "APP3", DoctorId = "DOC2", PatientId = "PAT1", Start = new DateTime(2023, 2, 5, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
             context.Appointments.Add(new Appointment { Id = "APP4", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 12, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 9, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
@@ -111,10 +114,7 @@ namespace HospitalTests.Setup
 
             //context.VacationRequests.Add(new VacationRequest { Id = 1, Start = new DateTime(2023, 3, 5), End = new DateTime(2023, 3, 10), Description = "need rest", Urgency = false, DoctorId = "DOC1", Status = VacationRequestStatus.WaitingForApproval, RejectionReason = "" });
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");
-
-
-            context.SaveChanges();
-       }
+        }
 
 
         //private static void InitializeUsers(HospitalDbContext context)
@@ -148,7 +148,8 @@ namespace HospitalTests.Setup
         //    context.Patients.Add(new Patient { Id = "8", Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = { },DoctorID="3", Active=true });
         //    context.Patients.Add(new Patient { Id = "9", Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = { }, DoctorID = "1", Active = true });
 
-        //}
+        //}*/
+
     }
 }
 

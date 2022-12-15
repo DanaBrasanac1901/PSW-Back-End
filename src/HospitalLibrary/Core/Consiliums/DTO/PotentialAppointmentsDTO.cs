@@ -8,6 +8,8 @@ namespace HospitalLibrary.Core.Consiliums.DTO
 {
     public class PotentialAppointmentsDTO
     {
+        private IConsiliumService consiliumService;
+
         public string Start { get; set; }
         public string End { get; set; }
         public string DoctorIds { get; set; }
@@ -24,6 +26,19 @@ namespace HospitalLibrary.Core.Consiliums.DTO
             Duration = duration;
             Start = start.Day.ToString() + '/' + start.Month.ToString() + '/' + start.Year.ToString() + ' ' + start.Hour.ToString() + ':' + start.Minute.ToString();
             End = end.Day.ToString() + '/' + end.Month.ToString() + '/' + end.Year.ToString() + ' ' + end.Hour.ToString() + ':' + end.Minute.ToString();
+        }
+
+        public PotentialAppointmentsDTO(IConsiliumService consiliumService)
+        {
+            Topic = "A consilium to discuss the further treatment of a patient";
+            Start = "24/4/2023 15:45";
+            End = "24/4/2023 16:30";
+            Duration = 45;
+            Specialties = "";
+            DoctorIds = "DOC1";
+
+
+            this.consiliumService = consiliumService;
         }
 
         private string ExtractIds(List<Doctor.Doctor> doctors)
@@ -57,5 +72,7 @@ namespace HospitalLibrary.Core.Consiliums.DTO
 
             return new DateTime(year, month, day, hours, minutes, 0);
         }
+
+
     }
 }
