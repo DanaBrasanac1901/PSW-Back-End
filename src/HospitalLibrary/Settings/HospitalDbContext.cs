@@ -6,7 +6,6 @@ using HospitalLibrary.Core.Feedback;
 using HospitalLibrary.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;

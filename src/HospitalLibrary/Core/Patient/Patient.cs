@@ -85,7 +85,7 @@ namespace HospitalLibrary.Core.Patient
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Surname { get => surname; set => surname = value; }
-        public Address Address { get => adress; }
+        public Address Address { get => adress; private set => adress = value; }
         public string Email { get => email; set => email = value; }
         public Gender Gender { get => gender; set => gender = value; }
         public int Age { get => age; set => age = value; }
