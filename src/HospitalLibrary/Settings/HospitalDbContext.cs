@@ -125,6 +125,8 @@ namespace HospitalLibrary.Settings
                   }
             );
 
+            modelBuilder.Entity<Patient>().Property(p => p.Address).HasColumnType("jsonb");
+
             base.OnModelCreating(modelBuilder);
         }
 

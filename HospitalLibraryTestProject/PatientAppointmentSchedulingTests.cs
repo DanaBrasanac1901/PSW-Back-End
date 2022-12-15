@@ -61,7 +61,7 @@ namespace HospitalLibraryTestProject
             Setting_appointment_service();
             Doctor testDoctor = new Doctor { Id = "1", Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 13 };
            // var result = appointmentService.FindAppointmentsWithSuggestions()
-          //  Assert.NotEmpty(result);
+            //Assert.NotEmpty(result);
         }
 
         [Fact]
