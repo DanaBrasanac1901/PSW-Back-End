@@ -77,14 +77,17 @@ namespace HospitalTests.Setup
 
 
 
+
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Doctors\";");
             context.Doctors.Add(new Doctor { Id = "DOC1", Name = "Milan", Surname = "Radovic", Email = "radovic@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 16, Appointments = new System.Collections.Generic.List<Appointment>(), VacationRequests = new System.Collections.Generic.List<VacationRequest>() });
+
             //context.Database.ExecuteSqlRaw("truncate table \"HospitalBlood\";");
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
             //context.Database.ExecuteSqlRaw("truncate table \"VacationRequests\";");
             context.HospitalBlood.Add(new BloodSupply { Id = 1, Amount = 10, Type = BloodType.A });
             context.HospitalBlood.Add(new BloodSupply { Id = 2, Amount = 11, Type = BloodType.B });
             context.HospitalBlood.Add(new BloodSupply { Id = 3, Amount = 12, Type = BloodType.O });
+
             context.HospitalBlood.Add(new BloodSupply { Id = 4, Amount = 13, Type = BloodType.AB });
            // context.Database.ExecuteSqlRaw("truncate table \"Appointments\";");
             context.Appointments.Add(new Appointment { Id = "APP1", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2022, 11, 28, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
@@ -93,6 +96,7 @@ namespace HospitalTests.Setup
             context.Appointments.Add(new Appointment { Id = "APP4", DoctorId = "DOC1", PatientId = "PAT1", Start = new DateTime(2023, 2, 12, 12, 40, 0), Duration = 20, RoomId = 1, Status = AppointmentStatus.Scheduled });
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionRecords\";");
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 9, Amount = 10, Type = BloodType.A, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
+
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 10, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 11, Amount = 12, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 12, Amount = 13, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });

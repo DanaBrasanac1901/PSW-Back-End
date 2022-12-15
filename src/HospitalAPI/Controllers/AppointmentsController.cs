@@ -142,5 +142,13 @@ namespace HospitalAPI.Controllers
             _appointmentService.ChangeDoctorForAppointment(doctorId, appointmentId);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetAppointmentForReport(string id)
+        {
+            var app = _appointmentService.GetAppointmentForReport(id);
+            return Ok(app);
+        }
     }
 }

@@ -12,6 +12,8 @@ using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
 using HospitalLibrary.Core.Consiliums;
+using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -41,6 +43,21 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Consilium> Consiliums {get; set;}
         public DbSet<ConsiliumAppointment> ConsiliumAppointments { get; set; }
+
+        public DbSet<Report> Reports { get; set; }
+
+        public DbSet<DrugPrescription> DrugPrescriptions { get; set; }
+
+
+
+        public DbSet<Symptom> Symptoms { get; set; }
+
+        public DbSet<Drug> Drugs { get; set; }
+
+
+        public DbSet<DrugList> DrugsList { get; set; }
+
+        public DbSet<SymptomList> SymptomList { get; set;}
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
@@ -109,7 +126,7 @@ namespace HospitalLibrary.Settings
             );
             */
             /*
-            Consilium consilium1 = new Consilium(1, "proba dal radi", 45, new DateTime(2023, 3, 10, 10, 30, 0), "DOC1, DOC2", "", "DOC1");
+            Consilium consilium1 = new Consilium(1, "A complicated case", 45, new DateTime(2023, 3, 10, 10, 30, 0), "DOC1, DOC2", "", "DOC1");
 
             modelBuilder.Entity<Consilium>().HasData(
                     consilium1
@@ -121,16 +138,36 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<ConsiliumAppointment>().HasData(
                     app1,
                     app2
-            );
+            );*/
 
 
+            DrugList drug1 = new DrugList("aspirin", "Aspirin", "Galenika");
+            DrugList drug2 = new DrugList("brufen", "Brufen", "Galenika");
+            DrugList drug3 = new DrugList("ginko", "Ginko", "Galenika");
+            modelBuilder.Entity<DrugList>().HasData(
+                drug1,drug2,drug3
+             );
 
-            base.OnModelCreating(modelBuilder);*/
+            modelBuilder.Entity<SymptomList>().HasData(
+                new SymptomList()
+                {
+                    Id= "Glavobolja",
+                    Name = "Glavobolja"
+                },
+                new SymptomList()
+                {
+                    Id = "Kijavica",
+                    Name = "Kijavica"
+                },
+                new SymptomList()
+                {
+                    Id = "Dijareja",
+                    Name = "Dijareja"
+                }
+                );
+
+            base.OnModelCreating(modelBuilder);
         }
-
-
-        
-
        
 
     }
