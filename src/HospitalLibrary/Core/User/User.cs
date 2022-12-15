@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.PasswordHasher;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,6 +21,18 @@ namespace HospitalLibrary.Core.User
         string role;
         bool active;
         string token;
+
+        public User(int id, int idByRole, string name, string surname, string email, string password, string role, bool active)
+        {
+            this.id = id;
+            this.idByRole = idByRole;
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
+            this.password = password;
+            this.role = role;
+            this.active = active;
+        }
 
         public User()
         {
@@ -47,6 +60,12 @@ namespace HospitalLibrary.Core.User
             Regex r=new Regex("^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!&$%&?\"]).*$");
             Match m=r.Match(this.password);
             if (!m.Success) throw new ArgumentException();
+
+            Regex r1 = new Regex("\\w{1,}@{1,}\\w{1,}.{1}");
+            Match m1 = r1.Match(this.email);
+            if (!m1.Success) throw new ArgumentException();
+
+
         }
        
 
@@ -54,7 +73,7 @@ namespace HospitalLibrary.Core.User
         public int IdByRole { get { return idByRole; } set { idByRole = value; } }
         public string Name { get { return name; } set { name = value; } }
         public string Surname { get { return surname; } set { surname = value;  } }
-        public string Email { get { return email; } set { email = value; } }
+        public string Email { get { return email; } private set { email = value; } }
         public string Password { get { return password; } set { password = value; } }
         public string Role { get { return role; } set { role = value; } }
 
@@ -79,5 +98,7 @@ namespace HospitalLibrary.Core.User
                 return hash;
             }
         }
+
+        
     }
 }
