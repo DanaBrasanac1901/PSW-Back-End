@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.Doctor.DTOS;
 using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Vacation.DTO;
 using System;
@@ -114,13 +115,104 @@ namespace HospitalLibrary.Core.Vacation
             VacationRequest request = VacationRequestDTOAdapter.CreateUrgenVacationDTOToVacationRequest(dto);
             List<bool> parameters = parametersForUrgentRequest(request);
             if (parameters[0] == false
-                && parameters[1] == true 
+                && parameters[1] == true
                 && parameters[2] == true
                 && parameters[3] == true)
             {
+                parameters.Add(false);
                 _vacationRequestRepository.Create(request);
             }
+            else if (parameters[0] == true)
+            {
+                parameters.Add(false);
+                var apps = GetAppointmentsUrgentVacation(request.DoctorId,dto.start,dto.end);
+                List<Doctor.Doctor> docs = new List<Doctor.Doctor>();
+                foreach(var app in apps)
+                {
+                    docs = GetFreeDoctors(app.Start);
+                    if (docs == null){
+                        parameters[4] = true;
+                        return ResponseHandler(parameters);
+                    }
+                    ChangeDoctorForAppointment(docs[0].Id, app.Id);
+                }
+                
+            }
+            
             return ResponseHandler(parameters);
+        }
+
+        public void ChangeDoctorForAppointment(string doctorId, string appointmentId)
+        {
+            var appointment = _appointmentRepository.GetById(appointmentId);
+
+            if (CheckIfAppointmentExistsForDoctor(doctorId, appointment.Start) == true)
+            {
+                appointment.DoctorId = doctorId;
+                _appointmentRepository.Update(appointment);
+            }
+
+        }
+
+        public Boolean CheckIfAppointmentExistsForDoctor(string doctorId, DateTime start)
+        {
+
+            foreach (var app in _appointmentRepository.GetAll())
+            {
+                if (app.DoctorId == doctorId && app.Start == start)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public List<Appointment.Appointment> ReturnListGetAppointmentsUrgentVacation(ICollection<Appointment.Appointment> apps,
+            List<DateTime> startAndEnd)
+        {
+            List<Appointment.Appointment> returnList = new List<Appointment.Appointment>();
+            foreach (var app in apps)
+            {
+                if (app.Start >= startAndEnd[0] && app.Start <= startAndEnd[1])
+                {
+                    returnList.Add(app);
+                }
+            }
+            return returnList;
+        }
+
+        public List<Appointment.Appointment> GetAppointmentsUrgentVacation(string id, string start, string end)
+        {
+            List<DateTime> timeRange = VacationRequestDTOAdapter.UrgentVacationParametersHandling(start, end);
+            return ReturnListGetAppointmentsUrgentVacation(_doctorRepository.GetById(id).Appointments, timeRange);
+        }
+
+
+
+        public List<Doctor.Doctor> GetFreeDoctors(DateTime start)
+        {
+            List<Doctor.Doctor> returnList = new List<Doctor.Doctor>();
+
+            foreach (var doc in _doctorRepository.GetAll())
+            {
+                if (CheckIfDoctorIsBusy(doc.Appointments, start) == true)
+                {
+                    returnList.Add(doc);
+                }
+
+            }
+            return returnList;
+        }
+        public Boolean CheckIfDoctorIsBusy(ICollection<Appointment.Appointment> apps, DateTime start)
+        {
+            foreach (var app in apps)
+            {
+                if (app.Start.Equals(start))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public List<bool> parametersForUrgentRequest(VacationRequest request)
@@ -163,7 +255,11 @@ namespace HospitalLibrary.Core.Vacation
 
         public string ResponseHandler(List<bool> parameters)
         {
-            if (parameters[3] == false)
+            if(parameters[4] == true)
+            {
+                return "NO DOCTORS";
+            }
+            else if (parameters[3] == false)
             {
                 return "End of the vacation is before start! Pick carefully.";
             }

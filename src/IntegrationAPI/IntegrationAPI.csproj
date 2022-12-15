@@ -25,6 +25,8 @@
 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17" />
 
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="108.0.5359.7100" />
+
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 

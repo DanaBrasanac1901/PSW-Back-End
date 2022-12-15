@@ -53,5 +53,14 @@ namespace HospitalLibrary.Core.Vacation.DTO
             return request;
         }
 
+        public static List<DateTime> UrgentVacationParametersHandling(string start, string end)
+        {
+            List<DateTime> retList = new List<DateTime>();
+            retList.Add(DateTime.Parse(start));
+            retList.Add(DateTime.Parse(end));
+            return retList;
+        }
+
+
     }
 }
