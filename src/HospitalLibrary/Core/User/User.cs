@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.User
 {
-    public class User
+    public class User : ValueObject<User>
     {
         public User(int id, int idByRole, string name, string surname, string email,string password, string role, string token)
         {
@@ -57,6 +57,25 @@ namespace HospitalLibrary.Core.User
         public string Role { get { return role; } set { role = value; } }
 
         public bool Active { get => active; set => active = value; }
-        public string Token { get { return token; } set { token = value; } }   
+        public string Token { get { return token; } set { token = value; } }
+
+        protected override bool EqualsCore(User other)
+        {
+            return Id == other.Id
+            && IdByRole == other.IdByRole
+            && Email.Equals(other.Email)
+            && Role.Equals(other.Role);
+        }
+
+        protected override int GetHashCodeCore()
+        {
+            unchecked
+            {
+                int hash = 11;
+                hash = hash * 31 + id;
+                hash = hash * 31 + idByRole;
+                return hash;
+            }
+        }
     }
 }
