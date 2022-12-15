@@ -87,8 +87,11 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Room>().HasData(
                 new Room(){ Id = 1, Number = "1A", Floor = 1} 
                 );
-            User user1 = new User { Id = 1, IdByRole = 1, Name = "Milica", Surname = "Peric", Email = "manager", Password = "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==", Role = "MANAGER", Active = true, Token = null };
-            User user2 = new User { Id = 2, IdByRole = 1, Name = "Filip", Surname = "Marinkovic", Email = "doctor", Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", Role = "DOCTOR", Active = true, Token = null };
+            User user1 = new User(1,1,"Milica","Peric","manager", "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==","MANAGER",true);
+            User user2 = new User(2, 1, "Filip", "Marinkovic", "doctor", "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", "DOCTOR", true);
+            User user3 = new User(2, 1, "Jelena", "Novakovic", "patient", "AEssL8tRDqEPwGzxIeyAU1F/kuq1w4klNScLgIOmwe/N+j4e24+2DR8o31HhYtWziw==", "PATIENT", true);
+
+
 
             modelBuilder.Entity<User>().HasData(user1, user2);
 
