@@ -22,7 +22,7 @@ namespace HospitalLibrary.Core
         }
 
         protected abstract bool EqualsCore(T other);
-
+        
         public override int GetHashCode()
         {
             return GetHashCodeCore();

@@ -40,6 +40,7 @@ namespace HospitalLibrary.Core.User
         private void Validate()
         {
             if (string.IsNullOrWhiteSpace(this.name)) throw new ArgumentException();
+            if (string.IsNullOrWhiteSpace(this.surname)) throw new ArgumentException();
             if (string.IsNullOrWhiteSpace(this.email)) throw new ArgumentException();
             if (string.IsNullOrWhiteSpace(this.password))  throw new ArgumentException();
 
