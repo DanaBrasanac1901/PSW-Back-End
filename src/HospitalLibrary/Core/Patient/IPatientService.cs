@@ -18,6 +18,5 @@ namespace HospitalLibrary.Core.Patient
         int GetMaxNumOfPatients();
         int NumberOfPatientsByDoctor(string doctorId);
         IEnumerable<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
-        void ChangePatientStatus(string patientId);
     }
 }

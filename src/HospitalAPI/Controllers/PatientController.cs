@@ -169,17 +169,6 @@ namespace HospitalAPI.Controllers
         }
 
         */
-        [HttpPost]
-        [Route("manager/viewPatients")]
-        public ActionResult ChangePatientStatus(string patientId)
-        {
-            if(string.IsNullOrEmpty(patientId))
-            {
-                return NotFound();
-            }
-            _patientService.ChangePatientStatus(patientId);
-            return Ok();
-        }
     }
 
 }

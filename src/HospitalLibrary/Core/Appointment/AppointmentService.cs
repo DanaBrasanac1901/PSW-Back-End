@@ -2,7 +2,6 @@
 using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
-using HospitalLibrary.Core.PatientAppointmentCancelation;
 using HospitalLibrary.Core.Room;
 //using HospitalLibrary.Core.Repository;
 using System;
@@ -20,20 +19,14 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IDoctorRepository _doctorRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
-        private readonly IPatientAppointmentCancelationService _patientAppointmentCancelationService;
-        private readonly IPatientAppointmentCancelationRepository _patientAppointmentCancelationRepository;
         private string _email;
         public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
-            IRoomRepository roomRepository, IEmailSendService emailSend,
-            IPatientAppointmentCancelationService patientAppointmentCancelationService,
-            IPatientAppointmentCancelationRepository patientAppointmentCancelationRepository)
+            IRoomRepository roomRepository, IEmailSendService emailSend)
         {
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
             _roomRepository = roomRepository;
             _emailSend = emailSend;
-            _patientAppointmentCancelationService = patientAppointmentCancelationService;
-            _patientAppointmentCancelationRepository = patientAppointmentCancelationRepository;
             UpdateFinishedAppointments();
         }
 
@@ -218,21 +211,6 @@ namespace HospitalLibrary.Core.Appointment
                 _appointmentRepository.Update(appointment);
             }
                 
-        }
-
-        public void PatientCancelsAppointment(string appointmentId)
-        {
-            Appointment canceledApp = _appointmentRepository.GetById(appointmentId);
-            if(canceledApp.Status != AppointmentStatus.Scheduled)
-            {
-                throw new ArgumentException();
-            }
-            canceledApp.Status = AppointmentStatus.Cancelled;
-            _appointmentRepository.Update(canceledApp);
-            //_patientAppointmentCancelationService.Create(canceledApp.PatientId);
-            _patientAppointmentCancelationRepository.Create(
-                new PatientAppointmentCancelation.PatientAppointmentCancelation(canceledApp.PatientId, DateTime.Now)
-                );
         }
     }
 }

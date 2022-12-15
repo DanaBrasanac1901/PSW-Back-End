@@ -142,18 +142,5 @@ namespace HospitalLibrary.Core.Patient
             return null;
         }
         */
-        public void ChangePatientStatus(string patientId)
-        {
-            Patient patient = _patientRepository.GetById(patientId);
-            if (patient.IsBlocked)
-            {
-                patient.IsBlocked = false;
-            }
-            else
-            {
-                patient.IsBlocked = true;
-            }
-            _patientRepository.Update(patient);
-        }
     }
 }

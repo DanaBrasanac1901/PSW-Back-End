@@ -15,7 +15,7 @@ namespace HospitalAPI.Controllers
         private readonly IAppointmentService _appointmentService;
         private readonly IDoctorService _doctorService;
   
-        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
+        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
         {
             _appointmentService = appointmentService;
             _doctorService = doctorService;
@@ -143,16 +143,5 @@ namespace HospitalAPI.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        [Route("PatientCancelsApp")]
-        public ActionResult PatientCancelsAppointment(string appointmentId)
-        {
-            if (string.IsNullOrEmpty(appointmentId))
-            {
-                return NotFound();
-            }
-            _appointmentService.PatientCancelsAppointment(appointmentId);
-            return Ok();
-        }
     }
 }

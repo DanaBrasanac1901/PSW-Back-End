@@ -20,10 +20,9 @@ namespace HospitalLibrary.Core.Patient
         private List<string> allergies;
         private string doctorID;
         private bool active;
-        private bool isBlocked;
        
         public Patient() {}
-        public Patient(string id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID, bool active, bool isBlocked)
+        public Patient(string id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID, bool active)
         {
             this.Id = id;
             this.Name = name;
@@ -35,7 +34,6 @@ namespace HospitalLibrary.Core.Patient
             this.Allergies = allergies;
             this.DoctorID = doctorID;
             this.Active = active;
-            this.IsBlocked = isBlocked;
             
         }
 
@@ -49,6 +47,5 @@ namespace HospitalLibrary.Core.Patient
         public List<string> Allergies { get => allergies; set => allergies = value; }
         public string DoctorID { get => doctorID; set => doctorID = value; }
         public bool Active { get => active; set => active = value; }
-        public bool IsBlocked { get => isBlocked; set => isBlocked = value; }
     }
 }
