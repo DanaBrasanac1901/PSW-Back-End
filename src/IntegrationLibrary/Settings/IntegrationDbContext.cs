@@ -66,7 +66,7 @@ namespace IntegrationLibrary.Settings
             modelBuilder.Entity < Report.Report>().HasData(
                 report2, report3
             );
-            modelBuilder.Entity<TenderOffer>().HasNoKey();
+            modelBuilder.Entity<TenderOffer>().HasKey(e=> new { e.TenderId,e.BloodBankId});
             //modelBuilder.Entity<BloodBank.BloodBank>()
             //.Property(b => b.Id)
             //.ValueGeneratedOnAdd();
