@@ -35,6 +35,18 @@ namespace HospitalLibraryTestProject
             bankId.Equals("-");
         }
 
+        /*
+        [Fact]
+        public void Can_reduce()
+        {
+            Blood supply = new Blood(BloodType.A, 10);
+            
+
+
+
+            IsReducible.ShouldBe(true);
+        }
+        */
 
 
 
