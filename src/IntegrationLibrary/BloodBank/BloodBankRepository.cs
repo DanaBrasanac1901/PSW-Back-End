@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Settings;
+﻿using IntegrationLibery.News;
+using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Nest;
 
@@ -49,6 +50,21 @@ namespace IntegrationLibrary.BloodBank
         public void Update(BloodBank bb)
         {
             integrationDbContext.SaveChangesAsync();
+        }
+        public void addNews(Message mess)
+        {
+            integrationDbContext.NewsTable.AddAsync(mess);
+            integrationDbContext.SaveChangesAsync();
+        }
+
+        public IEnumerable<Message> getNews()
+        {
+            return integrationDbContext.NewsTable.ToList();
+        }
+
+        public Message getByIdNews(Guid id)
+        {
+           return integrationDbContext.NewsTable.FirstOrDefault(x => x.Id == id);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace IntegrationLibrary.Settings
             );
             modelBuilder.Entity<Message>(entity =>
             {
-               entity.HasKey(e => e.Timestamp);
+               entity.HasKey(e => e.Id);
             } );
 
             BloodBank.BloodBank bank1 = new BloodBank.BloodBank() { Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190"), Username = "101A", Password = "edhb", Apikey = "efwfe", Email = "andykesic123@gmail.com", IsConfirmed = true };

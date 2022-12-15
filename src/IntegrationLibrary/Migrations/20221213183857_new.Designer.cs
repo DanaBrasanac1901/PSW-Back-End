@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221121150528_message")]
-    partial class message
+    [Migration("20221213183857_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,50 @@ namespace IntegrationLibrary.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+            modelBuilder.Entity("HospitalLibrary.Core.Tender.Tender", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("AmountOfA")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfAB")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfB")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfO")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("Expiration")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("HospitalName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenders");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.TenderOffer.TenderOffer", b =>
+                {
+                    b.Property<Guid>("BloodBankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("TenderId")
+                        .HasColumnType("integer");
+
+                    b.ToTable("TenderOffers");
+                });
 
             modelBuilder.Entity("IntegrationLibery.News.Message", b =>
                 {
@@ -39,8 +83,8 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Timestamp = new DateTime(2022, 11, 21, 16, 5, 27, 508, DateTimeKind.Local).AddTicks(5446),
-                            Id = new Guid("7b511c23-ed6e-4999-81a7-4e001474c4c2"),
+                            Timestamp = new DateTime(2022, 12, 13, 19, 38, 57, 1, DateTimeKind.Local).AddTicks(4447),
+                            Id = new Guid("2a0f3e54-2fa0-449f-8962-9c9d83edd9c4"),
                             Text = "doniraj krv"
                         });
                 });
@@ -76,7 +120,7 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("41021ad9-d16a-49b9-92e6-d75979ea375b"),
+                            Id = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
                             Apikey = "efwfe",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
@@ -85,7 +129,7 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e21cb335-f629-40fa-bcb0-a7f24f890279"),
+                            Id = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
                             Apikey = "dqad",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
@@ -94,7 +138,7 @@ namespace IntegrationLibrary.Migrations
                         },
                         new
                         {
-                            Id = new Guid("581aab9d-809c-4a5c-94f3-74ffc2e4ce78"),
+                            Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
                             Apikey = "ads",
                             Email = "andykesic123@gmail.com",
                             IsConfirmed = true,
@@ -109,9 +153,6 @@ namespace IntegrationLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BloodbankId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("ConfigurationDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -123,7 +164,23 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reports");
+                    b.ToTable("ReportTable");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            ConfigurationDate = new DateTime(2022, 11, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastReportGeneration = new DateTime(2022, 11, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Period = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
+                            ConfigurationDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastReportGeneration = new DateTime(2022, 10, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Period = 2
+                        });
                 });
 #pragma warning restore 612, 618
         }

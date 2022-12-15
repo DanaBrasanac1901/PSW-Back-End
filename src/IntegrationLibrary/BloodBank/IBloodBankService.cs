@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationLibery.News;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,9 @@ namespace IntegrationLibrary.BloodBank
             void UpdatePassword(Guid id, string pp);
 
            void SendEmail(Guid id);
-
+           void addNews(Message mess);
+           IEnumerable<Message> getNews();
+           Message getByIdNews(Guid id);
 
     }
 }
