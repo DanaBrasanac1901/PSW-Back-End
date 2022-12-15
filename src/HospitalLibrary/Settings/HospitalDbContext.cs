@@ -47,6 +47,7 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*
             Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
             Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
@@ -102,7 +103,21 @@ namespace HospitalLibrary.Settings
                       RoomId = 1
 
                   }
+            );*/
+            /*
+            BloodRequest request1 = new BloodRequest(1, BloodType.A, 4.5, "needed for surgery, ", new DateTime(2023, 1, 10));
+            BloodRequest request2 = new BloodRequest(2, BloodType.B, 15, "needed for surgery, ", new DateTime(2023, 1, 10));
+
+            modelBuilder.Entity<BloodRequest>().HasData(
+                request1, request2
             );
+
+            modelBuilder.Entity<BloodRequest>().OwnsOne(r => r.Blood);
+            */
+
+
+
+
             base.OnModelCreating(modelBuilder);
         }
 
