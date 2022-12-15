@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Appointment;
-
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalLibrary.Core.Doctor
 {
@@ -23,6 +23,8 @@ namespace HospitalLibrary.Core.Doctor
         public int StartWorkTime { get; set; }
         [Range(0, 23)]
         public int EndWorkTime { get; set; }
+
+        public Specialty Specialty { get; set; }
 
         public virtual ICollection<VacationRequest> VacationRequests { get; set; }
         
@@ -43,7 +45,22 @@ namespace HospitalLibrary.Core.Doctor
             EndWorkTime = endWorkTime;
             Appointments = appointments;
             VacationRequests = new List<VacationRequest>();
-        } 
+        }
+
+        public Doctor(string id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty)
+        {
+            Id = id;
+            Name = name;
+            Surname = surname;
+            Email = email;
+            RoomId = roomId;
+            Room = room;
+            StartWorkTime = startWorkTime;
+            EndWorkTime = endWorkTime;
+            Appointments = appointments;
+            VacationRequests = new List<VacationRequest>();
+            Specialty = (Specialty)specialty;
+        }
 
         public bool IsAvailable(DateTime start, DateTime end)
         {

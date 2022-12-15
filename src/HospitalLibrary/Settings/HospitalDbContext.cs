@@ -11,6 +11,7 @@ using HospitalLibrary.Core.Vacation;
 using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
+using HospitalLibrary.Core.Consiliums;
 using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.Model;
 
@@ -40,6 +41,9 @@ namespace HospitalLibrary.Settings
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Consilium> Consiliums {get; set;}
+        public DbSet<ConsiliumAppointment> ConsiliumAppointments { get; set; }
+
         public DbSet<Report> Reports { get; set; }
 
         public DbSet<DrugPrescription> DrugPrescriptions { get; set; }
@@ -55,7 +59,6 @@ namespace HospitalLibrary.Settings
 
         public DbSet<SymptomList> SymptomList { get; set;}
 
-
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
 
@@ -64,10 +67,11 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
-            Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
-            Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
+            // Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
+            //Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
+            //Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
 
+            /*
             BloodSupply supplyABank1 = new BloodSupply(1, BloodType.A, 54, bank1Id);
             BloodSupply supplyBBank1 = new BloodSupply(2, BloodType.B, 30, bank1Id);
             BloodSupply supplyABBank1 = new BloodSupply(3, BloodType.AB, 15, bank1Id);
@@ -82,8 +86,8 @@ namespace HospitalLibrary.Settings
                 supply0Bank1, supplyABank1, supplyABank2, supplyABank3, supplyABBank1,
                 supplyABBank3, supplyBBank1, supplyBBank2, supplyBBank3
             );
-
-
+            */
+            /*
             BloodConsumptionRecord bloodConsumptionRecord1 = new BloodConsumptionRecord(1, 2, BloodType.A, "needed for surgery", new DateTime(2022, 11, 22), "DOC1", bank1Id);
 
 
@@ -120,6 +124,21 @@ namespace HospitalLibrary.Settings
 
                   }
             );
+            */
+            /*
+            Consilium consilium1 = new Consilium(1, "A complicated case", 45, new DateTime(2023, 3, 10, 10, 30, 0), "DOC1, DOC2", "", "DOC1");
+
+            modelBuilder.Entity<Consilium>().HasData(
+                    consilium1
+            );
+
+            ConsiliumAppointment app1 = new ConsiliumAppointment(1, "DOC1", 1);
+            ConsiliumAppointment app2 = new ConsiliumAppointment(2, "DOC2", 1);
+
+            modelBuilder.Entity<ConsiliumAppointment>().HasData(
+                    app1,
+                    app2
+            );*/
 
 
             DrugList drug1 = new DrugList("aspirin", "Aspirin", "Galenika");
@@ -147,14 +166,8 @@ namespace HospitalLibrary.Settings
                 }
                 );
 
-
-
             base.OnModelCreating(modelBuilder);
         }
-
-
-        
-
        
 
     }

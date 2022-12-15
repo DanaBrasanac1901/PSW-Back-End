@@ -63,7 +63,5 @@ namespace HospitalAPI.Controllers
             return Ok();
         }
 
-
-
     }
 }
