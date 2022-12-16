@@ -37,8 +37,8 @@ namespace HospitalAPITestProject.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             var record = SetUpReportToCreateDTO(scope);
-            var result = ((OkObjectResult)controller.CreateReport(record))?.Value as string;
-            Assert.Equal("Passed", result);
+            var result = ((OkObjectResult)controller.CreateReport(record))?.Value as ReportToCreateDTO;
+            Assert.NotNull(result);
         }
     }
 }

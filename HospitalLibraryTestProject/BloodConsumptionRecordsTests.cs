@@ -36,10 +36,6 @@ namespace HospitalLibraryTestProject
         }
 
 
-
-
-
-
         private IBloodConsuptionRepository  CreateBloodSuppliesRepo()
         {
             var stubRepo = new Mock<IBloodConsuptionRepository>();
@@ -74,34 +70,24 @@ namespace HospitalLibraryTestProject
             return stubRepo.Object;
         }
 
-
-
-
-
-
-
-        /*
         [Fact]
-        public void Can_consume_blood()
+        public void Can_reduce()
         {
-            BloodSupply supply = new BloodSupply(BloodType.A, 30.5, new Guid("2D4894B6-02E4-4288-A3D3-089489563190"));
-            double amount = 3;
+            Blood supply = new Blood(BloodType.A, 10);
 
-            bool consumption_status = supply.ReduceBy(amount);
+            Blood reduced = supply.ReduceBy(new Blood(BloodType.A, 5));
 
-            consumption_status.ShouldBe(true);
+            Assert.True(reduced.Amount == 5);
         }
 
         [Fact]
-        public void Cannot_consume_blood()
+        public void Cannot_reduce()
         {
-            BloodSupply supply = new BloodSupply(BloodType.A, 2, new Guid("2D4894B6-02E4-4288-A3D3-089489563190"));
-            double amount = 5;
+            Blood supply = new Blood(BloodType.A, 10);
 
-            bool consumption_status = supply.ReduceBy(amount);
+            Blood reduced = supply.ReduceBy(new Blood(BloodType.A, 15));
 
-            consumption_status.ShouldBe(false);
+            Assert.Null(reduced);
         }
-        */
     }
 }

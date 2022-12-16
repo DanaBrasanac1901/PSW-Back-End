@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core
 {
-
-
     public abstract class ValueObject
     {
         protected abstract IEnumerable<object> GetEqualityComponents();
@@ -53,6 +51,5 @@ namespace HospitalLibrary.Core
             return !(a == b);
         }
     }
-
-
 }
+

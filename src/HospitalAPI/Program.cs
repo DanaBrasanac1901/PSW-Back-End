@@ -1,3 +1,4 @@
+using HospitalLibrary.Core.PasswordHasher;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 

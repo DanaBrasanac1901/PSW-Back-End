@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace IntegrationLibrary.BloodBank
         void Create(BloodBank bb);
         void Update(BloodBank bb);
         void Delete(BloodBank bb);
+      
 
     }
 }

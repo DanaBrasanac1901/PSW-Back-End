@@ -1,6 +1,7 @@
 ﻿using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Nest;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace IntegrationLibrary.BloodBank
             integrationDbContext.SaveChangesAsync();
 
         }
+       
+       
 
         public void Delete(BloodBank bb)
         {
