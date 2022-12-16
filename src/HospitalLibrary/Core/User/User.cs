@@ -47,7 +47,7 @@ namespace HospitalLibrary.Core.User
             this.surname = regDTO.Surname;
             this.email = regDTO.Email;
             this.password = regDTO.Password;
-            Validate();
+            //Validate();
         }
 
         private void Validate()

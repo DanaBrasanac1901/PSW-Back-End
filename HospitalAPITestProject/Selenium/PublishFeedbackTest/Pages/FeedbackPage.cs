@@ -12,18 +12,17 @@ namespace HospitalAPITestProject.Selenium.PublishFeedbackTests.Pages
     {
         private readonly IWebDriver webDriver;
         public const string URI = "http://localhost:4200/feedback";
-        private IWebElement PendingTable => webDriver.FindElement(By.Name("pending-table"));
+        private IWebElement PendingTable => webDriver.FindElement(By.Id("pending-table"));
 
-        private IReadOnlyCollection<IWebElement> PendingRows => webDriver.FindElements(By.XPath("//table[@id='pending-table']/tr"));
+        private IReadOnlyCollection<IWebElement> PendingRows => webDriver.FindElements(By.XPath("//table[@id='pending-table']/tbody/tr"));
 
-        private IWebElement SelectedRow => webDriver.FindElement(By.XPath("//table[@id='pending-table']/tr[0]"));
-        private IWebElement ApprovedTable => webDriver.FindElement(By.Name("approved-table"));
+        private IWebElement SelectedRow => webDriver.FindElement(By.XPath("//table[@id='pending-table']/tbody/tr[1]"));
+        private IWebElement ApprovedTable => webDriver.FindElement(By.Id("approved-table"));
 
-        private IReadOnlyCollection<IWebElement> ApprovedRows => webDriver.FindElements(By.XPath("//table[@id='approved-table']/tr"));
+        private IReadOnlyCollection<IWebElement> ApprovedRows => webDriver.FindElements(By.XPath("//table[@id='approved-table']/tbody/tr"));
 
-        private IWebElement Approve => webDriver.FindElement(By.Name("approve-button"));
-     
-        public string Title => webDriver.Title;
+        private IWebElement Approve => webDriver.FindElement(By.Id("approve-button"));
+    
 
         public void EnsurePageIsDisplayed()
         {

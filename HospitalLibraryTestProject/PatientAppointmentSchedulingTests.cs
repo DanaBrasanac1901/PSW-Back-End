@@ -68,7 +68,7 @@ namespace HospitalLibraryTestProject
         {
             Setting_appointment_service();
             Doctor testDoctor = new Doctor { Id = "1", Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 13 };
-            AppointmentPatientDTO dto = new AppointmentPatientDTO(new DateTimeRange(new DateTime(2022, 12, 28), new DateTime(2022, 12, 30)), testDoctor );
+            AppointmentPatientDTO dto = new AppointmentPatientDTO(new DateTimeRange(new DateTime(2022, 12, 28), new DateTime(2022, 12, 30)), testDoctor);
             var result = appointmentService.FindAppointmentsWithSuggestions(dto, "date");
             Assert.NotEmpty(result);
         }

@@ -63,11 +63,12 @@ namespace HospitalAPITestProject.Selenium.PublishFeedbackTest
             loginPage.InsertEmail("manager");
             Thread.Sleep(1000);
             loginPage.InsertPassword("manager");
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             loginPage.ClickLogin();
             loginPage.WaitForLogin();
 
             managerHome = new ManagerHomePage(driver);
+            Thread.Sleep(1000);
             Assert.True(managerHome.ToolbarDisplayed());
             Assert.True(managerHome.ButtonDisplayed());
             managerHome.ClickButton();
@@ -75,6 +76,7 @@ namespace HospitalAPITestProject.Selenium.PublishFeedbackTest
 
             feedbackPage = new FeedbackPage(driver);
             feedbackPage.EnsurePageIsDisplayed();
+            Thread.Sleep(2000);
             Assert.True(feedbackPage.ApprovedTableDisplayed());
             Assert.True(feedbackPage.PendingTableDisplayed());
             Assert.True(feedbackPage.ButtonDisplayed());
@@ -82,11 +84,12 @@ namespace HospitalAPITestProject.Selenium.PublishFeedbackTest
             int pending = feedbackPage.CountPending();
 
             feedbackPage.ClickSelected();
+            Thread.Sleep(2000);
             feedbackPage.ClickApprove();
-
+            Thread.Sleep(2000);
             Assert.True(approved == feedbackPage.CountApproved() - 1);
             Assert.True(pending == feedbackPage.CountPending() + 1);
-
+            Thread.Sleep(2000);
             Dispose();
         }
 
