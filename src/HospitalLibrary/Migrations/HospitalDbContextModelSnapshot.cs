@@ -83,32 +83,7 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("BloodConsumptionRecords");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("DoctorId")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Due")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BloodRequests");
-                });
+            
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodSupply", b =>
                 {
