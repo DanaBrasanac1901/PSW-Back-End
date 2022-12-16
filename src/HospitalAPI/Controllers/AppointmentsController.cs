@@ -108,7 +108,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
             string idFlag = _appointmentService.Create(appDTO);
-            return CreatedAtAction("GetById", new { id = idFlag }, appDTO);
+            return Ok("Passed");
         }
 
         [HttpGet]

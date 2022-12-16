@@ -188,6 +188,7 @@ namespace HospitalLibrary.Core.Doctor
                 ret.Add(d.Id);
             }
             return ret;
+        }
 
         public bool AreAvailableForConsilium(List<Doctor> neededDoctors, DateTimeRange consiliumInterval)
         {

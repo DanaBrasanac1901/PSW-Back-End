@@ -17,5 +17,12 @@ namespace HospitalLibrary.Core.Report.DTO
         {
 
         }
+
+        public DrugDTO(string name, string companyName, bool isChecked)
+        {
+            this.name = name;
+            this.companyName = companyName;
+            this.isChecked = isChecked;
+        }
     }
 }

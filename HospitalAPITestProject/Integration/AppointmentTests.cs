@@ -36,7 +36,7 @@ namespace HospitalTests.Integration
             var controller = SetupController(scope);
 
             var record = SetUpCreateAppointmentDTO(scope);
-            var result = ((CreatedAtActionResult)controller.CreateAppointment(record))?.Value as Appointment;
+            var result = ((OkObjectResult)controller.CreateAppointment(record))?.Value as string;
 
             Assert.NotNull(result);
         }

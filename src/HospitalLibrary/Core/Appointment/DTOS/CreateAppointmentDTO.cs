@@ -23,6 +23,14 @@ namespace HospitalLibrary.Core.Appointment.DTOS
         public CreateAppointmentDTO(IAppointmentService appointmentService)
         {
             this.appointmentService = appointmentService;
+            doctorId = "DOC1";
+            patientId = "PAT1";
+            var helper = DateTime.Now;
+            startDate = helper.Year +  "-" + helper.Month + "-" + helper.Day;
+            startTime = helper.Hour + ":" + helper.Minute;
+            roomId = 1;
+            status = "bilosta";
+            appointmentDuration = 20;
         }
     }
 }
