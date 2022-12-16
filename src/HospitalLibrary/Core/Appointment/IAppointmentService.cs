@@ -29,6 +29,7 @@ namespace HospitalLibrary.Core.Appointment
 
         void ChangeDoctorForAppointment(string doctorId,string appointmentId);
 
+        void PatientCancelsAppointment(string id);
 
     }
 }

@@ -210,5 +210,24 @@ namespace HospitalAPI.Controllers
             Appointment appointment = new Appointment();
             return NoContent();
         }
+
+        [HttpPut]
+        [Route("patientCancelsAppointment")]
+        public ActionResult PatientCancelsAppointment(string id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _appointmentService.PatientCancelsAppointment(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok(id);
+        }
     }
 }

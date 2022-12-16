@@ -12,6 +12,7 @@ using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
 using Npgsql;
+using HospitalLibrary.Core.AppointmentCancelation;
 
 namespace HospitalLibrary.Settings
 {
@@ -39,6 +40,7 @@ namespace HospitalLibrary.Settings
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<AppointmentCancelation> AppointmentCancelations { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {

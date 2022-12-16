@@ -65,7 +65,7 @@ namespace HospitalAPI.Controllers
             }
 
             Patient patient = new Patient(regDTO);
-
+            Console.Write(patient.Adress);
             if (_userService.GetByEmail(patient.Email) != null) return BadRequest("Exists");
             
             _patientService.Register(patient);
@@ -157,6 +157,16 @@ namespace HospitalAPI.Controllers
             return Ok(doctors);
         
         
+        }
+        [HttpGet("getPatientByEmail/{email}")]
+        public ActionResult getPatientByEmail(string email)
+        {
+            var patient = _patientService.GetByEmail(email);
+            if(patient == null)
+            {
+                return NotFound();
+            }
+            return Ok(patient);
         }
 
         /*

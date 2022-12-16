@@ -21,6 +21,7 @@ namespace HospitalLibrary.Core.Patient
         private BloodType bloodType;
         private List<string> allergies;
         private string doctorID;
+        private string adress;
 
         public Patient() {}
 
@@ -30,6 +31,7 @@ namespace HospitalLibrary.Core.Patient
             this.surname=regDTO.Surname;
             this.email = regDTO.Email;
             this.jmbg = regDTO.Jmbg;
+            this.adress = regDTO.Address;
             Gender.TryParse(regDTO.Gender, out this.gender);
             this.age = regDTO.Age;
             BloodType.TryParse(regDTO.BloodType,out this.bloodType);
@@ -42,7 +44,7 @@ namespace HospitalLibrary.Core.Patient
             this.doctorID = regDTO.DoctorId;
         }
 
-        public Patient(int id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID)
+        public Patient(int id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID, string adress)
         {
             this.Id = id;
             this.Name = name;
@@ -53,13 +55,14 @@ namespace HospitalLibrary.Core.Patient
             this.BloodType = bloodType;
             this.Allergies = allergies;
             this.DoctorID = doctorID;
+            this.Adress = adress;
             
         }
 
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Surname { get => surname; set => surname = value; }
-
+        public string Adress {  get => adress; set => adress = value; }
         public string Email { get => email; set => email = value; }
         public Gender Gender { get => gender; set => gender = value; }
         public int Age { get => age; set => age = value; }

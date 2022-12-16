@@ -47,7 +47,7 @@ namespace HospitalLibrary.Core.User
         string role;
         bool active;
         string token;
-
+        bool blocked;
         public int Id { get { return id; } set { id = value; } }
         public int IdByRole { get { return idByRole; } set { idByRole = value; } }
         public string Name { get { return name; } set { name = value; } }
@@ -58,5 +58,6 @@ namespace HospitalLibrary.Core.User
 
         public bool Active { get => active; set => active = value; }
         public string Token { get { return token; } set { token = value; } }   
+        public bool Blocked { get { return blocked; } set { blocked = value; } }
     }
 }

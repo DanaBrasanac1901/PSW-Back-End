@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HospitalLibrary.Core.PasswordHasher;
+using HospitalLibrary.Core.AppointmentCancelation;
 
 namespace HospitalAPI
 {
@@ -101,7 +102,8 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentService, EquipmentService>();
 
             services.AddScoped<IBloodConsuptionRepository, BloodSupplyRepository>();
-
+            services.AddScoped<IAppointmentCancelationRepository, AppointmentCancelationRepository>();
+            services.AddScoped<IAppointmentCancelationService, AppointmentCancelationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

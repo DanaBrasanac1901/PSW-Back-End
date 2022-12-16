@@ -1,6 +1,7 @@
 ﻿using Castle.Core.Internal;
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
+using HospitalLibrary.Core.AppointmentCancelation;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Enums;
@@ -24,10 +25,11 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IDoctorRepository _doctorRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
+        private readonly IAppointmentCancelationRepository _appointmentCancelationRepository;
         private string _email;
 
         public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
-            IRoomRepository roomRepository, IEmailSendService emailSend)
+            IRoomRepository roomRepository, IEmailSendService emailSend, IAppointmentCancelationRepository _appointmentCancelationRepository)
         {
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
@@ -219,6 +221,15 @@ namespace HospitalLibrary.Core.Appointment
                 _appointmentRepository.Update(appointment);
             }
                 
+        }
+
+        public void PatientCancelsAppointment(string id)
+        {
+            var appointment = _appointmentRepository.GetById(id);
+            AppointmentCancelation.AppointmentCancelation ac = new AppointmentCancelation.AppointmentCancelation(appointment.PatientId, DateTime.Now);
+            _appointmentCancelationRepository.Create(ac);
+            appointment.Status = AppointmentStatus.Cancelled;
+            _appointmentRepository.Update(appointment);
         }
     }
 }

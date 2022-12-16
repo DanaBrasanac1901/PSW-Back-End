@@ -188,5 +188,18 @@ namespace HospitalLibrary.Core.User
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        public void BlockUser(int id)
+        {
+            var user = _userRepository.GetById(id);
+            if (user.Blocked)
+            {
+                user.Blocked = false;
+            }
+            else
+            {
+                user.Blocked = true;
+            }
+            _userRepository.Update(user);
+        }
     }
 }
