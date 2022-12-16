@@ -105,8 +105,10 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
 
+
             services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
             services.AddScoped<IConsiliumService, ConsiliumService>();
+
 
             services.AddScoped<IDrugApplicationService, DrugApplicationService>();
             services.AddScoped<IDrugRepository, DrugRepository>();

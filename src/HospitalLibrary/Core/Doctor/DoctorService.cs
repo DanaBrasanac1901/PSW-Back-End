@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Consiliums.DTO;
+using HospitalLibrary.Core.Appointment;
+using HospitalLibrary.Core.Consiliums.DTO;
 using HospitalLibrary.Core.Doctor.DTOS;
 using HospitalLibrary.Core.Vacation;
 using System;
@@ -14,16 +15,19 @@ namespace HospitalLibrary.Core.Doctor
 
     {
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
         DoctorAdapter adapter = new DoctorAdapter();
 
         public DoctorService(IDoctorRepository doctorRepository)
         {
+            
             _doctorRepository = doctorRepository;
         }
 
-        public DoctorService(IDoctorRepository doctorRepository,IVacationRepository vacationRepository)
+        public DoctorService(IDoctorRepository doctorRepository,IVacationRepository vacationRepository, IAppointmentRepository appointmentRepository)
         {
             _doctorRepository = doctorRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         public IEnumerable<Doctor> GetAll()
@@ -159,6 +163,31 @@ namespace HospitalLibrary.Core.Doctor
             }
             return returnList;
         }
+
+
+        public List<string> GetFreeSpecialtyDoctors(string date, int specialty)
+        {
+            List<string> ret = new List<string>();
+            List<Appointment.Appointment> app = new List<Appointment.Appointment>(_appointmentRepository.GetAll());
+            DateTime parsed = DateTime.Parse(date);
+            foreach (Doctor d in _doctorRepository.GetAll().Where(doc => (int)doc.Specialty == specialty))
+            {
+                if((d.EndWorkTime - d.StartWorkTime)*3 > (app.Where(a => a.DoctorId == d.Id && a.Status == AppointmentStatus.Scheduled && a.Start.Year == parsed.Year && a.Start.Month == parsed.Month && a.Start.Day == parsed.Day)).Count())
+                {
+                    ret.Add(d.Id);
+                }
+            }
+            return ret;
+        }
+
+        public List<string> GetSpecialtyDoctors(int specialty)
+        {
+            List<string> ret = new List<string>();
+            foreach (Doctor d in _doctorRepository.GetAll().Where(doc => (int)doc.Specialty == specialty))
+            {
+                ret.Add(d.Id);
+            }
+            return ret;
 
         public bool AreAvailableForConsilium(List<Doctor> neededDoctors, DateTimeRange consiliumInterval)
         {
