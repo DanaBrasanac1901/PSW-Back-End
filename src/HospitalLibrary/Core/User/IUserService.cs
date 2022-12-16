@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,13 @@ namespace HospitalLibrary.Core.User
         void Create(User user);
         void Update(User user);
         void Delete(User user);
-        bool Activate(User user);
+        bool Activate(string email, string token);
+        bool SaveTokenToDatabase(string email, string token);
+
+        public User Authenticate(User user);
+        public SecurityToken GenerateFullToken(User user);
+        public string GenerateActivationToken(string email);
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Appointment.DTOS;
+using HospitalLibrary.Core.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -16,18 +17,19 @@ namespace HospitalLibrary.Core.Appointment
 
         Boolean IsAvailable(Appointment appointment);
 
-        Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck);
 
         IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id);
 
         Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc);
 
-       void UpdateFinishedAppointments();
+        void UpdateFinishedAppointments();
 
         RescheduleAppointmentDTO GetAppoitnemtnToReschedule(string id);
 
         void ChangeDoctorForAppointment(string doctorId,string appointmentId);
 
+
         AppointmentForReportDTO GetAppointmentForReport(string appId);
+
     }
 }

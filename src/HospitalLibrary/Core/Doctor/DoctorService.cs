@@ -1,4 +1,9 @@
+using HospitalLibrary.Core.Appointment;
+using HospitalLibrary.Core.Consiliums.DTO;
+using HospitalLibrary.Core.Doctor.DTOS;
+
 ﻿using HospitalLibrary.Core.Doctor.DTOS;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Vacation;
 using System;
 using System.Collections.Generic;
@@ -13,16 +18,19 @@ namespace HospitalLibrary.Core.Doctor
 
     {
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
         DoctorAdapter adapter = new DoctorAdapter();
 
         public DoctorService(IDoctorRepository doctorRepository)
         {
+            
             _doctorRepository = doctorRepository;
         }
 
-        public DoctorService(IDoctorRepository doctorRepository,IVacationRepository vacationRepository)
+        public DoctorService(IDoctorRepository doctorRepository,IVacationRepository vacationRepository, IAppointmentRepository appointmentRepository)
         {
             _doctorRepository = doctorRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         public IEnumerable<Doctor> GetAll()
@@ -111,13 +119,41 @@ namespace HospitalLibrary.Core.Doctor
             return returnList;
         }
 
+        public List<Doctor> GetAvailableBySpecialty(int specialty, DateTimeRange consiliumInterval)
+        {
+            List<Doctor> doctorsBySpecialty = _doctorRepository.GetBySpecialty(specialty);
+
+            List<Doctor> availableDoctors = new List<Doctor>();
+            foreach(Doctor doctor in doctorsBySpecialty)
+            {
+                if (doctor.IsAvailable(consiliumInterval.Start, consiliumInterval.End))
+                    availableDoctors.Add(doctor);
+            }
+            return availableDoctors;
+        }
+
         public List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameters)
         {
             List<DateTime> timeRange = adapter.UrgentVacationParametersHandling(parameters);
             return ReturnListGetAppointmentsUrgentVacation(_doctorRepository.GetById(parameters.id).Appointments, timeRange);
         }
 
-        
+        public List<Doctor> AvailableByEachSpecialty(string specialties, DateTimeRange consiliumInterval)
+        {
+            string[] requiredSpecialties = specialties.Split(',');
+
+            List<Doctor> availableDoctors = new List<Doctor>();
+            
+            foreach(string specialty in requiredSpecialties)
+            {
+                int currentSpecialty = Int32.Parse(specialty);
+                List<Doctor> availableBySpecialty = GetAvailableBySpecialty(currentSpecialty, consiliumInterval);
+                if (availableBySpecialty.Count == 0)
+                    return null;
+                availableDoctors.AddRange(availableBySpecialty);
+            }
+            return availableDoctors;
+        }
 
         public List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime)
         {
@@ -128,6 +164,65 @@ namespace HospitalLibrary.Core.Doctor
                 if (CheckIfDoctorIsBusy(doc.Appointments, DateTime.Parse( startDate + " " + startTime))== true)
                     returnList.Add(adapter.DoctorToDoctorToChangeUrgentVacationDTO(doc));
             }
+            return returnList;
+        }
+
+
+        public List<string> GetFreeSpecialtyDoctors(string date, int specialty)
+        {
+            List<string> ret = new List<string>();
+            List<Appointment.Appointment> app = new List<Appointment.Appointment>(_appointmentRepository.GetAll());
+            DateTime parsed = DateTime.Parse(date);
+            foreach (Doctor d in _doctorRepository.GetAll().Where(doc => (int)doc.Specialty == specialty))
+            {
+                if((d.EndWorkTime - d.StartWorkTime)*3 > (app.Where(a => a.DoctorId == d.Id && a.Status == AppointmentStatus.Scheduled && a.Start.Year == parsed.Year && a.Start.Month == parsed.Month && a.Start.Day == parsed.Day)).Count())
+                {
+                    ret.Add(d.Id);
+                }
+            }
+            return ret;
+        }
+
+        public List<string> GetSpecialtyDoctors(int specialty)
+        {
+            List<string> ret = new List<string>();
+            foreach (Doctor d in _doctorRepository.GetAll().Where(doc => (int)doc.Specialty == specialty))
+            {
+                ret.Add(d.Id);
+            }
+            return ret;
+        }
+
+        public bool AreAvailableForConsilium(List<Doctor> neededDoctors, DateTimeRange consiliumInterval)
+        {
+
+            foreach(Doctor doctor in neededDoctors)
+            {
+                if (!doctor.IsAvailable(consiliumInterval.Start, consiliumInterval.End))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public List<Doctor> GetByIds(string doctorIds)
+        {
+            return _doctorRepository.GetByIds(doctorIds);
+        }
+        public List<Doctor> GetBySpecialty(string specialty)
+        {
+            Specialty spec;
+            bool isSuccesful=Specialty.TryParse(specialty,out spec);
+            List<Doctor> returnList = new List<Doctor>();
+
+            if (isSuccesful)
+            {
+                foreach (Doctor doctor in GetAll())
+                {
+                    if (doctor.Specialty.Equals(spec)) returnList.Add(doctor);
+                }
+            }
+
             return returnList;
         }
     }

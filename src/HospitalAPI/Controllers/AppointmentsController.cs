@@ -5,6 +5,10 @@ using HospitalLibrary.Core.Doctor;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Globalization;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core;
+using System.Collections.Generic;
+using Castle.Core.Internal;
 
 namespace HospitalAPI.Controllers
 {
@@ -13,13 +17,15 @@ namespace HospitalAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-        private readonly IDoctorService _doctorService;
+https://github.com/FStefanovv/PSW-Back-End/pull/52/conflict?name=src%252FHospitalAPI%252FControllers%252FAppointmentsController.cs&ancestor_oid=c27437478ca3d0fc6c37933f62e7aceb924ce6de&base_oid=0be767473a5418a303ce262902f6e64a940edf63&head_oid=2e979e90e9007707d1aaaa53e285a4909a0e0635        private readonly IDoctorService _doctorService;
+        private readonly IAvailableAppointmentService _availableAppointmentService;
   
-        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
+        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
+        public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
         {
             _appointmentService = appointmentService;
             _doctorService = doctorService;
-            
+            _availableAppointmentService = availableAppointmentService;
         }
 
         // GET: api/appointments
@@ -28,6 +34,9 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_appointmentService.GetAll());
         }
+
+       
+
 
         // GET api/rooms/2
         [HttpGet("{id}")]
@@ -54,6 +63,8 @@ namespace HospitalAPI.Controllers
             Appointment appointment = new Appointment();
             return NoContent();
         }
+
+
 
         // PUT api/appointments/2
         [HttpPut("{id}")]
@@ -108,7 +119,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
             string idFlag = _appointmentService.Create(appDTO);
-            return CreatedAtAction("GetById", new { id = idFlag }, appDTO);
+            return Ok("Passed");
         }
 
         [HttpGet]
@@ -149,6 +160,72 @@ namespace HospitalAPI.Controllers
         {
             var app = _appointmentService.GetAppointmentForReport(id);
             return Ok(app);
+
+
+        //Dana&Anja
+
+        // GET: api/Appointments/patient/id
+        [HttpGet("patient/{id}")]
+        public ActionResult GetForPatient(string id)
+        {
+            return Ok(_availableAppointmentService.GetForPatient(id));
+        }
+
+
+        [HttpPost("patient/suggestions/{priority}")]
+        public ActionResult AppointmentsWithSuggestions(AppointmentPatientDTO dto, string priority)
+        {
+            Doctor doctor = _doctorService.GetById(dto.DoctorId);
+            dto.Doctor = doctor; 
+            var appointments = _availableAppointmentService.FindAppointmentsWithSuggestions(dto, priority);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(appointments);
+        }
+
+        [HttpPost("patient/AppAvailability")]
+        public ActionResult CheckIfAvailable(AppointmentPatientDTO dto)
+        {
+            bool available = _availableAppointmentService.CheckAvailability(dto);
+            if (available)
+            {
+                return Ok();
+            }
+            return NotFound();
+
+        }
+
+        [HttpPost("patient/regularAppointments")]
+        public ActionResult DateDoctorAppointments(AppointmentPatientDTO dto)
+        {
+            Doctor doctor = _doctorService.GetById(dto.DoctorId);
+            dto.Doctor=doctor;
+          
+            var appointments = _availableAppointmentService.GetDoctorsAvailableAppointmentsForDate(dto.Doctor,DateTime.Parse(dto.DateString));
+
+            if (appointments.IsNullOrEmpty())
+            {
+                return NotFound();
+            }
+            return Ok(appointments);
+        }
+
+
+        [HttpPost]
+        [Route("patient/schedule")]
+        public ActionResult PatientSchedule(AppointmentPatientDTO dto)
+        {
+            
+            CreateAppointmentDTO createDTO = dto.toCreateDTO();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _appointmentService.Create(createDTO);
+            return NoContent();
         }
     }
 }

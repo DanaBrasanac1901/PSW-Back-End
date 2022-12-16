@@ -12,20 +12,19 @@ namespace HospitalLibrary.Core.Blood
     {
         public int Id { get; set; }
         public String DoctorId { get; set; }
-        public BloodType Type { get; set; }
-        public double Amount { get; set; }
+        public Blood Blood { get; set; }
         public String Reason { get; set; }
         public DateTime Due { get; set; }
 
-        public BloodRequest(){}
+        public BloodRequest() { }
 
         public BloodRequest(int id, BloodType type, double amount, String reason, DateTime due)
         {
             this.Id = id;
-            this.Type = type;
-            this.Amount = amount;
+            this.Blood = new Blood(type, amount);
             this.Reason = reason;
             this.Due = due;
+            this.DoctorId = "DOC1";
         }
     }
 }

@@ -63,5 +63,12 @@ namespace HospitalLibrary.Core.Appointment
                                                                             && appointment.Status!=AppointmentStatus.Cancelled).ToList();
             return appointments;
         }
+
+        public IEnumerable<Appointment> GetAllByPatient(string id)
+        {
+            List<Appointment> appointments = _context.Appointments.Where(appointment => appointment.PatientId.Equals(id)
+                                                                            ).ToList();
+            return appointments;
+        }
     }
 }

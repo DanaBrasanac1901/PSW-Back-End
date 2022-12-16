@@ -19,10 +19,13 @@ using HospitalLibrary.Core.User;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HospitalLibrary.Core.Consiliums;
+
 using HospitalLibrary.Core.Report.Services;
 using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.Repositories;
 
+using HospitalLibrary.Core.PasswordHasher;
 
 namespace HospitalAPI
 {
@@ -81,6 +84,7 @@ namespace HospitalAPI
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAvailableAppointmentService, AvailableAppointmentService>();
 
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();
@@ -88,9 +92,12 @@ namespace HospitalAPI
             // services.AddScoped<IEmailSend, EmailSend>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IUserService, UserService>();
+
+
+
             services.AddScoped<IUserService, UserService>();
-
-
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IEmailSendService, EmailSendService>();
 
             services.AddScoped<IBloodConsuptionRecordRepository, BloodConsumptionRecordRepository>();
@@ -102,6 +109,12 @@ namespace HospitalAPI
             services.AddScoped<IInpatientTreatmentRecordRepository, InpatientTreatmentRecordRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
+
+
+            services.AddScoped<IBloodConsuptionRepository, BloodSupplyRepository>();
+
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
+            services.AddScoped<IConsiliumService, ConsiliumService>();
 
 
             services.AddScoped<IDrugApplicationService, DrugApplicationService>();
@@ -150,6 +163,8 @@ namespace HospitalAPI
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }

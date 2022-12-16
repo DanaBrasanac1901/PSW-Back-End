@@ -1,14 +1,19 @@
-﻿using HospitalLibrary.Core.Appointment;
+﻿using Castle.Core.Internal;
+using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Room;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 //using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
 
 namespace HospitalLibrary.Core.Appointment
 {
@@ -20,6 +25,7 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
         private string _email;
+
         public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
             IRoomRepository roomRepository, IEmailSendService emailSend)
         {
@@ -50,14 +56,19 @@ namespace HospitalLibrary.Core.Appointment
         {
             return _appointmentRepository.GetById(id);
         }
-
+        /// 
+        /// implementirati -> gledati radno vreme vacation  i appointments da lli postoje
         public Boolean IsAvailable(Appointment app)
         {
             Doctor.Doctor doc = app.Doctor;
+            if (app.Doctor.Appointments == null)
+            {
+                return true;
+            }
             ICollection<Appointment> allApp = app.Doctor.Appointments;
-            List<Appointment> allAppList = allApp.ToList();
-
-            foreach (var appToCheck in allAppList)
+            //List<Appointment> allAppList = allApp.ToList();
+            
+            foreach (var appToCheck in allApp.ToList())
             {
                 if(appToCheck.Start.ToString() == app.Start.ToString())
                 {
@@ -67,7 +78,7 @@ namespace HospitalLibrary.Core.Appointment
             return true;
         }
 
-        public Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
+        public static Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
         {
             DateTime dateTimeNow = DateTime.Now;
             if (dateTimeNow.Year > dateToCheck.Year)
@@ -106,7 +117,7 @@ namespace HospitalLibrary.Core.Appointment
             else
             {
                 _appointmentRepository.Create(app);
-                return app.Id;
+                return "Passed";
             }
         }
 
@@ -188,6 +199,7 @@ namespace HospitalLibrary.Core.Appointment
             return dto;
         }
 
+       
         public Boolean CheckIfAppointmentExistsForDoctor(string doctorId,DateTime start)
         {
             

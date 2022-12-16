@@ -27,27 +27,28 @@ namespace HospitalLibrary.Core.Report.DTO
         public ReportToCreateDTO(IReportApplicationService reportApplicationService)
         {
             _reportApplicationService = reportApplicationService;
-            //patientId = "PAT1";
-            //doctorId = "DOC1";
-            //description = "Descripcija";
-            //datOfMaking = DateTime.Now.ToString();
-            //symptoms = symptomsList();
-            //drugs = drugsList();
+            patientId = "PAT1";
+            doctorId = "DOC1";
+            description = "Descripcija";
+            datOfMaking = DateTime.Now.ToString();
+            symptoms = new List<SymptomDTO>();
+            drugs = new List<DrugDTO>();
+            appointmentId = DateTime.Now.ToString();
         }
 
-        private List<Symptom> symptomsList()
+        private List<SymptomDTO> symptomsList()
         {
-            List<Symptom> retList = new List<Symptom>();
-            retList.Add(new Symptom("Glavobolja"));
-            retList.Add(new Symptom("Kijavica"));
+            List<SymptomDTO> retList = new List<SymptomDTO>();
+            retList.Add(new SymptomDTO("Glavobolja")); 
+            retList.Add(new SymptomDTO("Kijavica"));
             return retList;
         }
 
-        private List<Drug> drugsList()
+        private List<DrugDTO> drugsList()
         {
-            List<Drug> retList = new List<Drug>();
-            retList.Add(new Drug("Aspirin","Hemofarm"));
-            retList.Add(new Drug("Brufent","Galenika"));
+            List<DrugDTO> retList = new List<DrugDTO>();
+            retList.Add(new DrugDTO("Aspirin","Hemofarm",false));
+            retList.Add(new DrugDTO("Brufent","Galenika",false));
             return retList;
         }
     }

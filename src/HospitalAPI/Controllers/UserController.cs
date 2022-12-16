@@ -16,6 +16,7 @@ namespace HospitalAPI.Controllers
 		{
 			_userService = userService;
 		}
+
 		[HttpGet("Doctors")]
 		[Authorize(Roles = "DOCTOR")]
 		public IActionResult DoctorsEndpoint()
@@ -51,6 +52,7 @@ namespace HospitalAPI.Controllers
 				return new User
 				{
 					Id = int.Parse(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Sid)?.Value),
+					//IdByRole = int.Parse(userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Sid)?.Value);
 					Name = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value,
 					Surname = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value,
 					Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value,
