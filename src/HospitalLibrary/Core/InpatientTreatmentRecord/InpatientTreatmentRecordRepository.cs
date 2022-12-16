@@ -30,7 +30,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
 
         public void Create(InpatientTreatmentRecord inpatientTreatmentRecord)
         {
-
+            _context.Entry(inpatientTreatmentRecord).State = EntityState.Modified;
             var local = _context.Set<InpatientTreatmentRecord>()
             .Local
             .FirstOrDefault(entry => entry.Id.Equals(inpatientTreatmentRecord.Id));
@@ -42,7 +42,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
                 _context.Entry(local).State = EntityState.Detached;
             }
             _context.InpatientTreatmentRecords.Add(inpatientTreatmentRecord);
-            _context.Entry(inpatientTreatmentRecord).State = EntityState.Modified;
+            
             
 
             _context.SaveChanges();
