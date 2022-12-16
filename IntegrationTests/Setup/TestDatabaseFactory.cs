@@ -50,9 +50,11 @@ namespace IntegrationTests.Setup
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
+            InitializeBloodbanks(context);
+            context.Tenders.Add(new Tender(1.1, 1.1, 1.1, 1.1, "aa", new DateTime(),99));
             /* context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportTable\";");
 
-
+            
          context.ReportTable.Add(new Report(
              new Guid("3E63FA4E-3A3A-4DEB-ACD1-3F784DE9D90B"),
              DateTime.Now, 

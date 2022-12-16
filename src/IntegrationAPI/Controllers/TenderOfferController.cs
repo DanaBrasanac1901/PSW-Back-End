@@ -52,8 +52,9 @@ namespace HospitalAPI.Controllers
             return Ok(tenderOffer);
         }
         [HttpGet("Tender/{id}")]
-        public ActionResult GetByTender(int id)
+        public ActionResult GetByTender()
         {
+            int id = Convert.ToInt32(Request.Query["Id"]);
             var tenderOffer = _tenderOfferService.GetByTender(id);
             if (tenderOffer == null)
             {
@@ -124,7 +125,7 @@ namespace HospitalAPI.Controllers
                 String email = winner.Email;
                 
                 Tender tender = _tenderService.GetById(tenderOffer.TenderId);
-                var lnkHref = Url.Action("AcceptOffer", "TenderOffers", new { email = email, date = tender.Expiration, id=tender.Id }, "http");
+                var lnkHref = Url.Action("AcceptOffer", "TenderOffers", new { email = email, date = tender.Expiration, id=tender.Id }, "https");
                 //HTML Template for Send email
                 string subject = "Tender won!";
                 string body = "Confirm tender win: \n" + lnkHref;
@@ -166,7 +167,7 @@ namespace HospitalAPI.Controllers
             
             _tenderService.Delete(_tenderService.GetById(id));
             NotifyLosers(email,date);
-            return Redirect("");
+            return Redirect("https//localhost:4200/tenders");
         }
     }
 
