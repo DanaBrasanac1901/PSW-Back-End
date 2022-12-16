@@ -1,5 +1,4 @@
 ﻿using HospitalLibrary.Core.Feedback;
-using HospitalLibrary.Core.Feedback.Injectors;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Mvc;
 

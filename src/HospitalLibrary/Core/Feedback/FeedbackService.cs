@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Feedback.Injectors;
-using HospitalLibrary.Settings;
+﻿using HospitalLibrary.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;

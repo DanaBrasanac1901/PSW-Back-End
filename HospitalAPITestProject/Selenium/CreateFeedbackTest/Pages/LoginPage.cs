@@ -8,5 +8,7 @@ namespace HospitalAPITestProject.Selenium.CreateFeedbackTest.Pages
 {
     public class LoginPage
     {
+
+       
     }
 }

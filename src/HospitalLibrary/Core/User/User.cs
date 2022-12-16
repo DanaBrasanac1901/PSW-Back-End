@@ -73,7 +73,7 @@ namespace HospitalLibrary.Core.User
         public int IdByRole { get { return idByRole; } set { idByRole = value; } }
         public string Name { get { return name; } set { name = value; } }
         public string Surname { get { return surname; } set { surname = value;  } }
-        public string Email { get { return email; } private set { email = value; } }
+        public string Email { get { return email; } set { email = value; } }
         public string Password { get { return password; } set { password = value; } }
         public string Role { get { return role; } set { role = value; } }
 
