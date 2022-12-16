@@ -25,6 +25,7 @@ using HospitalLibrary.Core.Report.Services;
 using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.Repositories;
 
+using HospitalLibrary.Core.PasswordHasher;
 
 namespace HospitalAPI
 {
@@ -83,6 +84,7 @@ namespace HospitalAPI
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAvailableAppointmentService, AvailableAppointmentService>();
 
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();
@@ -93,6 +95,9 @@ namespace HospitalAPI
             //services.AddScoped<IUserService, UserService>();
 
 
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IEmailSendService, EmailSendService>();
 
             services.AddScoped<IBloodConsuptionRecordRepository, BloodConsumptionRecordRepository>();
@@ -105,6 +110,8 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
 
+
+            services.AddScoped<IBloodConsuptionRepository, BloodSupplyRepository>();
 
             services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
             services.AddScoped<IConsiliumService, ConsiliumService>();
@@ -156,6 +163,8 @@ namespace HospitalAPI
             {
                 endpoints.MapControllers();
             });
+
+            
         }
     }
 }

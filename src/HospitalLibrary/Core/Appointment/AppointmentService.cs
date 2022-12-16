@@ -1,14 +1,19 @@
-﻿using HospitalLibrary.Core.Appointment;
+﻿using Castle.Core.Internal;
+using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Room;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 //using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
 
 namespace HospitalLibrary.Core.Appointment
 {
@@ -20,6 +25,7 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
         private string _email;
+
         public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
             IRoomRepository roomRepository, IEmailSendService emailSend)
         {
@@ -50,7 +56,8 @@ namespace HospitalLibrary.Core.Appointment
         {
             return _appointmentRepository.GetById(id);
         }
-
+        /// 
+        /// implementirati -> gledati radno vreme vacation  i appointments da lli postoje
         public Boolean IsAvailable(Appointment app)
         {
             Doctor.Doctor doc = app.Doctor;
@@ -71,7 +78,7 @@ namespace HospitalLibrary.Core.Appointment
             return true;
         }
 
-        public Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
+        public static Boolean CheckIfAppointmentIsSetInFuture(DateTime dateToCheck)
         {
             DateTime dateTimeNow = DateTime.Now;
             if (dateTimeNow.Year > dateToCheck.Year)
@@ -192,6 +199,7 @@ namespace HospitalLibrary.Core.Appointment
             return dto;
         }
 
+       
         public Boolean CheckIfAppointmentExistsForDoctor(string doctorId,DateTime start)
         {
             

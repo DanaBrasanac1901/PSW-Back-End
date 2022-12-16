@@ -40,6 +40,19 @@ namespace HospitalAPI.Controllers
             return Ok(doctor);
         }
 
+
+        // GET api/Doctor/specialty/Cardiologist
+        [HttpGet("specialty/{specialty}")]
+        public ActionResult GetBySpecialty(string specialty)
+        {
+            var doctors = _doctorService.GetBySpecialty(specialty);
+            if (doctors == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctors);
+        }
         //GET api/doctorNestoDTO/DOC1
         //[HttpGet("{id}")]
         //public ActionResult GetDoctorForShift(string id)

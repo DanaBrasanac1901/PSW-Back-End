@@ -34,6 +34,14 @@ namespace HospitalLibrary.Core.Patient
         {
             return _patientRepository.GetById(id);
         }
+        public Patient GetByEmail(string email)
+        {
+            foreach(Patient p in GetAll())
+            {
+                if (p.Email.Equals(email)) return p;
+            }
+            return null;
+        }
 
         public void Create(Patient patient)
         {
@@ -41,19 +49,14 @@ namespace HospitalLibrary.Core.Patient
             _patientRepository.Create(patient);
         }
 
-        /*
+
         public void Register(Patient patient)
         {
-            patient.Active = false;
             _patientRepository.Create(patient);
         }
-        */
 
-        public void Activate(Patient patient)
-        {
-            patient.Active = true;
-            _patientRepository.Update(patient);
-        }
+
+        
 
    
 
@@ -67,7 +70,7 @@ namespace HospitalLibrary.Core.Patient
             _patientRepository.Delete(patient);
         }
 
-        public IEnumerable<string> GetDoctorsWithLeastPatients()
+        public IEnumerable<Doctor.Doctor> GetDoctorsWithLeastPatients()
         {
             int minimalPatientNumber = GetMinNumOfPatients(GetMaxNumOfPatients());
             return DoctorsWithSimiliarNumOfPatients(minimalPatientNumber, minimalPatientNumber + 2);
@@ -116,17 +119,17 @@ namespace HospitalLibrary.Core.Patient
             return personalNumber;
         }
 
-        public IEnumerable<string> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
+        public IEnumerable<Doctor.Doctor> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
         {
             List<Doctor.Doctor> doctors = _doctorRepository.GetAll().ToList();
             doctors.RemoveAll(d => NumberOfPatientsByDoctor(d.Id) > maxNumber || NumberOfPatientsByDoctor(d.Id) < minNumber);
             
-            List<string> doctorIds = new List<string>();
+            List<Doctor.Doctor> availableDoctors = new List<Doctor.Doctor>();
             foreach(Doctor.Doctor d in doctors)
             {
-                doctorIds.Add(d.Id);
+                availableDoctors.Add(d);
             }
-            return doctorIds;
+            return availableDoctors;
 
         }
 

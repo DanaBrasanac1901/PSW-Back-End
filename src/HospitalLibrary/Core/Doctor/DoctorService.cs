@@ -1,6 +1,9 @@
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Consiliums.DTO;
 using HospitalLibrary.Core.Doctor.DTOS;
+
+﻿using HospitalLibrary.Core.Doctor.DTOS;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Vacation;
 using System;
 using System.Collections.Generic;
@@ -205,6 +208,22 @@ namespace HospitalLibrary.Core.Doctor
         public List<Doctor> GetByIds(string doctorIds)
         {
             return _doctorRepository.GetByIds(doctorIds);
+        }
+        public List<Doctor> GetBySpecialty(string specialty)
+        {
+            Specialty spec;
+            bool isSuccesful=Specialty.TryParse(specialty,out spec);
+            List<Doctor> returnList = new List<Doctor>();
+
+            if (isSuccesful)
+            {
+                foreach (Doctor doctor in GetAll())
+                {
+                    if (doctor.Specialty.Equals(spec)) returnList.Add(doctor);
+                }
+            }
+
+            return returnList;
         }
     }
 }

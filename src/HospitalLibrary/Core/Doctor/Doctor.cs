@@ -16,6 +16,7 @@ namespace HospitalLibrary.Core.Doctor
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public Specialty Specialty { get; set; }
         public int RoomId { get; set; }
         public virtual Room.Room Room { get; set; }
 
@@ -33,12 +34,13 @@ namespace HospitalLibrary.Core.Doctor
         
         public Doctor() {}
 
-        public Doctor(string id, string name, string surname, string email,int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments)
+        public Doctor(string id, string name, string surname, string email, Specialty specialty, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments)
         {
             Id = id;
             Name = name;
             Surname = surname;
             Email = email;
+            Specialty = specialty;
             RoomId = roomId;
             Room = room;
             StartWorkTime = startWorkTime;
@@ -48,6 +50,7 @@ namespace HospitalLibrary.Core.Doctor
         }
 
         public Doctor(string id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty)
+       
         {
             Id = id;
             Name = name;
@@ -60,6 +63,7 @@ namespace HospitalLibrary.Core.Doctor
             Appointments = appointments;
             VacationRequests = new List<VacationRequest>();
             Specialty = (Specialty)specialty;
+
         }
 
         public bool IsAvailable(DateTime start, DateTime end)

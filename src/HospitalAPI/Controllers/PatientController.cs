@@ -1,8 +1,10 @@
 ﻿using Castle.Core.Internal;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.User;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using HospitalLibrary.Core.EmailSender;
 
 namespace HospitalAPI.Controllers
 {
@@ -11,11 +13,14 @@ namespace HospitalAPI.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService _patientService;
-     
+        private readonly IUserService _userService;
+        private IEmailSendService _emailSendService;
 
-        public PatientsController(IPatientService patientService)
+        public PatientsController(IPatientService patientService,IUserService userService, IEmailSendService emailSendService)
         {
             _patientService = patientService;
+            _userService = userService;
+            _emailSendService = emailSendService;
         }
 
         // GET: api/patients
@@ -51,46 +56,52 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
-        /*
-        [HttpPost("login")]
-        public ActionResult Login(Patient patient)
+        [HttpPost("register")]
+        public ActionResult Register(RegisterDTO regDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _patientService.CheckCreditentials(patient.Email,patient.Password);
+            Patient patient = new Patient(regDTO);
+
+            if (_userService.GetByEmail(patient.Email) != null) return BadRequest("Exists");
+            
+            _patientService.Register(patient);
+
+            Patient createdPatient = _patientService.GetByEmail(patient.Email);
+
+            if (createdPatient != null)
+            {
+                User newUser = new User(regDTO, createdPatient.Id);
+                _userService.Create(newUser);
+            }
+
+           if(!SendActivationEmail(createdPatient.Email)) return BadRequest("Email");
+            
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
         
-
-        [HttpPost("validate/{id}")]
-        public ActionResult Validate(Patient patient)
+        private bool SendActivationEmail(string email)
         {
-            if (!ModelState.IsValid)
+
+            var token = _userService.GenerateActivationToken(email);
+
+            if (token != null)
             {
-                return BadRequest(ModelState);
+                _userService.SaveTokenToDatabase(email, token);
+
+                var lnkHref = Url.Action("Activate", "Credentials", new { email = email, code = token }, "http");
+                string subject = "HealthcareMD Activation Link";
+                string body = "Your activation link: " + lnkHref;
+                _emailSendService.SendEmail(new Message(new string[] { email, "tibbers707@gmail.com" }, subject, body));
+                return true;
             }
 
-            _patientService.Activate(patient);
-            return Ok(patient);
+            return false;
         }
-
-        [HttpPost("register")]
-        public ActionResult Register(Patient patient)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _patientService.Register(patient);
-            return CreatedAtAction("GetById", new { id = patient.Id }, patient);
-        }
-
-        */
 
         
 
@@ -137,13 +148,13 @@ namespace HospitalAPI.Controllers
         [HttpGet("minimal-patients-doctor")]
         public ActionResult GetDoctorsWithLeastPatients() {
 
-            var doctorIds = _patientService.GetDoctorsWithLeastPatients();
-            if(doctorIds == null)
+            var doctors = _patientService.GetDoctorsWithLeastPatients();
+            if(doctors == null)
             {
                 return NotFound();
             }
 
-            return Ok(doctorIds);
+            return Ok(doctors);
         
         
         }

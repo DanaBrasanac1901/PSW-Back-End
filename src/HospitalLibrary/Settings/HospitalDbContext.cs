@@ -14,6 +14,7 @@ using HospitalLibrary.Core.User;
 using HospitalLibrary.Core.Consiliums;
 using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.Model;
+using Npgsql;
 
 namespace HospitalLibrary.Settings
 {
@@ -59,9 +60,17 @@ namespace HospitalLibrary.Settings
         
         public DbSet<SymptomList> SymptomList { get; set;}
         
+
+
+        public DbSet<User> Users { get; set; }
+
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
-
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<Specialty>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<Gender>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<BloodType>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<AppointmentStatus>();
 
         }
 
@@ -70,6 +79,14 @@ namespace HospitalLibrary.Settings
             // Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
             //Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             //Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
+            modelBuilder.HasPostgresEnum<Specialty>();
+            modelBuilder.HasPostgresEnum<Gender>();
+            modelBuilder.HasPostgresEnum<BloodType>();
+            modelBuilder.HasPostgresEnum<AppointmentStatus>();
+
+            Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
+            Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
+            Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
 
             /*
             BloodSupply supplyABank1 = new BloodSupply(1, BloodType.A, 54, bank1Id);
@@ -94,6 +111,16 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<BloodConsumptionRecord>().HasData(
                 bloodConsumptionRecord1
                 );
+
+
+
+            modelBuilder.Entity<Room>().HasData(
+                new Room(){ Id = 1, Number = "1A", Floor = 1} 
+                );
+            User user1 = new User { Id = 1, IdByRole = 1, Name = "Milica", Surname = "Peric", Email = "manager", Password = "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==", Role = "MANAGER", Active = true, Token = null };
+            User user2 = new User { Id = 2, IdByRole = 1, Name = "Filip", Surname = "Marinkovic", Email = "doctor", Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", Role = "DOCTOR", Active = true, Token = null };
+
+            modelBuilder.Entity<User>().HasData(user1, user2);
 
             modelBuilder.Entity<InpatientTreatmentRecord>().HasData(
                 new InpatientTreatmentRecord()
@@ -127,6 +154,9 @@ namespace HospitalLibrary.Settings
             */
             /*
             Consilium consilium1 = new Consilium(1, "A complicated case", 45, new DateTime(2023, 3, 10, 10, 30, 0), "DOC1, DOC2", "", "DOC1");
+
+            base.OnModelCreating(modelBuilder);
+        }
 
             modelBuilder.Entity<Consilium>().HasData(
                     consilium1
@@ -169,6 +199,7 @@ namespace HospitalLibrary.Settings
             base.OnModelCreating(modelBuilder);
         }
        
+
 
     }
 }

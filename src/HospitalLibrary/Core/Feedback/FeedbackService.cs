@@ -28,11 +28,6 @@ namespace HospitalLibrary.Core.Feedback
             return _feedbackRepository.GetById(id);
         }
 
-        public Feedback GetByPatientId(int id)
-        {
-            return _feedbackRepository.GetByPatientId(id);
-        }
-
         public void Create(Feedback feedback)
         {
             feedback.Date = System.DateTime.Today;
@@ -52,15 +47,17 @@ namespace HospitalLibrary.Core.Feedback
         {
             _feedbackRepository.Delete(feedback);
         }
-        public void AcceptFeedback(Feedback feedback)
+        public void ChangeApproval(int feedbackId)
         {
-            feedback.Approved = true;
+            Feedback feedback = GetById(feedbackId);
+            if (feedback.Approved) feedback.Approved = false;
+            else feedback.Approved = true;
             _feedbackRepository.Update(feedback);
         }
-        public void ChangeVisibility(Feedback feedback)
+        public void ChangeVisibility(int feedbackId)
         {
-            if(feedback.VisibleToPublic)
-                feedback.VisibleToPublic = false;
+            Feedback feedback = GetById(feedbackId);
+            if (feedback.VisibleToPublic) feedback.VisibleToPublic = false;
             else feedback.VisibleToPublic = true;
             _feedbackRepository.Update(feedback);
         }

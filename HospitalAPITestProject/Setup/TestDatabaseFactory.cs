@@ -112,12 +112,33 @@ namespace HospitalTests.Setup
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 6, Amount = 11, Type = BloodType.B, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 7, Amount = 12, Type = BloodType.AB, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });
             context.BloodConsumptionRecords.Add(new BloodConsumptionRecord { Id = 8, Amount = 13, Type = BloodType.O, Reason = "some string", CreatedAt = System.DateTime.Now, DoctorId = "DOC1" });*/
+            //da li uopste pisati integracioni i sta proveravati njime? (da li se napravio blood consumption record u bazi?)
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
+            //context.Rooms.Add(new Room { Id = 1, Floor = 1, Number = "11" });
+            context.Rooms.Add(new Room { Id = 2, Floor = 1, Number = "12" });
+            context.Rooms.Add(new Room { Id = 3, Floor = 2, Number = "21" });
+            context.Rooms.Add(new Room { Id = 4, Floor = 3, Number = "31" });
 
+           
+            InitializeDoctors(context);
+            InitializePatients(context);
+            InitializeUsers(context);
 
             //context.VacationRequests.Add(new VacationRequest { Id = 49, Start = new DateTime(2023, 1, 1), End = new DateTime(2023, 1, 14), Description = "holidays", Urgency = true, DoctorId = "DOC1" });
 
-            //context.VacationRequests.Add(new VacationRequest { Id = 1, Start = new DateTime(2023, 3, 5), End = new DateTime(2023, 3, 10), Description = "need rest", Urgency = false, DoctorId = "DOC1", Status = VacationRequestStatus.WaitingForApproval, RejectionReason = "" });
-            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE\"Rooms\";");
+
+
+        private static void InitializeUsers(HospitalDbContext context)
+        {
+            context.Users.Add(new User { Id = 9, IdByRole = 1, Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com",Password = "pass1", Role ="DOCTOR"});
+            context.Users.Add(new User { Id = 10, IdByRole = 2, Name = "Milica", Surname = "Todorovic", Email = "mtodorovic@hotmail.com", Password = "pass2", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 11, IdByRole = 3, Name = "Darko", Surname = "Mitic", Email = "darkomitic@live.com", Password = "pass3", Role = "DOCTOR" });
+            context.Users.Add(new User { Id =12, IdByRole = 4, Name = "Selena", Surname = "Mirkovic", Email = "selmirkovic@gmail.com", Password = "pass4", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 13, IdByRole = 5, Name = "Janko", Surname = "Jankovic", Email = "janki@gmail.com", Password = "pass5", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 14, IdByRole = 6, Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", Password = "pass6", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 15, IdByRole = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", Password = "pass7", Role = "PATIENT" });
+            context.Users.Add(new User { Id =16, IdByRole = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", Password = "pass8", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 17, IdByRole = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", Password = "pass9", Role = "PATIENT" });
         }
 
 
@@ -154,6 +175,15 @@ namespace HospitalTests.Setup
 
         //}*/
 
+        private static void InitializePatients(HospitalDbContext context)
+        {
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\";");
+            context.Patients.Add(new Patient { Id = 5, Name = "Janko", Surname="Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies = { }, DoctorID="1" });
+            context.Patients.Add(new Patient { Id = 6, Name = "Milan", Surname = "Simic",  Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = { }, DoctorID="1" });
+            context.Patients.Add(new Patient { Id = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = { }, DoctorID="2"});
+            context.Patients.Add(new Patient { Id = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = { },DoctorID="3"});
+            context.Patients.Add(new Patient { Id = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = { }, DoctorID = "1"});
+        }
     }
 }
 

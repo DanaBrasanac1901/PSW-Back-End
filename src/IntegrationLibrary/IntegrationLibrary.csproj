@@ -1,10 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
+
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+
+    <PackageReference Include="IronPdf" Version="2022.11.10347" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
@@ -20,7 +25,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="NEST" Version="7.17.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17" />
@@ -29,6 +37,14 @@
 
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="108.0.5359.7100" />
 
+
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />
+  </ItemGroup>
+  
 
 </Project>
