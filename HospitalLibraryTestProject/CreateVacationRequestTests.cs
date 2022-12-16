@@ -29,7 +29,6 @@ namespace HospitalLibraryTestProject
             Doctor doctor = CreateDoctorWithAppointments();
             VacationRequest request = new VacationRequest(0, new DateTime(2022, 11, 12), new DateTime(2022, 11, 17), "I need to take some rest", false, "DOC0");
 
-
             bool available = doctor.IsAvailable(request.Start, request.End);
 
             Assert.True(!available);

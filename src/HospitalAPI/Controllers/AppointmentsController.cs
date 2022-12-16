@@ -17,9 +17,10 @@ namespace HospitalAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-        private readonly IDoctorService _doctorService;
+https://github.com/FStefanovv/PSW-Back-End/pull/52/conflict?name=src%252FHospitalAPI%252FControllers%252FAppointmentsController.cs&ancestor_oid=c27437478ca3d0fc6c37933f62e7aceb924ce6de&base_oid=0be767473a5418a303ce262902f6e64a940edf63&head_oid=2e979e90e9007707d1aaaa53e285a4909a0e0635        private readonly IDoctorService _doctorService;
         private readonly IAvailableAppointmentService _availableAppointmentService;
   
+        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
         public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
         {
             _appointmentService = appointmentService;
@@ -118,7 +119,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
             string idFlag = _appointmentService.Create(appDTO);
-            return CreatedAtAction("GetById", new { id = idFlag }, appDTO);
+            return Ok("Passed");
         }
 
         [HttpGet]
@@ -153,6 +154,12 @@ namespace HospitalAPI.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetAppointmentForReport(string id)
+        {
+            var app = _appointmentService.GetAppointmentForReport(id);
+            return Ok(app);
 
 
         //Dana&Anja

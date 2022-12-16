@@ -12,4 +12,6 @@ namespace HospitalLibrary.Core.Enums
         Anesthesiologist,
         Neurosurgeon
     }
+
 }
+

@@ -18,9 +18,16 @@ namespace HospitalLibrary.Core.Doctor
         void Delete(Doctor doctor);
         DoctorsShiftDTO GetDoctorsShiftById(string id);
         Boolean IsAvailable(string id, DateTime time);
-        //List<Doctor> GetAllDoctorsForRescheduleForUrgentVacation(Appointment.Appointment appointment);
         List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameter);
         List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime);
 
+
+        List<string> GetFreeSpecialtyDoctors(string date, int specialty);
+        List<string> GetSpecialtyDoctors(int specialty);
+
+        bool AreAvailableForConsilium(List<Doctor> neededDoctors, DateTimeRange consiliumInterval);
+        List<Doctor> GetByIds(string doctorIds);
+        List<Doctor> GetAvailableBySpecialty(int specialty, DateTimeRange consiliumInterval);
+        List<Doctor> AvailableByEachSpecialty(string specialties, DateTimeRange consiliumInterval);
     }
 }

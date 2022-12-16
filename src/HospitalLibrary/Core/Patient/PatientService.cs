@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.Patient.DTOS;
 using Microsoft.AspNetCore.Builder;
 using Org.BouncyCastle.Crypto.Tls;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace HospitalLibrary.Core.Patient
             return _patientRepository.GetAll();
         }
 
-        public Patient GetById(int id)
+        public Patient GetById(string id)
         {
             return _patientRepository.GetById(id);
         }
@@ -130,6 +131,29 @@ namespace HospitalLibrary.Core.Patient
             }
             return availableDoctors;
 
+        }
+
+        private List<PatientForAppointmentDTO> ReturnPatientsForAppointment(string doctorId)
+        {
+            List<PatientForAppointmentDTO> retList = new List<PatientForAppointmentDTO>(); 
+            foreach (var pat in _patientRepository.GetAll())
+            {
+                if(pat.DoctorID == doctorId)
+                {
+                    retList.Add(PatientAdapter.PatientToPatientForAppointmentDTO(pat));
+                }
+            }
+            return retList;
+        }
+
+        public List<PatientForAppointmentDTO> GetPatientsForDoctor(string doctorId)
+        {
+            return ReturnPatientsForAppointment(doctorId);
+        }
+
+        public PatientForReportDTO GetPatientForReport(string id)
+        {
+            return PatientAdapter.PatientToPatientForReportDTO(_patientRepository.GetById(id));
         }
 
         /*

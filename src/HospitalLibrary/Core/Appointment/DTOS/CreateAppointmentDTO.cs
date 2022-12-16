@@ -8,6 +8,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
 {
     public class CreateAppointmentDTO
     {
+        private IAppointmentService appointmentService;
         public string doctorId { get; set; }
         public string patientId { get; set; }
         public string startDate { get; set; }
@@ -18,6 +19,18 @@ namespace HospitalLibrary.Core.Appointment.DTOS
 
         public CreateAppointmentDTO()
         {
+        }
+        public CreateAppointmentDTO(IAppointmentService appointmentService)
+        {
+            this.appointmentService = appointmentService;
+            doctorId = "DOC1";
+            patientId = "PAT1";
+            var helper = DateTime.Now;
+            startDate = helper.Year +  "-" + helper.Month + "-" + helper.Day;
+            startTime = helper.Hour + ":" + helper.Minute;
+            roomId = 1;
+            status = "bilosta";
+            appointmentDuration = 20;
         }
     }
 }

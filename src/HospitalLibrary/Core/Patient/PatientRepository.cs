@@ -19,7 +19,7 @@ namespace HospitalLibrary.Core.Patient
             return _context.Patients.ToList();
         }
 
-        public Patient GetById(int id)
+        public Patient GetById(string id)
         {
             return _context.Patients.Find(id);
         }

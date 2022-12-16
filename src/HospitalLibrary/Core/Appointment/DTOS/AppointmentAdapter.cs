@@ -12,7 +12,14 @@ namespace HospitalLibrary.Core.Appointment.DTOS
         public static Appointment CreateAppointmentDTOToAppointment(CreateAppointmentDTO appDTO)
         {
             Appointment app = new Appointment();
-            app.DoctorId = "DOC1";
+            if(appDTO.doctorId != null)
+            {
+                app.DoctorId = appDTO.doctorId;
+            }
+            else
+            {
+                app.DoctorId = "DOC1";
+            }
             app.PatientId = appDTO.patientId;
             string DAT = appDTO.startDate + " " + appDTO.startTime + ":00";
             app.Start = Convert.ToDateTime(DAT);
@@ -57,6 +64,15 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             DateTime newStartTime = Convert.ToDateTime(timeParse);
             app.Start = createTime(dto);
             return app;
+        }
+
+        public static AppointmentForReportDTO AppointmentToAppointmentForReportDTO(Appointment app)
+        {
+            AppointmentForReportDTO dto = new AppointmentForReportDTO();
+            dto.id = app.Id;
+            dto.patientId = app.PatientId;
+            dto.doctorId = app.DoctorId;
+            return dto;
         }
     }
 }

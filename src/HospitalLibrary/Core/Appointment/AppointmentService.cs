@@ -61,10 +61,14 @@ namespace HospitalLibrary.Core.Appointment
         public Boolean IsAvailable(Appointment app)
         {
             Doctor.Doctor doc = app.Doctor;
+            if (app.Doctor.Appointments == null)
+            {
+                return true;
+            }
             ICollection<Appointment> allApp = app.Doctor.Appointments;
-            List<Appointment> allAppList = allApp.ToList();
-
-            foreach (var appToCheck in allAppList)
+            //List<Appointment> allAppList = allApp.ToList();
+            
+            foreach (var appToCheck in allApp.ToList())
             {
                 if(appToCheck.Start.ToString() == app.Start.ToString())
                 {
@@ -113,7 +117,7 @@ namespace HospitalLibrary.Core.Appointment
             else
             {
                 _appointmentRepository.Create(app);
-                return app.Id;
+                return "Passed";
             }
         }
 
@@ -219,6 +223,11 @@ namespace HospitalLibrary.Core.Appointment
                 _appointmentRepository.Update(appointment);
             }
                 
+        }
+
+        public AppointmentForReportDTO GetAppointmentForReport(string appId)
+        {
+            return AppointmentAdapter.AppointmentToAppointmentForReportDTO(_appointmentRepository.GetById(appId));
         }
     }
 }

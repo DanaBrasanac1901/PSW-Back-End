@@ -54,5 +54,20 @@ namespace HospitalLibrary.Core.Doctor
             _context.Doctors.Remove(doctor);
             _context.SaveChanges();
         }
+
+        public List<Doctor> GetByIds(string doctorIds)
+        {
+            List<Doctor> doctors = new List<Doctor>();
+            string[] doctorIdsSplit = doctorIds.Split(",");
+            foreach (string id in doctorIdsSplit)
+                doctors.Add(GetById(id));
+
+            return doctors;
+        }
+
+        public List<Doctor> GetBySpecialty(int specialty)
+        {
+            return _context.Doctors.Where(doctor => doctor.Specialty == (Enums.Specialty)specialty).ToList();
+        }
     }
 }
