@@ -28,6 +28,8 @@ namespace HospitalLibrary.Core.Appointment
 
         void ChangeDoctorForAppointment(string doctorId,string appointmentId);
 
+
         AppointmentForReportDTO GetAppointmentForReport(string appId);
+
     }
 }

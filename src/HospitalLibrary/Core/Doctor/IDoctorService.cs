@@ -18,6 +18,11 @@ namespace HospitalLibrary.Core.Doctor
         Boolean IsAvailable(string id, DateTime time);
         List<GetAppointmentsUrgentVacationDTO> GetAppointmentsUrgentVacation(GetDoctorsAppointmentsForUrgentVacationDTO parameter);
         List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime);
+
+
+        List<string> GetFreeSpecialtyDoctors(string date, int specialty);
+        List<string> GetSpecialtyDoctors(int specialty);
+
         bool AreAvailableForConsilium(List<Doctor> neededDoctors, DateTimeRange consiliumInterval);
         List<Doctor> GetByIds(string doctorIds);
         List<Doctor> GetAvailableBySpecialty(int specialty, DateTimeRange consiliumInterval);

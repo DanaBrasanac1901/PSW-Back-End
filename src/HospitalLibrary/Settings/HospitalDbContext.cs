@@ -36,29 +36,29 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
         public DbSet<VacationRequest> VacationRequests { get; set; }
+        
         public DbSet<InpatientTreatmentRecord> InpatientTreatmentRecords { get; set; }
+        
         public DbSet<Equipment> Equipment { get; set; }
-
+        
         public DbSet<User> Users { get; set; }
-
+        
         public DbSet<Consilium> Consiliums {get; set;}
+        
         public DbSet<ConsiliumAppointment> ConsiliumAppointments { get; set; }
-
+        
         public DbSet<Report> Reports { get; set; }
-
+        
         public DbSet<DrugPrescription> DrugPrescriptions { get; set; }
-
-
-
+        
         public DbSet<Symptom> Symptoms { get; set; }
-
+        
         public DbSet<Drug> Drugs { get; set; }
-
-
+        
         public DbSet<DrugList> DrugsList { get; set; }
-
+        
         public DbSet<SymptomList> SymptomList { get; set;}
-
+        
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
 
