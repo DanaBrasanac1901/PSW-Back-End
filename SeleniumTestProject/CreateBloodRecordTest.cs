@@ -38,13 +38,13 @@ namespace SeleniumTestProject
             Navigate("http://localhost:4200/bloodRecord/add");
 
             Click("patient-select");
-            ReadOnlyCollection<IWebElement> patientOptions = FindAllById();
-            patientOptions[0].Click();
+            //ReadOnlyCollection<IWebElement> patientOptions = FindAllById();
+            //patientOptions[0].Click();
             Sleep(1000);
  
 
             Click("date-input");
-            DeleteCharacters("date-input", 10);
+            //DeleteCharacters("date-input", 10);
             TypeInInput("date-input", "12/17/2022");
             Sleep(1000);
 
