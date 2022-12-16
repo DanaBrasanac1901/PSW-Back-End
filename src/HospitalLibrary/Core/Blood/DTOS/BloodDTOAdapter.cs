@@ -34,23 +34,23 @@ namespace HospitalLibrary.Core.Blood.DTOS
 
         public static BloodRequest CreateBloodRequestDTOToObject(CreateBloodRequestDTO newBloodRequest)
         {
-           BloodRequest bloodRequestTransformed= new BloodRequest();
+            //BloodRequest bloodRequestTransformed= new BloodRequest();
 
-            bloodRequestTransformed.Id = newBloodRequest.id;
-            bloodRequestTransformed.DoctorId = "DOC1";          
-            bloodRequestTransformed.Amount = newBloodRequest.amount;
-            bloodRequestTransformed.Reason = newBloodRequest.reason;          
-            bloodRequestTransformed.Due =Convert.ToDateTime(newBloodRequest.due);
-            if (newBloodRequest.type == "A")           
-                bloodRequestTransformed.Type = Enums.BloodType.A;           
+            //           bloodRequestTransformed.Id = newBloodRequest.id;
+            //         bloodRequestTransformed.DoctorId = "DOC1";          
+            //       bloodRequestTransformed.Reason = newBloodRequest.reason;          
+            //     bloodRequestTransformed.Due =Convert.ToDateTime(newBloodRequest.due);
+            Enums.BloodType type = Enums.BloodType.A;
+            if (newBloodRequest.type == "A")
+                type = Enums.BloodType.A;
             else if (newBloodRequest.type == "B")
-                bloodRequestTransformed.Type = Enums.BloodType.B;
+                type = Enums.BloodType.B;
             else if (newBloodRequest.type == "O")
-                bloodRequestTransformed.Type = Enums.BloodType.O;
+                type = Enums.BloodType.O;
             else if (newBloodRequest.type == "AB")
-                bloodRequestTransformed.Type = Enums.BloodType.AB;
-           
-            return bloodRequestTransformed;
+                type = Enums.BloodType.AB;
+
+            return new BloodRequest(newBloodRequest.id, type, newBloodRequest.amount, newBloodRequest.reason, Convert.ToDateTime(newBloodRequest.due));
 
         }
 

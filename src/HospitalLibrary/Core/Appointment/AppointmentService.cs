@@ -212,5 +212,10 @@ namespace HospitalLibrary.Core.Appointment
             }
                 
         }
+
+        public AppointmentForReportDTO GetAppointmentForReport(string appId)
+        {
+            return AppointmentAdapter.AppointmentToAppointmentForReportDTO(_appointmentRepository.GetById(appId));
+        }
     }
 }

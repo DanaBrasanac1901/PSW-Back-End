@@ -19,6 +19,12 @@ using HospitalLibrary.Core.User;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HospitalLibrary.Core.Consiliums;
+
+using HospitalLibrary.Core.Report.Services;
+using HospitalLibrary.Core.Report;
+using HospitalLibrary.Core.Report.Repositories;
+
 
 namespace HospitalAPI
 {
@@ -84,7 +90,7 @@ namespace HospitalAPI
             // services.AddScoped<IEmailSend, EmailSend>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserService, UserService>();
+            //services.AddScoped<IUserService, UserService>();
 
 
             services.AddScoped<IEmailSendService, EmailSendService>();
@@ -100,6 +106,26 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentService, EquipmentService>();
 
 
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
+            services.AddScoped<IConsiliumService, ConsiliumService>();
+
+
+            services.AddScoped<IDrugApplicationService, DrugApplicationService>();
+            services.AddScoped<IDrugRepository, DrugRepository>();
+            services.AddScoped<IReportApplicationService, ReportApplicationService>();
+            services.AddScoped<ISymptomApplicationService, SymptomApplicationService>();
+            services.AddScoped<ISymptomRepository, SymptomRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IDrugApplicationService, DrugApplicationService>();
+            services.AddScoped<IDrugPrescriptionRepository, DrugPrescriptionRepository>();
+
+            services.AddScoped<IDrugListRepository, DrugListRepository>();
+            services.AddScoped<IDrugListApplicationService, DrugListApplicationService>();
+
+
+            services.AddScoped<ISymptomListRepository, SymptomListRepository>();
+            services.AddScoped<IDrugPrescriptionApplicationService, DrugPrescriptionApplicationService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

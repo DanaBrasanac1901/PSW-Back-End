@@ -65,5 +65,14 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             app.Start = createTime(dto);
             return app;
         }
+
+        public static AppointmentForReportDTO AppointmentToAppointmentForReportDTO(Appointment app)
+        {
+            AppointmentForReportDTO dto = new AppointmentForReportDTO();
+            dto.id = app.Id;
+            dto.patientId = app.PatientId;
+            dto.doctorId = app.DoctorId;
+            return dto;
+        }
     }
 }

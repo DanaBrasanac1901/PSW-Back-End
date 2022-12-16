@@ -148,6 +148,22 @@ namespace HospitalAPI.Controllers
         
         }
 
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetPatientsForSpecificDoctor(string id)
+        {
+            var patients = _patientService.GetPatientsForDoctor(id);
+            return Ok(patients);
+        }
+
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public ActionResult GetPatientForReport(string id)
+        {
+            var patient = _patientService.GetPatientForReport(id);
+            return Ok(patient);
+        }
+
         /*
 
         [HttpGet("login/{email}")]
