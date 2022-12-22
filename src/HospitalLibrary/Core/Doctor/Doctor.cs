@@ -25,7 +25,6 @@ namespace HospitalLibrary.Core.Doctor
         [Range(0, 23)]
         public int EndWorkTime { get; set; }
 
-        public Specialty Specialty { get; set; }
 
         public virtual ICollection<VacationRequest> VacationRequests { get; set; }
         

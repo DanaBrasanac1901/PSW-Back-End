@@ -7,7 +7,7 @@ using Xunit;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Room;
-
+/*
 namespace HospitalLibraryTestProject
 {
     public class CreateVacationRequestTests
@@ -51,4 +51,4 @@ namespace HospitalLibraryTestProject
             return testDoctor;        
         }
     }
-}
+}*/

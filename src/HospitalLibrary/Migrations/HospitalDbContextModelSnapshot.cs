@@ -107,8 +107,7 @@ namespace HospitalLibrary.Migrations
                             Reason = "needed for surgery",
                             SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
                             Type = BloodType.A
-                        });
-                });
+                        }));
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
                 {

@@ -19,7 +19,6 @@ namespace HospitalLibrary.Core.Patient
         List<PatientForAppointmentDTO> GetPatientsForDoctor(string id);
         PatientForReportDTO GetPatientForReport(string id);
 
-        IEnumerable<Doctor.Doctor> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
         void Register(Patient patient);
         Patient GetByEmail(string email);
     }

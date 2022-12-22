@@ -156,6 +156,11 @@ namespace HospitalLibrary.Core.Patient
             return PatientAdapter.PatientToPatientForReportDTO(_patientRepository.GetById(id));
         }
 
+        IEnumerable<string> IPatientService.DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /*
         public Patient CheckCreditentials(string username, string password)
         {

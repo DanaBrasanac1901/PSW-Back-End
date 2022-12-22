@@ -62,9 +62,6 @@ namespace HospitalLibrary.Settings
         
 
 
-        public DbSet<User> Users { get; set; }
-
-
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
             NpgsqlConnection.GlobalTypeMapper.MapEnum<Specialty>();
