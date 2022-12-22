@@ -89,7 +89,7 @@ namespace HospitalLibrary.Core.Consiliums
             for (DateTime day = consiliumAppointmentInfo.Start; day <= consiliumAppointmentInfo.End; day = day.AddDays(1))
             {
                 DateTime start = new DateTime(day.Year, day.Month, day.Day, 8, 0, 0);
-                DateTime end = new DateTime(day.Year, day.Month, day.Day, 22, 0, 0);
+                DateTime end = new DateTime(day.Year, day.Month, day.Day, 17, 0, 0);
 
                 TimeSpan duration = new TimeSpan(0, consiliumAppointmentInfo.Duration, 0);
 
