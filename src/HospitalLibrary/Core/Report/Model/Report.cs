@@ -37,5 +37,58 @@ namespace HospitalLibrary.Core.Report.Model
             Drugs = drugs;
         }
 
+        public Report ContainsAny(string[] searchWords)
+        {
+            bool hasMatchingFields = HasMatchingFields(searchWords);
+            List<Drug> matchingPrescriptions = GetMatchingPrescriptions(searchWords);
+
+   
+            if (hasMatchingFields || matchingPrescriptions.Count != 0)
+            {
+                Report reportForDTO = new Report();
+                reportForDTO.Id = Id;
+                reportForDTO.PatientId = PatientId;
+                reportForDTO.ReportDescription = ReportDescription;
+                reportForDTO.Symptoms = Symptoms;
+                reportForDTO.AppointmentId = AppointmentId;
+                reportForDTO.Drugs = matchingPrescriptions;
+
+                return reportForDTO;
+            }
+
+            return null;
+        }
+
+        private bool HasMatchingFields(string[] searchWords)
+        {
+            foreach(string word in searchWords)
+            {
+                if (ReportDescription.Contains(word) || IsInSymptoms(word))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private List<Drug> GetMatchingPrescriptions(string[] searchWords)
+        {
+            List<Drug> matchingPrescriptions = new List<Drug>();
+            foreach(Drug drug in Drugs)
+            {
+                if (drug.ContainsAny(searchWords))
+                    matchingPrescriptions.Add(drug);
+            }
+            return matchingPrescriptions;
+        }
+
+        private bool IsInSymptoms(string word)
+        {
+            foreach(Symptom symptom in Symptoms)
+            {
+                if (symptom.Name.Contains(word))
+                    return true;
+            }
+            return false;
+        }
     }
 }
