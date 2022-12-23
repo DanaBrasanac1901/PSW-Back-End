@@ -62,6 +62,55 @@ namespace HospitalAPI.Controllers
             _bloodService.CreateBloodRequest(bloodRequest);
             return Ok();
         }
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetByGroupA()
+        {
+            var record = _bloodService.GetByGroupA();
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(record);
+        }
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetByGroupB()
+        {
+            var record = _bloodService.GetByGroupB();
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(record);
+        }
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetByGroupAB()
+        {
+            var record = _bloodService.GetByGroupAB();
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(record);
+        }
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetByGroupO()
+        {
+            var record = _bloodService.GetByGroupO();
+            if (record == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(record);
+        }
+
 
     }
 }

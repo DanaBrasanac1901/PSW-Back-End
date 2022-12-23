@@ -85,61 +85,61 @@ namespace HospitalLibrary.Migrations
                     table.PrimaryKey("PK_HospitalBlood", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "InpatientTreatmentRecords",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    DoctorID = table.Column<string>(type: "text", nullable: true),
-                    PatientID = table.Column<string>(type: "text", nullable: true),
-                    RoomID = table.Column<string>(type: "text", nullable: true),
-                    BedID = table.Column<string>(type: "text", nullable: true),
-                    AdmissionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Status = table.Column<bool>(type: "boolean", nullable: false),
-                    Therapy = table.Column<string>(type: "text", nullable: true),
-                    AdmissionReason = table.Column<string>(type: "text", nullable: true),
-                    DischargeReason = table.Column<string>(type: "text", nullable: true),
-                    DischargeDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InpatientTreatmentRecords", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "InpatientTreatmentRecords",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<string>(type: "text", nullable: false),
+            //        DoctorID = table.Column<string>(type: "text", nullable: true),
+            //        PatientID = table.Column<string>(type: "text", nullable: true),
+            //        RoomID = table.Column<string>(type: "text", nullable: true),
+            //        BedID = table.Column<string>(type: "text", nullable: true),
+            //        AdmissionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+            //        Status = table.Column<bool>(type: "boolean", nullable: false),
+            //        Therapy = table.Column<string>(type: "text", nullable: true),
+            //        AdmissionReason = table.Column<string>(type: "text", nullable: true),
+            //        DischargeReason = table.Column<string>(type: "text", nullable: true),
+            //        DischargeDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_InpatientTreatmentRecords", x => x.Id);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "Patients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Surname = table.Column<string>(type: "text", nullable: true),
-                    Email = table.Column<string>(type: "text", nullable: true),
-                    Gender = table.Column<Gender>(type: "gender", nullable: false),
-                    Age = table.Column<int>(type: "integer", nullable: false),
-                    BloodType = table.Column<BloodType>(type: "blood_type", nullable: false),
-                    Allergies = table.Column<List<string>>(type: "text[]", nullable: true),
-                    DoctorID = table.Column<string>(type: "text", nullable: true),
-                    Jmbg = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Patients", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Patients",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<int>(type: "integer", nullable: false)
+            //            .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+            //        Name = table.Column<string>(type: "text", nullable: true),
+            //        Surname = table.Column<string>(type: "text", nullable: true),
+            //        Email = table.Column<string>(type: "text", nullable: true),
+            //        Gender = table.Column<Gender>(type: "gender", nullable: false),
+            //        Age = table.Column<int>(type: "integer", nullable: false),
+            //        BloodType = table.Column<BloodType>(type: "blood_type", nullable: false),
+            //        Allergies = table.Column<List<string>>(type: "text[]", nullable: true),
+            //        DoctorID = table.Column<string>(type: "text", nullable: true),
+            //        Jmbg = table.Column<string>(type: "text", nullable: true)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Patients", x => x.Id);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "Rooms",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Number = table.Column<string>(type: "text", nullable: false),
-                    Floor = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rooms", x => x.Id);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Rooms",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<int>(type: "integer", nullable: false)
+            //            .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+            //        Number = table.Column<string>(type: "text", nullable: false),
+            //        Floor = table.Column<int>(type: "integer", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Rooms", x => x.Id);
+            //    });
 
             migrationBuilder.CreateTable(
                 name: "Users",
@@ -161,110 +161,110 @@ namespace HospitalLibrary.Migrations
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Doctors",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Surname = table.Column<string>(type: "text", nullable: true),
-                    Email = table.Column<string>(type: "text", nullable: true),
-                    Specialty = table.Column<Specialty>(type: "specialty", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false),
-                    StartWorkTime = table.Column<int>(type: "integer", nullable: false),
-                    EndWorkTime = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Doctors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Doctors_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Doctors",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<string>(type: "text", nullable: false),
+            //        Name = table.Column<string>(type: "text", nullable: true),
+            //        Surname = table.Column<string>(type: "text", nullable: true),
+            //        Email = table.Column<string>(type: "text", nullable: true),
+            //        Specialty = table.Column<Specialty>(type: "specialty", nullable: false),
+            //        RoomId = table.Column<int>(type: "integer", nullable: false),
+            //        StartWorkTime = table.Column<int>(type: "integer", nullable: false),
+            //        EndWorkTime = table.Column<int>(type: "integer", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Doctors", x => x.Id);
+            //        table.ForeignKey(
+            //            name: "FK_Doctors_Rooms_RoomId",
+            //            column: x => x.RoomId,
+            //            principalTable: "Rooms",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Cascade);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "Equipment",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Equipment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Equipment_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Equipment",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<string>(type: "text", nullable: false),
+            //        Type = table.Column<int>(type: "integer", nullable: false),
+            //        Quantity = table.Column<int>(type: "integer", nullable: false),
+            //        RoomId = table.Column<int>(type: "integer", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Equipment", x => x.Id);
+            //        table.ForeignKey(
+            //            name: "FK_Equipment_Rooms_RoomId",
+            //            column: x => x.RoomId,
+            //            principalTable: "Rooms",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Cascade);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "Appointments",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    DoctorId = table.Column<string>(type: "text", nullable: true),
-                    PatientId = table.Column<string>(type: "text", nullable: true),
-                    PatientId1 = table.Column<int>(type: "integer", nullable: true),
-                    Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Duration = table.Column<int>(type: "integer", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false),
-                    Status = table.Column<AppointmentStatus>(type: "appointment_status", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Patients_PatientId1",
-                        column: x => x.PatientId1,
-                        principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "Appointments",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<string>(type: "text", nullable: false),
+            //        DoctorId = table.Column<string>(type: "text", nullable: true),
+            //        PatientId = table.Column<string>(type: "text", nullable: true),
+            //        PatientId1 = table.Column<int>(type: "integer", nullable: true),
+            //        Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+            //        Duration = table.Column<int>(type: "integer", nullable: false),
+            //        RoomId = table.Column<int>(type: "integer", nullable: false),
+            //        Status = table.Column<AppointmentStatus>(type: "appointment_status", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Appointments", x => x.Id);
+            //        table.ForeignKey(
+            //            name: "FK_Appointments_Doctors_DoctorId",
+            //            column: x => x.DoctorId,
+            //            principalTable: "Doctors",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Restrict);
+            //        table.ForeignKey(
+            //            name: "FK_Appointments_Patients_PatientId1",
+            //            column: x => x.PatientId1,
+            //            principalTable: "Patients",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Restrict);
+            //        table.ForeignKey(
+            //            name: "FK_Appointments_Rooms_RoomId",
+            //            column: x => x.RoomId,
+            //            principalTable: "Rooms",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Cascade);
+            //    });
 
-            migrationBuilder.CreateTable(
-                name: "VacationRequests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    End = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Urgency = table.Column<bool>(type: "boolean", nullable: false),
-                    DoctorId = table.Column<string>(type: "text", nullable: true),
-                    RejectionReason = table.Column<string>(type: "text", nullable: true),
-                    Status = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_VacationRequests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_VacationRequests_Doctors_DoctorId",
-                        column: x => x.DoctorId,
-                        principalTable: "Doctors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+            //migrationBuilder.CreateTable(
+            //    name: "VacationRequests",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<int>(type: "integer", nullable: false)
+            //            .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+            //        Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+            //        End = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+            //        Description = table.Column<string>(type: "text", nullable: true),
+            //        Urgency = table.Column<bool>(type: "boolean", nullable: false),
+            //        DoctorId = table.Column<string>(type: "text", nullable: true),
+            //        RejectionReason = table.Column<string>(type: "text", nullable: true),
+            //        Status = table.Column<int>(type: "integer", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_VacationRequests", x => x.Id);
+            //        table.ForeignKey(
+            //            name: "FK_VacationRequests_Doctors_DoctorId",
+            //            column: x => x.DoctorId,
+            //            principalTable: "Doctors",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Restrict);
+            //    });
 
             migrationBuilder.InsertData(
                 table: "BloodConsumptionRecords",
@@ -295,7 +295,7 @@ namespace HospitalLibrary.Migrations
             migrationBuilder.InsertData(
                 table: "Rooms",
                 columns: new[] { "Id", "Floor", "Number" },
-                values: new object[] { 1, 1, "1A" });
+                values: new object[] { 8, 1, "1A" });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -309,37 +309,37 @@ namespace HospitalLibrary.Migrations
             migrationBuilder.InsertData(
                 table: "Equipment",
                 columns: new[] { "Id", "Quantity", "RoomId", "Type" },
-                values: new object[] { "1", 1, 1, 0 });
+                values: new object[] { "8", 1, 1, 0 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_DoctorId",
-                table: "Appointments",
-                column: "DoctorId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Appointments_DoctorId",
+            //    table: "Appointments",
+            //    column: "DoctorId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_PatientId1",
-                table: "Appointments",
-                column: "PatientId1");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Appointments_PatientId1",
+            //    table: "Appointments",
+            //    column: "PatientId1");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_RoomId",
-                table: "Appointments",
-                column: "RoomId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Appointments_RoomId",
+            //    table: "Appointments",
+            //    column: "RoomId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Doctors_RoomId",
-                table: "Doctors",
-                column: "RoomId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Doctors_RoomId",
+            //    table: "Doctors",
+            //    column: "RoomId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Equipment_RoomId",
-                table: "Equipment",
-                column: "RoomId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Equipment_RoomId",
+            //    table: "Equipment",
+            //    column: "RoomId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_VacationRequests_DoctorId",
-                table: "VacationRequests",
-                column: "DoctorId");
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_VacationRequests_DoctorId",
+            //    table: "VacationRequests",
+            //    column: "DoctorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

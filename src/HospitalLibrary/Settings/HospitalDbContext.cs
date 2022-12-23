@@ -85,7 +85,7 @@ namespace HospitalLibrary.Settings
             Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
 
-            /*
+            
             BloodSupply supplyABank1 = new BloodSupply(1, BloodType.A, 54, bank1Id);
             BloodSupply supplyBBank1 = new BloodSupply(2, BloodType.B, 30, bank1Id);
             BloodSupply supplyABBank1 = new BloodSupply(3, BloodType.AB, 15, bank1Id);
@@ -100,8 +100,8 @@ namespace HospitalLibrary.Settings
                 supply0Bank1, supplyABank1, supplyABank2, supplyABank3, supplyABBank1,
                 supplyABBank3, supplyBBank1, supplyBBank2, supplyBBank3
             );
-            */
-            /*
+            
+            
             BloodConsumptionRecord bloodConsumptionRecord1 = new BloodConsumptionRecord(1, 2, BloodType.A, "needed for surgery", new DateTime(2022, 11, 22), "DOC1", bank1Id);
 
 
@@ -109,7 +109,7 @@ namespace HospitalLibrary.Settings
                 bloodConsumptionRecord1
                 );
 
-
+            /*
 
             modelBuilder.Entity<Room>().HasData(
                 new Room(){ Id = 1, Number = "1A", Floor = 1} 

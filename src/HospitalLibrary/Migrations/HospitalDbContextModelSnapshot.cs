@@ -63,35 +63,35 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodConsumptionRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+            //modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodConsumptionRecord", b =>
+            //    {
+            //        b.Property<int>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("integer")
+            //            .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
+            //        b.Property<double>("Amount")
+            //            .HasColumnType("double precision");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+            //        b.Property<DateTime>("CreatedAt")
+            //            .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("DoctorId")
-                        .HasColumnType("text");
+            //        b.Property<string>("DoctorId")
+            //            .HasColumnType("text");
 
-                    b.Property<string>("Reason")
-                        .HasColumnType("text");
+            //        b.Property<string>("Reason")
+            //            .HasColumnType("text");
 
-                    b.Property<Guid>("SourceBank")
-                        .HasColumnType("uuid");
+            //        b.Property<Guid>("SourceBank")
+            //            .HasColumnType("uuid");
 
-                    b.Property<BloodType>("Type")
-                        .HasColumnType("blood_type");
+            //        b.Property<BloodType>("Type")
+            //            .HasColumnType("blood_type");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("BloodConsumptionRecords");
-                });
+            //        b.ToTable("BloodConsumptionRecords");
+            //    });
 
             
 
@@ -109,26 +109,26 @@ namespace HospitalLibrary.Migrations
                             Type = BloodType.A
                         }));
 
-            modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+            //modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
+            //    {
+            //        b.Property<int>("Id")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("integer")
+            //            .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
+            //        b.Property<double>("Amount")
+            //            .HasColumnType("double precision");
 
-                    b.Property<Guid>("SourceBank")
-                        .HasColumnType("uuid");
+            //        b.Property<Guid>("SourceBank")
+            //            .HasColumnType("uuid");
 
-                    b.Property<BloodType>("Type")
-                        .HasColumnType("blood_type");
+            //        b.Property<BloodType>("Type")
+            //            .HasColumnType("blood_type");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("HospitalBlood");
-                });
+            //        b.ToTable("HospitalBlood");
+            //    });
 
             modelBuilder.Entity("HospitalLibrary.Core.Consiliums.Consilium", b =>
                 {
@@ -289,38 +289,38 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Feedback.Feedback", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+            //modelBuilder.Entity("HospitalLibrary.Core.Feedback.Feedback", b =>
+            //    {
+            //        b.Property<int>("ID")
+            //            .ValueGeneratedOnAdd()
+            //            .HasColumnType("integer")
+            //            .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<bool>("Anonymous")
-                        .HasColumnType("boolean");
+            //        b.Property<bool>("Anonymous")
+            //            .HasColumnType("boolean");
 
-                    b.Property<bool>("Approved")
-                        .HasColumnType("boolean");
+            //        b.Property<bool>("Approved")
+            //            .HasColumnType("boolean");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp without time zone");
+            //        b.Property<DateTime>("Date")
+            //            .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("PatientName")
-                        .HasColumnType("text");
+            //        b.Property<string>("PatientName")
+            //            .HasColumnType("text");
 
-                    b.Property<string>("PatientSurname")
-                        .HasColumnType("text");
+            //        b.Property<string>("PatientSurname")
+            //            .HasColumnType("text");
 
-                    b.Property<string>("Text")
-                        .HasColumnType("text");
+            //        b.Property<string>("Text")
+            //            .HasColumnType("text");
 
-                    b.Property<bool>("VisibleToPublic")
-                        .HasColumnType("boolean");
+            //        b.Property<bool>("VisibleToPublic")
+            //            .HasColumnType("boolean");
 
-                    b.HasKey("ID");
+            //        b.HasKey("ID");
 
-                    b.ToTable("Feedbacks");
-                });
+            //        b.ToTable("Feedbacks");
+            //    });
 
             modelBuilder.Entity("HospitalLibrary.Core.InpatientTreatmentRecord.Equipment", b =>
                 {
