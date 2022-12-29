@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿ using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Core.Blood.DTOS;
 using System;
+using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers
 {
@@ -60,6 +61,15 @@ namespace HospitalAPI.Controllers
             }
 
             _bloodService.CreateBloodRequest(bloodRequest);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetFromIntegrationApi(ICollection<string> banks)
+        {
+            RedirectToRoute("http://localhost:16177/api/BloodBank");
+
             return Ok();
         }
 
