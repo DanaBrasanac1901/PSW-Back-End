@@ -2,23 +2,25 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
 
-    <PackageReference Include="EntityFramework" Version="6.4.4" />
-
     <PackageReference Include="IronPdf" Version="2022.11.10347" />
+
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="MailKit" Version="3.4.2" />
     
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
@@ -28,18 +30,24 @@
     
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
     <PackageReference Include="NEST" Version="7.17.5" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17" />
-
-    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
 
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20221104042827_ new boolean column.Designer.cs" />
+    <Compile Remove="Migrations\20221101111943_init4.cs" />
+    <Compile Remove="Migrations\20221101111943_init4.Designer.cs" />
+    <Compile Remove="Migrations\20221031115922_init22.cs" />
+    <Compile Remove="Migrations\20221031115922_init22.Designer.cs" />
+    <Compile Remove="Migrations\20221104042827_ new boolean column.cs" />
+    <Compile Remove="Migrations\20221030170202_intial.Designer.cs" />
+  </ItemGroup>
 
 </Project>

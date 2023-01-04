@@ -3,6 +3,7 @@ using IntegrationLibrary.BloodBank;
 
 using AutoMapper;
 using Profile = AutoMapper.Profile;
+using IntegrationLibery.News;
 
 namespace IntegrationAPI.Mapper
 {
@@ -11,7 +12,8 @@ namespace IntegrationAPI.Mapper
         public BloodBankProfile(){
             CreateMap<BloodBank, BloodBankDTO>().ReverseMap();
             CreateMap<ReportDTO, ReporttDTO>().ReverseMap();
-         }
+            CreateMap<Message, NewsDTO>().ReverseMap();
+        }
         
     }
 }

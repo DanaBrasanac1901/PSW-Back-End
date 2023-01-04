@@ -14,7 +14,9 @@ using System.Linq;
 using HospitalLibrary.Core.Blood;
 using IntegrationLibrary.Report;
 using IntegrationLibrary.Settings;
-
+using HospitalLibrary.Core.Tender;
+using HospitalLibrary.Core.TenderOffer;
+using HospitalLibrary.Core.EmailSender;
 using IntegrationLibrary.News;
 using IntegrationLibrary.Advertisements;
 
@@ -39,6 +41,10 @@ namespace IntegrationAPI
             options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")));
             services.AddAutoMapper(typeof(Startup));
             //services.AddControllersWithViews();
+            var emailConfig = Configuration
+          .GetSection("EmailConfiguration")
+          .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
 
             services.AddCors((setup) =>
             {
@@ -48,6 +54,7 @@ namespace IntegrationAPI
                 });
 
             });
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -60,22 +67,26 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankRepository,BloodBankRepository>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReportRepository, ReportRepository>();
-            // services.AddScoped<IEmailService, IEmailService>();
-            
+            services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<ITenderOfferService, TenderOfferService>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
+            services.AddScoped<IEmailSendService, EmailSendService>();
+
             services.AddScoped<ExceptionMiddleware>();
 
-            services.AddHostedService<BackgroundTask>();
+              services.AddHostedService<BackgroundTask>();
             services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
             
             services.AddScoped<IAdvertisementRepository,AdvertisementRepository>();
             services.AddScoped<IAdvertisementService, AdvertisementService>();
 
-            services.AddScoped<INewsService, NewsService>();
-            services.AddScoped<INewsRepository, NewsRepository>();
+            
+           // services.AddScoped<INewsService, NewsService>();
+           // services.AddScoped<INewsRepository, NewsRepository>();
             //services.AddSingleton<RabbitMQService>();
 
-           // services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
-             services.AddHostedService<RabbitMQService>();
+           // services.AddHostedService<RabbitMQService>();
            
 
         }
@@ -102,7 +113,6 @@ namespace IntegrationAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
-              
             }
             app.UseCors("default");
             app.UseMiddleware<ExceptionMiddleware>();

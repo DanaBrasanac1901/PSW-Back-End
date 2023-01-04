@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using Nest;
+using IntegrationLibery.News;
 
 namespace IntegrationLibrary.BloodBank
 {
@@ -121,6 +122,21 @@ namespace IntegrationLibrary.BloodBank
         void IBloodBankService.SendEmail(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public void addNews(Message mess)
+        {
+            bloodBankRepository.addNews(mess);
+        }
+
+        public IEnumerable<Message> getNews()
+        {
+           return  bloodBankRepository.getNews();
+        }
+
+        public Message getByIdNews(Guid id)
+        {
+            return bloodBankRepository.getByIdNews(id);
         }
     }
 }

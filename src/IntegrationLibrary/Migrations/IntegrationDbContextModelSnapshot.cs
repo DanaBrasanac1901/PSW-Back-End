@@ -19,27 +19,72 @@ namespace IntegrationLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("IntegrationLibery.News.Message", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Tender.Tender", b =>
                 {
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("AmountOfA")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfAB")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfB")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfO")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("Expiration")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("HospitalName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenders");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.TenderOffer.TenderOffer", b =>
+                {
+                    b.Property<Guid>("BloodBankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("TenderId")
+                        .HasColumnType("integer");
+
+                    b.ToTable("TenderOffers");
+                });
+
+            modelBuilder.Entity("IntegrationLibery.News.Message", b =>
+                {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");
 
-                    b.HasKey("Timestamp");
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
 
                     b.ToTable("NewsTable");
 
                     b.HasData(
                         new
                         {
-                            Timestamp = new DateTime(2023, 1, 4, 13, 43, 22, 881, DateTimeKind.Local).AddTicks(8630),
-                            Id = new Guid("9343f870-5c5f-4556-9a89-0f30adcd9c4a"),
-                            Text = "doniraj krv"
+                            Id = new Guid("60eef45b-26ff-4b25-a473-f3707ea1deb4"),
+                            Text = "doniraj krv",
+                            Timestamp = new DateTime(2022, 12, 13, 21, 36, 34, 54, DateTimeKind.Local).AddTicks(1615)
                         });
                 });
 
