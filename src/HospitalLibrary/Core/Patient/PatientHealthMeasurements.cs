@@ -14,18 +14,12 @@ namespace HospitalLibrary.Core.Patient
         public DateTime MeasurementTime { get; set; }
         public HealthMeasurements HealthMeasurements { get; set; }
 
+        public PatientHealthMeasurements() { }
         public PatientHealthMeasurements(int patientId, float weight, int bloodPressureUpper, int bloodPressureLower, int heartbeat, float temperature, float bloodSugarLevel)
         {
             PatientId = patientId;
             MeasurementTime = DateTime.Now;
             HealthMeasurements = new HealthMeasurements(weight, bloodPressureUpper, bloodPressureLower, heartbeat, temperature, bloodSugarLevel);
-        }
-
-        public PatientHealthMeasurements(CreatePatientHealthMeasurementsDTO dto)
-        {
-            PatientId = dto.PatientId;
-            MeasurementTime = DateTime.Now;
-            HealthMeasurements = new HealthMeasurements(dto.Weight, dto.BloodPressureUpper, dto.BloodPressureLower, dto.Heartbeat, dto.Temperature, dto.BloodSugarLevel);
         }
     }
 }
