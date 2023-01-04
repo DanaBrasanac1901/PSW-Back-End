@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Patient.DTOS;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,13 @@ namespace HospitalLibrary.Core.Patient
             PatientId = patientId;
             MeasurementTime = DateTime.Now;
             HealthMeasurements = new HealthMeasurements(weight, bloodPressureUpper, bloodPressureLower, heartbeat, temperature, bloodSugarLevel);
+        }
+
+        public PatientHealthMeasurements(CreatePatientHealthMeasurementsDTO dto)
+        {
+            PatientId = dto.PatientId;
+            MeasurementTime = DateTime.Now;
+            HealthMeasurements = new HealthMeasurements(dto.Weight, dto.BloodPressureUpper, dto.BloodPressureLower, dto.Heartbeat, dto.Temperature, dto.BloodSugarLevel);
         }
     }
 }
