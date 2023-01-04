@@ -48,17 +48,12 @@ namespace HospitalLibrary.Core.Patient
             _patientRepository.Create(patient);
         }
 
-
         public void Register(Patient patient)
         {
             _patientRepository.Create(patient);
         }
 
-
-        
-
    
-
         public void Update(Patient patient)
         {
             _patientRepository.Update(patient);

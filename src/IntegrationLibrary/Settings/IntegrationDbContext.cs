@@ -1,7 +1,8 @@
 ﻿using IntegrationLibery.News;
 using IntegrationLibrary.BloodBank;
-
+using IntegrationLibrary.Advertisements;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 //sing PrimerServis;
 using System;
 using System.Linq;
@@ -17,9 +18,8 @@ namespace IntegrationLibrary.Settings
 
         public DbSet<Message> NewsTable { get; set; }
 
+        public DbSet<Advertisement> AdvertisementTable { get; set; }
         
-        
-
         public DbSet<Report.Report> ReportTable { get; set; }
 
         public IntegrationDbContext(Microsoft.EntityFrameworkCore.DbContextOptions<IntegrationDbContext> options) : base(options) { }
@@ -62,6 +62,9 @@ namespace IntegrationLibrary.Settings
             modelBuilder.Entity < Report.Report>().HasData(
                 report2, report3
             );
+
+            modelBuilder.Entity<Advertisement>().HasData(new Advertisement(1,"ad1"),
+                new Advertisement(2, "ad2"), new Advertisement(3, "ad3"));
 
             //modelBuilder.Entity<BloodBank.BloodBank>()
             //.Property(b => b.Id)

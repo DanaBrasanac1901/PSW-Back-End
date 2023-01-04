@@ -16,6 +16,7 @@ using IntegrationLibrary.Report;
 using IntegrationLibrary.Settings;
 
 using IntegrationLibrary.News;
+using IntegrationLibrary.Advertisements;
 
 namespace IntegrationAPI
 {
@@ -66,10 +67,8 @@ namespace IntegrationAPI
             services.AddHostedService<BackgroundTask>();
             services.AddScoped<IReportGeneratorService, ReportGeneratorService>();
             
-
-
-         
-
+            services.AddScoped<IAdvertisementRepository,AdvertisementRepository>();
+            services.AddScoped<IAdvertisementService, AdvertisementService>();
 
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<INewsRepository, NewsRepository>();
