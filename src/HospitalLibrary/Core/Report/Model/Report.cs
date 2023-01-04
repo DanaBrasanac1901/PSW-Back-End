@@ -21,23 +21,19 @@ namespace HospitalLibrary.Core.Report.Model
         public ICollection<Drug> Drugs { get; set; }
 
         public int InitialVersion { get; private set; }
+        public int NumberOfNextClicks { get; private set; }
+        public int NumberOfBackClicks { get; private set; }
 
 
         public Report()
         {
         }
 
-        private void Causes(DomainEvent @event)
-        {
-            Changes.Add(@event);
-            Apply(@event);
-        }
 
         public Report(ReportSnapshot snapshot)
         {
             Version = snapshot.Version;
-            InitialVersion = snapshot.Version;
-           
+            InitialVersion = snapshot.Version; 
         }
 
         public Report(string id, string patientId, string doctorId, string reportDescription, ICollection<Symptom> symptoms, DateTime dayAndTimeOfMaking, ICollection<Drug> drugs)
@@ -51,11 +47,43 @@ namespace HospitalLibrary.Core.Report.Model
             Drugs = drugs;
         }
 
+        private void Causes(DomainEvent @event)
+        {
+            Changes.Add(@event);
+            Apply(@event);
+        }
+
         public override void Apply(DomainEvent @event)
         {
             When((dynamic)@event);
             Version++;
         }
+
+        public void ClickedOnNextButton()
+        {
+
+            Causes(new NextButtonClicked(Id, NumberOfNextClicks));
+        }
+
+        public void ClickedOnBackButton()
+        {
+
+            Causes(new BackButtonClicked(Id, NumberOfBackClicks));
+        }
+
+
+
+        public void When(NextButtonClicked nextClicked)
+        {
+            NumberOfNextClicks += 1;
+        }
+
+        public void When(BackButtonClicked backClicked)
+        {
+            NumberOfBackClicks += 1;
+        }
+
+
 
 
     }
