@@ -60,6 +60,9 @@ namespace HospitalLibrary.Settings
         
         public DbSet<SymptomList> SymptomList { get; set;}
         
+        public DbSet<HealthMeasurements> HealthMeasurements { get; set; }
+
+        public DbSet<PatientHealthMeasurements> PatientHealthMeasurements { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
@@ -168,34 +171,34 @@ namespace HospitalLibrary.Settings
             );*/
 
 
-            DrugList drug1 = new DrugList("aspirin", "Aspirin", "Galenika");
-            DrugList drug2 = new DrugList("brufen", "Brufen", "Galenika");
-            DrugList drug3 = new DrugList("ginko", "Ginko", "Galenika");
-            modelBuilder.Entity<DrugList>().HasData(
-                drug1,drug2,drug3
-             );
+            //    DrugList drug1 = new DrugList("aspirin", "Aspirin", "Galenika");
+            //    DrugList drug2 = new DrugList("brufen", "Brufen", "Galenika");
+            //    DrugList drug3 = new DrugList("ginko", "Ginko", "Galenika");
+            //    modelBuilder.Entity<DrugList>().HasData(
+            //        drug1,drug2,drug3
+            //     );
 
-            modelBuilder.Entity<SymptomList>().HasData(
-                new SymptomList()
-                {
-                    Id= "Glavobolja",
-                    Name = "Glavobolja"
-                },
-                new SymptomList()
-                {
-                    Id = "Kijavica",
-                    Name = "Kijavica"
-                },
-                new SymptomList()
-                {
-                    Id = "Dijareja",
-                    Name = "Dijareja"
-                }
-                );
+            //    modelBuilder.Entity<SymptomList>().HasData(
+            //        new SymptomList()
+            //        {
+            //            Id= "Glavobolja",
+            //            Name = "Glavobolja"
+            //        },
+            //        new SymptomList()
+            //        {
+            //            Id = "Kijavica",
+            //            Name = "Kijavica"
+            //        },
+            //        new SymptomList()
+            //        {
+            //            Id = "Dijareja",
+            //            Name = "Dijareja"
+            //        }
+            //        );
 
-            base.OnModelCreating(modelBuilder);
+            //    base.OnModelCreating(modelBuilder);
         }
-       
+
 
 
     }
