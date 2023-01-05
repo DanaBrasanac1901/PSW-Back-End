@@ -13,7 +13,7 @@ namespace IntegrationAPI.Controllers
             _advertisementService = advertisementService;
         }
 
-        [HttpGet("Integration")]
+        [HttpGet]
         public ActionResult GetAll()
         {
             var ads = _advertisementService.GetAll();

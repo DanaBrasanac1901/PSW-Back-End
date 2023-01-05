@@ -8,11 +8,12 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdvertisingController : ControllerBase
+    public class AdvertisementController : ControllerBase
     {
-       // private readonly AdvertisingService _advertisingService;
-        public AdvertisingController()
+        private readonly IAdvertisementService _advertisementService;
+        public AdvertisementController(IAdvertisementService advertisementService)
         {
+            _advertisementService = advertisementService;
         }
 
         [HttpGet]

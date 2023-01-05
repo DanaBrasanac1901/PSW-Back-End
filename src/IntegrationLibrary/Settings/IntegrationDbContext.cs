@@ -77,6 +77,7 @@ namespace IntegrationLibrary.Settings
             //modelBuilder.Entity<BloodBank.BloodBank>()
             //.Property(b => b.Id)
             //.ValueGeneratedOnAdd();
+
             base.OnModelCreating(modelBuilder);
 
 

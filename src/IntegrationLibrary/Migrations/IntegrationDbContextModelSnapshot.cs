@@ -51,14 +51,16 @@ namespace IntegrationLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.TenderOffer.TenderOffer", b =>
                 {
+                    b.Property<int>("TenderId")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("BloodBankId")
                         .HasColumnType("uuid");
 
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("TenderId")
-                        .HasColumnType("integer");
+                    b.HasKey("TenderId", "BloodBankId");
 
                     b.ToTable("TenderOffers");
                 });
@@ -82,9 +84,9 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("60eef45b-26ff-4b25-a473-f3707ea1deb4"),
+                            Id = new Guid("843f7177-9d68-431e-8a70-f97aed23410d"),
                             Text = "doniraj krv",
-                            Timestamp = new DateTime(2022, 12, 13, 21, 36, 34, 54, DateTimeKind.Local).AddTicks(1615)
+                            Timestamp = new DateTime(2023, 1, 5, 0, 4, 12, 527, DateTimeKind.Local).AddTicks(5664)
                         });
                 });
 
@@ -100,7 +102,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AdvertisementTable");
+                    b.ToTable("Advertisements");
 
                     b.HasData(
                         new

@@ -5,6 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Core\Authorization\**" />
+    <Compile Remove="GraphicalEditor\**" />
+    <Compile Remove="MedicalRecords\**" />
+    <Compile Remove="Migrations\**" />
+    <EmbeddedResource Remove="Core\Authorization\**" />
+    <EmbeddedResource Remove="GraphicalEditor\**" />
+    <EmbeddedResource Remove="MedicalRecords\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Core\Authorization\**" />
+    <None Remove="GraphicalEditor\**" />
+    <None Remove="MedicalRecords\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Core\Blood\IBloodConsumptionRecordRepository.txt" />
     <None Remove="Core\Blood\NewFile1.txt" />
     <None Remove="Core\Blood\NewFile2.txt" />
@@ -29,17 +44,6 @@
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Core\Authorization\" />
-    <Folder Include="GraphicalEditor\Model\" />
-    <Folder Include="GraphicalEditor\Service\" />
-    <Folder Include="GraphicalEditor\Repository\" />
-    <Folder Include="MedicalRecords\Model\" />
-    <Folder Include="MedicalRecords\Service\" />
-    <Folder Include="MedicalRecords\Repository\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,7 @@ namespace IntegrationLibrary.Advertisements
 
         public IEnumerable<Advertisement> GetAll()
         {
-            return _context.AdvertisementTable.ToList();
+            return _context.Advertisements.ToList();
         }
     }
 }

@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Advertising
 {
-    public class Advertisement
+    public interface IAdvertisementService
     {
-        public int Id { get; set; }
-        public string Ad { get; set; }
-        public Advertisement() { }
     }
 }

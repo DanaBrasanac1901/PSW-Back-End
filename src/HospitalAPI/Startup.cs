@@ -21,7 +21,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HospitalLibrary.Core.PasswordHasher;
 using HospitalLibrary.Core.Feedback;
-
+using HospitalLibrary.Core.Advertising;
 
 namespace HospitalAPI
 {
@@ -83,11 +83,11 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAvailableAppointmentService, AvailableAppointmentService>();
+            services.AddScoped<IAdvertisementService, AdvertisementService>();
 
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();
 
-            // services.AddScoped<IEmailSend, EmailSend>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
@@ -103,7 +103,7 @@ namespace HospitalAPI
             services.AddScoped<IInpatientTreatmentRecordRepository, InpatientTreatmentRecordRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
-
+           
 
         }
 
