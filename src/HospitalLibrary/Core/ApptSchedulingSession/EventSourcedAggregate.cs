@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.ApptSchedulingSession;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.AppointmentSchedulingSession
 {
-    public abstract class EventSourcedAppointmentAggregate : AppointmentSchedulingSession
+    public abstract class EventSourcedAggregate : Entity
     {
         public List<DomainEvent> Changes { get; private set; }
-        public EventSourcedAppointmentAggregate()
+       
+        public EventSourcedAggregate()
         {
             Changes = new List<DomainEvent>();
         }

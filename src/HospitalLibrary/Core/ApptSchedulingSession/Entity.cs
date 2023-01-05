@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.AppointmentSchedulingSession
+namespace HospitalLibrary.Core.ApptSchedulingSession
 {
-    public class AppointmentSchedulingSession
+    public abstract class Entity
     {
         public Guid Id { get; protected set; }
     }
