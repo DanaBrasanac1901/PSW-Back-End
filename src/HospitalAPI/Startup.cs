@@ -21,8 +21,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HospitalLibrary.Core.PasswordHasher;
 using HospitalLibrary.Core.Feedback;
-
-
 namespace HospitalAPI
 {
     public class Startup

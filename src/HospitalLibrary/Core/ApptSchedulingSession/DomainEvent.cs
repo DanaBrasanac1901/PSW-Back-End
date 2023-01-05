@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HospitalLibrary.Core.AppointmentSchedulingSession
+namespace HospitalLibrary.Core.ApptSchedulingSession
 {
     public abstract class DomainEvent
     {

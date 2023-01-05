@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.AppointmentSchedulingSession
+namespace HospitalLibrary.Core.ApptSchedulingSession
 {
     public class SchedulingSession
     {
