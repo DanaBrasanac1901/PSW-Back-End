@@ -1,9 +1,8 @@
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Consiliums.DTO;
 using HospitalLibrary.Core.Doctor.DTOS;
-
-﻿using HospitalLibrary.Core.Doctor.DTOS;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.Vacation;
 using System;
 using System.Collections.Generic;

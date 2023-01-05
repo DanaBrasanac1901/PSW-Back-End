@@ -30,6 +30,7 @@ namespace HospitalLibrary.Core.Appointment
 
 
         AppointmentForReportDTO GetAppointmentForReport(string appId);
+        IEnumerable<string> GetDoctorsPatients(string id);
 
     }
 }
