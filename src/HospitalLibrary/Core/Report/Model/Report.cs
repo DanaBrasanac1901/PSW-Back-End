@@ -11,8 +11,8 @@ namespace HospitalLibrary.Core.Report.Model
     public class Report
     {
         public string Id { get; set; }
-        public string PatientId { get; set; }
-        public string DoctorId { get; set; }
+        public int PatientId { get; set; }
+        public int DoctorId { get; set; }
         public string AppointmentId { get; set; }
         public string ReportDescription { get; set; }
 
@@ -26,7 +26,7 @@ namespace HospitalLibrary.Core.Report.Model
         {
         }
 
-        public Report(string id, string patientId, string doctorId, string reportDescription, ICollection<Symptom> symptoms, DateTime dayAndTimeOfMaking, ICollection<Drug> drugs)
+        public Report(string id, int patientId, int doctorId, string reportDescription, ICollection<Symptom> symptoms, DateTime dayAndTimeOfMaking, ICollection<Drug> drugs)
         {
             Id = id;
             PatientId = patientId;

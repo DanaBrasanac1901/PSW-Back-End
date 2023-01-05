@@ -11,7 +11,7 @@ namespace HospitalLibrary.Core.Vacation.DTO
     public class ViewAllVacationRequestsDTO
     {
         public int id { get; set; }
-        public string doctorId { get; set; }
+        public int doctorId { get; set; }
         public string start { get; set; }
         public string end { get; set; }
         public string description { get; set; }

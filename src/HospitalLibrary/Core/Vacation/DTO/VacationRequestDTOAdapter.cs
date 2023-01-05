@@ -11,7 +11,7 @@ namespace HospitalLibrary.Core.Vacation.DTO
         public static VacationRequest VacationRequestDTOToObject(CreateVacationRequestDTO request)
         {
             VacationRequest vacationRequest = new VacationRequest();
-            vacationRequest.DoctorId = "DOC1";
+            vacationRequest.DoctorId = 1;
 
             string[] startDate = request.Start.Split('-');
             string[] endDate = request.End.Split('-');
@@ -47,7 +47,7 @@ namespace HospitalLibrary.Core.Vacation.DTO
             request.End = DateTime.Parse(dto.end);
             request.Description = dto.description;
             request.Urgency = true;
-            request.DoctorId = "DOC1";
+            request.DoctorId = 1;
             request.RejectionReason = "nista";
             request.Status = Enums.VacationRequestStatus.Accepted;
             return request;

@@ -18,7 +18,7 @@ namespace HospitalLibrary.Core.Appointment
         Boolean IsAvailable(Appointment appointment);
 
 
-        IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id);
+        IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(int id);
 
         Doctor.Doctor SetDoctorAppointment(Doctor.Doctor doc);
 
@@ -26,7 +26,7 @@ namespace HospitalLibrary.Core.Appointment
 
         RescheduleAppointmentDTO GetAppoitnemtnToReschedule(string id);
 
-        void ChangeDoctorForAppointment(string doctorId,string appointmentId);
+        void ChangeDoctorForAppointment(int doctorId,string appointmentId);
 
 
         AppointmentForReportDTO GetAppointmentForReport(string appId);

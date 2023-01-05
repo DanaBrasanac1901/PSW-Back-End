@@ -17,7 +17,7 @@ namespace HospitalLibrary.Core.User
         private string jmbg;
         private string bloodType;
         private string[] allergies;
-        private string doctorID;
+        private int doctorID;
         private int age;
 
         public string Email { get { return email; } set { email = value; } }
@@ -29,7 +29,7 @@ namespace HospitalLibrary.Core.User
         public string Jmbg { get { return jmbg; } set { jmbg = value;} }
         public string BloodType { get { return bloodType; } set { bloodType = value; } }
         public string[] Allergies { get { return allergies; } set { allergies = value; } }
-        public string DoctorId { get { return doctorID; } set { doctorID = value; } }
+        public int DoctorId { get { return doctorID; } set { doctorID = value; } }
         public int Age { get { return age; } set { age = value; } }
 
     }

@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Report.DTO
     {
         public string id { get; set; }
         public List<SymptomDTO> symptoms { get; set; }
-        public string patientId { get; set; }
+        public int patientId { get; set; }
         public string description { get; set; }
         public string appointmentId { get; set; }
 

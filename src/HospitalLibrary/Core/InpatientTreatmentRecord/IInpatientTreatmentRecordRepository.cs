@@ -15,6 +15,6 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
         void Update(InpatientTreatmentRecord inpatientTreatmentRecord);
         void Delete(InpatientTreatmentRecord inpatientTreatmentRecord);
         IEnumerable<InpatientTreatmentRecord> GetAllWithStatusTrue();
-        IEnumerable<InpatientTreatmentRecord> GetAllByDoctor(string id);
+        IEnumerable<InpatientTreatmentRecord> GetAllByDoctor(int id);
     }
 }

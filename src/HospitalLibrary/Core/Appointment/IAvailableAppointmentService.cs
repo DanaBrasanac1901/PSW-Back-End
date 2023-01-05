@@ -30,7 +30,7 @@ namespace HospitalLibrary.Core.Appointment
 
         //anjino
 
-        IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId);
+        IEnumerable<AppointmentPatientDTO> GetForPatient(int patientId);
       
     }
 }

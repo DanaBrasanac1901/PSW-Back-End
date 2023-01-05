@@ -20,16 +20,14 @@ namespace HospitalAPI.Controllers
             _doctorService = doctorService;
         }
 
-        // GET: api/rooms
         [HttpGet]
         public ActionResult GetAll()
         {
             return Ok(_doctorService.GetAll());
         }
 
-        // GET api/rooms/2
         [HttpGet("{id}")]
-        public ActionResult GetById(string id)
+        public ActionResult GetById(int id)
         {
             var doctor = _doctorService.GetById(id);
             if (doctor == null)
@@ -40,8 +38,6 @@ namespace HospitalAPI.Controllers
             return Ok(doctor);
         }
 
-
-        // GET api/Doctor/specialty/Cardiologist
         [HttpGet("specialty/{specialty}")]
         public ActionResult GetBySpecialty(string specialty)
         {
@@ -53,20 +49,7 @@ namespace HospitalAPI.Controllers
 
             return Ok(doctors);
         }
-        //GET api/doctorNestoDTO/DOC1
-        //[HttpGet("{id}")]
-        //public ActionResult GetDoctorForShift(string id)
-        //{
-        //    DoctorShiftDTO doctorsShiftDTO = _doctorService.GetById(id);
-        //    if (doctorsShiftDTO == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(doctorsShiftDTO);
-        //}
-
-        // POST api/rooms
+        
         [HttpPost]
         public ActionResult Create(Doctor doctor)
         {
@@ -79,9 +62,8 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = doctor.Id }, doctor);
         }
 
-        // PUT api/rooms/2
         [HttpPut("{id}")]
-        public ActionResult Update(string id, Doctor doctor)
+        public ActionResult Update(int id, Doctor doctor)
         {
             if (!ModelState.IsValid)
             {
@@ -105,9 +87,8 @@ namespace HospitalAPI.Controllers
             return Ok(doctor);
         }
 
-        // DELETE api/rooms/2
         [HttpDelete("{id}")]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             var doctor = _doctorService.GetById(id);
             if (doctor == null)
@@ -121,7 +102,7 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public ActionResult GetDoctorShiftDTO(string id)
+        public ActionResult GetDoctorShiftDTO(int id)
         {
             var doctor = _doctorService.GetDoctorsShiftById(id);
             if (doctor == null)
@@ -134,9 +115,9 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]/{id}/{vacationStart}/{vacationEnd}")]
-        public ActionResult GetDoctorsAppointmentsForVacation(string id, string vacationStart, string vacationEnd)
+        public ActionResult GetDoctorsAppointmentsForVacation(int id, string vacationStart, string vacationEnd)
         {
-            GetDoctorsAppointmentsForUrgentVacationDTO dto = new GetDoctorsAppointmentsForUrgentVacationDTO();
+            GetDoctorsAppointmentsForUrgentVacationDTO dto = new();
             dto.id = id;
             dto.vacationStart = vacationStart;
             dto.vacationEnd = vacationEnd;

@@ -105,7 +105,7 @@ namespace HospitalLibrary.Settings
             );
             
             
-            BloodConsumptionRecord bloodConsumptionRecord1 = new BloodConsumptionRecord(1, 2, BloodType.A, "needed for surgery", new DateTime(2022, 11, 22), "DOC1", bank1Id);
+            BloodConsumptionRecord bloodConsumptionRecord1 = new BloodConsumptionRecord(1, 2, BloodType.A, "needed for surgery", new DateTime(2022, 11, 22), 1, bank1Id);
 
 
             modelBuilder.Entity<BloodConsumptionRecord>().HasData(

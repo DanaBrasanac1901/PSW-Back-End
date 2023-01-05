@@ -35,17 +35,12 @@ namespace HospitalAPI.Controllers
             this.doctorService = doctorService;
         }
 
-        // GET: api/appointments
         [HttpGet]
         public ActionResult GetAll()
         {
             return Ok(_appointmentService.GetAll());
         }
 
-
-
-
-        // GET api/rooms/2
         [HttpGet("{id}")]
         public ActionResult GetById(string id)
         {
@@ -54,10 +49,8 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(appointment);
         }
-
 
         [HttpPost]
         public ActionResult Create(CreateAppointmentDTO appointmentDTO)
@@ -71,51 +64,35 @@ namespace HospitalAPI.Controllers
             return NoContent();
         }
 
-
-
-        // PUT api/appointments/2
         [HttpPut("{id}")]
         public ActionResult Update(RescheduleAppointmentDTO appointmentDTO)
         {
-            //Console.WriteLine("MAMA DOBRO SAM!");
-            //Appointment appointment = _appointmentService.GetById(appointmentDTO.id);
-            //string timeParse = appointmentDTO.date + " " + appointmentDTO.time + ":00";
-            //DateTime newStartTime = Convert.ToDateTime(timeParse);
-            ////appointment.Start = newStartTime;
-            //Boolean flag1 = _appointmentService.CheckIfAppointmentIsSetInFuture(newStartTime);
-            //Boolean flag2 = _appointmentService.IsAvailableDateOnly(newStartTime,appointment.DoctorId);
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            try {
+            try 
+            {
                 _appointmentService.Update(appointmentDTO);
-            } catch
+            } 
+            catch
             {
                 return BadRequest();
             }
             return Ok(appointmentDTO);
         }
 
-        // DELETE api/appointments/2
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
-
-
             var appointment = _appointmentService.GetById(id);
-
-
             if (appointment == null)
             {
                 return NotFound();
             }
-
             _appointmentService.Delete(id);
             return NoContent();
         }
-
 
         [HttpPost]
         [Route("[action]")]
@@ -131,14 +108,14 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public ActionResult GetAllByDoctor(string id)
+        public ActionResult GetAllByDoctor(int id)
         {
             var appointments = _appointmentService.GetAllByDoctor(id);
             if (appointments == null)
+            {
                 return NotFound();
-
+            }
             return Ok(appointments);
-
         }
 
         [HttpGet]
@@ -155,7 +132,7 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]/{doctorId}/{appointmentId}")]
-        public ActionResult ChangeDoctorForAppointment(string doctorId, string appointmentId)
+        public ActionResult ChangeDoctorForAppointment(int doctorId, string appointmentId)
         {
             _appointmentService.ChangeDoctorForAppointment(doctorId, appointmentId);
             return Ok();
