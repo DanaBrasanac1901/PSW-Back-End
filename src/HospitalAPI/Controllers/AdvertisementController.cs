@@ -1,20 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using HospitalLibrary.Core.Advertising;
+using HospitalLibrary.Core.Appointment;
+using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.EmailSender;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using System;
 
-namespace HospitalLibrary.Core.Advertising
+namespace HospitalAPI.Controllers
 {
-    public class AdvertisementService:IAdvertisementService
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AdvertisementController : ControllerBase
     {
         static readonly private HttpClient client;
-        static AdvertisementService() {
+        static AdvertisementController()
+        {
             client = new HttpClient();
         }
 
-        public static async Task GetAll() {
+        /*
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            
+           
+
+        }
+        */
+
+        public static async Task GetAllAsync()
+        {
 
             try
             {
