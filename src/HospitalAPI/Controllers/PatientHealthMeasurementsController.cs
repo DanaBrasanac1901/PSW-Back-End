@@ -64,11 +64,11 @@ namespace HospitalAPI.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("GetPatientHealthMeasurements/{id}")]
-        public ActionResult GetPatientHealthMeasurements(int id)
+        [HttpPost]
+        [Route("GetPatientHealthMeasurements")]
+        public ActionResult GetPatientHealthMeasurements(GetPatientHealthMeasurementsDTO dto)
         {
-            return Ok(_patientHealthMeasurementsService.GetPatientHealthMeasurements(id));
+            return Ok(_patientHealthMeasurementsService.GetPatientHealthMeasurements(dto));
         }
     }
 }

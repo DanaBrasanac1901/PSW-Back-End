@@ -167,7 +167,14 @@ namespace HospitalAPI.Controllers
         {
             var app = _appointmentService.GetAppointmentForReport(id);
             return Ok(app);
+        }
 
+        [HttpPost]
+        [Route("[action]/{id}")]
+        public ActionResult GetDoctorsPatients(string id)
+        {
+            return Ok(_appointmentService.GetDoctorsPatients(id));
+        }
             /*
             //Dana&Anja
 
@@ -234,6 +241,5 @@ namespace HospitalAPI.Controllers
                 _appointmentService.Create(createDTO);
                 return NoContent();
             }*/
-        }
     }
 }

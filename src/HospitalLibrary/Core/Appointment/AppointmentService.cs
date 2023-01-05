@@ -229,5 +229,18 @@ namespace HospitalLibrary.Core.Appointment
         {
             return AppointmentAdapter.AppointmentToAppointmentForReportDTO(_appointmentRepository.GetById(appId));
         }
+        public IEnumerable<string> GetDoctorsPatients(string id)
+        {
+            var apps = _appointmentRepository.GetAllByDoctor(id);
+            List<string> patients = new List<string>();
+            foreach (var appointment in apps)
+            {
+                if (!patients.Contains(appointment.PatientId))
+                {
+                    patients.Add(appointment.PatientId);
+                }
+            }
+            return patients;
+        }
     }
 }
