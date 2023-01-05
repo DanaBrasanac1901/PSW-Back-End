@@ -12,6 +12,7 @@ using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
 using Npgsql;
 using System.Collections.Generic;
+using HospitalLibrary.Core.ApptSchedulingSession.Storage;
 
 namespace HospitalLibrary.Settings
 {
@@ -33,6 +34,7 @@ namespace HospitalLibrary.Settings
 
         public DbSet<BloodRequest> BloodRequests { get; set; }
 
+        public DbSet<EventStream> EventStreams { get; set; }    
         public DbSet<VacationRequest> VacationRequests { get; set; }
         public DbSet<InpatientTreatmentRecord> InpatientTreatmentRecords { get; set; }
         public DbSet<Equipment> Equipment { get; set; }

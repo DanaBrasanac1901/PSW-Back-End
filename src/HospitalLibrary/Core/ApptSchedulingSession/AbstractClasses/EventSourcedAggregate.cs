@@ -1,11 +1,10 @@
-﻿using HospitalLibrary.Core.ApptSchedulingSession;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.ApptSchedulingSession
+namespace HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses
 {
     public abstract class EventSourcedAggregate : Entity
     {

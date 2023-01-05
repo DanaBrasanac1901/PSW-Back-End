@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.AppointmentSchedulingSession;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.ApptSchedulingSession
 {
-    public class BackButtonEvent
+    public class SchedulingSnapshot
     {
-      
+        public int Version { get; set; }
     }
 }
