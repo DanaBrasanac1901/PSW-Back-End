@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.AppointmentSchedulingSession;
+﻿using HospitalLibrary.Core.ApptSchedulingSession;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.ApptSchedulingSession
 {
-    internal class ScheduleAggregate : EventSourcedAggregate
+    public class ScheduleAggregate : EventSourcedAggregate
     {
-        public int Id;
         public DateTime Begin;
         public DateTime End;
         public List<DateTime> BackTimestamps;
