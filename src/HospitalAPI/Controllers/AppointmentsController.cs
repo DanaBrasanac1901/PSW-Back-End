@@ -29,12 +29,6 @@ namespace HospitalAPI.Controllers
             _availableAppointmentService = availableAppointmentService;
         }
 
-        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
-        {
-            this.appointmentService = appointmentService;
-            this.doctorService = doctorService;
-        }
-
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -148,7 +142,7 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]/{id}")]
-        public ActionResult GetDoctorsPatients(string id)
+        public ActionResult GetDoctorsPatients(int id)
         {
             return Ok(_appointmentService.GetDoctorsPatients(id));
         }

@@ -25,12 +25,13 @@ namespace HospitalLibrary.Core.Patient
         }
         public void Create(SubmitPatientHealthMeasurementsDTO dto)
         {
-            if(int.TryParse(dto.PatientId, out int patientId) && float.TryParse(dto.Weight, out float weight) &&
+            if(int.TryParse(dto.PatientId, out int patientId) && 
+               float.TryParse(dto.Weight, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float weight) &&
                int.TryParse(dto.BloodPressureUpper, out int bloodPressureUpper) &&
                int.TryParse(dto.BloodPressureLower, out int bloodPressureLower) &&
                int.TryParse(dto.Heartbeat, out int heartbeat) &&
-               float.TryParse(dto.Temperature, out float temperature) &&
-               float.TryParse(dto.BloodSugarLevel, out float bloodSugarLevel))
+               float.TryParse(dto.Temperature, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float temperature) &&
+               float.TryParse(dto.BloodSugarLevel, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float bloodSugarLevel))
             {
                 var phm = new PatientHealthMeasurements(patientId, weight, bloodPressureUpper, bloodPressureLower, heartbeat, temperature, bloodSugarLevel);
                 _repository.Create(phm);
@@ -78,20 +79,18 @@ namespace HospitalLibrary.Core.Patient
             foreach(PatientHealthMeasurements phm in allPatientsHM)
             {
                 var check = phm.MeasurementTime;
-                foreach(DateTime date in checkedDates)
+                if (checkedDates.Contains(check))
                 {
-                    if(date.Day == check.Day)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        checkedDates.Add(date);
-                    }
+                    continue;
                 }
+                else
+                {
+                    checkedDates.Add(check);
+                }
+                
                 foreach(PatientHealthMeasurements it in allPatientsHM)
                 {
-                    if(it.MeasurementTime.Day == check.Day)
+                    if(it.MeasurementTime == check)
                     {
                         avgWeight += it.HealthMeasurements.Weight;
                         avgBloodPressureUpper += it.HealthMeasurements.BloodPressureUpper;
@@ -120,7 +119,6 @@ namespace HospitalLibrary.Core.Patient
                 avgHeartbeat = 0;
                 avgTemperature = 0;
                 avgBloodSugarLevel = 0;
-                allPatientsHM = allPatientsHM.Where(phm => phm.MeasurementTime.Day != check.Day).ToList();
             }
             return retList;
         }

@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.Room;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
@@ -21,15 +22,17 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IAppointmentRepository _appointmentRepositoryMock;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IPatientRepository _patientRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
         private string _email;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
-            IRoomRepository roomRepository, IEmailSendService emailSend)
+        public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository,
+            IPatientRepository patientRepository, IRoomRepository roomRepository, IEmailSendService emailSend)
         {
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
+            _patientRepository = patientRepository;
             _roomRepository = roomRepository;
             _emailSend = emailSend;
             UpdateFinishedAppointments();
@@ -228,15 +231,16 @@ namespace HospitalLibrary.Core.Appointment
         {
             return AppointmentAdapter.AppointmentToAppointmentForReportDTO(_appointmentRepository.GetById(appId));
         }
-        public IEnumerable<string> GetDoctorsPatients(string id)
+        public IEnumerable<Patient.Patient> GetDoctorsPatients(int id)
         {
             var apps = _appointmentRepository.GetAllByDoctor(id);
-            List<string> patients = new List<string>();
+            List<Patient.Patient> patients = new();
             foreach (var appointment in apps)
             {
-                if (!patients.Contains(appointment.PatientId))
+                var patient = _patientRepository.GetById(appointment.PatientId);
+                if (!patients.Contains(patient))
                 {
-                    patients.Add(appointment.PatientId);
+                    patients.Add(patient);
                 }
             }
             return patients;

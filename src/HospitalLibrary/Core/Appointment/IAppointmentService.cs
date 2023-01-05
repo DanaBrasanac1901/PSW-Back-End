@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Appointment.DTOS;
+using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.Enums;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace HospitalLibrary.Core.Appointment
 
 
         AppointmentForReportDTO GetAppointmentForReport(string appId);
-        IEnumerable<string> GetDoctorsPatients(string id);
+        IEnumerable<Patient.Patient> GetDoctorsPatients(int id);
 
     }
 }
