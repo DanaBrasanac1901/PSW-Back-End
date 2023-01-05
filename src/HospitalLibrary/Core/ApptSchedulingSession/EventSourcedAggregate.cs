@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.AppointmentSchedulingSession
     public abstract class EventSourcedAggregate : Entity
     {
         public List<DomainEvent> Changes { get; private set; }
-       
+        public int Version { get; private set; }
         public EventSourcedAggregate()
         {
             Changes = new List<DomainEvent>();

@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Advertising;
-using HospitalLibrary.Core.Appointment;
+﻿using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
 using Microsoft.AspNetCore.Mvc;
