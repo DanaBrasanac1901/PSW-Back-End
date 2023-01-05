@@ -295,6 +295,11 @@ namespace HospitalLibrary.Migrations
                 values: new object[] { "1", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "bolesnik", "1", new DateTime(22, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "1", "1", "1", true, "nista" });
 
             migrationBuilder.InsertData(
+                table: "Patients",
+                columns: new[] { "Id", "Address", "Age", "Allergies", "BloodType", "DoctorID", "Email", "Gender", "Jmbg", "Name", "Surname" },
+                values: new object[] { 1, null, 31, null, BloodType.A, null, "patient", Gender.FEMALE, null, "Jelena", "Novakovic" });
+
+            migrationBuilder.InsertData(
                 table: "Rooms",
                 columns: new[] { "Id", "Floor", "Number" },
                 values: new object[] { 1, 1, "1A" });
@@ -305,7 +310,8 @@ namespace HospitalLibrary.Migrations
                 values: new object[,]
                 {
                     { 1, true, "manager", 1, "Milica", "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==", "MANAGER", "Peric", null },
-                    { 2, true, "doctor", 1, "Filip", "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", "DOCTOR", "Marinkovic", null }
+                    { 2, true, "doctor", 1, "Filip", "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", "DOCTOR", "Marinkovic", null },
+                    { 3, true, "patient", 1, "Jelena", "AEssL8tRDqEPwGzxIeyAU1F/kuq1w4klNScLgIOmwe/N+j4e24+2DR8o31HhYtWziw==", "PATIENT", "Novakovic", null }
                 });
 
             migrationBuilder.InsertData(

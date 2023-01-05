@@ -410,6 +410,18 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 31,
+                            BloodType = BloodType.A,
+                            Email = "patient",
+                            Gender = Gender.FEMALE,
+                            Name = "Jelena",
+                            Surname = "Novakovic"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
@@ -496,6 +508,17 @@ namespace HospitalLibrary.Migrations
                             Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==",
                             Role = "DOCTOR",
                             Surname = "Marinkovic"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Active = true,
+                            Email = "patient",
+                            IdByRole = 1,
+                            Name = "Jelena",
+                            Password = "AEssL8tRDqEPwGzxIeyAU1F/kuq1w4klNScLgIOmwe/N+j4e24+2DR8o31HhYtWziw==",
+                            Role = "PATIENT",
+                            Surname = "Novakovic"
                         });
                 });
 

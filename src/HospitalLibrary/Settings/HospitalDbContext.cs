@@ -11,6 +11,7 @@ using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
 using HospitalLibrary.Core.User;
 using Npgsql;
+using System.Collections.Generic;
 
 namespace HospitalLibrary.Settings
 {
@@ -83,15 +84,12 @@ namespace HospitalLibrary.Settings
 
 
             modelBuilder.Entity<Room>().HasData(
-                new Room(){ Id = 1, Number = "1A", Floor = 1} 
+                new Room() { Id = 1, Number = "1A", Floor = 1 }
                 );
-            User user1 = new User(1,1,"Milica","Peric","manager", "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==","MANAGER",true);
+            User user1 = new User(1, 1, "Milica", "Peric", "manager", "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==", "MANAGER", true);
             User user2 = new User(2, 1, "Filip", "Marinkovic", "doctor", "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", "DOCTOR", true);
-            User user3 = new User(2, 1, "Jelena", "Novakovic", "patient", "AEssL8tRDqEPwGzxIeyAU1F/kuq1w4klNScLgIOmwe/N+j4e24+2DR8o31HhYtWziw==", "PATIENT", true);
-
-
-
-            modelBuilder.Entity<User>().HasData(user1, user2);
+            User user3 = new User(3, 1, "Jelena", "Novakovic", "patient", "AEssL8tRDqEPwGzxIeyAU1F/kuq1w4klNScLgIOmwe/N+j4e24+2DR8o31HhYtWziw==", "PATIENT", true);
+            modelBuilder.Entity<User>().HasData(user1, user2, user3);
 
             modelBuilder.Entity<InpatientTreatmentRecord>().HasData(
                 new InpatientTreatmentRecord()
@@ -124,6 +122,9 @@ namespace HospitalLibrary.Settings
             );
 
             modelBuilder.Entity<Patient>().Property(p => p.Address).HasColumnType("jsonb");
+            Patient patient1 = new(1, "Jelena", "Novakovic", "Futoska,62,Novi Sad", "patient", Gender.FEMALE, 31, BloodType.A, null, null);
+            modelBuilder.Entity<Patient>().HasData(patient1);
+
 
             base.OnModelCreating(modelBuilder);
         }

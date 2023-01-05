@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.AppointmentSchedulingSession;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.ApptSchedulingSession
 {
-    public class SchedulingSession
+    public class BackButtonEvent
     {
-        public Guid Id { get; protected set; }
+      
     }
 }

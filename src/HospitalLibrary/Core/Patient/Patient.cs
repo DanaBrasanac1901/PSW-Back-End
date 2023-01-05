@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.Patient
         private string name;
         private string surname;
         private string email;
+
         private Address address;
         private string jmbg;
         private Gender gender;
@@ -47,8 +48,7 @@ namespace HospitalLibrary.Core.Patient
 
         private Address MakeAddress(string address)
         {
-            string[] all = address.Split(" ");
-            if(all.Length>3) return new Address(all[0], all[1], all[2] + all[3]);
+            string[] all = address.Split(",");
             return new Address(all[0], all[1], all[2]);
         }
 
@@ -68,11 +68,12 @@ namespace HospitalLibrary.Core.Patient
             return (this.Id.GetHashCode() * 3 - 4) ^ this.Email.GetHashCode();  
         }
 
-        public Patient(int id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID)
+        public Patient(int id, string name, string surname, string address, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID)
         {
             this.Id = id;
             this.Name = name;
             this.Surname = surname;
+            this.Address = MakeAddress(address);
             this.Email = email;
             this.Gender = gender;
             this.Age = age;

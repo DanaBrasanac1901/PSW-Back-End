@@ -36,7 +36,7 @@ namespace HospitalLibrary.Core.Patient
             Regex r1 = new Regex("^[a-zA-Z]+$");
             Match m1 = r1.Match(this.Street);
             Match m2 = r1.Match(this.City);
-            if (!m1.Success || !m2.Success) throw new ArgumentException();
+           // if (!m1.Success || !m2.Success) throw new ArgumentException();
            
         }
 
