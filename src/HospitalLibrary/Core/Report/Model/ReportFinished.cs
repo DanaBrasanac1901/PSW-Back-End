@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Report.Model
 {
-    public class ReportCreated : DomainEvent
+    public class ReportFinished : DomainEvent
     {
-        public ReportCreated(string aggregateId) : base(aggregateId)
+        public ReportFinished(string aggregateId) : base(aggregateId)
         {
-            CreatedAt = DateTime.Now;
+            FinishedAt = DateTime.Now;
         }
 
-        public DateTime CreatedAt { get; private set; }
+        public DateTime FinishedAt { get; private set; }
     }
 }

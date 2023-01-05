@@ -21,14 +21,10 @@ namespace HospitalLibrary.Core.Report.Model
         public ICollection<Drug> Drugs { get; set; }
 
         public int InitialVersion { get; private set; }
-        public int NumberOfNextClicks { get; private set; }
-        public int NumberOfBackClicks { get; private set; }
+        public int CurrentStep { get; private set; }
 
 
-        public Report()
-        {
-        }
-
+        public Report(){}
 
         public Report(ReportSnapshot snapshot)
         {
@@ -61,30 +57,40 @@ namespace HospitalLibrary.Core.Report.Model
 
         public void ClickedOnNextButton()
         {
-
-            Causes(new NextButtonClicked(Id, NumberOfNextClicks));
+            if(CurrentStep<4)
+                Causes(new NextButtonClicked(Id, CurrentStep));
         }
 
         public void ClickedOnBackButton()
         {
-
-            Causes(new BackButtonClicked(Id, NumberOfBackClicks));
+            if(CurrentStep>0)
+                Causes(new BackButtonClicked(Id, CurrentStep));
         }
 
+        public void FinishedCreating()
+        {
+            Causes(new ReportFinished(Id));
+        }
 
 
         public void When(NextButtonClicked nextClicked)
         {
-            NumberOfNextClicks += 1;
+            CurrentStep += 1;
         }
 
         public void When(BackButtonClicked backClicked)
         {
-            NumberOfBackClicks += 1;
+            CurrentStep -= 1;
         }
 
+        public void When(ReportCreated reportCreated)
+        {
+            CurrentStep = 0;
+        }
 
-
-
+        public void When(ReportFinished reportFinished)
+        {
+            
+        }
     }
 }

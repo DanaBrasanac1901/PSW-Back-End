@@ -8,11 +8,11 @@ namespace HospitalLibrary.Core.Infrastructure
 {
     public abstract class DomainEvent
     {
-        public DomainEvent(Guid aggregateId)
+        public DomainEvent(string aggregateId)
         {
             Id = aggregateId;
         }
 
-        public Guid Id { get; private set; }
+        public string Id { get; private set; }
     }
 }

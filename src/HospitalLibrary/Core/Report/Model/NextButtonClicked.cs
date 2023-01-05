@@ -9,11 +9,13 @@ namespace HospitalLibrary.Core.Report.Model
 {
     public class NextButtonClicked : DomainEvent
     {
-        public NextButtonClicked(Guid aggregateId, int numOfSteps) : base(aggregateId)
+        public NextButtonClicked(string aggregateId, int fromStep) : base(aggregateId)
         {
-            NumberOfNextSteps = numOfSteps;
+            FromStep = fromStep;
+            ClickedAt = DateTime.Now;
         }
 
-        public int NumberOfNextSteps { get; private set; }
+        public int FromStep { get; private set; }
+        public DateTime ClickedAt { get; private set; }
     }
 }
