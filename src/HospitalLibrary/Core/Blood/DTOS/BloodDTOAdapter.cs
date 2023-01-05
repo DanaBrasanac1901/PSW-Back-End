@@ -19,7 +19,7 @@ namespace HospitalLibrary.Core.Blood.DTOS
             //string date = DateTime.Now.ToString("MM/dd/yyyy HH:mm");
             recordTransformed.CreatedAt = DateTime.Now;
             //get the currently logged in doctor and set his id
-            recordTransformed.DoctorId = "DOC1";
+            recordTransformed.DoctorId = 1;// srediti front gas record.doctorId;
             if (record.type == "A")
                 recordTransformed.Type = Enums.BloodType.A;
             else if (record.type == "B")

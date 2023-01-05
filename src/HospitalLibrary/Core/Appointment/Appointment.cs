@@ -13,10 +13,10 @@ namespace HospitalLibrary.Core.Appointment
     {
         private const int AppointmentDuration = 20;
         public string Id { get; set; }
-        public string DoctorId { get; set; }
+        public int DoctorId { get; set; }
         [JsonIgnore]
         public virtual Doctor.Doctor Doctor { get; set; }
-        public string PatientId { get; set; }
+        public int PatientId { get; set; }
         //line below should be uncommented once Patients have been created
         public virtual Patient.Patient Patient {get; set;}
         public DateTime Start { get; set; }
@@ -29,7 +29,7 @@ namespace HospitalLibrary.Core.Appointment
         //constructor below should be changed once patients are added to the model(Patient object instead of patientId)
  
 
-        public Appointment(string id, string doctorId, string patientId, DateTime start, int roomId)
+        public Appointment(string id, int doctorId, int patientId, DateTime start, int roomId)
         {
             Id = id;
             DoctorId = doctorId;

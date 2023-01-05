@@ -68,7 +68,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
            return _inpatientTreatmentRecordRepository.GetAllWithStatusTrue();
         }
 
-        public IEnumerable<ViewAcceptedPatientsOnTreatmentDTO> GetAllByDoctor(string id)
+        public IEnumerable<ViewAcceptedPatientsOnTreatmentDTO> GetAllByDoctor(int id)
         {
             IEnumerable<InpatientTreatmentRecord> records = _inpatientTreatmentRecordRepository.GetAllByDoctor(id);
 

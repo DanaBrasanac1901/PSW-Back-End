@@ -10,8 +10,8 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord.DTO
     public class CreateInpatientTretmentRecordDTO
     {
         private IInpatientTreatmentRecordService inpatientTreatmentService;
-        public string doctorId { get; set; }
-        public string patientId { get; set; }
+        public int doctorId { get; set; }
+        public int patientId { get; set; }
         public string roomId { get; set; }
         public string bedId { get; set; }
         public string AdmissionReason { get; set; }
@@ -21,7 +21,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord.DTO
 
         public CreateInpatientTretmentRecordDTO(IInpatientTreatmentRecordService inpatientTreatmentService)
         {
-            doctorId = "DOC1";
+            doctorId = 1;
             bedId = "B1";
             roomId = "1";
             Therapy = "terapija neka";

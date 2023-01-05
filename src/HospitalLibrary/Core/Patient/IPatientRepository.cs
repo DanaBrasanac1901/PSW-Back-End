@@ -5,7 +5,7 @@ namespace HospitalLibrary.Core.Patient
     public interface IPatientRepository
     {
         IEnumerable<Patient> GetAll();
-        Patient GetById(string id);
+        Patient GetById(int id);
         void Create(Patient patient);
         void Update(Patient patient);
         void Delete(Patient patient);

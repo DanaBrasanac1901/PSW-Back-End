@@ -74,7 +74,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
             return records.Where(r => r.Status == true);
         }
 
-        public IEnumerable<InpatientTreatmentRecord> GetAllByDoctor(string id)
+        public IEnumerable<InpatientTreatmentRecord> GetAllByDoctor(int id)
         {
             List<InpatientTreatmentRecord> records = _context.InpatientTreatmentRecords.Where(record => record.DoctorID.Equals(id)).ToList();
             return records;

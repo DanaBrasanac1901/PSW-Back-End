@@ -9,8 +9,8 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
     public class InpatientTreatmentRecord
     {
         public string Id { get; set; }
-        public string DoctorID { get; set; }
-        public string PatientID { get; set; }
+        public int DoctorID { get; set; }
+        public int PatientID { get; set; }
         public string RoomID { get; set; }
         public string BedID { get; set; }
         public DateTime AdmissionDate { get; set; }
@@ -22,7 +22,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
 
         public InpatientTreatmentRecord() { }
 
-        public InpatientTreatmentRecord(string id, string doctorID, string patientID, string roomID, string bedID, DateTime admissionDate, bool status, string therapy, string admissionReason, string dischargeReason, DateTime dischargeDate)
+        public InpatientTreatmentRecord(string id, int doctorID, int patientID, string roomID, string bedID, DateTime admissionDate, bool status, string therapy, string admissionReason, string dischargeReason, DateTime dischargeDate)
         {
             Id = id;
             DoctorID = doctorID;

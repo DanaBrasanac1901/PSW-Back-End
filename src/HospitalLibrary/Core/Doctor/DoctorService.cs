@@ -38,7 +38,7 @@ namespace HospitalLibrary.Core.Doctor
             return _doctorRepository.GetAll();
         }
 
-        public Doctor GetById(string id)
+        public Doctor GetById(int id)
         {
             return _doctorRepository.GetById(id);
         }
@@ -58,14 +58,14 @@ namespace HospitalLibrary.Core.Doctor
             _doctorRepository.Delete(doctor);
         }
 
-        public DoctorsShiftDTO GetDoctorsShiftById(string id)
+        public DoctorsShiftDTO GetDoctorsShiftById(int id)
         {
             Doctor doctor = _doctorRepository.GetById(id);
             DoctorAdapter adapter = new DoctorAdapter();
             return adapter.DoctorToDoctorsShiftDTO(doctor);
         }
 
-        public Boolean IsAvailable(string doctorId, DateTime appointmentTime)
+        public Boolean IsAvailable(int doctorId, DateTime appointmentTime)
         {
             //DateTime appointment = DateTime.Parse(appointmentTime);
             Doctor doc = GetById(doctorId);
@@ -168,9 +168,9 @@ namespace HospitalLibrary.Core.Doctor
         }
 
 
-        public List<string> GetFreeSpecialtyDoctors(string date, int specialty)
+        public List<int> GetFreeSpecialtyDoctors(string date, int specialty)
         {
-            List<string> ret = new List<string>();
+            List<int> ret = new List<int>();
             List<Appointment.Appointment> app = new List<Appointment.Appointment>(_appointmentRepository.GetAll());
             DateTime parsed = DateTime.Parse(date);
             foreach (Doctor d in _doctorRepository.GetAll().Where(doc => (int)doc.Specialty == specialty))
@@ -183,9 +183,9 @@ namespace HospitalLibrary.Core.Doctor
             return ret;
         }
 
-        public List<string> GetSpecialtyDoctors(int specialty)
+        public List<int> GetSpecialtyDoctors(int specialty)
         {
-            List<string> ret = new List<string>();
+            List<int> ret = new();
             foreach (Doctor d in _doctorRepository.GetAll().Where(doc => (int)doc.Specialty == specialty))
             {
                 ret.Add(d.Id);
@@ -205,9 +205,21 @@ namespace HospitalLibrary.Core.Doctor
             return true;
         }
 
-        public List<Doctor> GetByIds(string doctorIds)
+        private IEnumerable<Doctor> StringToIntIds(string doctorIds)
         {
-            return _doctorRepository.GetByIds(doctorIds);
+            List<Doctor> doctors = new List<Doctor>();
+            string[] doctorIdsSplit = doctorIds.Split(",");
+            foreach (string id in doctorIdsSplit)
+            {
+                int.TryParse(id, out int docId);
+                doctors.Add(_doctorRepository.GetById(docId));
+            }
+            return doctors;
+        }
+
+        public IEnumerable<Doctor> GetByIds(string doctorIds)
+        {
+            return StringToIntIds(doctorIds);
         }
         public List<Doctor> GetBySpecialty(string specialty)
         {
@@ -222,7 +234,6 @@ namespace HospitalLibrary.Core.Doctor
                     if (doctor.Specialty.Equals(spec)) returnList.Add(doctor);
                 }
             }
-
             return returnList;
         }
     }

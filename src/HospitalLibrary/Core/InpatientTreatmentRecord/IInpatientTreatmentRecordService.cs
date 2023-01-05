@@ -16,7 +16,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord
         void Discharge(string requestId);
         string GenerateStringID();
         IEnumerable<InpatientTreatmentRecord> GetAllWithStatusTrue();
-        IEnumerable<ViewAcceptedPatientsOnTreatmentDTO> GetAllByDoctor(string id);
+        IEnumerable<ViewAcceptedPatientsOnTreatmentDTO> GetAllByDoctor(int id);
         DischargeTreatmentDTO GetRecordForDischarged(string id);
 
     }

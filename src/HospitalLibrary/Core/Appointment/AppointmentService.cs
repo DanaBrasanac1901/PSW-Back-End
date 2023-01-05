@@ -6,7 +6,6 @@ using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Room;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-//using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -131,17 +130,17 @@ namespace HospitalLibrary.Core.Appointment
             }
         }
 
-        private string GetEmail(string patientId)
+        private string GetEmail(int patientId)
         {
-            if (patientId == "Pera Peric")
+            if (patientId == 1)
             {
                 return "imeprezime0124@gmail.com";
             }
-            else if (patientId == "Sima Simic")
+            else if (patientId == 2)
             {
                 return "milos.adnadjevic@gmail.com";
             }
-            else if (patientId == "Djordje Djokic")
+            else if (patientId == 3)
             {
                 return "jales32331@harcity.com";
             }else
@@ -164,7 +163,7 @@ namespace HospitalLibrary.Core.Appointment
         }
 
 
-        public IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id)
+        public IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(int id)
         {
             IEnumerable<Appointment> doctorsApointments = _appointmentRepository.GetAllByDoctor(id);
             List<ViewAllAppointmentsDTO> appointmentsDTOs = new List<ViewAllAppointmentsDTO>();
@@ -200,7 +199,7 @@ namespace HospitalLibrary.Core.Appointment
         }
 
        
-        public Boolean CheckIfAppointmentExistsForDoctor(string doctorId,DateTime start)
+        public Boolean CheckIfAppointmentExistsForDoctor(int doctorId,DateTime start)
         {
             
             foreach (var app in _appointmentRepository.GetAll())
@@ -213,7 +212,7 @@ namespace HospitalLibrary.Core.Appointment
             return true;
         }
 
-        public void ChangeDoctorForAppointment(string doctorId, string appointmentId)
+        public void ChangeDoctorForAppointment(int doctorId, string appointmentId)
         {
             var appointment = _appointmentRepository.GetById(appointmentId);
             

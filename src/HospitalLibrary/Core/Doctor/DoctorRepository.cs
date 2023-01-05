@@ -24,7 +24,7 @@ namespace HospitalLibrary.Core.Doctor
             return _context.Doctors.ToList();
         }
 
-        public Doctor GetById(string id)
+        public Doctor GetById(int id)
         {
             return _context.Doctors.Find(id);
         }
@@ -55,15 +55,15 @@ namespace HospitalLibrary.Core.Doctor
             _context.SaveChanges();
         }
 
-        public List<Doctor> GetByIds(string doctorIds)
-        {
-            List<Doctor> doctors = new List<Doctor>();
-            string[] doctorIdsSplit = doctorIds.Split(",");
-            foreach (string id in doctorIdsSplit)
-                doctors.Add(GetById(id));
+        //public List<Doctor> GetByIds(int doctorIds)
+        //{
+        //    List<Doctor> doctors = new List<Doctor>();
+        //    string[] doctorIdsSplit = doctorIds.Split(",");
+        //    foreach (string id in doctorIdsSplit)
+        //        doctors.Add(GetById(id));
 
-            return doctors;
-        }
+        //    return doctors;
+        //}
 
         public List<Doctor> GetBySpecialty(int specialty)
         {

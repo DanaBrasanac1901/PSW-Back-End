@@ -30,7 +30,7 @@ namespace HospitalLibrary.Core.Patient
             return _patientRepository.GetAll();
         }
 
-        public Patient GetById(string id)
+        public Patient GetById(int id)
         {
             return _patientRepository.GetById(id);
         }
@@ -105,7 +105,7 @@ namespace HospitalLibrary.Core.Patient
             return maxNumber;
         }
 
-        public int NumberOfPatientsByDoctor(string doctorId)
+        public int NumberOfPatientsByDoctor(int doctorId)
         {
             IEnumerable<Patient> patients = GetAll();
             int personalNumber = 0;
@@ -133,7 +133,7 @@ namespace HospitalLibrary.Core.Patient
 
         }
 
-        private List<PatientForAppointmentDTO> ReturnPatientsForAppointment(string doctorId)
+        private List<PatientForAppointmentDTO> ReturnPatientsForAppointment(int doctorId)
         {
             List<PatientForAppointmentDTO> retList = new List<PatientForAppointmentDTO>(); 
             foreach (var pat in _patientRepository.GetAll())
@@ -146,17 +146,17 @@ namespace HospitalLibrary.Core.Patient
             return retList;
         }
 
-        public List<PatientForAppointmentDTO> GetPatientsForDoctor(string doctorId)
+        public List<PatientForAppointmentDTO> GetPatientsForDoctor(int doctorId)
         {
             return ReturnPatientsForAppointment(doctorId);
         }
 
-        public PatientForReportDTO GetPatientForReport(string id)
+        public PatientForReportDTO GetPatientForReport(int id)
         {
             return PatientAdapter.PatientToPatientForReportDTO(_patientRepository.GetById(id));
         }
 
-        IEnumerable<string> IPatientService.DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
+        IEnumerable<int> IPatientService.DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
         {
             throw new System.NotImplementedException();
         }

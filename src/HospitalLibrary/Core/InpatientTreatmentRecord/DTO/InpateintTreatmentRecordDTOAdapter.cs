@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord.DTO
         public static InpatientTreatmentRecord InpatientTreatmentRecordDTOToObject(CreateInpatientTretmentRecordDTO recordDTO)
         {
             InpatientTreatmentRecord record = new InpatientTreatmentRecord();
-            record.DoctorID = "DOC1";
+            record.DoctorID = recordDTO.doctorId;
             record.PatientID = recordDTO.patientId;
             record.RoomID = recordDTO.roomId;
             record.BedID = recordDTO.bedId;

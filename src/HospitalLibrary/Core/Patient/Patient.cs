@@ -20,7 +20,7 @@ namespace HospitalLibrary.Core.Patient
         private int age;
         private BloodType bloodType;
         private List<string> allergies;
-        private string doctorID;
+        private int doctorID;
         private bool active;
        
         public Patient() {}
@@ -45,7 +45,7 @@ namespace HospitalLibrary.Core.Patient
             this.doctorID = regDTO.DoctorId;
         }
 
-        public Patient(int id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID)
+        public Patient(int id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, int doctorID)
         {
             this.Id = id;
             this.Name = name;
@@ -67,7 +67,7 @@ namespace HospitalLibrary.Core.Patient
         public int Age { get => age; set => age = value; }
         public BloodType BloodType { get => bloodType; set => bloodType = value; }
         public List<string> Allergies { get => allergies; set => allergies = value; }
-        public string DoctorID { get => doctorID; set => doctorID = value; }
+        public int DoctorID { get => doctorID; set => doctorID = value; }
         public bool Active { get => active; set => active = value; }
 
         public string Jmbg { get => jmbg; set => jmbg = value; }

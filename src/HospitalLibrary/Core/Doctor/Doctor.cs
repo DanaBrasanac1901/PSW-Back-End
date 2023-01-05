@@ -12,7 +12,7 @@ namespace HospitalLibrary.Core.Doctor
 {
     public class Doctor
     {   
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
@@ -33,7 +33,7 @@ namespace HospitalLibrary.Core.Doctor
         
         public Doctor() {}
 
-        public Doctor(string id, string name, string surname, string email, Specialty specialty, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments)
+        public Doctor(int id, string name, string surname, string email, Specialty specialty, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments)
         {
             Id = id;
             Name = name;
@@ -48,7 +48,7 @@ namespace HospitalLibrary.Core.Doctor
             VacationRequests = new List<VacationRequest>();
         }
 
-        public Doctor(string id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty)
+        public Doctor(int id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty)
        
         {
             Id = id;
