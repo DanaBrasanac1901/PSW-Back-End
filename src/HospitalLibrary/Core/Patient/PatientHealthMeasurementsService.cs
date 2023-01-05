@@ -111,7 +111,7 @@ namespace HospitalLibrary.Core.Patient
                 int bpu = (int)Math.Round(avgBloodPressureUpper);
                 int bpl = (int)Math.Round(avgBloodPressureLower);
                 int hb = (int)Math.Round(avgHeartbeat);
-                var add = new PatientHealthMeasurements(phm.PatientId, avgWeight, bpu, bpl, hb, avgTemperature, avgBloodSugarLevel);
+                var add = new PatientHealthMeasurements(phm.PatientId, new DateTime(check.Year, check.Month, check.Day), avgWeight, bpu, bpl, hb, avgTemperature, avgBloodSugarLevel);
                 retList.Add(add);
                 counter = 0;
                 avgWeight = 0;

@@ -21,5 +21,11 @@ namespace HospitalLibrary.Core.Patient
             MeasurementTime = DateTime.Now;
             HealthMeasurements = new HealthMeasurements(weight, bloodPressureUpper, bloodPressureLower, heartbeat, temperature, bloodSugarLevel);
         }
+        public PatientHealthMeasurements(int patientId, DateTime time, float weight, int bloodPressureUpper, int bloodPressureLower, int heartbeat, float temperature, float bloodSugarLevel)
+        {
+            PatientId = patientId;
+            MeasurementTime = time;
+            HealthMeasurements = new HealthMeasurements(weight, bloodPressureUpper, bloodPressureLower, heartbeat, temperature, bloodSugarLevel);
+        }
     }
 }
