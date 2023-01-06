@@ -37,8 +37,8 @@ namespace IntegrationAPI.Controllers
             
 
             var bloodBanks = _IbbService.GetAll();
-           
-            return this.RedirectToRoute("http://localhost:5000/api/Blood/GetFromIntegrationApi", new {bloodBanks=bloodBanks});
+            return Ok(bloodBanks);
+
 
         }
         [HttpGet]

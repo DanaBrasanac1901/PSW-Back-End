@@ -3,6 +3,9 @@ using HospitalLibrary.Core.Blood;
 using HospitalLibrary.Core.Blood.DTOS;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace HospitalAPI.Controllers
 {
@@ -66,11 +69,19 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public ActionResult GetFromIntegrationApi(ICollection<string> banks)
+        public  async Task<IActionResult> GetFromIntegrationApi()
         {
-            RedirectToRoute("http://localhost:16177/api/BloodBank");
 
-            return Ok();
+
+            using HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync("http://localhost:16177/api/BloodBank");
+            Console.WriteLine("Status: " + response.StatusCode.ToString());
+
+            string jsonContent = response.Content.ReadAsStringAsync().Result;
+            List<BloodBankDTO> result = JsonConvert.DeserializeObject<List<BloodBankDTO>>(jsonContent);
+
+            return Ok(result);
+            
         }
 
 
