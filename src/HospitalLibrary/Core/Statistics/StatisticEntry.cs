@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Statistics
 {
-    internal class StatisticEntry
+    public class StatisticEntry
     {
         public int DataPoint;
         public int Occurences;

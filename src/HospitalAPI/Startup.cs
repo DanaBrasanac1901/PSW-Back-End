@@ -21,6 +21,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HospitalLibrary.Core.PasswordHasher;
 using HospitalLibrary.Core.Feedback;
+using HospitalLibrary.Core.Statistics;
+
 namespace HospitalAPI
 {
     public class Startup
@@ -100,6 +102,10 @@ namespace HospitalAPI
             services.AddScoped<IInpatientTreatmentRecordRepository, InpatientTreatmentRecordRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
+
+            services.AddScoped<ISchedulingStatisticsService,SchedulingStatisticsService>();
+
+
            
 
         }

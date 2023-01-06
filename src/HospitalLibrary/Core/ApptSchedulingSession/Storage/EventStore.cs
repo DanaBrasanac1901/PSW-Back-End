@@ -16,6 +16,8 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
             _context = context;
         }
 
+
+
         public void CreateNewStream(string streamName, IEnumerable<Object> domainEvents)
         {
             var eventStream = new EventStream(streamName);

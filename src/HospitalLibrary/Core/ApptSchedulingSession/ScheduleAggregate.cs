@@ -12,11 +12,11 @@ namespace HospitalLibrary.Core.ApptSchedulingSession
         private DateTime _begin;
         private DateTime _end;
 
-        private Boolean _isFinished;
+        private bool _isFinished;
 
         public DateTime Begin { get { return _begin; } }
         public DateTime End { get { return _end; } }
-        public Boolean IsFinished { get { return _isFinished; } }
+        public bool IsFinished { get { return _isFinished; } }
 
         public ScheduleAggregate() { }
 

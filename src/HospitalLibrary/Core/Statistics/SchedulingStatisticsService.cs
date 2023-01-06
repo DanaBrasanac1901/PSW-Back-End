@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.ApptSchedulingSession;
 using HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses;
+using HospitalLibrary.Core.ApptSchedulingSession.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Statistics
 {
-    internal class SchedulingStatisticsService : ISchedulingStatisticsService
+    public class SchedulingStatisticsService : ISchedulingStatisticsService
     {
         // statisticsList[0] = number of steps and their occurences
         // statisticsList[1] = time spent on each step (in seconds) and their occurences
@@ -16,11 +17,21 @@ namespace HospitalLibrary.Core.Statistics
         // statisticsList[3] = how many times schedule was clicked in one session and occurences
         // statisticsList[4] = how many times back was clicked in one session and occurences
         private List<List<StatisticEntry>> statisticsList;
+        private ScheduleAggregateRepository _repo;
 
-
-        public List<List<StatisticEntry>> GetStatistics(List<ScheduleAggregate> aggregates)
+        public SchedulingStatisticsService(ScheduleAggregateRepository repo)
         {
-            
+            _repo= repo;
+        }
+
+
+        public List<List<StatisticEntry>> GetStatistics()
+        {
+            //izmeniti kad bude implementirano
+            //List<ScheduleAggregate> aggregates = _repo.GetAll();
+            List<ScheduleAggregate> aggregates = new List<ScheduleAggregate>();
+
+
             IDictionary<Guid, int> stepsInAggregates = new Dictionary<Guid, int>();
             IDictionary<Guid, int> secondsSpentInAggregates = new Dictionary<Guid, int>();
             IDictionary<Guid, int> nextOccurencesInAggregates = new Dictionary<Guid, int>();

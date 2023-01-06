@@ -16,8 +16,9 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
             _eventStore= eventStore;
         }
 
-        
-              //Ovo je rehidratacija agregata ja msm 
+
+
+        //Ovo je rehidratacija agregata ja msm 
         public ScheduleAggregate FindById(Guid id)
         {
             var streamName = string.Format("{0}-{1}", typeof(ScheduleAggregate).Name, id.ToString());
