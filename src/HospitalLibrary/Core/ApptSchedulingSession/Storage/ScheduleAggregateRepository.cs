@@ -34,7 +34,7 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
 
             foreach(var @event in stream)
             {
-               scheduleAggregate.Apply(@event);
+            //   scheduleAggregate.Apply(@event);
             }
 
             return scheduleAggregate;            
