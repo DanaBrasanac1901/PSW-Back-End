@@ -9,6 +9,7 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.UseCases
     public interface IScheduleAppointment
     {
         void Execute(string eventId, DateTime timestamp);
+        public List<ScheduleAggregate> GetAggregates();
 
     }
 }

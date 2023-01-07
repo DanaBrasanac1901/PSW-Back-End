@@ -29,9 +29,7 @@ namespace HospitalLibrary.Core.Statistics
 
         public List<List<StatisticEntry>> GetStatistics()
         {
-            //izmeniti kad bude implementirano
-            //List<ScheduleAggregate> aggregates = _repo.GetAll();
-            List<ScheduleAggregate> aggregates = new List<ScheduleAggregate>();
+            List<ScheduleAggregate> aggregates = _aggregateService.GetAggregates();
 
 
             IDictionary<Guid, int> stepsInAggregates = new Dictionary<Guid, int>();
@@ -43,17 +41,17 @@ namespace HospitalLibrary.Core.Statistics
             // initialize necessary aggregate data for statistics
             foreach (ScheduleAggregate aggregate in aggregates)
             {
+                //we only calculate into statistics sessions that have ended or weren't cancelled midway
+                if (!aggregate.Changes.OfType<SchedulingEnded>().Any()) continue;
+
                 // calculate num of steps in aggregate
                 if (!stepsInAggregates.Keys.Contains(aggregate.Id)) stepsInAggregates.Add(aggregate.Id, aggregate.Changes.Count);
                 // calculate lifespan of aggregate
                 if (!secondsSpentInAggregates.Keys.Contains(aggregate.Id))
                 {
-                    if (aggregate.IsFinished)
-                    {
-                        TimeSpan timeSpent = aggregate.End - aggregate.Begin;
-                        secondsSpentInAggregates.Add(aggregate.Id,(int) timeSpent.TotalSeconds); // could TECHNICALLY throw error but highly unlikely that the patient is going to spend more than 2.147.483.647 seconds scheduling 
-                    }
+                    secondsSpentInAggregates.Add(aggregate.Id, getAggregateLifespan(aggregate)); // could TECHNICALLY throw error but highly unlikely that the patient is going to spend more than 2.147.483.647 seconds scheduling 
                 }
+
                 // init steps for aggregate
                 nextOccurencesInAggregates.Add(aggregate.Id, 0);
                 backOccurencesInAggregates.Add(aggregate.Id, 0);
@@ -66,30 +64,30 @@ namespace HospitalLibrary.Core.Statistics
                     else if (_event is ScheduleButtonPressed) scheduleOccurencesInAggregates = updateOccurencesInDictionary(scheduleOccurencesInAggregates, aggregate.Id);
                     else if (_event is BackButtonPressed) backOccurencesInAggregates = updateOccurencesInDictionary(backOccurencesInAggregates, aggregate.Id);
                     else throw new NotImplementedException();
-                    
+
                 }
             }
 
             // do actual statistics on our data
-            IDictionary<int, int> stepStatistics=groupData(stepsInAggregates);
-            IDictionary<int,int> timeSpentStatistics=groupData(secondsSpentInAggregates);
-            IDictionary<int,int> nextClickStatistics= groupData(nextOccurencesInAggregates);
-            IDictionary<int,int> scheduleClickStatistics= groupData(scheduleOccurencesInAggregates);
-            IDictionary<int,int> backClickStatistics= groupData(backOccurencesInAggregates);
+            IDictionary<int, int> stepStatistics = groupData(stepsInAggregates);
+            IDictionary<int, int> timeSpentStatistics = groupData(secondsSpentInAggregates);
+            IDictionary<int, int> nextClickStatistics = groupData(nextOccurencesInAggregates);
+            IDictionary<int, int> scheduleClickStatistics = groupData(scheduleOccurencesInAggregates);
+            IDictionary<int, int> backClickStatistics = groupData(backOccurencesInAggregates);
 
 
             // Dictionary<int,int> ----> List<StatisticEntry> so it can be ready for front
-            statisticsList = new List<List<StatisticEntry>>() { 
+            statisticsList = new List<List<StatisticEntry>>() {
                 ConvertToStatisticEntries(stepStatistics), ConvertToStatisticEntries(timeSpentStatistics), ConvertToStatisticEntries(nextClickStatistics),ConvertToStatisticEntries(scheduleClickStatistics), ConvertToStatisticEntries(backClickStatistics) };
 
-            
+
             return statisticsList;
-            
+
         }
 
         // get current occurence count and increment it by one, then update dictionary
         //used for individual step count
-        private IDictionary<Guid, int> updateOccurencesInDictionary(IDictionary<Guid, int> dictionary,Guid key)
+        private IDictionary<Guid, int> updateOccurencesInDictionary(IDictionary<Guid, int> dictionary, Guid key)
         {
             int occurenceCount;
             dictionary.TryGetValue(key, out occurenceCount);
@@ -122,12 +120,12 @@ namespace HospitalLibrary.Core.Statistics
         private IDictionary<int, int> groupData(IDictionary<Guid, int> data)
         {
             IDictionary<int, int> statistics = new Dictionary<int, int>();
-            if(data == null) return statistics;
+            if (data == null) return statistics;
             foreach (KeyValuePair<Guid, int> dataPoint in data)
             {
                 int dataValue = dataPoint.Value;
                 if (statistics.ContainsKey(dataValue))  // if entry with same key exists, increment occurence
-                    statistics=updateOccurencesInDictionary(statistics, dataValue);
+                    statistics = updateOccurencesInDictionary(statistics, dataValue);
 
                 else statistics.Add(dataValue, 1); // if not, this is the first time it appears so add it
             }
@@ -147,6 +145,15 @@ namespace HospitalLibrary.Core.Statistics
             return results;
         }
 
-        private int get
+        private int getAggregateLifespan(ScheduleAggregate aggregate)
+        {
+            SchedulingStarted startEvent = (SchedulingStarted)aggregate.Changes.FirstOrDefault(i => i is SchedulingStarted);
+            SchedulingEnded endEvent = (SchedulingEnded)aggregate.Changes.FirstOrDefault(i => i is SchedulingEnded);
+
+            TimeSpan timeSpent = endEvent.TimeStamp - startEvent.TimeStamp;
+
+            return (int)timeSpent.TotalSeconds;
+        }
     }
 }
+    

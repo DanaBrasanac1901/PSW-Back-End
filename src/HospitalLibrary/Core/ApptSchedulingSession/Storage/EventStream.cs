@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses;
+using HospitalLibrary.Core.ApptSchedulingSession.Events;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -28,5 +29,23 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
             TimeStamp = timeStamp;
         }
 
+        public DomainEvent ToDomainEvent()
+        {
+            switch (EventInstance)
+            {
+                case "next":
+                        return new NextButtonPressed(AggregateId,TimeStamp);
+
+                case "start": 
+                        return new SchedulingStarted(AggregateId,TimeStamp);
+                case "end":
+                        return new SchedulingEnded(AggregateId,TimeStamp);
+                case "back":
+                        return new BackButtonPressed(AggregateId,TimeStamp);
+                case "schedule":
+                        return new ScheduleButtonPressed(AggregateId,TimeStamp);
+                default: return null;
+            }
+        }
     }
 }
