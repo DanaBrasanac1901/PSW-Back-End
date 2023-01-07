@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses;
 using HospitalLibrary.Core.ApptSchedulingSession.Events;
 using HospitalLibrary.Core.ApptSchedulingSession.Storage;
+using HospitalLibrary.Core.ApptSchedulingSession.UseCases;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,11 @@ namespace HospitalLibrary.Core.Statistics
         // statisticsList[3] = how many times schedule was clicked in one session and occurences
         // statisticsList[4] = how many times back was clicked in one session and occurences
         private List<List<StatisticEntry>> statisticsList;
-        private ScheduleAggregateRepository _repo;
+        private IScheduleAppointment _aggregateService;
 
-        public SchedulingStatisticsService(ScheduleAggregateRepository repo)
+        public SchedulingStatisticsService(IScheduleAppointment aggregateService)
         {
-            _repo= repo;
+            _aggregateService = aggregateService;
         }
 
 
@@ -145,5 +146,7 @@ namespace HospitalLibrary.Core.Statistics
 
             return results;
         }
+
+        private int get
     }
 }
