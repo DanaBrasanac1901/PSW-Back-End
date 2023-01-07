@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.ApptSchedulingSession;
 using HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses;
+using HospitalLibrary.Core.ApptSchedulingSession.Events;
 using HospitalLibrary.Core.ApptSchedulingSession.Storage;
 using System;
 using System.Collections.Generic;

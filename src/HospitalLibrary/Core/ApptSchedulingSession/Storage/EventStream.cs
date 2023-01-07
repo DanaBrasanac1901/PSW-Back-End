@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,23 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
 {
     public class EventStream
     {
-        public string Id { get; private set; } //aggregate type + id
+        public int Id { get; private set; } 
+        public Guid AggregateId { get; private set; }
         public int Version { get; private set; }
 
-        private EventStream() { }
+        public string EventInstance { get; private set; }
 
-        public EventStream(string id)
+        public DateTime TimeStamp { get; private set; }
+
+        public EventStream() { }
+
+        public EventStream(Guid aggregateId, int version, string eventInstance, DateTime timeStamp)
         {
-            Id = id;
-            Version = 0;
+           AggregateId = aggregateId;
+            Version= version;
+            EventInstance= eventInstance;
+            TimeStamp = timeStamp;
         }
 
-        public EventWrapper RegisterEvent(DomainEvent @event)
-        {
-            Version++;
-
-            return new EventWrapper(@event, Version, Id);
-        }
     }
 }

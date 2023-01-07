@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using HospitalLibrary.Core.PasswordHasher;
 using HospitalLibrary.Core.Feedback;
 using HospitalLibrary.Core.Statistics;
+using HospitalLibrary.Core.ApptSchedulingSession.UseCases;
 
 namespace HospitalAPI
 {
@@ -83,7 +84,7 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAvailableAppointmentService, AvailableAppointmentService>();
-
+            services.AddScoped<IScheduleAppointment, ScheduleAppointment>();
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();
 

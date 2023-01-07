@@ -5,15 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.ApptSchedulingSession
+namespace HospitalLibrary.Core.ApptSchedulingSession.Events
 {
-    public class ScheduleButtonPressed : DomainEvent
+    public class BackButtonPressed : DomainEvent
     {
-        public ScheduleButtonPressed(Guid aggregateId, DateTime timeStamp) : base(aggregateId)
+        public BackButtonPressed(Guid aggregateId, DateTime timeStamp) : base(aggregateId)
         {
             TimeStamp = timeStamp;
         }
-
-        public DateTime TimeStamp { get; private set;}
+        public DateTime TimeStamp { get; private set; }
     }
 }

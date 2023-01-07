@@ -1,12 +1,11 @@
-﻿using HospitalLibrary.Core.ApptSchedulingSession;
-using HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses;
+﻿using HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.ApptSchedulingSession
+namespace HospitalLibrary.Core.ApptSchedulingSession.Events
 {
     public class NextButtonPressed : DomainEvent
     {
@@ -14,6 +13,6 @@ namespace HospitalLibrary.Core.ApptSchedulingSession
         {
             TimeStamp = timeStamp;
         }
-        public DateTime TimeStamp { get; private set;}
+        public DateTime TimeStamp { get; private set; }
     }
 }

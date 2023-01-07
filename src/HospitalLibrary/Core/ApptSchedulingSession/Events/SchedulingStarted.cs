@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.ApptSchedulingSession
+namespace HospitalLibrary.Core.ApptSchedulingSession.Events
 {
     public class SchedulingStarted : DomainEvent
     {

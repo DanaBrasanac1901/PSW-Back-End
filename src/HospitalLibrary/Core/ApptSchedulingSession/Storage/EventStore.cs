@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Settings;
+using Org.BouncyCastle.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,46 +18,27 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
         }
 
 
-
-        public void CreateNewStream(string streamName, IEnumerable<Object> domainEvents)
+        public IEnumerable<EventStream> GetAll()
         {
-            var eventStream = new EventStream(streamName);
-            _context.EventStreams.Add(eventStream);
-//ovo ispraviti
-            AppendEventsToStream(streamName, domainEvents);
+            return _context.EventStreams.ToList();
         }
 
-        public void AppendEventsToStream(string streamName, IEnumerable<Object> domainEvents)
+        public EventStream GetById(int id)
         {
-          //  var stream = _documentSession.Load<EventStream>(streamName);
-
-            foreach (var @event in domainEvents)
-            {
-            //    _documentSession.Store(stream.RegisterEvent(@event));
-            }
+            return _context.EventStreams.Find(id);
         }
 
-        public IEnumerable<Object> GetStream(string streamName, int fromVersion, int toVersion)
+        //apdejt agregata 
+        public void NewEvent(EventStream eventStream)
         {
-            // Get events from a specific version
-         //   var eventWrappers = (from stream in _documentSession.Query<EventWrapper>()
-                    //              .Customize(x => x.WaitForNonStaleResultsAsOfNow())
-                   //              where stream.EventStreamId.Equals(streamName)
-                   //              && stream.EventNumber <= toVersion
-                   //              && stream.EventNumber >= fromVersion
-                    //             orderby stream.EventNumber
-                   //              select stream).ToList();
+            _context.Add(eventStream);
+        }
 
-          //  if (eventWrappers.Count() == 0) return null;
-
-            var events = new List<Object>();
-
-           // foreach (var @event in eventWrappers)
-           // {
-          //      events.Add(@event.Event);
-          //  }
-
-            return events;
+        public EventStream FindLastEvent()
+        {
+            List<EventStream> allEvents = (List<EventStream>)GetAll();
+            EventStream biggest = allEvents.Aggregate((e1, e2) => e1.Id > e2.Id ? e1 : e2);
+            return biggest;
         }
     }
 }
