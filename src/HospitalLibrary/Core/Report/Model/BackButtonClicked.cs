@@ -9,6 +9,9 @@ namespace HospitalLibrary.Core.Report.Model
 {
     public class BackButtonClicked : DomainEvent
     {
+
+        public BackButtonClicked() { }
+
         public BackButtonClicked(string aggregateId, int fromStep) : base(aggregateId)
         {
             FromStep = fromStep;

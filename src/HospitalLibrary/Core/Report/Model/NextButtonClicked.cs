@@ -9,6 +9,8 @@ namespace HospitalLibrary.Core.Report.Model
 {
     public class NextButtonClicked : DomainEvent
     {
+        public NextButtonClicked() { }
+
         public NextButtonClicked(string aggregateId, int fromStep) : base(aggregateId)
         {
             FromStep = fromStep;

@@ -11,7 +11,6 @@ namespace HospitalLibrary.Core.Report.Model
 {
     public class Report : EventSourcedAggregate
     {
-        public string Id { get; set; }
         public string PatientId { get; set; }
         public string DoctorId { get; set; }
         public string AppointmentId { get; set; }
@@ -19,12 +18,15 @@ namespace HospitalLibrary.Core.Report.Model
         public ICollection<Symptom> Symptoms { get; set; }
         public DateTime DayAndTimeOfMaking { get; set; }
         public ICollection<Drug> Drugs { get; set; }
-
         public int InitialVersion { get; private set; }
         public int CurrentStep { get; private set; }
+        virtual public new List<DomainEvent> Changes { get; private set; }
 
 
-        public Report(){}
+
+        public Report(){
+            
+        }
 
         public Report(ReportSnapshot snapshot)
         {

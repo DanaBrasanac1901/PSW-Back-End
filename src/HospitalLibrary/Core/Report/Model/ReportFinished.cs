@@ -9,6 +9,9 @@ namespace HospitalLibrary.Core.Report.Model
 {
     public class ReportFinished : DomainEvent
     {
+
+        public ReportFinished() { }
+
         public ReportFinished(string aggregateId) : base(aggregateId)
         {
             FinishedAt = DateTime.Now;

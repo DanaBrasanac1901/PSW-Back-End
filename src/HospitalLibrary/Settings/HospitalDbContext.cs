@@ -15,6 +15,7 @@ using HospitalLibrary.Core.Consiliums;
 using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.Model;
 using Npgsql;
+using HospitalLibrary.Core.Infrastructure;
 
 namespace HospitalLibrary.Settings
 {
@@ -60,7 +61,9 @@ namespace HospitalLibrary.Settings
         
         public DbSet<SymptomList> SymptomList { get; set;}
         
-
+        
+        public DbSet<DomainEvent> ReportCreationEvents { get; set; }
+      
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
@@ -76,6 +79,7 @@ namespace HospitalLibrary.Settings
             // Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
             //Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             //Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
+            /*
             modelBuilder.HasPostgresEnum<Specialty>();
             modelBuilder.HasPostgresEnum<Gender>();
             modelBuilder.HasPostgresEnum<BloodType>();
@@ -167,7 +171,7 @@ namespace HospitalLibrary.Settings
                     app2
             );*/
 
-
+            /*
             DrugList drug1 = new DrugList("aspirin", "Aspirin", "Galenika");
             DrugList drug2 = new DrugList("brufen", "Brufen", "Galenika");
             DrugList drug3 = new DrugList("ginko", "Ginko", "Galenika");
@@ -191,7 +195,15 @@ namespace HospitalLibrary.Settings
                     Id = "Dijareja",
                     Name = "Dijareja"
                 }
-                );
+                );*/
+
+            modelBuilder.Entity<DomainEvent>()
+                .HasDiscriminator<string>("event_type")
+                .HasValue<NextButtonClicked>("next")
+                .HasValue<BackButtonClicked>("back")
+                .HasValue<ReportCreated>("created")
+                .HasValue<ReportFinished>("finished");
+
 
             base.OnModelCreating(modelBuilder);
         }

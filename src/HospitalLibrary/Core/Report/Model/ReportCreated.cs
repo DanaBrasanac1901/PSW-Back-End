@@ -9,6 +9,8 @@ namespace HospitalLibrary.Core.Report.Model
 {
     public class ReportCreated : DomainEvent
     {
+        public ReportCreated() { }
+
         public ReportCreated(string aggregateId) : base(aggregateId)
         {
             CreatedAt = DateTime.Now;
