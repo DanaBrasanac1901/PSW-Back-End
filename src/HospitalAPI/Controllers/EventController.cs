@@ -12,14 +12,14 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("patient/start")]
-        public ActionResult PatientStart(DateTime timeStamp)
+        public ActionResult PatientStart(string timeStamp)
         {
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _scheduleAppointment.Execute("start", timeStamp);
+            _scheduleAppointment.Execute("start", DateTime.Parse(timeStamp));
             return NoContent();
         }
 
