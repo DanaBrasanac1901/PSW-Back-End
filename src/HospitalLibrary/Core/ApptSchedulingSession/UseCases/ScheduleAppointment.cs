@@ -67,10 +67,9 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.UseCases
 
         public EventStream HandleStart(DateTime timeStamp)
         {
-            var aggregates = GetAggregates();
-            ScheduleAggregate aggregate = new ScheduleAggregate(new Guid(), 0);
+           
+            ScheduleAggregate aggregate = new ScheduleAggregate(Guid.NewGuid(), 0);
             aggregate.Start(timeStamp);
-            aggregates.Add(aggregate);
             return new EventStream(aggregate.Id, aggregate.Version, "start", timeStamp);
         }
 
