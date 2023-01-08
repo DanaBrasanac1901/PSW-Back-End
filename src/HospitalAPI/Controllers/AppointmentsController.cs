@@ -207,7 +207,6 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
-            _scheduleAppointment.Execute("end", DateTime.Now);
             return Ok(appointments);
         }
 
@@ -223,6 +222,8 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
             _appointmentService.Create(createDTO);
+
+            _scheduleAppointment.Execute("end", DateTime.Now);
             return NoContent();
         }
     }
