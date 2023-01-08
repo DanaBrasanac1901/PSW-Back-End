@@ -9,6 +9,8 @@ using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core;
 using System.Collections.Generic;
 using Castle.Core.Internal;
+using HospitalLibrary.Core.ApptSchedulingSession.Storage;
+using HospitalLibrary.Core.ApptSchedulingSession.UseCases;
 
 namespace HospitalAPI.Controllers
 {
@@ -19,12 +21,14 @@ namespace HospitalAPI.Controllers
         private readonly IAppointmentService _appointmentService;
         private readonly IDoctorService _doctorService;
         private readonly IAvailableAppointmentService _availableAppointmentService;
-  
-        public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
+        private readonly IScheduleAppointment _scheduleAppointment;
+
+        public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend, IScheduleAppointment scheduleAppointment)
         {
             _appointmentService = appointmentService;
             _doctorService = doctorService;
             _availableAppointmentService = availableAppointmentService;
+            _scheduleAppointment = scheduleAppointment;
         }
 
         // GET: api/appointments
@@ -203,6 +207,7 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
+            _scheduleAppointment.Execute("end", DateTime.Now);
             return Ok(appointments);
         }
 

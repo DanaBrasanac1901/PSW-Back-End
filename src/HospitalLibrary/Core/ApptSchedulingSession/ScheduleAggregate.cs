@@ -35,12 +35,12 @@ namespace HospitalLibrary.Core.ApptSchedulingSession
             Causes(new SchedulingStarted(this.Id, timeStamp));
         }
 
-        /*
+        
         public void End(DateTime timeStamp)
         {
             Causes(new SchedulingEnded(this.Id, timeStamp));
         }
-     */
+     
         public void Back(DateTime timeStamp)
         {
             Causes(new BackButtonPressed(this.Id, timeStamp));
@@ -80,20 +80,12 @@ namespace HospitalLibrary.Core.ApptSchedulingSession
             //
 
         }
-        /* 
-         ako dodamo scheduling ended kao event
        
         private void When(SchedulingEnded schedulingEnded)
         {
             //
 
         }
-
-        */
-
-
-
-
 
     }
 }

@@ -124,8 +124,8 @@ namespace HospitalLibrary.Settings
             );
 
             modelBuilder.Entity<Patient>().Property(p => p.Address).HasColumnType("jsonb");
-            Patient patient1 = new(1, "Jelena", "Novakovic", "Futoska,62,Novi Sad", "patient", Gender.FEMALE, 31, BloodType.A, null, null);
-            modelBuilder.Entity<Patient>().HasData(patient1);
+           // Patient patient1 = new(1, "Jelena", "Novakovic", null , "patient", Gender.FEMALE, 31, BloodType.A, null, null);
+           // modelBuilder.Entity<Patient>().HasData(patient1);
 
 
             base.OnModelCreating(modelBuilder);

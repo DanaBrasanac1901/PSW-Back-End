@@ -40,5 +40,21 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
             EventStream biggest = allEvents.Aggregate((e1, e2) => e1.Id > e2.Id ? e1 : e2);
             return biggest;
         }
+
+        public int GetLastVersionOfAggregate(Guid aggregateId)
+        {
+            IEnumerable<EventStream> allEvents = GetAll();
+            //IEnumerable<EventStream> aggregateEvents = GetAll().Where(e => e.AggregateId == aggregateId);
+            List<EventStream> aggregateEvents = new List<EventStream>();
+            foreach(EventStream eventStream in allEvents)
+            {
+                if(eventStream.AggregateId == aggregateId)
+                {
+                    aggregateEvents.Add(eventStream);
+                }
+            }
+            EventStream biggest = aggregateEvents.Aggregate((e1, e2) => e1.Version > e2.Version ? e1 : e2);
+            return biggest.Version;
+        }
     }
 }

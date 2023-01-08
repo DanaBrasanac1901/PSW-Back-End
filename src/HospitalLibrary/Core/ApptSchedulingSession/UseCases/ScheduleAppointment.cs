@@ -33,10 +33,11 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.UseCases
                 else if (eventId == "back") _eventStore.NewEvent(HandleBack(aggregate, timeStamp));
                 else if (eventId == "schedule")
                 {
-                    _eventStore.NewEvent(HandleSchedule(aggregate, timeStamp));
-                    //ovo je ako napravimo schedulingEnded kao dogadjaj agregata
-                    // aggregate.SchedulingEnded(timeStamp);
-                    // _eventStore.NewEvent(new EventStream(aggregate.Id, aggregate.Version, "end", timeStamp));
+                    _eventStore.NewEvent(HandleSchedule(aggregate, timeStamp)); 
+                }
+                else if (eventId == "end")
+                {
+                    _eventStore.NewEvent(HandleEnd(aggregate, timeStamp));
                 }
             }
                     
@@ -53,7 +54,7 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.UseCases
                 if (aggregate != null) aggregate.Changes.Add(_event.ToDomainEvent());
                 else
                 {
-                    ScheduleAggregate newAggregate = new ScheduleAggregate(_event.AggregateId);
+                    ScheduleAggregate newAggregate = new ScheduleAggregate(_event.AggregateId, _eventStore.GetLastVersionOfAggregate(_event.AggregateId));
                     newAggregate.Changes.Add(_event.ToDomainEvent());
                     aggregates.Add(newAggregate);
                     
@@ -90,6 +91,13 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.UseCases
 
             aggregate.Schedule(timeStamp);
             return new EventStream(aggregate.Id, aggregate.Version, "schedule", timeStamp);
+        }
+
+        public EventStream HandleEnd(ScheduleAggregate aggregate, DateTime timeStamp)
+        {
+
+            aggregate.End(timeStamp);
+            return new EventStream(aggregate.Id, aggregate.Version, "end", timeStamp);
         }
     }
 }

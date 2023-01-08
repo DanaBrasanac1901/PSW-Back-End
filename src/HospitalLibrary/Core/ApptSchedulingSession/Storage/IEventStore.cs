@@ -13,5 +13,7 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
         EventStream GetById(int id);
         void NewEvent(EventStream eventStream);
         EventStream FindLastEvent();
+
+        int GetLastVersionOfAggregate(Guid aggregateId);
     }
 }
