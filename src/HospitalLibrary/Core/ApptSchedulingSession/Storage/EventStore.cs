@@ -33,6 +33,8 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
         public void NewEvent(EventStream eventStream)
         {
             _context.Add(eventStream);
+            _context.SaveChanges();
+
         }
 
         public EventStream FindLastEvent()

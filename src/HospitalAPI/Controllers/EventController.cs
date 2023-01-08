@@ -4,6 +4,8 @@ using System;
 
 namespace HospitalAPI.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class EventController : ControllerBase
     {
         private readonly IScheduleAppointment _scheduleAppointment;
@@ -12,20 +14,22 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("patient/start")]
-        public ActionResult PatientStart(string timeStamp)
+        public ActionResult PatientStart()
         {
+            DateTime timeStamp= DateTime.Now;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _scheduleAppointment.Execute("start", DateTime.Parse(timeStamp));
+            _scheduleAppointment.Execute("start", timeStamp);
             return NoContent();
         }
 
         [HttpPost("patient/back")]
-        public ActionResult PatientBack(DateTime timeStamp)
+        public ActionResult PatientBack()
         {
+            DateTime timeStamp = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -35,8 +39,9 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("patient/next")]
-        public ActionResult PatientNext(DateTime timeStamp)
+        public ActionResult PatientNext()
         {
+            DateTime timeStamp = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -46,8 +51,9 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("patient/schedule")]
-        public ActionResult PatientSchedule(DateTime timeStamp)
+        public ActionResult PatientSchedule()
         {
+            DateTime timeStamp = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
