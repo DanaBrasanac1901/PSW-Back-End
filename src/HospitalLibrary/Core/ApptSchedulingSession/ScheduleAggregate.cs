@@ -27,7 +27,7 @@ namespace HospitalLibrary.Core.ApptSchedulingSession
         public override void Apply(DomainEvent @event)
         {
             When((dynamic)@event);
-            Version = Version++;
+            Version = Version+1;
         }
 
         public void Start(DateTime timeStamp)
