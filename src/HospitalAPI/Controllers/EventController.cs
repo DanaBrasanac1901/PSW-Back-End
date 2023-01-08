@@ -14,6 +14,7 @@ namespace HospitalAPI.Controllers
         [HttpPost("patient/start")]
         public ActionResult PatientStart(DateTime timeStamp)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -21,6 +22,7 @@ namespace HospitalAPI.Controllers
             _scheduleAppointment.Execute("start", timeStamp);
             return NoContent();
         }
+
         [HttpPost("patient/back")]
         public ActionResult PatientBack(DateTime timeStamp)
         {

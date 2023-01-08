@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class molimteradi : Migration
+    public partial class migracija : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,6 +50,22 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BloodRequests", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventStreams",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AggregateId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Version = table.Column<int>(type: "integer", nullable: false),
+                    EventInstance = table.Column<string>(type: "text", nullable: true),
+                    TimeStamp = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventStreams", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -295,11 +311,6 @@ namespace HospitalLibrary.Migrations
                 values: new object[] { "1", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "bolesnik", "1", new DateTime(22, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "", "1", "1", "1", true, "nista" });
 
             migrationBuilder.InsertData(
-                table: "Patients",
-                columns: new[] { "Id", "Address", "Age", "Allergies", "BloodType", "DoctorID", "Email", "Gender", "Jmbg", "Name", "Surname" },
-                values: new object[] { 1, null, 31, null, BloodType.A, null, "patient", Gender.FEMALE, null, "Jelena", "Novakovic" });
-
-            migrationBuilder.InsertData(
                 table: "Rooms",
                 columns: new[] { "Id", "Floor", "Number" },
                 values: new object[] { 1, 1, "1A" });
@@ -363,6 +374,9 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Equipment");
+
+            migrationBuilder.DropTable(
+                name: "EventStreams");
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");

@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\20230105155352_molimteradi.cs" />
-    <Compile Include="Migrations\20230105155352_molimteradi.Designer.cs" />
+    <Compile Include="Migrations\20230108170305_migracija.cs" />
+    <Compile Include="Migrations\20230108170305_migracija.Designer.cs" />
     <Compile Include="Migrations\HospitalDbContextModelSnapshot.cs" />
   </ItemGroup>
 

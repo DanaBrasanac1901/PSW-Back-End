@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Settings;
+﻿using Castle.Core.Internal;
+using HospitalLibrary.Settings;
 using Org.BouncyCastle.Utilities;
 using System;
 using System.Collections.Generic;
@@ -37,8 +38,8 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
         public EventStream FindLastEvent()
         {
             List<EventStream> allEvents = (List<EventStream>)GetAll();
-            EventStream biggest = allEvents.Aggregate((e1, e2) => e1.Id > e2.Id ? e1 : e2);
-            return biggest;
+            if(!allEvents.IsNullOrEmpty()) return allEvents.Aggregate((e1, e2) => e1.Id > e2.Id ? e1 : e2);
+            return null;
         }
 
         public int GetLastVersionOfAggregate(Guid aggregateId)
@@ -53,7 +54,7 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
                     aggregateEvents.Add(eventStream);
                 }
             }
-            EventStream biggest = aggregateEvents.Aggregate((e1, e2) => e1.Version > e2.Version ? e1 : e2);
+             EventStream biggest = aggregateEvents.Aggregate((e1, e2) => e1.Version > e2.Version ? e1 : e2);
             return biggest.Version;
         }
     }

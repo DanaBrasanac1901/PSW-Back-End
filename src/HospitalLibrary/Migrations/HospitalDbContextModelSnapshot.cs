@@ -63,6 +63,30 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.ApptSchedulingSession.Storage.EventStream", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EventInstance")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventStreams");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodConsumptionRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -410,18 +434,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Age = 31,
-                            BloodType = BloodType.A,
-                            Email = "patient",
-                            Gender = Gender.FEMALE,
-                            Name = "Jelena",
-                            Surname = "Novakovic"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
