@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.Core.ApptSchedulingSession.Storage;
+﻿using HospitalLibrary.Core.ApptSchedulingSession.AbstractClasses;
+using HospitalLibrary.Core.ApptSchedulingSession.Storage;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,34 +13,36 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.UseCases
     public class ScheduleAppointment :IScheduleAppointment
     {
         
-        private EventStore _eventStore;
-        public ScheduleAppointment(EventStore eventStore)
+        private IEventStore _eventStore;
+        public ScheduleAppointment(IEventStore eventStore)
         {
             _eventStore = eventStore;
         }
 
         public void Execute(string eventId, DateTime timeStamp)
         {
-            EventStream eventStream;
-            if(eventId == "start")
-            { 
-                eventStream = new EventStream(new Guid(), 0, eventId, timeStamp);
-            }
+
+            if (eventId == "start") _eventStore.NewEvent(HandleStart(timeStamp));
             else
-            { 
+            {
+                var aggregates = GetAggregates();
                 EventStream previous = _eventStore.FindLastEvent();
-                eventStream = new EventStream(previous.AggregateId,previous.Version+1, eventId, timeStamp);
+                ScheduleAggregate aggregate = aggregates.Find(f => f.Id == previous.AggregateId);
+
+                if (eventId == "next") _eventStore.NewEvent(HandleNext(aggregate, timeStamp));
+                else if (eventId == "back") _eventStore.NewEvent(HandleBack(aggregate, timeStamp));
+                else if (eventId == "schedule")
+                {
+                    _eventStore.NewEvent(HandleSchedule(aggregate, timeStamp));
+                    //ovo je ako napravimo schedulingEnded kao dogadjaj agregata
+                    // aggregate.SchedulingEnded(timeStamp);
+                    // _eventStore.NewEvent(new EventStream(aggregate.Id, aggregate.Version, "end", timeStamp));
+                }
             }
-
-
-            _eventStore.NewEvent(eventStream);
-               
-            
-                // agregat instanca.EventKojiGodDaJe(timestamp) ---->ovo nam je sad suvisno sto ne bi trebalo da bude
-               
-              
+                    
         }
 
+      
         public List<ScheduleAggregate> GetAggregates()
         {
             IEnumerable<EventStream> allEvents = _eventStore.GetAll();
@@ -57,6 +61,35 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.UseCases
             }
 
             return aggregates;
+        }
+
+
+        public EventStream HandleStart(DateTime timeStamp)
+        {
+            var aggregates = GetAggregates();
+            ScheduleAggregate aggregate = new ScheduleAggregate(new Guid(), 0);
+            aggregate.Start(timeStamp);
+            aggregates.Add(aggregate);
+            return new EventStream(aggregate.Id, aggregate.Version, "start", timeStamp);
+        }
+
+        public EventStream HandleNext(ScheduleAggregate aggregate, DateTime timeStamp) {
+           
+            aggregate.Next(timeStamp);
+            return new EventStream(aggregate.Id, aggregate.Version, "next", timeStamp);
+       
+        }
+
+        public EventStream HandleBack(ScheduleAggregate aggregate, DateTime timeStamp) {
+
+            aggregate.Back(timeStamp);
+            return new EventStream(aggregate.Id, aggregate.Version, "back", timeStamp);
+
+        }
+        public EventStream HandleSchedule(ScheduleAggregate aggregate, DateTime timeStamp) {
+
+            aggregate.Schedule(timeStamp);
+            return new EventStream(aggregate.Id, aggregate.Version, "schedule", timeStamp);
         }
     }
 }

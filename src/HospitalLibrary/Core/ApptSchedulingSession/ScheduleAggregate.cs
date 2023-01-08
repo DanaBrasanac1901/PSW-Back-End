@@ -16,6 +16,12 @@ namespace HospitalLibrary.Core.ApptSchedulingSession
             Id = id;
         }
 
+        public ScheduleAggregate(Guid id, int version)
+        {
+            Version= version;
+            Id = id;
+        }
+
         public ScheduleAggregate() { }
 
         public override void Apply(DomainEvent @event)
@@ -24,11 +30,17 @@ namespace HospitalLibrary.Core.ApptSchedulingSession
             Version = Version++;
         }
 
-        public void Start(Guid id, DateTime timeStamp)
+        public void Start(DateTime timeStamp)
         {
-            Causes(new SchedulingStarted(id, timeStamp));
+            Causes(new SchedulingStarted(this.Id, timeStamp));
         }
 
+        /*
+        public void End(DateTime timeStamp)
+        {
+            Causes(new SchedulingEnded(this.Id, timeStamp));
+        }
+     */
         public void Back(DateTime timeStamp)
         {
             Causes(new BackButtonPressed(this.Id, timeStamp));
@@ -65,10 +77,22 @@ namespace HospitalLibrary.Core.ApptSchedulingSession
 
         private void When(ScheduleButtonPressed scheduleButtonPressed)
         {
-           //
+            //
+
+        }
+        /* 
+         ako dodamo scheduling ended kao event
+       
+        private void When(SchedulingEnded schedulingEnded)
+        {
+            //
+
         }
 
-       
+        */
+
+
+
 
 
     }

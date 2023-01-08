@@ -23,6 +23,7 @@ using HospitalLibrary.Core.PasswordHasher;
 using HospitalLibrary.Core.Feedback;
 using HospitalLibrary.Core.Statistics;
 using HospitalLibrary.Core.ApptSchedulingSession.UseCases;
+using HospitalLibrary.Core.ApptSchedulingSession.Storage;
 
 namespace HospitalAPI
 {
@@ -104,6 +105,7 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<IEquipmentService, EquipmentService>();
 
+            services.AddScoped<IEventStore, EventStore>();
             services.AddScoped<IScheduleAppointment,ScheduleAppointment>();
             services.AddScoped<ISchedulingStatisticsService,SchedulingStatisticsService>();
 

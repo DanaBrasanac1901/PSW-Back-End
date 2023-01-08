@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
 {
-    public class EventStore
+    public class EventStore: IEventStore
     {
         //ovde vljd ide kontekst
         private readonly HospitalDbContext _context;

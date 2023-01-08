@@ -11,13 +11,13 @@ namespace HospitalLibrary.Core.ApptSchedulingSession.Storage
 {
     public class EventStream
     {
-        public int Id { get; private set; } 
-        public Guid AggregateId { get; private set; }
-        public int Version { get; private set; }
+        public int Id { get;  set; } 
+        public Guid AggregateId { get; set; }
+        public int Version { get; set; }
 
-        public string EventInstance { get; private set; }
+        public string EventInstance { get; set; }
 
-        public DateTime TimeStamp { get; private set; }
+        public DateTime TimeStamp { get; set; }
 
         public EventStream() { }
 
