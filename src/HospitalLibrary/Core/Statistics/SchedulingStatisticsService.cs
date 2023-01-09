@@ -47,10 +47,9 @@ namespace HospitalLibrary.Core.Statistics
                 // calculate num of steps in aggregate
                 if (!stepsInAggregates.Keys.Contains(aggregate.Id)) stepsInAggregates.Add(aggregate.Id, aggregate.Changes.Count);
                 // calculate lifespan of aggregate
-                if (!secondsSpentInAggregates.Keys.Contains(aggregate.Id))
-                {
-                    secondsSpentInAggregates.Add(aggregate.Id, getAggregateLifespan(aggregate)); // could TECHNICALLY throw error but highly unlikely that the patient is going to spend more than 2.147.483.647 seconds scheduling 
-                }
+               
+                 secondsSpentInAggregates.Add(aggregate.Id, getAggregateLifespan(aggregate)); // could TECHNICALLY throw error but highly unlikely that the patient is going to spend more than 2.147.483.647 seconds scheduling 
+               
 
                 // init steps for aggregate
                 nextOccurencesInAggregates.Add(aggregate.Id, 0);
@@ -60,6 +59,7 @@ namespace HospitalLibrary.Core.Statistics
                 // increment the list that corresponds to type of action
                 foreach (DomainEvent _event in aggregate.Changes)
                 {
+                    if (_event is SchedulingStarted || _event is SchedulingEnded) continue;
                     if (_event is NextButtonPressed) nextOccurencesInAggregates = updateOccurencesInDictionary(nextOccurencesInAggregates, aggregate.Id);
                     else if (_event is ScheduleButtonPressed) scheduleOccurencesInAggregates = updateOccurencesInDictionary(scheduleOccurencesInAggregates, aggregate.Id);
                     else if (_event is BackButtonPressed) backOccurencesInAggregates = updateOccurencesInDictionary(backOccurencesInAggregates, aggregate.Id);
