@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Infrastructure;
+using HospitalLibrary.Core.Report.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,7 +12,7 @@ namespace HospitalLibrary.Core.Report.Model
 {
     public class Report : EventSourcedAggregate
     {
-        public string PatientId { get; set; }
+        public string PatientId { get; set; }  
         public string DoctorId { get; set; }
         public string AppointmentId { get; set; }
         public string ReportDescription { get; set; }
@@ -20,12 +21,10 @@ namespace HospitalLibrary.Core.Report.Model
         public ICollection<Drug> Drugs { get; set; }
         public int InitialVersion { get; private set; }
         public int CurrentStep { get; private set; }
-        virtual public new List<DomainEvent> Changes { get; private set; }
 
-
-
-        public Report(){
-            
+        public Report(string id){
+            Id = id;
+            ReportCreated();
         }
 
         public Report(ReportSnapshot snapshot)
@@ -45,10 +44,12 @@ namespace HospitalLibrary.Core.Report.Model
             Drugs = drugs;
         }
 
-        private void Causes(DomainEvent @event)
+        private DomainEvent Causes(DomainEvent @event)
         {
-            Changes.Add(@event);
+            //Changes.Add(@event);
             Apply(@event);
+
+            return @event;
         }
 
         public override void Apply(DomainEvent @event)
@@ -57,21 +58,28 @@ namespace HospitalLibrary.Core.Report.Model
             Version++;
         }
 
-        public void ClickedOnNextButton()
+        public DomainEvent ReportCreated()
         {
-            if(CurrentStep<4)
-                Causes(new NextButtonClicked(Id, CurrentStep));
+            return Causes(new ReportCreated(Id));
         }
 
-        public void ClickedOnBackButton()
+        public DomainEvent ClickedOnNextButton()
+        {
+            if (CurrentStep < 4)
+                return Causes(new NextButtonClicked(Id, CurrentStep));
+            return null;
+        }
+
+        public DomainEvent ClickedOnBackButton()
         {
             if(CurrentStep>0)
-                Causes(new BackButtonClicked(Id, CurrentStep));
+                return Causes(new BackButtonClicked(Id, CurrentStep));
+            return null;
         }
 
-        public void FinishedCreating()
+        public DomainEvent FinishedCreating()
         {
-            Causes(new ReportFinished(Id));
+            return Causes(new ReportFinished(Id));
         }
 
 

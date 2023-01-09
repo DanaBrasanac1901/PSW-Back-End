@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,12 @@ namespace HospitalLibrary.Core.Infrastructure
 
         public DomainEvent(string aggregateId)
         {
-            Id = aggregateId;
+            ReportId = aggregateId;
+            Id = 2;
         }
 
-        public string Id { get; private set; }
+        public int Id { get; set; }
+        [ForeignKey("Report")]
+        public string ReportId { get; private set; }
     }
 }

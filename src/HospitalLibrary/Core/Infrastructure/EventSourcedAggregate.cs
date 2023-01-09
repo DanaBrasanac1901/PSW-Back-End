@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Infrastructure
 {
     public abstract class EventSourcedAggregate : Entity
     {
-        public List<DomainEvent> Changes { get; private set; }
+        virtual  public List<DomainEvent> Changes { get; private set; }
         public int Version { get; protected set; }
 
         public EventSourcedAggregate()

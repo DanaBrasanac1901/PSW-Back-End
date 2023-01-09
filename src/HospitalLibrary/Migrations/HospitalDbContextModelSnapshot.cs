@@ -257,8 +257,10 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Infrastructure.DomainEvent", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("ReportId")
                         .HasColumnType("text");
@@ -427,6 +429,7 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<string>("DoctorId")
                         .HasColumnType("text");
+
 
                     b.Property<int>("InitialVersion")
                         .HasColumnType("integer");

@@ -25,6 +25,7 @@ namespace HospitalLibrary.Core.Report.DTO
             return report;
         }
 
+
         public static ICollection<Symptom>CreateSymptoms(List<SymptomDTO> dtos)
         {
             ICollection<Symptom> retList = new List<Symptom>();
@@ -54,6 +55,19 @@ namespace HospitalLibrary.Core.Report.DTO
             }
 
             return retList;
+        }
+
+        public static Model.Report SetFields(Model.Report report, ReportToCreateDTO dto)
+        {
+            report.PatientId = dto.patientId;
+            report.DoctorId = dto.doctorId;
+            report.ReportDescription = dto.description;
+            report.DayAndTimeOfMaking = DateTime.Now;
+            report.Symptoms = CreateSymptoms(dto.symptoms);
+            report.AppointmentId = dto.appointmentId;
+            report.Drugs = CreateDrugs(dto.drugs); 
+
+            return report;
         }
 
         private static List<SymptomDTO> CreateSymptomsDTO(ICollection<Symptom> symptoms)

@@ -61,7 +61,6 @@ namespace HospitalLibrary.Settings
         
         public DbSet<SymptomList> SymptomList { get; set;}
         
-        
         public DbSet<DomainEvent> ReportCreationEvents { get; set; }
       
 
@@ -196,6 +195,7 @@ namespace HospitalLibrary.Settings
                     Name = "Dijareja"
                 }
                 );*/
+
 
             modelBuilder.Entity<DomainEvent>()
                 .HasDiscriminator<string>("event_type")
