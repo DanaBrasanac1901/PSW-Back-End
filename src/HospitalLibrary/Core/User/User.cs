@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.User
 {
-    public class User : ValueObject<User>
+    public class User : ValueObject1<User>
     {
         [Key]
         int id;

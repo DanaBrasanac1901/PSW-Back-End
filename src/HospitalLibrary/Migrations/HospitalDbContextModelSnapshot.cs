@@ -121,7 +121,7 @@ namespace HospitalLibrary.Migrations
             
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodSupply", b =>
-
+                { 
                     b.HasData(
                         new
                         {
@@ -835,7 +835,7 @@ namespace HospitalLibrary.Migrations
                 {
                     b.Navigation("ConsiliumAppointments");
                 });
-      modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Doctor.Doctor", "Doctor")
                         .WithMany("VacationRequests")

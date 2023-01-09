@@ -26,10 +26,7 @@ namespace HospitalLibrary.Core.Patient
         private bool active;
        
         public Patient() {}
-        public Patient(string id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID, bool active)
-
-        public Patient() {}
-
+      
         public Patient(RegisterDTO regDTO)
         {
             this.name = regDTO.Name;

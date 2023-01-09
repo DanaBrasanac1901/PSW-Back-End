@@ -20,10 +20,8 @@ namespace HospitalAPI.Controllers
     {
         private readonly IAppointmentService _appointmentService;
         private readonly IAvailableAppointmentService _availableAppointmentService;
-  
-       //public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
-        //public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
         private readonly IScheduleAppointment _scheduleAppointment;
+        private readonly IDoctorService _doctorService;
 
         public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend, IScheduleAppointment scheduleAppointment)
         {
@@ -167,7 +165,8 @@ namespace HospitalAPI.Controllers
             return Ok(app);
 
 
-        //Dana&Anja
+            //Dana&Anja
+        }
 
         // GET: api/Appointments/patient/id
         [HttpGet("patient/{id}")]
