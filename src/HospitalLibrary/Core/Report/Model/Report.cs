@@ -24,7 +24,6 @@ namespace HospitalLibrary.Core.Report.Model
 
         public Report(string id){
             Id = id;
-            ReportCreated();
         }
 
         public Report(ReportSnapshot snapshot)
@@ -72,7 +71,7 @@ namespace HospitalLibrary.Core.Report.Model
 
         public DomainEvent ClickedOnBackButton()
         {
-            if(CurrentStep>0)
+            if (CurrentStep > 0)
                 return Causes(new BackButtonClicked(Id, CurrentStep));
             return null;
         }
