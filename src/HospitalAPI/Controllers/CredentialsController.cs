@@ -61,7 +61,7 @@ namespace HospitalAPI.Controllers
 				var lnkHref = Url.Action("Activate", "Credentials", new { email = email, code = token }, "http");
 				string subject = "HealthcareMD Activation Link";
 				string body = "Your activation link: " + lnkHref;
-				_emailSendService.SendEmail(new Message(new string[] { email, "tibbers707@gmail.com" }, subject, body));
+				_emailSendService.SendEmail(new Message(new string[] { email, "danabrasanac@gmail.com" }, subject, body));
 				return Ok();
 			}
 

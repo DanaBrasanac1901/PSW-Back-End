@@ -1,7 +1,10 @@
-﻿using IntegrationLibery.News;
+﻿
+using HospitalLibrary.Core.TenderOffer;
+using IntegrationLibery.News;
 using IntegrationLibrary.BloodBank;
-
+using IntegrationLibrary.Advertisements;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 //sing PrimerServis;
 using System;
 using System.Linq;
@@ -17,8 +20,12 @@ namespace IntegrationLibrary.Settings
 
         public DbSet<Message> NewsTable { get; set; }
 
+        public DbSet<Advertisement> Advertisements { get; set; }
         
-        
+
+        public DbSet<HospitalLibrary.Core.Tender.Tender> Tenders { get; set; }
+
+        public DbSet<TenderOffer> TenderOffers { get; set; }
 
         public DbSet<Report.Report> ReportTable { get; set; }
 
@@ -35,7 +42,7 @@ namespace IntegrationLibrary.Settings
             );
             modelBuilder.Entity<Message>(entity =>
             {
-               entity.HasKey(e => e.Timestamp);
+               entity.HasKey(e => e.Id);
             } );
 
             BloodBank.BloodBank bank1 = new BloodBank.BloodBank() { Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190"), Username = "101A", Password = "edhb", Apikey = "efwfe", Email = "andykesic123@gmail.com", IsConfirmed = true };
@@ -63,9 +70,14 @@ namespace IntegrationLibrary.Settings
                 report2, report3
             );
 
+            modelBuilder.Entity<Advertisement>().HasData(new Advertisement(1,"ad1"),
+                new Advertisement(2, "ad2"), new Advertisement(3, "ad3"));
+
+            modelBuilder.Entity<TenderOffer>().HasKey(e=> new { e.TenderId,e.BloodBankId});
             //modelBuilder.Entity<BloodBank.BloodBank>()
             //.Property(b => b.Id)
             //.ValueGeneratedOnAdd();
+
             base.OnModelCreating(modelBuilder);
 
 

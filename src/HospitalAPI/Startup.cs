@@ -26,6 +26,10 @@ using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.Repositories;
 
 using HospitalLibrary.Core.PasswordHasher;
+using HospitalLibrary.Core.Feedback;
+using HospitalLibrary.Core.Statistics;
+using HospitalLibrary.Core.ApptSchedulingSession.UseCases;
+using HospitalLibrary.Core.ApptSchedulingSession.Storage;
 
 namespace HospitalAPI
 {
@@ -76,6 +80,8 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
 
+            services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();            
             services.AddScoped<IRoomService, RoomService>();
@@ -85,11 +91,10 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAvailableAppointmentService, AvailableAppointmentService>();
-
+            services.AddScoped<IScheduleAppointment, ScheduleAppointment>();
             services.AddScoped<IVacationService, VacationService>();
             services.AddScoped<IVacationRepository, VacationRepository>();
 
-            // services.AddScoped<IEmailSend, EmailSend>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             //services.AddScoped<IUserService, UserService>();
@@ -112,6 +117,12 @@ namespace HospitalAPI
 
 
             services.AddScoped<IBloodConsuptionRepository, BloodSupplyRepository>();
+            services.AddScoped<IEventStore, EventStore>();
+            services.AddScoped<IScheduleAppointment,ScheduleAppointment>();
+            services.AddScoped<ISchedulingStatisticsService,SchedulingStatisticsService>();
+
+
+           
 
             services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
             services.AddScoped<IConsiliumService, ConsiliumService>();

@@ -15,6 +15,8 @@ namespace HospitalLibrary.Core.Patient
         private string name;
         private string surname;
         private string email;
+
+        private Address address;
         private string jmbg;
         private Gender gender;
         private int age;
@@ -33,12 +35,14 @@ namespace HospitalLibrary.Core.Patient
             this.name = regDTO.Name;
             this.surname=regDTO.Surname;
             this.email = regDTO.Email;
+            this.address = MakeAddress(regDTO.Address);
             this.jmbg = regDTO.Jmbg;
             Gender.TryParse(regDTO.Gender, out this.gender);
             this.age = regDTO.Age;
             BloodType.TryParse(regDTO.BloodType,out this.bloodType);
             
             this.allergies=new List<string>();
+            
             foreach (string allergy in regDTO.Allergies)
             {
                 allergies.Add(allergy);
@@ -46,11 +50,34 @@ namespace HospitalLibrary.Core.Patient
             this.doctorID = regDTO.DoctorId;
         }
 
-        public Patient(int id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID)
+        private Address MakeAddress(string address)
+        {
+            string[] all = address.Split(",");
+            return new Address(all[0], all[1], all[2]);
+        }
+
+        public override bool Equals(Object obj)
+        {
+            if(obj is Patient)
+            {
+                Patient patient = (Patient)obj;
+                return this.Id == patient.Id && this.Jmbg.Equals(patient.Jmbg);
+            }
+            return false;
+            
+        }
+
+        public override int GetHashCode()
+        {
+            return (this.Id.GetHashCode() * 3 - 4) ^ this.Email.GetHashCode();  
+        }
+
+        public Patient(int id, string name, string surname, string address, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID)
         {
             this.Id = id;
             this.Name = name;
             this.Surname = surname;
+            this.Address = MakeAddress(address);
             this.Email = email;
             this.Gender = gender;
             this.Age = age;
@@ -60,9 +87,11 @@ namespace HospitalLibrary.Core.Patient
             
         }
 
+
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Surname { get => surname; set => surname = value; }
+        public Address Address { get => address; private set => address = value; }
         public string Email { get => email; set => email = value; }
         public Gender Gender { get => gender; set => gender = value; }
         public int Age { get => age; set => age = value; }

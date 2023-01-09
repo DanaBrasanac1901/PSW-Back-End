@@ -9,6 +9,8 @@ using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core;
 using System.Collections.Generic;
 using Castle.Core.Internal;
+using HospitalLibrary.Core.ApptSchedulingSession.Storage;
+using HospitalLibrary.Core.ApptSchedulingSession.UseCases;
 
 namespace HospitalAPI.Controllers
 {
@@ -17,15 +19,18 @@ namespace HospitalAPI.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-https://github.com/FStefanovv/PSW-Back-End/pull/52/conflict?name=src%252FHospitalAPI%252FControllers%252FAppointmentsController.cs&ancestor_oid=c27437478ca3d0fc6c37933f62e7aceb924ce6de&base_oid=0be767473a5418a303ce262902f6e64a940edf63&head_oid=2e979e90e9007707d1aaaa53e285a4909a0e0635        private readonly IDoctorService _doctorService;
         private readonly IAvailableAppointmentService _availableAppointmentService;
   
-        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
-        public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
+       //public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
+        //public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend)
+        private readonly IScheduleAppointment _scheduleAppointment;
+
+        public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend, IScheduleAppointment scheduleAppointment)
         {
             _appointmentService = appointmentService;
             _doctorService = doctorService;
             _availableAppointmentService = availableAppointmentService;
+            _scheduleAppointment = scheduleAppointment;
         }
 
         // GET: api/appointments
@@ -225,6 +230,8 @@ https://github.com/FStefanovv/PSW-Back-End/pull/52/conflict?name=src%252FHospita
                 return BadRequest(ModelState);
             }
             _appointmentService.Create(createDTO);
+
+            _scheduleAppointment.Execute("end", DateTime.Now);
             return NoContent();
         }
     }

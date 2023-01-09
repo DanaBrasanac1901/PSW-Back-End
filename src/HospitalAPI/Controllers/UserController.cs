@@ -17,23 +17,9 @@ namespace HospitalAPI.Controllers
 			_userService = userService;
 		}
 
-		[HttpGet("Doctors")]
-		[Authorize(Roles = "DOCTOR")]
-		public IActionResult DoctorsEndpoint()
-		{
-			var currentUser = GetCurrentUser();
-			return Ok($"Hi {currentUser.Name}, you are an {currentUser.Role}");
-		}
+		
 
-		[HttpGet("Patients")]
-		[Authorize(Roles = "PATIENT")]
-		public IActionResult PatientsEndpoint()
-		{
-			var currentUser = GetCurrentUser();
-			return Ok($"Hi {currentUser.Name}, you are an {currentUser.Role}");
-		}
-
-		private User GetCurrentUser()
+		/*private User GetCurrentUser()
 		{
 			var identity = HttpContext.User.Identity as ClaimsIdentity;
 
@@ -62,6 +48,6 @@ namespace HospitalAPI.Controllers
 				};
 			}
 			return null;
-		}
+		}*/
 	}
 }

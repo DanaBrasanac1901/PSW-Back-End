@@ -22,9 +22,15 @@ namespace IntegrationLibery.News
             this.Timestamp = timestamp;
         }
 
+        public Message() {
+            this.Id = Guid.NewGuid();
+        }
+
         public override string ToString()
         {
             return this.Text + " sent at " + this.Timestamp.ToString();
         }
+       
+        
     }
 }

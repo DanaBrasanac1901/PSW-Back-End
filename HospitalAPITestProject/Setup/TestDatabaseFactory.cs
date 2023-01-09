@@ -19,6 +19,7 @@ using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.Vacation;
 using System;
 using HospitalLibrary.Core.InpatientTreatmentRecord;
+using HospitalLibrary.Core.Feedback;
 
 namespace HospitalTests.Setup
 {
@@ -126,19 +127,29 @@ namespace HospitalTests.Setup
 
             //context.VacationRequests.Add(new VacationRequest { Id = 49, Start = new DateTime(2023, 1, 1), End = new DateTime(2023, 1, 14), Description = "holidays", Urgency = true, DoctorId = "DOC1" });
 
+            InitializeFeedback(context);
+            context.SaveChanges();
+       }
 
+        private static void InitializeFeedback(HospitalDbContext context)
+        {
+            context.Feedbacks.Add(new Feedback { ID = 1, Anonymous = true, Approved = false, Date = new DateTime(2022, 1, 1), PatientName="Lena", PatientSurname="Milic", Text="Komentar broj 1", VisibleToPublic = true });
+            context.Feedbacks.Add(new Feedback { ID = 2, Anonymous = false, Approved = true, Date = new DateTime(2022, 9, 9), PatientName = "Ivana", PatientSurname = "Paunovic", Text = "Komentar broj 2", VisibleToPublic = true });
+            context.Feedbacks.Add(new Feedback { ID = 3, Anonymous = false, Approved = true, Date = new DateTime(2022, 1, 1), PatientName = "Igor", PatientSurname = "Lazic", Text = "Komentar broj 3", VisibleToPublic = true });
+            context.Feedbacks.Add(new Feedback { ID = 4, Anonymous = false, Approved = false, Date = new DateTime(2022, 1, 1), PatientName = "Nemanja", PatientSurname = "Bilinac", Text = "Komentar broj 4", VisibleToPublic = true });
+        }
 
         private static void InitializeUsers(HospitalDbContext context)
         {
-            context.Users.Add(new User { Id = 9, IdByRole = 1, Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com",Password = "pass1", Role ="DOCTOR"});
-            context.Users.Add(new User { Id = 10, IdByRole = 2, Name = "Milica", Surname = "Todorovic", Email = "mtodorovic@hotmail.com", Password = "pass2", Role = "DOCTOR" });
-            context.Users.Add(new User { Id = 11, IdByRole = 3, Name = "Darko", Surname = "Mitic", Email = "darkomitic@live.com", Password = "pass3", Role = "DOCTOR" });
-            context.Users.Add(new User { Id =12, IdByRole = 4, Name = "Selena", Surname = "Mirkovic", Email = "selmirkovic@gmail.com", Password = "pass4", Role = "DOCTOR" });
-            context.Users.Add(new User { Id = 13, IdByRole = 5, Name = "Janko", Surname = "Jankovic", Email = "janki@gmail.com", Password = "pass5", Role = "PATIENT" });
-            context.Users.Add(new User { Id = 14, IdByRole = 6, Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", Password = "pass6", Role = "PATIENT" });
-            context.Users.Add(new User { Id = 15, IdByRole = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", Password = "pass7", Role = "PATIENT" });
-            context.Users.Add(new User { Id =16, IdByRole = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", Password = "pass8", Role = "PATIENT" });
-            context.Users.Add(new User { Id = 17, IdByRole = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", Password = "pass9", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 9, IdByRole = 1, Name = "Ivan", Surname = "Nikolic", Password = "pass1", Role ="DOCTOR"});
+            context.Users.Add(new User { Id = 10, IdByRole = 2, Name = "Milica", Surname = "Todorovic", Password = "pass2", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 11, IdByRole = 3, Name = "Darko", Surname = "Mitic",  Password = "pass3", Role = "DOCTOR" });
+            context.Users.Add(new User { Id =12, IdByRole = 4, Name = "Selena", Surname = "Mirkovic",  Password = "pass4", Role = "DOCTOR" });
+            context.Users.Add(new User { Id = 13, IdByRole = 5, Name = "Janko", Surname = "Jankovic",  Password = "pass5", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 14, IdByRole = 6, Name = "Milan", Surname = "Simic",  Password = "pass6", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 15, IdByRole = 7, Name = "Nikola", Surname = "Nikolic",  Password = "pass7", Role = "PATIENT" });
+            context.Users.Add(new User { Id =16, IdByRole = 8, Name = "Sanja", Surname = "Medic",  Password = "pass8", Role = "PATIENT" });
+            context.Users.Add(new User { Id = 17, IdByRole = 9, Name = "Mirko", Surname = "Kis",  Password = "pass9", Role = "PATIENT" });
         }
 
 

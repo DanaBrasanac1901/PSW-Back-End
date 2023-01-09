@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -61,6 +62,30 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.ApptSchedulingSession.Storage.EventStream", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("EventInstance")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventStreams");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodConsumptionRecord", b =>
@@ -409,6 +434,9 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("boolean");
 
 
+                    b.Property<Address>("Address")
+                        .HasColumnType("jsonb");
+
                     b.Property<int>("Age")
                         .HasColumnType("integer");
 
@@ -632,6 +660,17 @@ namespace HospitalLibrary.Migrations
                             Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==",
                             Role = "DOCTOR",
                             Surname = "Marinkovic"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Active = true,
+                            Email = "patient",
+                            IdByRole = 1,
+                            Name = "Jelena",
+                            Password = "AEssL8tRDqEPwGzxIeyAU1F/kuq1w4klNScLgIOmwe/N+j4e24+2DR8o31HhYtWziw==",
+                            Role = "PATIENT",
+                            Surname = "Novakovic"
                         });
                 });
 

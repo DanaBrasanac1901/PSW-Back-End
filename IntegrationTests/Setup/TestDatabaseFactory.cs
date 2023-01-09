@@ -1,6 +1,12 @@
 using System;
 using System.Linq;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Core.Tender;
+using HospitalLibrary.Core.TenderOffer;
+using HospitalLibrary.Settings;
 using IntegrationAPI;
+using IntegrationLibrary.BloodBank;
 using IntegrationLibrary.Report;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -42,11 +48,13 @@ namespace IntegrationTests.Setup
         
         private static void InitializeDatabase(IntegrationDbContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-
+            InitializeBloodbanks(context);
+            context.Tenders.Add(new Tender(1.1, 1.1, 1.1, 1.1, "aa", new DateTime(),99));
             /* context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportTable\";");
 
-
+            
          context.ReportTable.Add(new Report(
              new Guid("3E63FA4E-3A3A-4DEB-ACD1-3F784DE9D90B"),
              DateTime.Now, 
@@ -64,8 +72,18 @@ namespace IntegrationTests.Setup
              DateTime.Today, 
              IntegrationLibrary.Report.Period.EveryTwoMonths,
              DateTime.Today));
-*/
+*/          
             context.SaveChanges();
+        }
+        private static void InitializeBloodbanks(IntegrationDbContext context)
+        {
+            BloodBank bb = new BloodBank();
+            bb.Email = "example1@gmail.com";
+            bb.Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66");
+            context.BloodBankTable.Add(bb);
+            BloodBank bb2 = new BloodBank();
+            bb2.Email = "example2@gmail.com";
+            context.BloodBankTable.Add(bb);
         }
     }
 }

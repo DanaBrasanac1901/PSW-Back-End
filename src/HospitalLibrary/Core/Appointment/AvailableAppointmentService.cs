@@ -47,6 +47,7 @@ namespace HospitalLibrary.Core.Appointment
         public IEnumerable<Doctor.Doctor> GetDoctorsByDateAndSpecialty(DateTime date, Specialty specialty)
         {
             List<Doctor.Doctor> specializedDoctors = GetDoctorsBySpecialty(specialty);
+            if (specializedDoctors.IsNullOrEmpty()) return new List<Doctor.Doctor>();
             foreach (Doctor.Doctor doctor in specializedDoctors)
             {
                 IEnumerable<AppointmentPatientDTO> appointments = GetDoctorsAvailableAppointmentsForDate(doctor, date);

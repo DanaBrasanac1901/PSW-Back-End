@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Core.Feedback.Injectors;
-using HospitalLibrary.Settings;
+﻿using HospitalLibrary.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +11,9 @@ namespace HospitalLibrary.Core.Feedback
     {
         private readonly IFeedbackRepository _feedbackRepository;
 
-        public FeedbackService(HospitalDbContext hospitalDb)
+        public FeedbackService(IFeedbackRepository feedbackRepository)
         {
-           _feedbackRepository=new FeedbackRepositoryInjector(hospitalDb).Inject();
+           _feedbackRepository= feedbackRepository;
 
         }
 
@@ -32,9 +31,6 @@ namespace HospitalLibrary.Core.Feedback
         {
             feedback.Date = System.DateTime.Today;
             feedback.Approved = false;
-
-            //change when login gets implemented
-            //feedback.PatientId = 0;
             _feedbackRepository.Create(feedback);
         }
 

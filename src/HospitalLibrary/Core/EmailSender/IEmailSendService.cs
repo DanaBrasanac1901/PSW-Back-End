@@ -8,6 +8,6 @@ namespace HospitalLibrary.Core.EmailSender
 {
     public interface IEmailSendService
     {
-        void SendEmail(Message message);
+        bool SendEmail(Message message);
     }
 }

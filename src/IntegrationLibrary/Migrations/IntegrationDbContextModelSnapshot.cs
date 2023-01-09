@@ -19,27 +19,106 @@ namespace IntegrationLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("IntegrationLibery.News.Message", b =>
+            modelBuilder.Entity("HospitalLibrary.Core.Tender.Tender", b =>
                 {
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("AmountOfA")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfAB")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfB")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AmountOfO")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("Expiration")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("HospitalName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenders");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.TenderOffer.TenderOffer", b =>
+                {
+                    b.Property<int>("TenderId")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("BloodBankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("TenderId", "BloodBankId");
+
+                    b.ToTable("TenderOffers");
+                });
+
+            modelBuilder.Entity("IntegrationLibery.News.Message", b =>
+                {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");
 
-                    b.HasKey("Timestamp");
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
 
                     b.ToTable("NewsTable");
 
                     b.HasData(
                         new
                         {
-                            Timestamp = new DateTime(2022, 11, 24, 15, 49, 15, 6, DateTimeKind.Local).AddTicks(8932),
-                            Id = new Guid("bdf7764b-269f-4559-9ae5-86b6b021d4f7"),
-                            Text = "doniraj krv"
+                            Id = new Guid("843f7177-9d68-431e-8a70-f97aed23410d"),
+                            Text = "doniraj krv",
+                            Timestamp = new DateTime(2023, 1, 5, 0, 4, 12, 527, DateTimeKind.Local).AddTicks(5664)
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Advertisements.Advertisement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Ad")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Advertisements");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ad = "ad1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ad = "ad2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Ad = "ad3"
                         });
                 });
 
@@ -123,23 +202,16 @@ namespace IntegrationLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
-                            ConfigurationDate = new DateTime(2022, 11, 24, 15, 49, 15, 33, DateTimeKind.Local).AddTicks(2779),
-                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Id = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            ConfigurationDate = new DateTime(2022, 11, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastReportGeneration = new DateTime(2022, 11, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Period = 0
                         },
                         new
                         {
-                            Id = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
-                            ConfigurationDate = new DateTime(2022, 11, 24, 15, 49, 15, 34, DateTimeKind.Local).AddTicks(349),
-                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
-                            Period = 1
-                        },
-                        new
-                        {
                             Id = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
-                            ConfigurationDate = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
-                            LastReportGeneration = new DateTime(2022, 11, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            ConfigurationDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastReportGeneration = new DateTime(2022, 10, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Period = 2
                         });
                 });
