@@ -8,6 +8,7 @@ namespace IntegrationLibrary.Advertisements
 {
     public interface IAdvertisementService
     {
-        public IEnumerable<Advertisement> GetAll();
+        public IEnumerable<string> GetAll();
+        public string ConversionOfImg(string imgPath);
     }
 }

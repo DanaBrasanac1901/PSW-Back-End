@@ -5,10 +5,10 @@ namespace IntegrationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdvertisementController : ControllerBase
+    public class AdvertisementsController : ControllerBase
     {
         private readonly IAdvertisementService _advertisementService;
-        public AdvertisementController(IAdvertisementService advertisementService)
+        public AdvertisementsController(IAdvertisementService advertisementService)
         {
             _advertisementService = advertisementService;
         }

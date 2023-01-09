@@ -34,7 +34,7 @@ namespace HospitalAPI.Controllers
 
             try
             {
-                using HttpResponseMessage response = await client.GetAsync("https://localhost:44335/IntegrationAPI/Advertisement");
+                using HttpResponseMessage response = await client.GetAsync("http://localhost:5000/IntegrationAPI/Advertisement");
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(responseBody);
