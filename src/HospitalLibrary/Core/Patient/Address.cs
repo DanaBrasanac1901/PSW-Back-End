@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Patient
 {
-    public class Address : ValueObject<Address>
+    public class Address : ValueObject1<Address>
     {
         public string Street { get; }
 
