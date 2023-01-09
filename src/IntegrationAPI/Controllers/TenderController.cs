@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Nest;
 using System;
-namespace HospitalAPI.Controllers
+namespace IntegrationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -30,7 +30,7 @@ namespace HospitalAPI.Controllers
         }
 
         // GET api/tenders/2
-       
+
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -54,7 +54,7 @@ namespace HospitalAPI.Controllers
             _tenderService.Create(tender);
             return CreatedAtAction("GetById", new { id = tender.Id }, tender);
         }
-        
+
 
         // PUT api/tenders/2
         [HttpPut("{id}")]

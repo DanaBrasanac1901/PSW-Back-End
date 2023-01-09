@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HospitalAPI.Controllers
+namespace IntegrationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -39,11 +39,11 @@ namespace HospitalAPI.Controllers
         }
 
         // GET api/tenderOffers/2
-       
+
         [HttpGet("{id}")]
         public ActionResult GetById(int id, Guid bankID)
         {
-            var tenderOffer = _tenderOfferService.GetById(id,bankID);
+            var tenderOffer = _tenderOfferService.GetById(id, bankID);
             if (tenderOffer == null)
             {
                 return NotFound();
@@ -73,9 +73,9 @@ namespace HospitalAPI.Controllers
             }
 
             _tenderOfferService.Create(tenderOffer);
-            return CreatedAtAction("GetById", new { id = tenderOffer.TenderId, bloodBankId=tenderOffer.BloodBankId }, tenderOffer);
+            return CreatedAtAction("GetById", new { id = tenderOffer.TenderId, bloodBankId = tenderOffer.BloodBankId }, tenderOffer);
         }
-        
+
 
         // PUT api/tenderOffers/2
         [HttpPut("{id}")]
@@ -105,7 +105,7 @@ namespace HospitalAPI.Controllers
 
         // DELETE api/tenderOffers/2
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id,Guid bankID)
+        public ActionResult Delete(int id, Guid bankID)
         {
             var tenderOffer = _tenderOfferService.GetById(id, bankID);
             if (tenderOffer == null)
@@ -121,11 +121,11 @@ namespace HospitalAPI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var winner= _bloodBankService.GetById(tenderOffer.BloodBankId);
-                String email = winner.Email;
-                
+                var winner = _bloodBankService.GetById(tenderOffer.BloodBankId);
+                string email = winner.Email;
+
                 Tender tender = _tenderService.GetById(tenderOffer.TenderId);
-                var lnkHref = Url.Action("AcceptOffer", "TenderOffers", new { email = email, date = tender.Expiration, id=tender.Id }, "https");
+                var lnkHref = Url.Action("AcceptOffer", "TenderOffers", new { email, date = tender.Expiration, id = tender.Id }, "https");
                 //HTML Template for Send email
                 string subject = "Tender won!";
                 string body = "Confirm tender win: \n" + lnkHref;
@@ -138,18 +138,18 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("notify-losers")]
-        public ActionResult NotifyLosers(String winem,DateTime expires)
+        public ActionResult NotifyLosers(string winem, DateTime expires)
         {
             if (ModelState.IsValid)
             {
                 //var winner= _bloodBankService.GetById(tenderOffer.BloodBankId);
                 //String email = winner.Email;
-                List<BloodBank> banks=_bloodBankService.GetAll().ToList();
+                List<BloodBank> banks = _bloodBankService.GetAll().ToList();
                 string winneremail = winem;
-                List<string> loseremails=new List<string>();
+                List<string> loseremails = new List<string>();
                 foreach (BloodBank bank in banks)
-                    if(winneremail!= bank.Email)
-                    loseremails.Append(bank.Email);
+                    if (winneremail != bank.Email)
+                        loseremails.Append(bank.Email);
                 loseremails.Append("docatufe@hotmail.com");
                 string subject = "Tender lost!";
                 string body = "Tender expiring" + expires + " has finished, you have not won the tender.";
@@ -164,9 +164,9 @@ namespace HospitalAPI.Controllers
             int id = Convert.ToInt32(Request.Query["Id"]);
             DateTime date = DateTime.Parse(Request.Query["Date"]);
             string email = Request.Query["Email"];
-            
+
             _tenderService.Delete(_tenderService.GetById(id));
-            NotifyLosers(email,date);
+            NotifyLosers(email, date);
             return Redirect("https//localhost:4200/tenders");
         }
     }
