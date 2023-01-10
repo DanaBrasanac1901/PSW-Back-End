@@ -16,7 +16,7 @@ namespace HospitalAPI.Controllers
 
 
         [HttpPost("schedule")]
-        public ActionResult GetStatistics(StatisticEntry statisticEntry)
+        public ActionResult GetStatistics()
         {
             return Ok(_schedulingStatisticsService.GetStatistics());
         }
