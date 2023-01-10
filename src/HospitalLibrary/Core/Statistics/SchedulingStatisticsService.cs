@@ -75,7 +75,6 @@ namespace HospitalLibrary.Core.Statistics
             IDictionary<int, int> scheduleClickStatistics = groupData(scheduleOccurencesInAggregates);
             IDictionary<int, int> backClickStatistics = groupData(backOccurencesInAggregates);
 
-
             // Dictionary<int,int> ----> List<StatisticEntry> so it can be ready for front
             statisticsList = new List<List<StatisticEntry>>() {
                 ConvertToStatisticEntries(stepStatistics), ConvertToStatisticEntries(timeSpentStatistics), ConvertToStatisticEntries(nextClickStatistics),ConvertToStatisticEntries(scheduleClickStatistics), ConvertToStatisticEntries(backClickStatistics) };
