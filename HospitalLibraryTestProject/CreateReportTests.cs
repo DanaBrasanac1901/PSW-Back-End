@@ -29,7 +29,7 @@ namespace HospitalLibraryTestProject
         public void Have_Symptom_In_DB()
         {
             var haveSymptom = new Mock<IReportApplicationService>();
-            ReportApplicationService service = new ReportApplicationService(CreateReport(), CreateSymptom());
+            ReportApplicationService service = null;
             bool check = service.IsSymptomExist(CreateSymptomList(), "RET1");
             Assert.True(check);
         }

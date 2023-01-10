@@ -18,6 +18,10 @@ namespace HospitalLibrary.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasPostgresEnum(null, "appointment_status", new[] { "scheduled", "finished", "cancelled" })
+                .HasPostgresEnum(null, "blood_type", new[] { "a", "b", "ab", "o" })
+                .HasPostgresEnum(null, "gender", new[] { "male", "female" })
+                .HasPostgresEnum(null, "specialty", new[] { "cardiologist", "anesthesiologist", "neurosurgeon" })
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -87,6 +91,18 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodConsumptionRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 2.0,
+                            CreatedAt = new DateTime(2022, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = "DOC1",
+                            Reason = "needed for surgery",
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            Type = BloodType.A
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
@@ -129,6 +145,71 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("HospitalBlood");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 4,
+                            Amount = 10.0,
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            Type = BloodType.O
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Amount = 54.0,
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            Type = BloodType.A
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Amount = 23.0,
+                            SourceBank = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
+                            Type = BloodType.A
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Amount = 24.0,
+                            SourceBank = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
+                            Type = BloodType.A
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 15.0,
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            Type = BloodType.AB
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Amount = 34.0,
+                            SourceBank = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
+                            Type = BloodType.AB
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 30.0,
+                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
+                            Type = BloodType.B
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Amount = 40.0,
+                            SourceBank = new Guid("55510651-d36e-444d-95fb-871e0902cd7e"),
+                            Type = BloodType.B
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Amount = 10.0,
+                            SourceBank = new Guid("a60460fe-0d33-478d-93b3-45d424079e66"),
+                            Type = BloodType.B
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Consiliums.Consilium", b =>
@@ -220,6 +301,30 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "DOC1",
+                            Email = "ne pitaj",
+                            EndWorkTime = 23,
+                            Name = "Prika",
+                            RoomId = 1,
+                            Specialty = Specialty.Cardiologist,
+                            StartWorkTime = 8,
+                            Surname = "Prikic"
+                        },
+                        new
+                        {
+                            Id = "DOC2",
+                            Email = "ne pitaj",
+                            EndWorkTime = 23,
+                            Name = "Novi",
+                            RoomId = 1,
+                            Specialty = Specialty.Anesthesiologist,
+                            StartWorkTime = 8,
+                            Surname = "Sad"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Feedback.Feedback", b =>
@@ -297,6 +402,15 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Equipment");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Quantity = 1,
+                            RoomId = 1,
+                            Type = 0
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.InpatientTreatmentRecord.InpatientTreatmentRecord", b =>
@@ -337,6 +451,22 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InpatientTreatmentRecords");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AdmissionDate = new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AdmissionReason = "bolesnik",
+                            BedID = "1",
+                            DischargeDate = new DateTime(22, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DischargeReason = "",
+                            DoctorID = "1",
+                            PatientID = "1",
+                            RoomID = "1",
+                            Status = true,
+                            Therapy = "nista"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Patient.Patient", b =>
@@ -379,6 +509,34 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Patients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Age = 34,
+                            BloodType = BloodType.B,
+                            DoctorID = "DOC1",
+                            Email = "Mail",
+                            Gender = Gender.MALE,
+                            Jmbg = "4564565656",
+                            Name = "Prvi",
+                            Surname = "Prvic"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Age = 34,
+                            BloodType = BloodType.A,
+                            DoctorID = "DOC1",
+                            Email = "Mail2",
+                            Gender = Gender.MALE,
+                            Jmbg = "4564565656",
+                            Name = "Drugi",
+                            Surname = "Drugic"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Report.Model.DrugList", b =>
@@ -395,6 +553,26 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DrugsList");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "aspirin",
+                            CompanyName = "Galenika",
+                            Name = "Aspirin"
+                        },
+                        new
+                        {
+                            Id = "brufen",
+                            CompanyName = "Galenika",
+                            Name = "Brufen"
+                        },
+                        new
+                        {
+                            Id = "ginko",
+                            CompanyName = "Galenika",
+                            Name = "Ginko"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Report.Model.DrugPrescription", b =>
@@ -430,7 +608,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("DoctorId")
                         .HasColumnType("text");
 
-
                     b.Property<int>("InitialVersion")
                         .HasColumnType("integer");
 
@@ -459,6 +636,23 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SymptomList");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "Glavobolja",
+                            Name = "Glavobolja"
+                        },
+                        new
+                        {
+                            Id = "Kijavica",
+                            Name = "Kijavica"
+                        },
+                        new
+                        {
+                            Id = "Dijareja",
+                            Name = "Dijareja"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Room.Room", b =>
@@ -478,6 +672,14 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Floor = 1,
+                            Number = "1A"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.User.User", b =>
@@ -514,6 +716,30 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Email = "manager",
+                            IdByRole = 1,
+                            Name = "Milica",
+                            Password = "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==",
+                            Role = "MANAGER",
+                            Surname = "Peric"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Email = "doctor",
+                            IdByRole = 1,
+                            Name = "Filip",
+                            Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==",
+                            Role = "DOCTOR",
+                            Surname = "Marinkovic"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
