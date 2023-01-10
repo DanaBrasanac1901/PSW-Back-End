@@ -29,11 +29,7 @@ namespace HospitalAPI.Controllers
             _availableAppointmentService = availableAppointmentService;
         }
 
-        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
-        {
-            this.appointmentService = appointmentService;
-            this.doctorService = doctorService;
-        }
+        
 
         // GET: api/appointments
         [HttpGet]
@@ -125,8 +121,8 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            string idFlag = _appointmentService.Create(appDTO);
-            return Ok("Passed");
+            _appointmentService.Create(appDTO);
+            return Ok(appDTO);
         }
 
         [HttpGet]

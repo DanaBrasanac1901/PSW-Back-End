@@ -118,11 +118,11 @@ namespace HospitalLibrary.Core.Report.DTO
         {
             SearchResultReportDTO dto = new SearchResultReportDTO();
 
-            dto.PatientId = report.PatientId;
-            dto.Description = report.ReportDescription;
-            dto.Symptoms = CreateSymptomsDTO(report.Symptoms);
-            dto.AppointmentId = report.AppointmentId;
-            dto.Prescriptions = CreateDrugdDTO(report.Drugs);
+            dto.patientId = report.PatientId;
+            dto.description = report.ReportDescription;
+            dto.symptoms = CreateSymptomsDTO(report.Symptoms);
+            dto.appointmentId = report.AppointmentId;
+            dto.prescriptions = CreateDrugdDTO(report.Drugs);
 
             return dto;
         }

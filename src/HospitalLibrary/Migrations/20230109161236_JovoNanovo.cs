@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Report.Model;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class migracija243 : Migration
+    public partial class JovoNanovo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,14 +42,60 @@ namespace HospitalLibrary.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DoctorId = table.Column<string>(type: "text", nullable: true),
-                    Type = table.Column<BloodType>(type: "blood_type", nullable: false),
-                    Amount = table.Column<double>(type: "double precision", nullable: false),
+                    Blood_Type = table.Column<BloodType>(type: "blood_type", nullable: true),
+                    Blood_Amount = table.Column<double>(type: "double precision", nullable: true),
                     Reason = table.Column<string>(type: "text", nullable: true),
                     Due = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BloodRequests", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Consiliums",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Topic = table.Column<string>(type: "text", nullable: true),
+                    Duration = table.Column<int>(type: "integer", nullable: false),
+                    Specialties = table.Column<string>(type: "text", nullable: true),
+                    DoctorIds = table.Column<string>(type: "text", nullable: true),
+                    Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Finished = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    RoomId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Consiliums", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DrugPrescriptions",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    ReportId = table.Column<string>(type: "text", nullable: true),
+                    Drugs = table.Column<ICollection<Drug>>(type: "jsonb", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugPrescriptions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DrugsList",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    CompanyName = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DrugsList", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,11 +167,28 @@ namespace HospitalLibrary.Migrations
                     BloodType = table.Column<BloodType>(type: "blood_type", nullable: false),
                     Allergies = table.Column<List<string>>(type: "text[]", nullable: true),
                     DoctorID = table.Column<string>(type: "text", nullable: true),
+                    Active = table.Column<bool>(type: "boolean", nullable: false),
                     Jmbg = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patients", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reports",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    PatientId = table.Column<string>(type: "text", nullable: true),
+                    DoctorId = table.Column<string>(type: "text", nullable: true),
+                    AppointmentId = table.Column<string>(type: "text", nullable: true),
+                    ReportDescription = table.Column<string>(type: "text", nullable: true),
+                    DayAndTimeOfMaking = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reports", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -139,6 +203,18 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SymptomList",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SymptomList", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,6 +235,47 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Drugs",
+                columns: table => new
+                {
+                    ReportId = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    CompanyName = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Drugs", x => new { x.ReportId, x.Id });
+                    table.ForeignKey(
+                        name: "FK_Drugs_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalTable: "Reports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Symptoms",
+                columns: table => new
+                {
+                    ReportId = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Symptoms", x => new { x.ReportId, x.Id });
+                    table.ForeignKey(
+                        name: "FK_Symptoms_Reports_ReportId",
+                        column: x => x.ReportId,
+                        principalTable: "Reports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,6 +359,32 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ConsiliumAppointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    DoctorId = table.Column<string>(type: "text", nullable: true),
+                    ConsiliumId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConsiliumAppointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ConsiliumAppointments_Consiliums_ConsiliumId",
+                        column: x => x.ConsiliumId,
+                        principalTable: "Consiliums",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ConsiliumAppointments_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VacationRequests",
                 columns: table => new
                 {
@@ -272,19 +415,29 @@ namespace HospitalLibrary.Migrations
                 values: new object[] { 1, 2.0, new DateTime(2022, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "DOC1", "needed for surgery", new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.A });
 
             migrationBuilder.InsertData(
+                table: "DrugsList",
+                columns: new[] { "Id", "CompanyName", "Name" },
+                values: new object[,]
+                {
+                    { "ginko", "Galenika", "Ginko" },
+                    { "brufen", "Galenika", "Brufen" },
+                    { "aspirin", "Galenika", "Aspirin" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "HospitalBlood",
                 columns: new[] { "Id", "Amount", "SourceBank", "Type" },
                 values: new object[,]
                 {
-                    { 4, 10.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.O },
-                    { 1, 54.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.A },
-                    { 5, 23.0, new Guid("55510651-d36e-444d-95fb-871e0902cd7e"), BloodType.A },
-                    { 7, 24.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.A },
-                    { 3, 15.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.AB },
-                    { 9, 34.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.AB },
-                    { 2, 30.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.B },
                     { 6, 40.0, new Guid("55510651-d36e-444d-95fb-871e0902cd7e"), BloodType.B },
-                    { 8, 10.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.B }
+                    { 2, 30.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.B },
+                    { 8, 10.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.B },
+                    { 3, 15.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.AB },
+                    { 7, 24.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.A },
+                    { 5, 23.0, new Guid("55510651-d36e-444d-95fb-871e0902cd7e"), BloodType.A },
+                    { 1, 54.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.A },
+                    { 4, 10.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.O },
+                    { 9, 34.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.AB }
                 });
 
             migrationBuilder.InsertData(
@@ -298,12 +451,31 @@ namespace HospitalLibrary.Migrations
                 values: new object[] { 1, 1, "1A" });
 
             migrationBuilder.InsertData(
+                table: "SymptomList",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { "Glavobolja", "Glavobolja" },
+                    { "Kijavica", "Kijavica" },
+                    { "Dijareja", "Dijareja" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Active", "Email", "IdByRole", "Name", "Password", "Role", "Surname", "Token" },
                 values: new object[,]
                 {
                     { 1, true, "manager", 1, "Milica", "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==", "MANAGER", "Peric", null },
                     { 2, true, "doctor", 1, "Filip", "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", "DOCTOR", "Marinkovic", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Doctors",
+                columns: new[] { "Id", "Email", "EndWorkTime", "Name", "RoomId", "Specialty", "StartWorkTime", "Surname" },
+                values: new object[,]
+                {
+                    { "DOC1", "ne pitaj", 23, "Prika", 1, Specialty.Cardiologist, 8, "Prikic" },
+                    { "DOC2", "ne pitaj", 23, "Novi", 1, Specialty.Anesthesiologist, 8, "Sad" }
                 });
 
             migrationBuilder.InsertData(
@@ -325,6 +497,16 @@ namespace HospitalLibrary.Migrations
                 name: "IX_Appointments_RoomId",
                 table: "Appointments",
                 column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConsiliumAppointments_ConsiliumId",
+                table: "ConsiliumAppointments",
+                column: "ConsiliumId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConsiliumAppointments_DoctorId",
+                table: "ConsiliumAppointments",
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_RoomId",
@@ -354,6 +536,18 @@ namespace HospitalLibrary.Migrations
                 name: "BloodRequests");
 
             migrationBuilder.DropTable(
+                name: "ConsiliumAppointments");
+
+            migrationBuilder.DropTable(
+                name: "DrugPrescriptions");
+
+            migrationBuilder.DropTable(
+                name: "Drugs");
+
+            migrationBuilder.DropTable(
+                name: "DrugsList");
+
+            migrationBuilder.DropTable(
                 name: "Equipment");
 
             migrationBuilder.DropTable(
@@ -366,6 +560,12 @@ namespace HospitalLibrary.Migrations
                 name: "InpatientTreatmentRecords");
 
             migrationBuilder.DropTable(
+                name: "SymptomList");
+
+            migrationBuilder.DropTable(
+                name: "Symptoms");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
@@ -373,6 +573,12 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Patients");
+
+            migrationBuilder.DropTable(
+                name: "Consiliums");
+
+            migrationBuilder.DropTable(
+                name: "Reports");
 
             migrationBuilder.DropTable(
                 name: "Doctors");

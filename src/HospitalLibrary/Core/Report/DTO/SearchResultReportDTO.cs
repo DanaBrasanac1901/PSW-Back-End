@@ -9,12 +9,12 @@ namespace HospitalLibrary.Core.Report.DTO
 {
     public class SearchResultReportDTO
     {
-        public List<SymptomDTO> Symptoms { set; get; }
-        public string DayAndTimeOfMaking { get; set; }
-        public string Description { get; set; }
-        public List<DrugDTO> Prescriptions { get; set; }
-        public string PatientId { get; set; }
-        public string AppointmentId { get; set; }
+        public List<SymptomDTO> symptoms { set; get; }
+        public string dayAndTimeOfMaking { get; set; }
+        public string description { get; set; }
+        public List<DrugDTO> prescriptions { get; set; }
+        public string patientId { get; set; }
+        public string appointmentId { get; set; }
 
         public SearchResultReportDTO() { }
 

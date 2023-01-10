@@ -51,7 +51,6 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             _patientService.Create(patient);
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }

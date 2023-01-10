@@ -85,7 +85,7 @@ namespace HospitalLibrary.Settings
             Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
 
-            /*
+
             BloodSupply supplyABank1 = new BloodSupply(1, BloodType.A, 54, bank1Id);
             BloodSupply supplyBBank1 = new BloodSupply(2, BloodType.B, 30, bank1Id);
             BloodSupply supplyABBank1 = new BloodSupply(3, BloodType.AB, 15, bank1Id);
@@ -100,8 +100,8 @@ namespace HospitalLibrary.Settings
                 supply0Bank1, supplyABank1, supplyABank2, supplyABank3, supplyABBank1,
                 supplyABBank3, supplyBBank1, supplyBBank2, supplyBBank3
             );
-            */
-            /*
+
+
             BloodConsumptionRecord bloodConsumptionRecord1 = new BloodConsumptionRecord(1, 2, BloodType.A, "needed for surgery", new DateTime(2022, 11, 22), "DOC1", bank1Id);
 
 
@@ -112,7 +112,7 @@ namespace HospitalLibrary.Settings
 
 
             modelBuilder.Entity<Room>().HasData(
-                new Room(){ Id = 1, Number = "1A", Floor = 1} 
+                new Room() { Id = 1, Number = "1A", Floor = 1 }
                 );
             User user1 = new User { Id = 1, IdByRole = 1, Name = "Milica", Surname = "Peric", Email = "manager", Password = "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==", Role = "MANAGER", Active = true, Token = null };
             User user2 = new User { Id = 2, IdByRole = 1, Name = "Filip", Surname = "Marinkovic", Email = "doctor", Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", Role = "DOCTOR", Active = true, Token = null };
@@ -148,7 +148,13 @@ namespace HospitalLibrary.Settings
 
                   }
             );
-            */
+
+            Doctor doctor1 = new Doctor { Id = "DOC1", Name = "Prika", Surname = "Prikic", Email = "ne pitaj", Specialty = Specialty.Cardiologist, RoomId = 1, StartWorkTime = 8, EndWorkTime = 23 };
+            Doctor doctor2 = new Doctor { Id = "DOC2", Name = "Novi", Surname = "Sad", Email = "ne pitaj", Specialty = Specialty.Anesthesiologist, RoomId = 1, StartWorkTime = 8, EndWorkTime = 23 };
+
+            modelBuilder.Entity<Doctor>().HasData(
+                doctor1, doctor2
+                );
             /*
             Consilium consilium1 = new Consilium(1, "A complicated case", 45, new DateTime(2023, 3, 10, 10, 30, 0), "DOC1, DOC2", "", "DOC1");
 
@@ -191,6 +197,12 @@ namespace HospitalLibrary.Settings
                     Id = "Dijareja",
                     Name = "Dijareja"
                 }
+                );
+
+            Patient patient1 = new Patient { Id = 1, Name = "Prvi", Surname = "Prvic", Email = "Mail", Gender = Gender.MALE, Age = 34, BloodType = BloodType.B, Allergies = null, DoctorID = "DOC1", Active = true, Jmbg = "4564565656" };
+            Patient patient2 = new Patient { Id = 2, Name = "Drugi", Surname = "Drugic", Email = "Mail2", Gender = Gender.MALE, Age = 34, BloodType = BloodType.A, Allergies = null, DoctorID = "DOC1", Active = true, Jmbg = "4564565656" };
+            modelBuilder.Entity<Patient>().HasData(
+                patient1,patient2
                 );
 
             base.OnModelCreating(modelBuilder);

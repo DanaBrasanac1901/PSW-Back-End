@@ -133,8 +133,8 @@ namespace HospitalAPI.Controllers
             return Ok(drugPres);
         }
 
-        [HttpGet]
-        [Route("[action]/{id}")]
+        [HttpPost]
+        [Route("[action]")]
         public ActionResult SearchReports(string[] searchWords)
         {
             List<SearchResultReportDTO> matchingReports = _reportApplicationService.GetSearchMatches(searchWords);
