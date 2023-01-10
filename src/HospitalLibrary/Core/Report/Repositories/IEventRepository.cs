@@ -11,5 +11,9 @@ namespace HospitalLibrary.Core.Report.Repositories
     {
         void Create(DomainEvent domainEvent);
         IEnumerable<DomainEvent> GetAll();
+
+        IEnumerable<string> GetReportIds();
+
+        IEnumerable<TimeSpan> GetDurations();
     }
 }
