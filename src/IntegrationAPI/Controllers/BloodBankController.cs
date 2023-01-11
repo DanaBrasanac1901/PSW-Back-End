@@ -37,8 +37,8 @@ namespace IntegrationAPI.Controllers
             
 
             var bloodBanks = _IbbService.GetAll();
-           
             return Ok(bloodBanks);
+
 
         }
         [HttpGet]
