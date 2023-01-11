@@ -67,6 +67,7 @@ namespace IntegrationAPI
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<ITenderHandlerService, TenderHandlerService>();
             services.AddScoped<ITenderOfferService, TenderOfferService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();

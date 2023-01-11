@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IntegrationLibrary.Tender.BloodAmount.BloodAmount" Collapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAUAAAQBAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TenderHandler\Tender\BloodAmount\BloodAmount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Core.Tender.Tender" Collapsed="true">
+    <Position X="2.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAgAAAAKAAAAAgAAAQBAAAAAAAAAAAAAAAACAAgA=</HashCode>
+      <FileName>TenderHandler\Tender\Tender.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="BloodAmount" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HospitalLibrary.Core.Tender.TenderRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABAAAAAAAAAAAAAEAAEAAAgAAAAAAAIA=</HashCode>
+      <FileName>TenderHandler\Tender\TenderRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HospitalLibrary.Core.Tender.TenderService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAIAAAAAgAAAAAQAAAEAAEAAAgAAAAAAAIQ=</HashCode>
+      <FileName>TenderHandler\Tender\TenderService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TenderHandlerService" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HospitalLibrary.Core.Tender.TenderHandlerService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAFABABAAAAAQAAAAAAAABAAAAABAgAAAAAAAIQ=</HashCode>
+      <FileName>TenderHandler\TenderHandlerService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HospitalLibrary.Core.TenderOffer.TenderOffer" Collapsed="true">
+    <Position X="2.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABAAgAAQAAAAAAAAAAgAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TenderHandler\TenderOffer\TenderOffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Core.TenderOffer.TenderOfferRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABAAAAAAAAAAAAAEAAEAAAgAAAAAQAIA=</HashCode>
+      <FileName>TenderHandler\TenderOffer\TenderOfferRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TenderOffer" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HospitalLibrary.Core.TenderOffer.TenderOfferService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAABAAAAAAACAAAAAAAQAAAEAAEAAAgAAAIEAAIA=</HashCode>
+      <FileName>TenderHandler\TenderOffer\TenderOfferService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TenderHandlerService" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="IntegrationLibrary.TenderHandler.TenderHandler" Collapsed="true">
+    <Position X="2.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAACAAAAAAAAAAAABAAAAAQAAAAAAAAAAQAAA=</HashCode>
+      <FileName>TenderHandler\TenderHandler.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Tender1" />
+      <Property Name="TenderOffer" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="HospitalLibrary.Core.Tender.ITenderRepository" Collapsed="true">
+    <Position X="4.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAIAAAAAAAAEAAEAAAgAAAAAAAIA=</HashCode>
+      <FileName>TenderHandler\Tender\ITenderRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TenderRepository" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="HospitalLibrary.Core.Tender.ITenderService" Collapsed="true">
+    <Position X="7" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEAAEAAAgAAAAQAAIA=</HashCode>
+      <FileName>TenderHandler\Tender\ITenderService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TenderService" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="HospitalLibrary.Core.Tender.ITenderHandlerService" Collapsed="true">
+    <Position X="9.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEABABAAAAAQAAAAAQAABAAAAABAgAAAAAAAIA=</HashCode>
+      <FileName>TenderHandler\ITenderHandlerService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TenderHandlerService" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="HospitalLibrary.Core.TenderOffer.ITenderOfferRepository" Collapsed="true">
+    <Position X="4.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAABAAEAAEAAAgAAAAAAAIA=</HashCode>
+      <FileName>TenderHandler\TenderOffer\ITenderOfferRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TenderOfferRepository" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="HospitalLibrary.Core.TenderOffer.ITenderOfferService" Collapsed="true">
+    <Position X="7" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAEAAEgAAgAAAIAAAIA=</HashCode>
+      <FileName>TenderHandler\TenderOffer\ITenderOfferService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TenderOfferService" />
+    </ShowAsAssociation>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

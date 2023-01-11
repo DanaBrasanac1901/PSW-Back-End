@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace HospitalLibrary.Core.TenderOffer
 {
-    public class TenderOfferService : ITenderOfferService
+    public class TenderOfferService :  ITenderOfferService
     {
         private readonly ITenderOfferRepository _tenderOfferRepository;
         private readonly ITenderService _tenderService;
@@ -25,14 +25,15 @@ namespace HospitalLibrary.Core.TenderOffer
             _tenderOfferRepository = tenderOfferRepository;
         }
 
+
         public IEnumerable<TenderOffer> GetAll()
         {
             return _tenderOfferRepository.GetAll();
         }
 
-        public TenderOffer GetById(int id,Guid bankID)
+        public TenderOffer GetById(int id, Guid bankID)
         {
-            return _tenderOfferRepository.GetById(id,bankID);
+            return _tenderOfferRepository.GetById(id, bankID);
         }
 
         public void Create(TenderOffer tenderOffer)
@@ -40,7 +41,7 @@ namespace HospitalLibrary.Core.TenderOffer
 
             _tenderOfferRepository.Create(tenderOffer);
         }
-   
+
 
         public void Update(TenderOffer tenderOffer)
         {
@@ -54,9 +55,9 @@ namespace HospitalLibrary.Core.TenderOffer
 
         public TenderOffer GetByTender(int id)
         {
-            foreach(TenderOffer TO in _tenderOfferRepository.GetAll())
+            foreach (TenderOffer TO in _tenderOfferRepository.GetAll())
             {
-                if(TO.TenderId == id)
+                if (TO.TenderId == id)
                     return TO;
             }
             return null;

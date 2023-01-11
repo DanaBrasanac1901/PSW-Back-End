@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.TenderOffer
             _context = context;
         }
 
+
         public IEnumerable<TenderOffer> GetAll()
         {
             return _context.TenderOffers.ToArray().ToList();

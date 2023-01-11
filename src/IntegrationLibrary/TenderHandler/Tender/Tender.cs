@@ -36,5 +36,13 @@ namespace HospitalLibrary.Core.Tender
         public string HospitalName { get => hospitalName; private set => hospitalName = value; }
         public DateTime Expiration { get => expiration; private set => expiration = value; }
         public int Id { get => id; private set => id = value; }
+
+        internal BloodAmount BloodAmount
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

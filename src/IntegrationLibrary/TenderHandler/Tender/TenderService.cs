@@ -24,6 +24,14 @@ namespace HospitalLibrary.Core.Tender
             _doctorRepository = doctorRepository;
         }
 
+        public TenderHandlerService TenderHandlerService
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public IEnumerable<Tender> GetAll()
         {
             return _tenderRepository.GetAll();
@@ -39,7 +47,7 @@ namespace HospitalLibrary.Core.Tender
 
             _tenderRepository.Create(tender);
         }
-   
+
 
         public void Update(Tender tender)
         {
@@ -51,6 +59,6 @@ namespace HospitalLibrary.Core.Tender
             _tenderRepository.Delete(tender);
         }
 
-   
+
     }
 }
