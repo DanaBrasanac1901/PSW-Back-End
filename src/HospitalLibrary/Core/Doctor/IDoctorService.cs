@@ -22,7 +22,7 @@ namespace HospitalLibrary.Core.Doctor
         List<DoctorToChangeUrgentVacationDTO> GetFreeDoctors(string startDate,string startTime);
 
 
-        List<int> GetFreeSpecialtyDoctors(string date, int specialty);
+        List<Doctor> GetFreeSpecialtyDoctors(string date, int specialty);
         List<int> GetSpecialtyDoctors(int specialty);
 
         bool AreAvailableForConsilium(List<Doctor> neededDoctors, DateTimeRange consiliumInterval);

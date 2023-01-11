@@ -84,7 +84,7 @@ namespace HospitalLibrary.Core.Vacation
             _vacationRequestRepository.Update(request);
         }
 
-        public IEnumerable<ViewAllVacationRequestsDTO> GetAllByDoctor(string id)
+        public IEnumerable<ViewAllVacationRequestsDTO> GetAllByDoctor(int id)
         {
             IEnumerable<VacationRequest> doctorsVacationRequests = _vacationRequestRepository.GetAllByDoctor(id);
            

@@ -167,16 +167,16 @@ namespace HospitalLibrary.Core.Doctor
         }
 
 
-        public List<int> GetFreeSpecialtyDoctors(string date, int specialty)
+        public List<Doctor> GetFreeSpecialtyDoctors(string date, int specialty)
         {
-            List<int> ret = new List<int>();
-            List<Appointment.Appointment> app = new List<Appointment.Appointment>(_appointmentRepository.GetAll());
+            List<Doctor> ret = new();
+            List<Appointment.Appointment> app = new(_appointmentRepository.GetAll());
             DateTime parsed = DateTime.Parse(date);
             foreach (Doctor d in _doctorRepository.GetAll().Where(doc => (int)doc.Specialty == specialty))
             {
                 if((d.EndWorkTime - d.StartWorkTime)*3 > (app.Where(a => a.DoctorId == d.Id && a.Status == AppointmentStatus.Scheduled && a.Start.Year == parsed.Year && a.Start.Month == parsed.Month && a.Start.Day == parsed.Day)).Count())
                 {
-                    ret.Add(d.Id);
+                    ret.Add(d);
                 }
             }
             return ret;

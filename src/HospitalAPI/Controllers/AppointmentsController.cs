@@ -96,8 +96,8 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            string idFlag = _appointmentService.Create(appDTO);
-            return Ok("Passed");
+            _appointmentService.Create(appDTO);
+            return Ok();
         }
 
         [HttpGet]
@@ -140,7 +140,7 @@ namespace HospitalAPI.Controllers
             return Ok(app);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("[action]/{id}")]
         public ActionResult GetDoctorsPatients(int id)
         {

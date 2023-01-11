@@ -14,6 +14,6 @@ namespace HospitalLibrary.Core.Patient
         void Create(SubmitPatientHealthMeasurementsDTO dto);
         void Update(PatientHealthMeasurements patientHealthMeasurements);
         void Delete(PatientHealthMeasurements patientHealthMeasurements);
-        IEnumerable<PatientHealthMeasurements> GetPatientHealthMeasurements(GetPatientHealthMeasurementsDTO dto);
+        IEnumerable<ReturnMeasurementsDTO> GetPatientHealthMeasurements(GetPatientHealthMeasurementsDTO dto);
     }
 }

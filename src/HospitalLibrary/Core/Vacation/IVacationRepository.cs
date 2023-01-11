@@ -14,6 +14,6 @@ namespace HospitalLibrary.Core.Vacation
         void Create(VacationRequest vacationRequest);
         void Update(VacationRequest vacationRequest);
         void Delete(VacationRequest vacationRequest);
-        IEnumerable<VacationRequest> GetAllByDoctor(string id);
+        IEnumerable<VacationRequest> GetAllByDoctor(int id);
     }
 }

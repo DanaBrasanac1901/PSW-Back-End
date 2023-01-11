@@ -50,7 +50,7 @@ namespace HospitalLibrary.Core.Patient
             _repository.Delete(phm);
         }
         //ozbiljna kobasica od koda
-        public IEnumerable<PatientHealthMeasurements> GetPatientHealthMeasurements(GetPatientHealthMeasurementsDTO dto)
+        public IEnumerable<ReturnMeasurementsDTO> GetPatientHealthMeasurements(GetPatientHealthMeasurementsDTO dto)
         {
 
             if(!(int.TryParse(dto.Month, out int month) && int.TryParse(dto.PatientId, out int patientId)))
@@ -66,7 +66,7 @@ namespace HospitalLibrary.Core.Patient
                                                      phm.MeasurementTime.Year == DateTime.Now.Year &&
                                                      phm.PatientId == patientId).ToList();
 
-            List<PatientHealthMeasurements> retList = new();
+            List<ReturnMeasurementsDTO> retList = new();
             List<DateTime> checkedDates = new();
             float avgWeight = 0;
             float avgBloodPressureUpper = 0;
@@ -110,7 +110,7 @@ namespace HospitalLibrary.Core.Patient
                 int bpu = (int)Math.Round(avgBloodPressureUpper);
                 int bpl = (int)Math.Round(avgBloodPressureLower);
                 int hb = (int)Math.Round(avgHeartbeat);
-                var add = new PatientHealthMeasurements(phm.PatientId, new DateTime(check.Year, check.Month, check.Day), avgWeight, bpu, bpl, hb, avgTemperature, avgBloodSugarLevel);
+                var add = new ReturnMeasurementsDTO(new PatientHealthMeasurements(phm.PatientId, new DateTime(check.Year, check.Month, check.Day), avgWeight, bpu, bpl, hb, avgTemperature, avgBloodSugarLevel));
                 retList.Add(add);
                 counter = 0;
                 avgWeight = 0;

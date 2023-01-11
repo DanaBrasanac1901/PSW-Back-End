@@ -145,7 +145,7 @@ namespace HospitalAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult getFreeSpecialtyDoctors(CheckDateSpecialtyDTO dto)
+        public ActionResult GetFreeSpecialtyDoctors(CheckDateSpecialtyDTO dto)
         {
             var ret = _doctorService.GetFreeSpecialtyDoctors(dto.AppointmentDate, dto.Specialty);
             return Ok(ret);
@@ -153,7 +153,7 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public ActionResult getSpecialtyDoctors(int specialty)
+        public ActionResult GetSpecialtyDoctors(int specialty)
         {
             return Ok(_doctorService.GetSpecialtyDoctors(specialty));
         }
