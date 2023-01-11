@@ -24,6 +24,7 @@ namespace HospitalLibrary.Core.Report.Model
 
         public Report(string id){
             Id = id;
+            DayAndTimeOfMaking = DateTime.Now;
         }
 
         public Report(ReportSnapshot snapshot)

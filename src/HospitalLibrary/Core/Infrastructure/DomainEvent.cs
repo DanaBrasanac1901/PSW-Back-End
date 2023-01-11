@@ -15,7 +15,7 @@ namespace HospitalLibrary.Core.Infrastructure
         public DomainEvent(string aggregateId)
         {
             ReportId = aggregateId;
-            Id = 2;
+            Id = 3;
         }
 
         public int Id { get; set; }

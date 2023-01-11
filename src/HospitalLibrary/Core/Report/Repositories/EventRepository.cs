@@ -21,6 +21,8 @@ namespace HospitalLibrary.Core.Report.Repositories
         public void Create(DomainEvent domainEvent)
         {
             _context.ReportCreationEvents.Add(domainEvent);
+            _context.SaveChanges();
+
         }
 
         public IEnumerable<DomainEvent> GetAll()
