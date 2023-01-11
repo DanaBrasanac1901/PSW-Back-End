@@ -48,10 +48,11 @@ namespace HospitalLibrary.Core.Report.Services
 
         public string InstantiateReport()
         {
-            Model.Report report = new Model.Report(DateTime.Now.ToString("yyMMddhhmmssffffff"));
+            string flag = DateTime.Now.ToString("yyMMddhhmmssffffff");
+            Model.Report report = new Model.Report(flag);
             _reportRepository.Create(report);
 
-            return report.Id;
+            return flag;
         }
 
         public void SetReportFields(string id, ReportToCreateDTO dto)

@@ -143,7 +143,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost]
-        [Route("[action]/{id}")]
+        [Route("[action]/{id}/{eventCode}")]
         public ActionResult EventHappened(string id, int eventCode)
         {
             DomainEvent domainEvent = _reportApplicationService.HandleClick(id, eventCode);
