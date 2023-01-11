@@ -5,7 +5,9 @@ using HospitalLibrary.Core.ApptSchedulingSession.Storage;
 using HospitalLibrary.Core.ApptSchedulingSession.UseCases;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +23,13 @@ namespace HospitalLibrary.Core.Statistics
         private List<List<StatisticEntry>> statisticsList;
         private IScheduleAppointment _aggregateService;
 
+
+        private IDictionary<Guid, int> stepsInAggregates;
+        private IDictionary<Guid, int> secondsSpentInAggregates;
+        private IDictionary<Guid, int> nextOccurencesInAggregates;
+        private IDictionary<Guid, int> backOccurencesInAggregates;
+        private IDictionary<Guid, int> scheduleOccurencesInAggregates;
+
         public SchedulingStatisticsService(IScheduleAppointment aggregateService)
         {
             _aggregateService = aggregateService;
@@ -31,12 +40,11 @@ namespace HospitalLibrary.Core.Statistics
         {
             List<ScheduleAggregate> aggregates = _aggregateService.GetAggregates();
 
-
-            IDictionary<Guid, int> stepsInAggregates = new Dictionary<Guid, int>();
-            IDictionary<Guid, int> secondsSpentInAggregates = new Dictionary<Guid, int>();
-            IDictionary<Guid, int> nextOccurencesInAggregates = new Dictionary<Guid, int>();
-            IDictionary<Guid, int> backOccurencesInAggregates = new Dictionary<Guid, int>();
-            IDictionary<Guid, int> scheduleOccurencesInAggregates = new Dictionary<Guid, int>();
+            stepsInAggregates= new Dictionary<Guid, int>(); 
+            secondsSpentInAggregates= new Dictionary<Guid, int>();
+            nextOccurencesInAggregates= new Dictionary<Guid, int>();
+            backOccurencesInAggregates= new Dictionary<Guid, int>();
+            scheduleOccurencesInAggregates= new Dictionary<Guid, int>();
 
             // initialize necessary aggregate data for statistics
             foreach (ScheduleAggregate aggregate in aggregates)
@@ -79,6 +87,9 @@ namespace HospitalLibrary.Core.Statistics
             statisticsList = new List<List<StatisticEntry>>() {
                 ConvertToStatisticEntries(stepStatistics), ConvertToStatisticEntries(timeSpentStatistics), ConvertToStatisticEntries(nextClickStatistics),ConvertToStatisticEntries(scheduleClickStatistics), ConvertToStatisticEntries(backClickStatistics) };
 
+
+            // Stores data while its available so it can be fetched for the table
+            storeTableData();
 
             return statisticsList;
 
@@ -153,6 +164,47 @@ namespace HospitalLibrary.Core.Statistics
 
             return (int)timeSpent.TotalSeconds;
         }
+
+
+        // Table Data
+
+
+        public List<TableEntry> GetTableStats()
+        {
+            List<TableEntry> tableEntries = new List<TableEntry>();
+            foreach (string line in System.IO.File.ReadLines("TableData.txt"))
+            {
+                TableEntry entry = new TableEntry(line);
+                tableEntries.Add(entry);
+            }
+            return tableEntries;
+        }
+
+        private int[] calculateTableStats(IDictionary<Guid, int> dictionary)
+        {
+            int[] res=new int[3];
+            res[0] = dictionary.Values.Min();
+            res[1] = dictionary.Values.Max();
+            res[2] = dictionary.Values.Sum();
+
+            return res;
+        }
+
+        private  async Task storeTableData()
+        {
+            int[] stats = calculateTableStats(nextOccurencesInAggregates);
+            string nextLine = "next "+stats[0]+" "+stats[1]+" "+stats[2];
+
+            stats = calculateTableStats(backOccurencesInAggregates);
+            string backLine = "back " + stats[0] + " " + stats[1] + " " + stats[2];
+
+            stats = calculateTableStats(scheduleOccurencesInAggregates);
+            string scheduleLine = "schedule " + stats[0] + " " + stats[1] + " " + stats[2];
+            string[] lines = { nextLine, backLine, scheduleLine };
+
+            await File.WriteAllLinesAsync("TableData.txt", lines);
+        }
+
     }
 }
     
