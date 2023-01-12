@@ -99,5 +99,32 @@ namespace HospitalLibrary.Core.Report.DTO
             dto.drugs = CreateDrugdDTO(report.Drugs);
             return dto;
         }
+
+
+        /*
+    public string PatientId { get; set; }
+       public string DoctorId { get; set; }
+       public string AppointmentId { get; set; }
+       public string ReportDescription { get; set; }
+
+       //[Column(TypeName = "jsonb")]
+       public ICollection<Symptom> Symptoms { get; set; }
+       public DateTime DayAndTimeOfMaking { get; set; }
+
+       public ICollection<Drug> Drugs { get; set; }
+   */
+
+        public static SearchResultReportDTO CreateSearchResultDTO(Report.Model.Report report)
+        {
+            SearchResultReportDTO dto = new SearchResultReportDTO();
+
+            dto.patientId = report.PatientId;
+            dto.description = report.ReportDescription;
+            dto.symptoms = CreateSymptomsDTO(report.Symptoms);
+            dto.appointmentId = report.AppointmentId;
+            dto.prescriptions = CreateDrugdDTO(report.Drugs);
+
+            return dto;
+        }
     }
 }

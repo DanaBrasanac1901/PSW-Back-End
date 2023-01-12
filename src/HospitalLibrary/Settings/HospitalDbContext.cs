@@ -115,7 +115,7 @@ namespace HospitalLibrary.Settings
             /*
 
             modelBuilder.Entity<Room>().HasData(
-                new Room(){ Id = 1, Number = "1A", Floor = 1} 
+                new Room() { Id = 1, Number = "1A", Floor = 1 }
                 );
             User user1 = new User { Id = 1, IdByRole = 1, Name = "Milica", Surname = "Peric", Email = "manager", Password = "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==", Role = "MANAGER", Active = true, Token = null };
             User user2 = new User { Id = 2, IdByRole = 1, Name = "Filip", Surname = "Marinkovic", Email = "doctor", Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", Role = "DOCTOR", Active = true, Token = null };
@@ -151,7 +151,13 @@ namespace HospitalLibrary.Settings
 
                   }
             );
-            */
+
+            Doctor doctor1 = new Doctor { Id = "DOC1", Name = "Prika", Surname = "Prikic", Email = "ne pitaj", Specialty = Specialty.Cardiologist, RoomId = 1, StartWorkTime = 8, EndWorkTime = 23 };
+            Doctor doctor2 = new Doctor { Id = "DOC2", Name = "Novi", Surname = "Sad", Email = "ne pitaj", Specialty = Specialty.Anesthesiologist, RoomId = 1, StartWorkTime = 8, EndWorkTime = 23 };
+
+            modelBuilder.Entity<Doctor>().HasData(
+                doctor1, doctor2
+                );
             /*
             Consilium consilium1 = new Consilium(1, "A complicated case", 45, new DateTime(2023, 3, 10, 10, 30, 0), "DOC1, DOC2", "", "DOC1");
 

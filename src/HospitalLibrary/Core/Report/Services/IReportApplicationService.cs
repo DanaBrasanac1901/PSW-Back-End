@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Report.DTO;
 using HospitalLibrary.Core.Report.Model;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,6 @@ namespace HospitalLibrary.Core.Report.Services
         ICollection<Drug> GetDrugFromReport(string reportId);
 
         DrugPrescriptionToShowDTO GetDrugToShow(string id);
-
-
-
+        List<SearchResultReportDTO> GetSearchMatches(string[] searchWords);
     }
 }

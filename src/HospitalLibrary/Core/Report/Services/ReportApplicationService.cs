@@ -23,6 +23,24 @@ namespace HospitalLibrary.Core.Report.Services
             _symptomRepository = symptomRepository;
         }
 
+        public List<SearchResultReportDTO> GetSearchMatches(string[] searchWords)
+        {
+            List<Model.Report> allReports = (List<Model.Report>)_reportRepository.GetAll();
+
+            List<SearchResultReportDTO> matchingReports = new List<SearchResultReportDTO>();
+
+
+            foreach (Model.Report report in allReports)
+            {
+                Model.Report reportForDTO = report.ContainsAny(searchWords);
+                if (reportForDTO != null)
+                    matchingReports.Add(ReportAdapter.CreateSearchResultDTO(reportForDTO));
+                
+            }
+
+            return matchingReports;
+        }
+
         public ReportApplicationService(IReportRepository reportRepository,
             ISymptomRepository symptomRepository)
         {

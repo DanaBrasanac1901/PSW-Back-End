@@ -29,6 +29,12 @@ namespace HospitalAPI.Controllers
             _availableAppointmentService = availableAppointmentService;
         }
 
+<<<<<<< HEAD
+=======
+        
+
+        // GET: api/appointments
+>>>>>>> feature/drug-prescription
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -97,7 +103,11 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
             _appointmentService.Create(appDTO);
+<<<<<<< HEAD
             return Ok();
+=======
+            return Ok(appDTO);
+>>>>>>> feature/drug-prescription
         }
 
         [HttpGet]

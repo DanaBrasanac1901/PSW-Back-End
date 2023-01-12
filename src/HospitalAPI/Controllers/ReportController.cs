@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Report.DTO;
 using HospitalLibrary.Core.Report.Services;
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Report.Model;
+using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers
 {
@@ -132,6 +133,17 @@ namespace HospitalAPI.Controllers
             return Ok(drugPres);
         }
 
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult SearchReports(string[] searchWords)
+        {
+            List<SearchResultReportDTO> matchingReports = _reportApplicationService.GetSearchMatches(searchWords);
+
+            if (matchingReports.Count == 0)
+                return NoContent();
+
+            return Ok(matchingReports);
+        }
 
 
     }
