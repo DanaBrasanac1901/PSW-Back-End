@@ -11,5 +11,12 @@ namespace HospitalLibrary.Core.Report.Services
     {
         List<ReportCreationDurationDTO> GetReportCreationDurations();
 
+        double GetAvgNumOfSteps();
+
+        NumOfTimeOnEachStepDTO NumOfTimeOnEachStep(string reportId);
+
+        List<DurationAndNumOfStepsInCorellationWithDoctorAgeDTO> GetDurationAndNumOfStepsInCorellationWithDoctorAge();
+        List<NumOfTimeOnEachStepDTO> ListNumOfTimeOnEachStep();
+
     }
 }

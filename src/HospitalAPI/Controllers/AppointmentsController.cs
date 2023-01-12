@@ -29,11 +29,11 @@ namespace HospitalAPI.Controllers
             _availableAppointmentService = availableAppointmentService;
         }
 
-        public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
-        {
-            this.appointmentService = appointmentService;
-            this.doctorService = doctorService;
-        }
+        //public AppointmentsController(IAppointmentService appointmentService, IDoctorService doctorService)
+        //{
+        //    this.appointmentService = appointmentService;
+        //    this.doctorService = doctorService;
+        //}
 
         // GET: api/appointments
         [HttpGet]

@@ -34,19 +34,20 @@ namespace HospitalLibrary.Core.Report.Services
             _eventRepository = eventRepository;
 
         }
+   
 
 
-        //kada se dodje na stranicu na front-u salje se http request koji
-        //ce da pozove konstruktor objekta report koji mu dodeljuje id 
-        //i postavlja current_step na 0, taj id se vrati na front
+            //kada se dodje na stranicu na front-u salje se http request koji
+            //ce da pozove konstruktor objekta report koji mu dodeljuje id 
+            //i postavlja current_step na 0, taj id se vrati na front
 
-        //svaki put kad se klikne na neko dugme na frontu posalje se http req sa id-em agregata i na osnovu 
-        //njega se poziva odgovarajuca metoda agregata
+            //svaki put kad se klikne na neko dugme na frontu posalje se http req sa id-em agregata i na osnovu 
+            //njega se poziva odgovarajuca metoda agregata
 
-        //kad se klikne na finish dugme na frontu tada se popune sva polja 
-        //report objekta na beku na osnovu dto sa fronta (do tad ima sustinski prazna polja)
+            //kad se klikne na finish dugme na frontu tada se popune sva polja 
+            //report objekta na beku na osnovu dto sa fronta (do tad ima sustinski prazna polja)
 
-        public string InstantiateReport()
+            public string InstantiateReport()
         {
             Model.Report report = new Model.Report(DateTime.Now.ToString("yyMMddhhmmssffffff"));
             DomainEvent reportCreated = report.ReportCreated();

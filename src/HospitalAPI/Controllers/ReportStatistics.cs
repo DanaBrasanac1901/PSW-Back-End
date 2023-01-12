@@ -27,5 +27,32 @@ namespace HospitalAPI.Controllers
             List<ReportCreationDurationDTO> responseDTOs = _statisticsService.GetReportCreationDurations();
             return Ok(responseDTOs);
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetReportAvgNumOfSteps()
+        {
+
+            double avgNumOfSteps = _statisticsService.GetAvgNumOfSteps();
+            return Ok(avgNumOfSteps);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetNumOfTimeOnEachStep()
+        {
+
+            List<NumOfTimeOnEachStepDTO> numOfTimeOnEachStep = _statisticsService.ListNumOfTimeOnEachStep();
+            return Ok(numOfTimeOnEachStep);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetDurationAndNumOfStepsInCorellationWithDoctorAge ()
+        {
+
+            List<DurationAndNumOfStepsInCorellationWithDoctorAgeDTO> responseDTOs = _statisticsService.GetDurationAndNumOfStepsInCorellationWithDoctorAge();
+            return Ok(responseDTOs);
+        }
     }
 }
