@@ -76,8 +76,9 @@ namespace IntegrationLibrary.Report
         private string Html(Report report)
         {
             BloodBank.BloodBank bloodBank = _bloodBankService.GetById(report.Id);
-            
-            return $"<h1>Report </h1> Report for {bloodBank.Username} week {DateTime.Now}";
+
+            //return $"<h1>Report </h1> Report for {bloodBank.Username} week {DateTime.Now}";
+            return "nesto";
                 //+ $" Spent {ConsumptionForBank(bloodBank.Id)} ";
         }
      

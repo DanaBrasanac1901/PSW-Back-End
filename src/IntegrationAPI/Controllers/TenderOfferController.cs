@@ -4,6 +4,7 @@ using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Tender;
 using HospitalLibrary.Core.TenderOffer;
 using IntegrationLibrary.BloodBank;
+using IntegrationLibrary.TenderHandler;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Primitives;
@@ -18,24 +19,22 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class TenderOffersController : Controller
     {
-        private readonly ITenderOfferService _tenderOfferService;
+        private readonly ITenderHandlerService _tenderHandlerService;
         private readonly IBloodBankService _bloodBankService;
         private readonly IEmailSendService _emailSendService;
-        private readonly ITenderService _tenderService;
 
-        public TenderOffersController(ITenderOfferService tenderOfferService, IBloodBankService bloodBankService, IEmailSendService emailSendService, ITenderService tenderService)
+        public TenderOffersController(IBloodBankService bloodBankService, IEmailSendService emailSendService, ITenderHandlerService tenderHandlerService)
         {
-            _tenderOfferService = tenderOfferService;
             _bloodBankService = bloodBankService;
             _emailSendService = emailSendService;
-            _tenderService = tenderService;
+            _tenderHandlerService = tenderHandlerService;
         }
 
         // GET: api/tenderOffers
-        [HttpGet]
+        /*[HttpGet]
         public ActionResult GetAll()
-        {
-            return Ok(_tenderOfferService.GetAll());
+        { 
+            return Ok(_tenderHandlerService.GetAll());
         }
 
         // GET api/tenderOffers/2
@@ -43,25 +42,25 @@ namespace IntegrationAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById(int id, Guid bankID)
         {
-            var tenderOffer = _tenderOfferService.GetById(id, bankID);
+            var tenderOffer = _tenderHandlerService.GetById(id,bankID);
             if (tenderOffer == null)
             {
                 return NotFound();
             }
 
             return Ok(tenderOffer);
-        }
+        }*/
         [HttpGet("Tender/{id}")]
-        public ActionResult GetByTender()
+        public ActionResult GetByTender(int id)
         {
-            int id = Convert.ToInt32(Request.Query["Id"]);
-            var tenderOffer = _tenderOfferService.GetByTender(id);
-            if (tenderOffer == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(tenderOffer);
+            List<TenderHandler> tenderHandlers = _tenderHandlerService.GetAll().ToList();
+            List<TenderOffer> tenderoffers = new List<TenderOffer>();
+            foreach (TenderHandler tenderHandler in tenderHandlers)
+                if (tenderHandler.Tender.Id == id)
+                    foreach (TenderOffer offer in tenderHandler.TenderOffers)
+                        tenderoffers.Add(offer);
+                return Ok(tenderoffers);
         }
         // POST api/tenderOffers
         [HttpPost]
@@ -71,9 +70,16 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            _tenderOfferService.Create(tenderOffer);
-            return CreatedAtAction("GetById", new { id = tenderOffer.TenderId, bloodBankId = tenderOffer.BloodBankId }, tenderOffer);
+            bool exists = false;
+            TenderHandler tenderHandler = _tenderHandlerService.GetById(tenderOffer.TenderId);
+            foreach (TenderOffer offer in tenderHandler.TenderOffers)
+                if (tenderOffer.BloodBankId == offer.BloodBankId)
+                    exists = true;
+            if (!exists)
+                _tenderHandlerService.CreateOffer(tenderOffer);
+            else
+                _tenderHandlerService.UpdateOffer(tenderOffer);
+            return CreatedAtAction("GetById", new { id = tenderOffer.TenderId, bloodBankId=tenderOffer.BloodBankId }, tenderOffer);
         }
 
 
@@ -93,7 +99,7 @@ namespace IntegrationAPI.Controllers
 
             try
             {
-                _tenderOfferService.Update(tenderOffer);
+                _tenderHandlerService.UpdateOffer(tenderOffer);
             }
             catch
             {
@@ -107,25 +113,25 @@ namespace IntegrationAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id, Guid bankID)
         {
-            var tenderOffer = _tenderOfferService.GetById(id, bankID);
+           /* var tenderOffer = _.GetById(id, bankID);
             if (tenderOffer == null)
             {
                 return NotFound();
             }
 
-            _tenderOfferService.Delete(tenderOffer);
-            return NoContent();
+            _tenderHandlerService.DeleteOffer(tenderOffer);*/
+            return Ok();
         }
         [HttpPost("notify-winner")]
         public ActionResult NotifyWinner(TenderOffer tenderOffer)
         {
             if (ModelState.IsValid)
             {
-                var winner = _bloodBankService.GetById(tenderOffer.BloodBankId);
-                string email = winner.Email;
-
-                Tender tender = _tenderService.GetById(tenderOffer.TenderId);
-                var lnkHref = Url.Action("AcceptOffer", "TenderOffers", new { email, date = tender.Expiration, id = tender.Id }, "https");
+                var winner= _bloodBankService.GetById(tenderOffer.BloodBankId);
+                String email = winner.Email;
+                
+                Tender tender = _tenderHandlerService.GetById(tenderOffer.TenderId).Tender;
+                var lnkHref = Url.Action("AcceptOffer", "TenderOffers", new { email = email, date = tender.Expiration, id=tender.Id }, "https");
                 //HTML Template for Send email
                 string subject = "Tender won!";
                 string body = "Confirm tender win: \n" + lnkHref;
@@ -164,9 +170,11 @@ namespace IntegrationAPI.Controllers
             int id = Convert.ToInt32(Request.Query["Id"]);
             DateTime date = DateTime.Parse(Request.Query["Date"]);
             string email = Request.Query["Email"];
-
-            _tenderService.Delete(_tenderService.GetById(id));
-            NotifyLosers(email, date);
+            TenderHandler tenderHandler = _tenderHandlerService.GetById(id);
+            foreach(TenderOffer offer in tenderHandler.TenderOffers)
+                _tenderHandlerService.DeleteOffer(offer);
+            _tenderHandlerService.DeleteTender(tenderHandler.Tender);
+            NotifyLosers(email,date);
             return Redirect("https//localhost:4200/tenders");
         }
     }

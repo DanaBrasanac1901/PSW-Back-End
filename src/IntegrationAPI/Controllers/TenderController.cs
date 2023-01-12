@@ -5,6 +5,7 @@ using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Tender;
 using HospitalLibrary.Core.TenderOffer;
 using IntegrationLibrary.BloodBank;
+using IntegrationLibrary.TenderHandler;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Nest;
@@ -15,10 +16,10 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class TendersController : Controller
     {
-        private readonly ITenderService _tenderService;
-        public TendersController(ITenderService tenderService)
+        private readonly ITenderHandlerService _tenderHandlerService;
+        public TendersController(ITenderHandlerService tenderService)
         {
-            _tenderService = tenderService;
+            _tenderHandlerService = tenderService;
         }
 
 
@@ -26,7 +27,11 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_tenderService.GetAll());
+            List<TenderHandler> tenderHandlers = _tenderHandlerService.GetAll().ToList();
+            List<Tender> tenders = new List<Tender>();
+            foreach (TenderHandler tenderHandler in tenderHandlers)
+                tenders.Add(tenderHandler.Tender);
+            return Ok(tenders);
         }
 
         // GET api/tenders/2
@@ -34,13 +39,13 @@ namespace IntegrationAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var tender = _tenderService.GetById(id);
+            var tender = _tenderHandlerService.GetById(id);
             if (tender == null)
             {
                 return NotFound();
             }
 
-            return Ok(tender);
+            return Ok(tender.Tender);
         }
         // POST api/tenders
         [HttpPost]
@@ -51,7 +56,7 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            _tenderService.Create(tender);
+            _tenderHandlerService.CreateTender(tender);
             return CreatedAtAction("GetById", new { id = tender.Id }, tender);
         }
 
@@ -72,7 +77,7 @@ namespace IntegrationAPI.Controllers
 
             try
             {
-                _tenderService.Update(tender);
+                _tenderHandlerService.UpdateTender(tender);
             }
             catch
             {
@@ -86,13 +91,13 @@ namespace IntegrationAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var tender = _tenderService.GetById(id);
+            var tender = _tenderHandlerService.GetById(id);
             if (tender == null)
             {
                 return NotFound();
             }
 
-            _tenderService.Delete(tender);
+            _tenderHandlerService.DeleteTender(tender.Tender);
             return NoContent();
         }
     }

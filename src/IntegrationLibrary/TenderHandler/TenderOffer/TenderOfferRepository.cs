@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.TenderOffer
             _context = context;
         }
 
+
         public IEnumerable<TenderOffer> GetAll()
         {
             return _context.TenderOffers.ToArray().ToList();
@@ -33,7 +34,7 @@ namespace HospitalLibrary.Core.TenderOffer
 
         public void Update(TenderOffer tenderOffer)
         {
-            _context.Entry(tenderOffer).State = EntityState.Modified;
+            _context.Entry(tenderOffer).State = EntityState.Detached;
 
             try
             {
