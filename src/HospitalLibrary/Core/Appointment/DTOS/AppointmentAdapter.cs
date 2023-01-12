@@ -39,7 +39,22 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             RescheduleAppointmentDTO dto = new RescheduleAppointmentDTO();
             dto.id = appointment.Id;
             dto.patientId = appointment.PatientId;
-            dto.date = appointment.Start.Year + "-" + appointment.Start.Month + "-" + appointment.Start.Day;
+            if(appointment.Start.Month < 10 && appointment.Start.Day < 10)
+            {
+                dto.date = appointment.Start.Year + "-" + "0" + appointment.Start.Month + "-" + "0" + appointment.Start.Day;
+            }
+            else if(appointment.Start.Month < 10)
+            {
+                dto.date = appointment.Start.Year + "-" + "0" + appointment.Start.Month + "-" + appointment.Start.Day;
+            }
+            else if(appointment.Start.Day < 10)
+            {
+                dto.date = appointment.Start.Year + "-" + appointment.Start.Month + "-" + "0" + appointment.Start.Day;
+            }
+            else
+            {
+                dto.date = appointment.Start.Year + "-" + appointment.Start.Month + "-" + appointment.Start.Day;
+            }
             dto.time = appointment.Start.Hour + ":" + appointment.Start.Minute;
             return dto;
         }

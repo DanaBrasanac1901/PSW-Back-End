@@ -18,7 +18,7 @@ namespace SeleniumTests
         {
 
             driver = new ChromeDriver();
-            driver.Url = "http://localhost:4200/doctor-home";
+            driver.Url = "http://localhost:4200";
             driver.Manage().Window.Maximize();
         }
 
@@ -26,6 +26,15 @@ namespace SeleniumTests
         public void Test()
         {
             Thread.Sleep(1000);
+            driver.FindElement(By.Name("email")).SendKeys("sabane.zivis@gmail.com");
+            Thread.Sleep(1000);
+            driver.FindElement(By.Name("password")).SendKeys("1234");
+            Thread.Sleep(1000);
+            driver.FindElement(By.Name("loginButton")).Click();
+            Thread.Sleep(1000);
+            driver.FindElement(By.Name("createTreatmentButton")).Click();
+            Thread.Sleep(1000);
+
             IWebElement patientTreatments = driver.FindElement(By.Name("patientTreatments"));
             patientTreatments.Click();
             Thread.Sleep(1000);
@@ -33,7 +42,7 @@ namespace SeleniumTests
             createTreatment.Click();
             Thread.Sleep(1000);
             IWebElement doctorID = driver.FindElement(By.Id("doctorID"));
-            doctorID.SendKeys("DOC1");
+            doctorID.SendKeys("1");
             Thread.Sleep(1000);
             IWebElement patientID = driver.FindElement(By.Id("patientID"));
             patientID.SendKeys("PAT2");
