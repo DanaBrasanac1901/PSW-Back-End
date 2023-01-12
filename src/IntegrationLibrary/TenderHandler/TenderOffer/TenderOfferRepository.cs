@@ -34,7 +34,7 @@ namespace HospitalLibrary.Core.TenderOffer
 
         public void Update(TenderOffer tenderOffer)
         {
-            _context.Entry(tenderOffer).State = EntityState.Modified;
+            _context.Entry(tenderOffer).State = EntityState.Detached;
 
             try
             {
