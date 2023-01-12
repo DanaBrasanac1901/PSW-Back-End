@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Nest;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace IntegrationAPI.Controllers
 {
     [Route("api/[controller]")]
