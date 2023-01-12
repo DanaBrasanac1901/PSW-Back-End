@@ -29,8 +29,6 @@ namespace HospitalAPI.Controllers
             _availableAppointmentService = availableAppointmentService;
         }
 
-        
-        
 
         // GET: api/appointments
         [HttpGet]

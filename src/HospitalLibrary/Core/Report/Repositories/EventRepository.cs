@@ -52,5 +52,73 @@ namespace HospitalLibrary.Core.Report.Repositories
 
             return durations;
         }
+
+        public IEnumerable<int> GetAllStepsForNext(string reportId)
+        {
+            List<int> listOfNexts = new List<int>();
+
+            IEnumerable<NextButtonClicked> nextButtonClicked;
+
+            List<string> reportIds = (List<string>)GetReportIds();
+
+            
+            foreach (var id in reportIds)
+            {
+                if (reportId.Equals(id))
+                { 
+                       
+
+
+
+                         nextButtonClicked = (IEnumerable<NextButtonClicked>)_context.ReportCreationEvents.OfType<NextButtonClicked>().Where(e => e.ReportId == id).ToList();
+                         foreach(var next in nextButtonClicked)
+                         {
+                            if (next.FromStep != null)
+                            {
+                                listOfNexts.Add(next.FromStep);
+                            }
+                         }
+                    
+                  
+                }
+            }
+
+      
+
+
+            
+        
+
+            return listOfNexts;
+        }
+
+        public IEnumerable<int> GetAllStepsForBack(string reportId)
+        {
+            List<int> listOfBacks = new List<int>();
+
+            List<string> reportIds = (List<string>)GetReportIds();
+            
+            foreach (var id in reportIds) 
+            {
+                if (reportId.Equals(id))
+                {
+               
+
+
+                
+                    IEnumerable<BackButtonClicked> backButtonClicked = (IEnumerable<BackButtonClicked>)_context.ReportCreationEvents.OfType<BackButtonClicked>().Where(e => e.ReportId == id).ToList();
+                    foreach (var back in backButtonClicked)
+                    {
+                        if (back.FromStep != null)
+                        {
+                            listOfBacks.Add(back.FromStep);
+                        }
+                    }
+                }
+            }
+        
+            return listOfBacks;
+        }
+
     }
 }

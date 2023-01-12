@@ -15,5 +15,9 @@ namespace HospitalLibrary.Core.Report.Repositories
         IEnumerable<string> GetReportIds();
 
         IEnumerable<TimeSpan> GetDurations();
+
+        IEnumerable<int> GetAllStepsForBack(string reportId);
+
+        IEnumerable<int> GetAllStepsForNext(string reportId);
     }
 }
