@@ -60,26 +60,23 @@ namespace HospitalLibrary.Core.Report.Services
             Report.Model.Report report = _reportRepository.GetById(id);
 
             report = ReportAdapter.SetFields(report, dto);
+            DomainEvent domainEvent = report.FinishedCreating();
 
             _reportRepository.Update(report);
+            _eventRepository.Create(domainEvent);
         }
 
         public DomainEvent HandleClick(string id, int click)
         {
             Report.Model.Report report = _reportRepository.GetById(id);
 
-            DomainEvent domainEvent;
+            DomainEvent domainEvent = null;
 
-            if (click == 0)
-                domainEvent = report.ReportCreated();
-            else if (click == 1)
+            if (click == 1)
                 domainEvent = report.ClickedOnNextButton();
             else if (click == -1)
                 domainEvent = report.ClickedOnBackButton();
-            else
-                domainEvent = report.FinishedCreating();
-
-
+           
             _reportRepository.Update(report);
             _eventRepository.Create(domainEvent);
 
