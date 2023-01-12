@@ -8,15 +8,19 @@ namespace HospitalLibrary.Core.Report.DTO
 {
     public class ReportCreationDurationDTO
     {
-        private string reportId;
-        private TimeSpan durationInSeconds;
-        private string durationString;
+        public string reportId { get; set; }
+        public int durationInSeconds { get; set; }
+        public string durationString { get; set; }
 
-        public ReportCreationDurationDTO(string v, TimeSpan timeSpan)
+        public ReportCreationDurationDTO()
         {
-            this.reportId = v;
-            this.durationInSeconds = timeSpan;
-            this.durationString = timeSpan.Minutes.ToString() + ":" + timeSpan.Seconds.ToString();
+        }
+
+        public ReportCreationDurationDTO(string reportId, TimeSpan durationInSeconds)
+        {
+            this.reportId = reportId;
+            this.durationInSeconds = (int)durationInSeconds.TotalSeconds;
+            this.durationString = durationInSeconds.Minutes.ToString() + ":" + durationInSeconds.Seconds.ToString();
         }
     }
 }
