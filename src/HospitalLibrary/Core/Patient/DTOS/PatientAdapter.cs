@@ -11,7 +11,7 @@ namespace HospitalLibrary.Core.Patient.DTOS
         public static PatientForAppointmentDTO PatientToPatientForAppointmentDTO(Patient pat)
         {
             PatientForAppointmentDTO dto = new PatientForAppointmentDTO();
-            dto.id = pat.Id;
+            dto.id = pat.Id.ToString();
             dto.name = pat.Name;
             dto.surname = pat.Surname;
             return dto;
@@ -20,7 +20,7 @@ namespace HospitalLibrary.Core.Patient.DTOS
         public static PatientForReportDTO PatientToPatientForReportDTO(Patient pat)
         {
             PatientForReportDTO dto = new PatientForReportDTO();
-            dto.id = pat.Id;
+            dto.id = pat.Id.ToString();
             dto.name = pat.Name;
             dto.surname = pat.Surname;
             dto.age = pat.Age;
