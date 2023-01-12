@@ -53,6 +53,13 @@ namespace HospitalLibrary.Core.Report.Repositories
             _context.Reports.Remove(report);
             _context.SaveChanges();
         }
+
+        public string GetDoctorIdByReportId(string reportId)
+        {
+            Report.Model.Report report = GetById(reportId);
+            string doctorId = report.DoctorId;
+            return doctorId;
+        }
     }
 }
 

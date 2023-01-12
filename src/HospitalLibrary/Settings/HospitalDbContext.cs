@@ -15,6 +15,7 @@ using HospitalLibrary.Core.Consiliums;
 using HospitalLibrary.Core.Report;
 using HospitalLibrary.Core.Report.Model;
 using Npgsql;
+using HospitalLibrary.Core.Infrastructure;
 
 namespace HospitalLibrary.Settings
 {
@@ -63,6 +64,8 @@ namespace HospitalLibrary.Settings
         public DbSet<HealthMeasurements> HealthMeasurements { get; set; }
 
         public DbSet<PatientHealthMeasurements> PatientHealthMeasurements { get; set; }
+        public DbSet<DomainEvent> ReportCreationEvents { get; set; }
+      
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
@@ -79,6 +82,7 @@ namespace HospitalLibrary.Settings
             // Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
             //Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             //Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
+            /*
             modelBuilder.HasPostgresEnum<Specialty>();
             modelBuilder.HasPostgresEnum<Gender>();
             modelBuilder.HasPostgresEnum<BloodType>();
@@ -184,25 +188,42 @@ namespace HospitalLibrary.Settings
             //        drug1,drug2,drug3
             //     );
 
-            //    modelBuilder.Entity<SymptomList>().HasData(
-            //        new SymptomList()
-            //        {
-            //            Id= "Glavobolja",
-            //            Name = "Glavobolja"
-            //        },
-            //        new SymptomList()
-            //        {
-            //            Id = "Kijavica",
-            //            Name = "Kijavica"
-            //        },
-            //        new SymptomList()
-            //        {
-            //            Id = "Dijareja",
-            //            Name = "Dijareja"
-            //        }
-            //        );
+            modelBuilder.Entity<SymptomList>().HasData(
+                new SymptomList()
+                {
+                    Id= "Glavobolja",
+                    Name = "Glavobolja"
+                },
+                new SymptomList()
+                {
+                    Id = "Kijavica",
+                    Name = "Kijavica"
+                },
+                new SymptomList()
+                {
+                    Id = "Dijareja",
+                    Name = "Dijareja"
+                }
+                );
 
-            //    base.OnModelCreating(modelBuilder);
+            Patient patient1 = new Patient { Id = 1, Name = "Prvi", Surname = "Prvic", Email = "Mail", Gender = Gender.MALE, Age = 34, BloodType = BloodType.B, Allergies = null, DoctorID = "DOC1", Active = true, Jmbg = "4564565656" };
+            Patient patient2 = new Patient { Id = 2, Name = "Drugi", Surname = "Drugic", Email = "Mail2", Gender = Gender.MALE, Age = 34, BloodType = BloodType.A, Allergies = null, DoctorID = "DOC1", Active = true, Jmbg = "4564565656" };
+            modelBuilder.Entity<Patient>().HasData(
+                patient1, patient2
+                );
+
+            
+
+
+            modelBuilder.Entity<DomainEvent>()
+                .HasDiscriminator<string>("event_type")
+                .HasValue<NextButtonClicked>("next")
+                .HasValue<BackButtonClicked>("back")
+                .HasValue<ReportCreated>("created")
+                .HasValue<ReportFinished>("finished");
+
+
+            base.OnModelCreating(modelBuilder);
         }
 
 

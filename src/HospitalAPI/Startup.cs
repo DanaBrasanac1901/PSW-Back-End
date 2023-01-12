@@ -132,6 +132,11 @@ namespace HospitalAPI
 
             services.AddScoped<ISymptomListRepository, SymptomListRepository>();
             services.AddScoped<IDrugPrescriptionApplicationService, DrugPrescriptionApplicationService>();
+
+
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IEventSourcingStatistics, EventSourcingStatistics>();
+
             services.AddScoped<IHealthMeasurementsService, HealthMeasurementsService>();
             services.AddScoped<IHealthMeasurementsRepository, HealthMeasurementsRepository>();
             services.AddScoped<IPatientHealthMeasurementsService, PatientHealthMeasurementsService>();

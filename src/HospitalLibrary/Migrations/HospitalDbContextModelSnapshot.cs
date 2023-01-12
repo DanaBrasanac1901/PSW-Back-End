@@ -63,55 +63,34 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Appointments");
                 });
 
-            //modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodConsumptionRecord", b =>
-            //    {
-            //        b.Property<int>("Id")
-            //            .ValueGeneratedOnAdd()
-            //            .HasColumnType("integer")
-            //            .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+            modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodConsumptionRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            //        b.Property<double>("Amount")
-            //            .HasColumnType("double precision");
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
 
-            //        b.Property<DateTime>("CreatedAt")
-            //            .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
-            //        b.Property<string>("DoctorId")
-            //            .HasColumnType("text");
+                    b.Property<string>("DoctorId")
+                        .HasColumnType("text");
 
-            //        b.Property<string>("Reason")
-            //            .HasColumnType("text");
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
 
-            //        b.Property<Guid>("SourceBank")
-            //            .HasColumnType("uuid");
+                    b.Property<Guid>("SourceBank")
+                        .HasColumnType("uuid");
 
-            //        b.Property<BloodType>("Type")
-            //            .HasColumnType("blood_type");
+                    b.Property<BloodType>("Type")
+                        .HasColumnType("blood_type");
 
-            //        b.HasKey("Id");
+                    b.HasKey("Id");
 
-<<<<<<< HEAD
-            //        b.ToTable("BloodConsumptionRecords");
-            //    });
-
-            
-
-            modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodSupply", b =>
-=======
                     b.ToTable("BloodConsumptionRecords");
->>>>>>> feature/drug-prescription
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 2.0,
-                            CreatedAt = new DateTime(2022, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = "DOC1",
-                            Reason = "needed for surgery",
-                            SourceBank = new Guid("2d4894b6-02e4-4288-a3d3-089489563190"),
-                            Type = BloodType.A
-                        });
                 });
 
             //modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodRequest", b =>
@@ -121,23 +100,19 @@ namespace HospitalLibrary.Migrations
             //            .HasColumnType("integer")
             //            .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-<<<<<<< HEAD
             //        b.Property<double>("Amount")
             //            .HasColumnType("double precision");
-=======
-                    b.Property<string>("DoctorId")
-                        .HasColumnType("text");
 
-                    b.Property<DateTime>("Due")
-                        .HasColumnType("timestamp without time zone");
+            //        b.Property<Guid>("SourceBank")
+            //            .HasColumnType("uuid");
 
-                    b.Property<string>("Reason")
-                        .HasColumnType("text");
+            //        b.Property<BloodType>("Type")
+            //            .HasColumnType("blood_type");
 
-                    b.HasKey("Id");
+            //        b.HasKey("Id");
 
-                    b.ToTable("BloodRequests");
-                });
+            //        b.ToTable("HospitalBlood");
+            //    });
 
             modelBuilder.Entity("HospitalLibrary.Core.Blood.BloodSupply", b =>
                 {
@@ -148,22 +123,16 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
->>>>>>> feature/drug-prescription
 
-            //        b.Property<Guid>("SourceBank")
-            //            .HasColumnType("uuid");
+                    b.Property<Guid>("SourceBank")
+                        .HasColumnType("uuid");
 
-            //        b.Property<BloodType>("Type")
-            //            .HasColumnType("blood_type");
+                    b.Property<BloodType>("Type")
+                        .HasColumnType("blood_type");
 
-            //        b.HasKey("Id");
+                    b.HasKey("Id");
 
-<<<<<<< HEAD
-            //        b.ToTable("HospitalBlood");
-            //    });
-=======
                     b.ToTable("HospitalBlood");
->>>>>>> feature/drug-prescription
 
                     b.HasData(
                         new
