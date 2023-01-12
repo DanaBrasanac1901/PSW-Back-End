@@ -57,6 +57,9 @@ namespace HospitalLibrary.Settings
             modelBuilder.HasPostgresEnum<BloodType>();
             modelBuilder.HasPostgresEnum<AppointmentStatus>();
 
+            modelBuilder.Entity<Patient>().Property(p => p.AddressJson).HasColumnType("jsonb");
+
+
             Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
             Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
@@ -93,6 +96,11 @@ namespace HospitalLibrary.Settings
             User user3 = new User(3, 1, "Jelena", "Novakovic", "patient", "AEssL8tRDqEPwGzxIeyAU1F/kuq1w4klNScLgIOmwe/N+j4e24+2DR8o31HhYtWziw==", "PATIENT", true);
             modelBuilder.Entity<User>().HasData(user1, user2, user3);
 
+
+            string addressJson = "{\"Street\":\"Bulevar Oslobodjenja\",\"StreetNumber\":\"80\",\"City\":\"Novi Sad\"}";
+            Patient patient= new Patient() {Id=1, Name="Jelena",Surname="Novakovic",AddressJson=addressJson,Jmbg="782847638",Gender=Gender.FEMALE,Email="patient",Age=20,BloodType=BloodType.B};
+            modelBuilder.Entity<Patient>().HasData(patient);
+
             modelBuilder.Entity<InpatientTreatmentRecord>().HasData(
                 new InpatientTreatmentRecord()
                 {
@@ -123,7 +131,6 @@ namespace HospitalLibrary.Settings
                   }
             );
 
-            modelBuilder.Entity<Patient>().Property(p => p.Address).HasColumnType("jsonb");
            // Patient patient1 = new(1, "Jelena", "Novakovic", null , "patient", Gender.FEMALE, 31, BloodType.A, null, null);
            // modelBuilder.Entity<Patient>().HasData(patient1);
 

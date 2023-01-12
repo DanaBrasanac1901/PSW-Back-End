@@ -16,7 +16,7 @@ namespace HospitalLibrary.Core.Statistics
     public class SchedulingStatisticsService : ISchedulingStatisticsService
     {
         // statisticsList[0] = number of steps and their occurences
-        // statisticsList[1] = time spent on each step (in seconds) and their occurences
+        // statisticsList[1] = time spent in each session (in seconds) and their occurences
         // statisticsList[2] = how many times next was clicked in one session and occurences
         // statisticsList[3] = how many times schedule was clicked in one session and occurences
         // statisticsList[4] = how many times back was clicked in one session and occurences
