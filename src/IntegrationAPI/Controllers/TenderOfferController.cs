@@ -61,7 +61,6 @@ namespace HospitalAPI.Controllers
                     foreach (TenderOffer offer in tenderHandler.TenderOffers)
                         tenderoffers.Add(offer);
                 return Ok(tenderoffers);
-            return Ok();
         }
         // POST api/tenderOffers
         [HttpPost]
@@ -71,8 +70,15 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            _tenderHandlerService.CreateOffer(tenderOffer);
+            bool exists = false;
+            TenderHandler tenderHandler = _tenderHandlerService.GetById(tenderOffer.TenderId);
+            foreach (TenderOffer offer in tenderHandler.TenderOffers)
+                if (tenderOffer.BloodBankId == offer.BloodBankId)
+                    exists = true;
+            if (!exists)
+                _tenderHandlerService.CreateOffer(tenderOffer);
+            else
+                _tenderHandlerService.UpdateOffer(tenderOffer);
             return CreatedAtAction("GetById", new { id = tenderOffer.TenderId, bloodBankId=tenderOffer.BloodBankId }, tenderOffer);
         }
         
@@ -164,8 +170,10 @@ namespace HospitalAPI.Controllers
             int id = Convert.ToInt32(Request.Query["Id"]);
             DateTime date = DateTime.Parse(Request.Query["Date"]);
             string email = Request.Query["Email"];
-            
-            _tenderHandlerService.DeleteTender(_tenderHandlerService.GetById(id).Tender);
+            TenderHandler tenderHandler = _tenderHandlerService.GetById(id);
+            foreach(TenderOffer offer in tenderHandler.TenderOffers)
+                _tenderHandlerService.DeleteOffer(offer);
+            _tenderHandlerService.DeleteTender(tenderHandler.Tender);
             NotifyLosers(email,date);
             return Redirect("https//localhost:4200/tenders");
         }
