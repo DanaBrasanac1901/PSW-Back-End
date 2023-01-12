@@ -240,6 +240,25 @@ namespace HospitalLibrary.Core.Report.Services
             }
 
             return correlations;
-        }       
+        } 
+        
+        public List<NextBackButtonProportionDTO> GetRatioOfSuccess()
+        {
+            List<string> reportIds = (List<string>)_eventRepository.GetReportIds();
+            List<NextBackButtonProportionDTO> listOfSuccess = new List<NextBackButtonProportionDTO>();
+            for (int i = 0; i < reportIds.Count; i++)
+            {
+                List<int> listOfNext = (List<int>)_eventRepository.GetAllStepsForNext(reportIds[i]);
+                List<int> listOfBack = (List<int>)_eventRepository.GetAllStepsForBack(reportIds[i]);
+                int allSteps=listOfNext.Count+listOfBack.Count;
+                int numOfNextSteps = listOfNext.Count;
+                double percentOfSuccess= (double)(Decimal.Divide(numOfNextSteps, allSteps) * 100);
+
+                listOfSuccess.Add(new NextBackButtonProportionDTO(reportIds[i], listOfNext.Count, listOfBack.Count, percentOfSuccess));
+            }
+
+            return listOfSuccess;
+
+        }
     }
 }
