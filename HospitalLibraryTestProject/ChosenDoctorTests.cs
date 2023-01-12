@@ -23,10 +23,10 @@ namespace HospitalLibraryTestProject
             var doctors = new List<Doctor>();
             doctorRepo = new Mock<IDoctorRepository>();
            
-            doctors.Add(new Doctor { Id = "1", Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 13 });
-            doctors.Add(new Doctor { Id = "2", Name = "Milica", Surname = "Todorovic", Email = "mtodorovic@hotmail.com", RoomId = 2, StartWorkTime = 8, EndWorkTime = 13 });
-            doctors.Add(new Doctor { Id = "3", Name = "Darko", Surname = "Mitic", Email = "darkomitic@live.com", RoomId = 3, StartWorkTime = 13, EndWorkTime = 20 });
-            doctors.Add(new Doctor { Id = "4", Name = "Selena", Surname = "Mirkovic", Email = "selmirkovic@gmail.com", RoomId = 4, StartWorkTime = 13, EndWorkTime = 20 });
+            doctors.Add(new Doctor { Id = 1, Name = "Ivan", Surname = "Nikolic", Email = "inik@gmail.com", RoomId = 1, StartWorkTime = 8, EndWorkTime = 13 });
+            doctors.Add(new Doctor { Id = 2, Name = "Milica", Surname = "Todorovic", Email = "mtodorovic@hotmail.com", RoomId = 2, StartWorkTime = 8, EndWorkTime = 13 });
+            doctors.Add(new Doctor { Id = 3, Name = "Darko", Surname = "Mitic", Email = "darkomitic@live.com", RoomId = 3, StartWorkTime = 13, EndWorkTime = 20 });
+            doctors.Add(new Doctor { Id = 4, Name = "Selena", Surname = "Mirkovic", Email = "selmirkovic@gmail.com", RoomId = 4, StartWorkTime = 13, EndWorkTime = 20 });
 
             this.doctorRepo.Setup(m => m.GetAll()).Returns(doctors);
 
@@ -37,11 +37,11 @@ namespace HospitalLibraryTestProject
             var patients = new List<Patient>();
             patientRepo = new Mock<IPatientRepository>();
 
-            patients.Add(new Patient { Id = 5, Name = "Janko", Surname= "Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = "1" });
-            patients.Add(new Patient { Id = 6, Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = new List<string>(), DoctorID = "1"});
-            patients.Add(new Patient { Id = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = new List<string>(), DoctorID = "2"});
-            patients.Add(new Patient { Id = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = "3" });
-            patients.Add(new Patient { Id = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = new List<string>(), DoctorID = "1" });
+            patients.Add(new Patient { Id = 5, Name = "Janko", Surname= "Jankovic", Email = "janki@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = 1 });
+            patients.Add(new Patient { Id = 6, Name = "Milan", Surname = "Simic", Email = "mmilaaan@hotmail.com", BloodType = BloodType.O, Allergies = new List<string>(), DoctorID = 1});
+            patients.Add(new Patient { Id = 7, Name = "Nikola", Surname = "Nikolic", Email = "niknik@live.com", BloodType = BloodType.AB, Allergies = new List<string>(), DoctorID = 2});
+            patients.Add(new Patient { Id = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = new List<string>(), DoctorID = 3});
+            patients.Add(new Patient { Id = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = new List<string>(), DoctorID = 4});
 
             this.patientRepo.Setup(m => m.GetAll()).Returns(patients);
         }
@@ -67,8 +67,8 @@ namespace HospitalLibraryTestProject
         public void Finds_doctors_with_smallest_patient_count()
         {
             Setting_patient_service();
-            List<string> wantedDoctorIds = new List<string>(){ "2", "3", "4"};
-            List<string> result = new List<string>();
+            List<int> wantedDoctorIds = new(){ 2, 3, 4};
+            List<int> result = new();
 
             var doctorList = patientService.DoctorsWithSimiliarNumOfPatients(0, 1);
            
@@ -97,7 +97,7 @@ namespace HospitalLibraryTestProject
         {
             Setting_patient_service();
 
-            var numberOfPatients = patientService.NumberOfPatientsByDoctor("2");
+            var numberOfPatients = patientService.NumberOfPatientsByDoctor(2);
 
             Assert.StrictEqual(1, numberOfPatients);
         }

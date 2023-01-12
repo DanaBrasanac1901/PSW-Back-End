@@ -218,7 +218,7 @@ namespace HospitalLibrary.Core.Report.Services
         }
         public int GetDoctorAge(string reportId)
         {
-            string doctorId=_reportRepository.GetDoctorIdByReportId(reportId);
+            int doctorId = _reportRepository.GetDoctorIdByReportId(reportId);
             Doctor.Doctor doctor = _doctorRepository.GetById(doctorId);
             int age = doctor.Age;
             return age;

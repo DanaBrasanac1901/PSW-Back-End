@@ -14,6 +14,6 @@ namespace HospitalLibrary.Core.Report.Repositories
         void Create(Report.Model.Report report);
         void Update(Report.Model.Report report);
         void Delete(Report.Model.Report report);
-        string GetDoctorIdByReportId(string reportId);
+        int GetDoctorIdByReportId(string reportId);
     }
 }

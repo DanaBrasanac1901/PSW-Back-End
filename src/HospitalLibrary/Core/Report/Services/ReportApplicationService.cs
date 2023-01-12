@@ -70,6 +70,7 @@ namespace HospitalLibrary.Core.Report.Services
             var list = _reportRepository.GetAll();
             string flag = (list.ToList().Count + 1).ToString();
             Model.Report report = new Model.Report(flag);
+            report.ReportCreated();
             _reportRepository.Create(report);
             return report.Id;
         }

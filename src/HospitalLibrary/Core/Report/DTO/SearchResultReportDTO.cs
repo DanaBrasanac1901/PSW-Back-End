@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Report.DTO
         public string dayAndTimeOfMaking { get; set; }
         public string description { get; set; }
         public List<DrugDTO> prescriptions { get; set; }
-        public string patientId { get; set; }
+        public int patientId { get; set; }
         public string appointmentId { get; set; }
 
         public SearchResultReportDTO() { }

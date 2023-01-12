@@ -54,10 +54,10 @@ namespace HospitalLibrary.Core.Report.Repositories
             _context.SaveChanges();
         }
 
-        public string GetDoctorIdByReportId(string reportId)
+        public int GetDoctorIdByReportId(string reportId)
         {
             Report.Model.Report report = GetById(reportId);
-            string doctorId = report.DoctorId;
+            int doctorId = report.DoctorId;
             return doctorId;
         }
     }

@@ -23,6 +23,7 @@ namespace HospitalLibrary.Core.Report.Model
         public int InitialVersion { get; private set; }
         public int CurrentStep { get; private set; }
 
+        public Report() { }
         public Report(string id){
             Id = id;
             DayAndTimeOfMaking = DateTime.Now;
@@ -66,7 +67,7 @@ namespace HospitalLibrary.Core.Report.Model
 
         public DomainEvent ClickedOnNextButton()
         {
-            if (CurrentStep < 4)
+            if (CurrentStep < 3)
                 return Causes(new NextButtonClicked(Id, CurrentStep));
             return null;
         }

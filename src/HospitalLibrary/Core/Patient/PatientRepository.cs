@@ -23,7 +23,7 @@ namespace HospitalLibrary.Core.Patient
         public Patient GetById(int id)
         {
 
-            return _context.Patients.Find(Int32.Parse(id));
+            return _context.Patients.Find(id);
         }
 
         public void Create(Patient patient)

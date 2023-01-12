@@ -206,8 +206,8 @@ namespace HospitalLibrary.Settings
                 }
                 );
 
-            Patient patient1 = new Patient { Id = 1, Name = "Prvi", Surname = "Prvic", Email = "Mail", Gender = Gender.MALE, Age = 34, BloodType = BloodType.B, Allergies = null, DoctorID = "DOC1", Active = true, Jmbg = "4564565656" };
-            Patient patient2 = new Patient { Id = 2, Name = "Drugi", Surname = "Drugic", Email = "Mail2", Gender = Gender.MALE, Age = 34, BloodType = BloodType.A, Allergies = null, DoctorID = "DOC1", Active = true, Jmbg = "4564565656" };
+            Patient patient1 = new Patient { Id = 1, Name = "Prvi", Surname = "Prvic", Email = "Mail", Gender = Gender.MALE, Age = 34, BloodType = BloodType.B, Allergies = null, DoctorID = 1, Active = true, Jmbg = "4564565656" };
+            Patient patient2 = new Patient { Id = 2, Name = "Drugi", Surname = "Drugic", Email = "Mail2", Gender = Gender.MALE, Age = 34, BloodType = BloodType.A, Allergies = null, DoctorID = 1, Active = true, Jmbg = "4564565656" };
             modelBuilder.Entity<Patient>().HasData(
                 patient1, patient2
                 );

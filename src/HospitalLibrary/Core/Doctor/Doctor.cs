@@ -67,7 +67,7 @@ namespace HospitalLibrary.Core.Doctor
             Specialty = (Specialty)specialty;
 
         }
-        public Doctor(string id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty,int age)
+        public Doctor(int id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty,int age)
 
         {
             Id = id;
