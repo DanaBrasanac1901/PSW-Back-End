@@ -14,11 +14,19 @@ namespace HospitalAPI.Controllers
             _schedulingStatisticsService = schedulingStatisticsService;   
         }
 
+        // ALWAYS FIRST CALL GRAPH AND TABLE SECOND
+        // GraphData also stores table data so if table is called first it will throw exception
 
-        [HttpGet("schedule")]
-        public ActionResult GetStatistics()
+        [HttpGet("schedule/graphs")]
+        public ActionResult GetGraphData()
         {
             return Ok(_schedulingStatisticsService.GetStatistics());
+        }
+
+        [HttpGet("schedule/table")]
+        public ActionResult GetTableData()
+        {
+            return Ok(_schedulingStatisticsService.GetTableStats());
         }
     }
 }

@@ -10,5 +10,6 @@ namespace HospitalLibrary.Core.Statistics
     public interface ISchedulingStatisticsService
     {
         public List<List<StatisticEntry>> GetStatistics();
+        public List<TableEntry> GetTableStats();
     }
 }

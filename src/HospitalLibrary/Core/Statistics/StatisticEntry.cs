@@ -8,7 +8,15 @@ namespace HospitalLibrary.Core.Statistics
 {
     public class StatisticEntry
     {
-        public int DataPoint;
-        public int Occurences;
+        public int DataPoint { get; set; }
+        public int Occurences { get; set; }
+
+        public StatisticEntry() { }
+
+        public StatisticEntry(int dp, int occurences) 
+        {
+            DataPoint = dp;
+            Occurences = occurences;
+        }
     }
 }
