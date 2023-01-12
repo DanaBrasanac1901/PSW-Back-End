@@ -548,3 +548,4 @@ $RECYCLE.BIN/
 .idea
 src/HospitalAPI/appsettings.json
 *.sln
+src/IntegrationAPI/appsettings.json
