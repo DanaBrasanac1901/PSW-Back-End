@@ -10,13 +10,10 @@ namespace HospitalLibrary.Core.Report.Services
     public interface IEventSourcingStatistics
     {
         List<ReportCreationDurationDTO> GetReportCreationDurations();
-
         double GetAvgNumOfSteps();
-
         NumOfTimeOnEachStepDTO NumOfTimeOnEachStep(string reportId);
-
         List<DurationAndNumOfStepsInCorellationWithDoctorAgeDTO> GetDurationAndNumOfStepsInCorellationWithDoctorAge();
         List<NumOfTimeOnEachStepDTO> ListNumOfTimeOnEachStep();
-
+        List<NextBackButtonProportionDTO> GetRatioOfSuccess();
     }
 }
