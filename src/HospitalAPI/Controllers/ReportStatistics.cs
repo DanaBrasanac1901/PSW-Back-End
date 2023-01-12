@@ -25,6 +25,7 @@ namespace HospitalAPI.Controllers
         {
 
             List<ReportCreationDurationDTO> responseDTOs = _statisticsService.GetReportCreationDurations();
+
             return Ok(responseDTOs);
         }
 

@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Report.DTO
 
         int numberOfSteps { get; set; }
 
-        TimeSpan duration { get; set; }
+        int duration { get; set; }
 
         string durationString { get; set; }
 
@@ -27,7 +27,7 @@ namespace HospitalLibrary.Core.Report.DTO
             this.reportId = reportId;
             this.age = age;           
             this.numberOfSteps = numberOfSteps;
-            this.duration = duration;
+            this.duration =(int) duration.TotalSeconds;
             this.durationString = duration.Minutes.ToString() + ":" + duration.Seconds.ToString();
         }
     }
