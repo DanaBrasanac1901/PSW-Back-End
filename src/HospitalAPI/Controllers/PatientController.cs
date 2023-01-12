@@ -47,7 +47,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("getByEmail/{email}")]
         public ActionResult GetByEmail(string email)
         {
-            var patient = _patientService.GetByEmail(email);
+            var patient = _patientService.GetDTOByEmail(email);
             if (patient == null)
             {
                 return NotFound();
