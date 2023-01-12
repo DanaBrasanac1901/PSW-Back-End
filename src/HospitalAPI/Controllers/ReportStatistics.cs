@@ -55,5 +55,14 @@ namespace HospitalAPI.Controllers
             List<DurationAndNumOfStepsInCorellationWithDoctorAgeDTO> responseDTOs = _statisticsService.GetDurationAndNumOfStepsInCorellationWithDoctorAge();
             return Ok(responseDTOs);
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public ActionResult GetPercentOfSuccess()
+        {
+
+            List<NextBackButtonProportionDTO> responseDTOs = _statisticsService.GetRatioOfSuccess();
+            return Ok(responseDTOs);
+        }
     }
 }
