@@ -8,14 +8,14 @@ namespace HospitalLibrary.Core.Report.DTO
 {
     public class DurationAndNumOfStepsInCorellationWithDoctorAgeDTO
     {
-        string reportId { get; set; }
-        int age { get; set; }  
+        public string reportId { get; set; }
+        public int age { get; set; }
 
-        int numberOfSteps { get; set; }
+        public int numberOfSteps { get; set; }
 
-        int duration { get; set; }
+        public int duration { get; set; }
 
-        string durationString { get; set; }
+        public string durationString { get; set; }
 
         public DurationAndNumOfStepsInCorellationWithDoctorAgeDTO()
         {
