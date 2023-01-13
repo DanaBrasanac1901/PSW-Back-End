@@ -56,7 +56,7 @@ namespace HospitalLibrary.Core.Vacation
             _context.SaveChanges();
         }
 
-        public IEnumerable<VacationRequest> GetAllByDoctor(string id)
+        public IEnumerable<VacationRequest> GetAllByDoctor(int id)
         {
             List<VacationRequest> requests = _context.VacationRequests.Where(request => request.DoctorId.Equals(id)).ToList();
             return requests;

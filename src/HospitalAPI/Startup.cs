@@ -143,7 +143,16 @@ namespace HospitalAPI
 
             services.AddScoped<ISymptomListRepository, SymptomListRepository>();
             services.AddScoped<IDrugPrescriptionApplicationService, DrugPrescriptionApplicationService>();
-            
+
+
+            services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IEventSourcingStatistics, EventSourcingStatistics>();
+
+            services.AddScoped<IHealthMeasurementsService, HealthMeasurementsService>();
+            services.AddScoped<IHealthMeasurementsRepository, HealthMeasurementsRepository>();
+            services.AddScoped<IPatientHealthMeasurementsService, PatientHealthMeasurementsService>();
+            services.AddScoped<IPatientHealthMeasurementsRepository, PatientHealthMeasurementsRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

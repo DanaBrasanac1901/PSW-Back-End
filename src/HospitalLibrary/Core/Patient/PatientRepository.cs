@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,8 +20,9 @@ namespace HospitalLibrary.Core.Patient
             return _context.Patients.ToList();
         }
 
-        public Patient GetById(string id)
+        public Patient GetById(int id)
         {
+
             return _context.Patients.Find(id);
         }
 

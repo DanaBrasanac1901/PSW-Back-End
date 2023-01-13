@@ -23,27 +23,23 @@ namespace HospitalAPI.Controllers
             _emailSendService = emailSendService;
         }
 
-        // GET: api/patients
         [HttpGet]
         public ActionResult GetAll()
         {
             return Ok(_patientService.GetAll());
         }
-
-        // GET api/patients/2
        
         [HttpGet("{id}")]
-        public ActionResult GetById(string id)
+        public ActionResult GetById(int id)
         {
             var patient = _patientService.GetById(id);
             if (patient == null)
             {
                 return NotFound();
             }
-
             return Ok(patient);
         }
-        // POST api/patients
+
         [HttpPost]
         public ActionResult Create(Patient patient)
         {
@@ -51,7 +47,6 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             _patientService.Create(patient);
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
@@ -65,47 +60,33 @@ namespace HospitalAPI.Controllers
             }
 
             Patient patient = new Patient(regDTO);
-
             if (_userService.GetByEmail(patient.Email) != null) return BadRequest("Exists");
-            
             _patientService.Register(patient);
-
             Patient createdPatient = _patientService.GetByEmail(patient.Email);
-
             if (createdPatient != null)
             {
                 User newUser = new User(regDTO, createdPatient.Id);
                 _userService.Create(newUser);
             }
-
            if(!SendActivationEmail(createdPatient.Email)) return BadRequest("Email");
-            
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
-        
         private bool SendActivationEmail(string email)
         {
-
             var token = _userService.GenerateActivationToken(email);
-
             if (token != null)
             {
                 _userService.SaveTokenToDatabase(email, token);
-
                 var lnkHref = Url.Action("Activate", "Credentials", new { email = email, code = token }, "http");
                 string subject = "HealthcareMD Activation Link";
                 string body = "Your activation link: " + lnkHref;
                 _emailSendService.SendEmail(new Message(new string[] { email, "tibbers707@gmail.com" }, subject, body));
                 return true;
             }
-
             return false;
         }
 
-        
-
-        // PUT api/patients/2
         [HttpPut("{id}")]
         public ActionResult Update(int id, Patient patient)
         {
@@ -113,12 +94,10 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             if (!id.Equals(patient.Id))
             {
                 return BadRequest();
             }
-
             try
             {
                 _patientService.Update(patient);
@@ -127,41 +106,35 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest();
             }
-
             return Ok(patient);
         }
 
-        // DELETE api/patients/2
         [HttpDelete("{id}")]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int id)
         {
             var patient = _patientService.GetById(id);
             if (patient == null)
             {
                 return NotFound();
             }
-
             _patientService.Delete(patient);
             return NoContent();
         }
 
         [HttpGet("minimal-patients-doctor")]
-        public ActionResult GetDoctorsWithLeastPatients() {
-
+        public ActionResult GetDoctorsWithLeastPatients() 
+        {
             var doctors = _patientService.GetDoctorsWithLeastPatients();
             if(doctors == null)
             {
                 return NotFound();
             }
-
             return Ok(doctors);
-        
-        
         }
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public ActionResult GetPatientsForSpecificDoctor(string id)
+        public ActionResult GetPatientsForSpecificDoctor(int id)
         {
             var patients = _patientService.GetPatientsForDoctor(id);
             return Ok(patients);
@@ -169,12 +142,11 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public ActionResult GetPatientForReport(string id)
+        public ActionResult GetPatientForReport(int id)
         {
             var patient = _patientService.GetPatientForReport(id);
             return Ok(patient);
         }
-
         /*
 
         [HttpGet("login/{email}")]

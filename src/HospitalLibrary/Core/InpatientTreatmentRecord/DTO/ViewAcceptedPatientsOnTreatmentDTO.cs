@@ -12,7 +12,7 @@ namespace HospitalLibrary.Core.InpatientTreatmentRecord.DTO
         //public string patientSurname { get; set; }
 
         public string id { get; set; }
-        public string patientId { get; set; }
+        public int patientId { get; set; }
         public string roomId { get; set; }
         public string bedId { get; set; }
 

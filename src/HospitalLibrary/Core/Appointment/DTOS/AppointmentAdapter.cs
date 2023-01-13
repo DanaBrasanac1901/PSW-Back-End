@@ -12,14 +12,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
         public static Appointment CreateAppointmentDTOToAppointment(CreateAppointmentDTO appDTO)
         {
             Appointment app = new Appointment();
-            if(appDTO.doctorId != null)
-            {
-                app.DoctorId = appDTO.doctorId;
-            }
-            else
-            {
-                app.DoctorId = "DOC1";
-            }
+            app.DoctorId = appDTO.doctorId;
             app.PatientId = appDTO.patientId;
             string DAT = appDTO.startDate + " " + appDTO.startTime + ":00";
             app.Start = Convert.ToDateTime(DAT);
@@ -46,7 +39,22 @@ namespace HospitalLibrary.Core.Appointment.DTOS
             RescheduleAppointmentDTO dto = new RescheduleAppointmentDTO();
             dto.id = appointment.Id;
             dto.patientId = appointment.PatientId;
-            dto.date = appointment.Start.Year + "-" + appointment.Start.Month + "-" + appointment.Start.Day;
+            if(appointment.Start.Month < 10 && appointment.Start.Day < 10)
+            {
+                dto.date = appointment.Start.Year + "-" + "0" + appointment.Start.Month + "-" + "0" + appointment.Start.Day;
+            }
+            else if(appointment.Start.Month < 10)
+            {
+                dto.date = appointment.Start.Year + "-" + "0" + appointment.Start.Month + "-" + appointment.Start.Day;
+            }
+            else if(appointment.Start.Day < 10)
+            {
+                dto.date = appointment.Start.Year + "-" + appointment.Start.Month + "-" + "0" + appointment.Start.Day;
+            }
+            else
+            {
+                dto.date = appointment.Start.Year + "-" + appointment.Start.Month + "-" + appointment.Start.Day;
+            }
             dto.time = appointment.Start.Hour + ":" + appointment.Start.Minute;
             return dto;
         }

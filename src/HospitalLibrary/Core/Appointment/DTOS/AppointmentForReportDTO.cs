@@ -9,8 +9,8 @@ namespace HospitalLibrary.Core.Appointment.DTOS
     public class AppointmentForReportDTO
     {
         public string id { get; set; }
-        public string patientId { get; set; }
-        public string doctorId { get; set; }
+        public int patientId { get; set; }
+        public int doctorId { get; set; }
 
         public AppointmentForReportDTO()
         {

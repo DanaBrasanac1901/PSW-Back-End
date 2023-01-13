@@ -1,5 +1,7 @@
-﻿using HospitalLibrary.Core.Report.DTO;
+﻿using HospitalLibrary.Core.Infrastructure;
+using HospitalLibrary.Core.Report.DTO;
 using HospitalLibrary.Core.Report.Model;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +26,9 @@ namespace HospitalLibrary.Core.Report.Services
         ICollection<Drug> GetDrugFromReport(string reportId);
 
         DrugPrescriptionToShowDTO GetDrugToShow(string id);
-
-
-
+        string InstantiateReport();
+        DomainEvent HandleClick(string id, int eventCode);
+        void SetReportFields(string id, ReportToCreateDTO dto);
+        List<SearchResultReportDTO> GetSearchMatches(string[] searchWords);
     }
 }

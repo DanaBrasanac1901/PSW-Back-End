@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Doctor.DTOS
 {
     public class DoctorsShiftDTO
     {
-        public string id { get; set; }
+        public int id { get; set; }
         public int startWorkTime { get; set; }
         public int endWorkTime { get; set; }
 

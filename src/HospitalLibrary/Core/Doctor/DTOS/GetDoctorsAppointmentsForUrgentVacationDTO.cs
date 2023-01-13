@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Doctor.DTOS
 {
     public class GetDoctorsAppointmentsForUrgentVacationDTO
     {
-        public string id;
+        public int id;
         public string vacationStart;
         public string vacationEnd;
 
@@ -16,7 +16,7 @@ namespace HospitalLibrary.Core.Doctor.DTOS
         {
         }
 
-        public GetDoctorsAppointmentsForUrgentVacationDTO(string id, string vacationStart, string vacationEnd)
+        public GetDoctorsAppointmentsForUrgentVacationDTO(int id, string vacationStart, string vacationEnd)
         {
             this.id = id;
             this.vacationStart = vacationStart;

@@ -26,7 +26,7 @@ namespace HospitalLibrary.Core.Appointment
         }
 
 
-        public IEnumerable<AppointmentPatientDTO> GetForPatient(string patientId)
+        public IEnumerable<AppointmentPatientDTO> GetForPatient(int patientId)
         {
             IEnumerable<Appointment> appointments = _appointmentRepository.GetAllByPatient(patientId);
             List<AppointmentPatientDTO> result = new List<AppointmentPatientDTO>();

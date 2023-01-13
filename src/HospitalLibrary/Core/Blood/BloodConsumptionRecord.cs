@@ -16,11 +16,11 @@ namespace HospitalLibrary.Core.Blood
         public BloodType Type { get; set; }
         public String Reason { get; set; }
         public DateTime CreatedAt { get; set; }
-        public String DoctorId { get; set; }
+        public int DoctorId { get; set; }
         public Guid SourceBank { get; set; }
 
         public BloodConsumptionRecord() { }
-        public BloodConsumptionRecord(int id, double amount, BloodType type, string reason, DateTime createAt, string doctorId, Guid sourceBank)
+        public BloodConsumptionRecord(int id, double amount, BloodType type, string reason, DateTime createAt, int doctorId, Guid sourceBank)
         {
             Id = id;        
             Amount = amount;

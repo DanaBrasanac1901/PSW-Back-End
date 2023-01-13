@@ -16,5 +16,13 @@ namespace HospitalLibrary.Core.Blood
         void CreateBloodRequest(CreateBloodRequestDTO bloodRequest);
         int GenerateId(int type);
         BloodConsumptionRecord GetById(int id);
+        double GetByGroupO();
+        double GetByGroupA();
+        double GetByGroupB();
+        double GetByGroupAB();
+
+
+
+
     }
 }

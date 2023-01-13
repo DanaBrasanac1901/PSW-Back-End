@@ -9,7 +9,7 @@ namespace HospitalLibrary.Core.Appointment.DTOS
     public class ViewAllAppointmentsDTO
     {
         public string Id { get; set; }
-        public string PatientId { get; set; }
+        public int PatientId { get; set; }
         public string RoomNumber { get; set; }
         public string Start { get; set; }
         public AppointmentStatus Status { get; set; }

@@ -22,11 +22,15 @@ namespace HospitalLibrary.Core.Patient
         private int age;
         private BloodType bloodType;
         private List<string> allergies;
-        private string doctorID;
+        private int doctorID;
         private bool active;
        
         public Patient() {}
-      
+        public Patient(string id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID, bool active)
+
+        public Patient() {}
+
+
         public Patient(RegisterDTO regDTO)
         {
             this.name = regDTO.Name;
@@ -45,8 +49,6 @@ namespace HospitalLibrary.Core.Patient
                 allergies.Add(allergy);
             }
             this.doctorID = regDTO.DoctorId;
-        }
-
         private Address MakeAddress(string address)
         {
             string[] all = address.Split(",");
@@ -70,6 +72,8 @@ namespace HospitalLibrary.Core.Patient
         }
 
         public Patient(int id, string name, string surname, string address, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID)
+
+        public Patient(int id, string name, string surname, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, string doctorID)
         {
             this.Id = id;
             this.Name = name;
@@ -116,7 +120,7 @@ namespace HospitalLibrary.Core.Patient
         public int Age { get => age; set => age = value; }
         public BloodType BloodType { get => bloodType; set => bloodType = value; }
         public List<string> Allergies { get => allergies; set => allergies = value; }
-        public string DoctorID { get => doctorID; set => doctorID = value; }
+        public int DoctorID { get => doctorID; set => doctorID = value; }
         public bool Active { get => active; set => active = value; }
 
         public string Jmbg { get => jmbg; set => jmbg = value; }

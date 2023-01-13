@@ -31,7 +31,6 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
-
             return Ok(request);
         }
 
@@ -43,16 +42,11 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-
             InpatientTreatmentRecord newRecord = InpateintTreatmentRecordDTOAdapter.InpatientTreatmentRecordDTOToObject(record);
             newRecord.Id = _inpatientTreatmentService.GenerateStringID();
             newRecord.DischargeDate.AddDays(30);
-
             _inpatientTreatmentService.Create(newRecord);
-
             _equipmentService.ChangeBedStatus(newRecord.BedID, 0);
-
             return CreatedAtAction("GetById", new { id = newRecord.Id }, newRecord);
         }
 
@@ -76,9 +70,7 @@ namespace HospitalAPI.Controllers
                 InpatientTreatmentRecord record = _inpatientTreatmentService.GetById(id);
                 record.DischargeReason = reason;
                 _inpatientTreatmentService.Discharge(id);
-
                 _equipmentService.ChangeBedStatus(record.BedID, 1);
-
                 return Ok(record);
             }
         }
@@ -91,7 +83,6 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             InpatientTreatmentRecord record = _inpatientTreatmentService.GetById(id);
             record.Therapy = therapy;
             _inpatientTreatmentService.Update(record);
@@ -100,7 +91,7 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]/{id}")]
-        public ActionResult GetAllByDoctor(string id)
+        public ActionResult GetAllByDoctor(int id)
         {
             return Ok(_inpatientTreatmentService.GetAllByDoctor(id));   
         }

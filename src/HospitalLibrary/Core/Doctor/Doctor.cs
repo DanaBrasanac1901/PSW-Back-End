@@ -12,7 +12,7 @@ namespace HospitalLibrary.Core.Doctor
 {
     public class Doctor
     {   
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
@@ -25,6 +25,9 @@ namespace HospitalLibrary.Core.Doctor
         [Range(0, 23)]
         public int EndWorkTime { get; set; }
 
+        public int Age { get; set; }
+
+
         public virtual ICollection<VacationRequest> VacationRequests { get; set; }
         
         public virtual ICollection<Appointment.Appointment> Appointments{ get; set; }
@@ -32,7 +35,7 @@ namespace HospitalLibrary.Core.Doctor
         
         public Doctor() {}
 
-        public Doctor(string id, string name, string surname, string email, Specialty specialty, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments)
+        public Doctor(int id, string name, string surname, string email, Specialty specialty, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments)
         {
             Id = id;
             Name = name;
@@ -45,9 +48,10 @@ namespace HospitalLibrary.Core.Doctor
             EndWorkTime = endWorkTime;
             Appointments = appointments;
             VacationRequests = new List<VacationRequest>();
+
         }
 
-        public Doctor(string id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty)
+        public Doctor(int id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty)
        
         {
             Id = id;
@@ -61,6 +65,23 @@ namespace HospitalLibrary.Core.Doctor
             Appointments = appointments;
             VacationRequests = new List<VacationRequest>();
             Specialty = (Specialty)specialty;
+
+        }
+        public Doctor(int id, string name, string surname, string email, int roomId, Room.Room room, int startWorkTime, int endWorkTime, ICollection<Appointment.Appointment> appointments, int specialty,int age)
+
+        {
+            Id = id;
+            Name = name;
+            Surname = surname;
+            Email = email;
+            RoomId = roomId;
+            Room = room;
+            StartWorkTime = startWorkTime;
+            EndWorkTime = endWorkTime;
+            Appointments = appointments;
+            VacationRequests = new List<VacationRequest>();
+            Specialty = (Specialty)specialty;
+            Age=age;
 
         }
 

@@ -4,9 +4,9 @@ using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Doctor;
 using HospitalLibrary.Core.EmailSender;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.Room;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-//using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +22,17 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IAppointmentRepository _appointmentRepositoryMock;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IPatientRepository _patientRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
         private string _email;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
-            IRoomRepository roomRepository, IEmailSendService emailSend)
+        public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository,
+            IPatientRepository patientRepository, IRoomRepository roomRepository, IEmailSendService emailSend)
         {
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
+            _patientRepository = patientRepository;
             _roomRepository = roomRepository;
             _emailSend = emailSend;
             UpdateFinishedAppointments();
@@ -131,17 +133,17 @@ namespace HospitalLibrary.Core.Appointment
             }
         }
 
-        private string GetEmail(string patientId)
+        private string GetEmail(int patientId)
         {
-            if (patientId == "Pera Peric")
+            if (patientId == 1)
             {
                 return "imeprezime0124@gmail.com";
             }
-            else if (patientId == "Sima Simic")
+            else if (patientId == 2)
             {
                 return "milos.adnadjevic@gmail.com";
             }
-            else if (patientId == "Djordje Djokic")
+            else if (patientId == 3)
             {
                 return "jales32331@harcity.com";
             }else
@@ -164,7 +166,7 @@ namespace HospitalLibrary.Core.Appointment
         }
 
 
-        public IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(string id)
+        public IEnumerable<ViewAllAppointmentsDTO> GetAllByDoctor(int id)
         {
             IEnumerable<Appointment> doctorsApointments = _appointmentRepository.GetAllByDoctor(id);
             List<ViewAllAppointmentsDTO> appointmentsDTOs = new List<ViewAllAppointmentsDTO>();
@@ -200,7 +202,7 @@ namespace HospitalLibrary.Core.Appointment
         }
 
        
-        public Boolean CheckIfAppointmentExistsForDoctor(string doctorId,DateTime start)
+        public Boolean CheckIfAppointmentExistsForDoctor(int doctorId,DateTime start)
         {
             
             foreach (var app in _appointmentRepository.GetAll())
@@ -213,7 +215,7 @@ namespace HospitalLibrary.Core.Appointment
             return true;
         }
 
-        public void ChangeDoctorForAppointment(string doctorId, string appointmentId)
+        public void ChangeDoctorForAppointment(int doctorId, string appointmentId)
         {
             var appointment = _appointmentRepository.GetById(appointmentId);
             
@@ -228,6 +230,20 @@ namespace HospitalLibrary.Core.Appointment
         public AppointmentForReportDTO GetAppointmentForReport(string appId)
         {
             return AppointmentAdapter.AppointmentToAppointmentForReportDTO(_appointmentRepository.GetById(appId));
+        }
+        public IEnumerable<Patient.Patient> GetDoctorsPatients(int id)
+        {
+            var apps = _appointmentRepository.GetAllByDoctor(id);
+            List<Patient.Patient> patients = new();
+            foreach (var appointment in apps)
+            {
+                var patient = _patientRepository.GetById(appointment.PatientId);
+                if (!patients.Contains(patient))
+                {
+                    patients.Add(patient);
+                }
+            }
+            return patients;
         }
     }
 }

@@ -41,5 +41,15 @@ namespace HospitalLibrary.Core.Report.Model
                 throw new Exception("Cannot be empty string");
         }   }
 
+        public bool ContainsAny(string[] searchWords)
+        {
+            foreach(string word in searchWords)
+            {
+                if (Name.Contains(word) || CompanyName.Contains(word))
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

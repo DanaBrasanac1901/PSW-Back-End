@@ -19,7 +19,7 @@ namespace HospitalLibrary.Core.Vacation
         void Disapprove(int requestId);
         //bool CheckIfVacationIsSetInFuture(DateTime dateToCheck);
         bool VacationTooClose(DateTime startDate);
-        IEnumerable<ViewAllVacationRequestsDTO> GetAllByDoctor(string id);
+        IEnumerable<ViewAllVacationRequestsDTO> GetAllByDoctor(int id);
         int GenerateId();
     }
 }

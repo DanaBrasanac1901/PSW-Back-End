@@ -25,5 +25,16 @@ namespace HospitalLibrary.Core.Report.Model
             ReportId = reportId;
             Drugs = drugs;
         }
+
+        public bool ContainsAny(string[] searchWords)
+        {
+            foreach(Drug drug in Drugs)
+            {
+                if (drug.ContainsAny(searchWords))
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

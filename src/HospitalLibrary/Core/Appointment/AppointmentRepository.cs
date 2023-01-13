@@ -57,14 +57,14 @@ namespace HospitalLibrary.Core.Appointment
             _context.SaveChanges();
         }
 
-        public IEnumerable<Appointment> GetAllByDoctor(string id)
+        public IEnumerable<Appointment> GetAllByDoctor(int id)
         {
             List<Appointment> appointments = _context.Appointments.Where(appointment => appointment.DoctorId.Equals(id) 
                                                                             && appointment.Status!=AppointmentStatus.Cancelled).ToList();
             return appointments;
         }
 
-        public IEnumerable<Appointment> GetAllByPatient(string id)
+        public IEnumerable<Appointment> GetAllByPatient(int id)
         {
             List<Appointment> appointments = _context.Appointments.Where(appointment => appointment.PatientId.Equals(id)
                                                                             ).ToList();

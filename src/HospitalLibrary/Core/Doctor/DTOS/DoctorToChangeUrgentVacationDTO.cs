@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Doctor.DTOS
 {
     public class DoctorToChangeUrgentVacationDTO
     {
-        public string id { get; set; }
+        public int id { get; set; }
         public string name { get; set; }
         public string surname { get; set; }
 

@@ -11,7 +11,7 @@ namespace HospitalLibrary.Core.Blood
     public class BloodRequest
     {
         public int Id { get; set; }
-        public String DoctorId { get; set; }
+        public int DoctorId { get; set; }
         public Blood Blood { get; set; }
         public String Reason { get; set; }
         public DateTime Due { get; set; }
@@ -24,7 +24,7 @@ namespace HospitalLibrary.Core.Blood
             this.Blood = new Blood(type, amount);
             this.Reason = reason;
             this.Due = due;
-            this.DoctorId = "DOC1";
+            this.DoctorId = 1;
         }
     }
 }

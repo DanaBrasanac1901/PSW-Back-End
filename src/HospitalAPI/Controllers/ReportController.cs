@@ -3,6 +3,8 @@ using HospitalLibrary.Core.Report.DTO;
 using HospitalLibrary.Core.Report.Services;
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Report.Model;
+using HospitalLibrary.Core.Infrastructure;
+using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers
 {
@@ -132,6 +134,47 @@ namespace HospitalAPI.Controllers
             return Ok(drugPres);
         }
 
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult InstantiateReport()
+        {
+            string reportId = _reportApplicationService.InstantiateReport();
+
+            return Ok(reportId);
+        }
+
+        [HttpPost]
+        [Route("[action]/{id}/{eventCode}")]
+        public ActionResult EventHappened(string id, int eventCode)
+        {
+            DomainEvent domainEvent = _reportApplicationService.HandleClick(id, eventCode);
+
+            return Ok(domainEvent);
+        }
+
+        [HttpPut]
+        [Route("[action]/{id}")]
+        public ActionResult SetFields(string id, ReportToCreateDTO dto)
+        {
+            _reportApplicationService.SetReportFields(id, dto);
+
+            return Ok();
+        }
+
+
+
+
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult SearchReports(string[] searchWords)
+        {
+            List<SearchResultReportDTO> matchingReports = _reportApplicationService.GetSearchMatches(searchWords);
+
+            if (matchingReports.Count == 0)
+                return NoContent();
+
+            return Ok(matchingReports);
+        }
 
 
     }

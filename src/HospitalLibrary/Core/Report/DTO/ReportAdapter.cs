@@ -11,17 +11,20 @@ namespace HospitalLibrary.Core.Report.DTO
     {
         public static Report.Model.Report ReportToCreateDTOToReport(ReportToCreateDTO dto)
         {
-            Report.Model.Report report = new Report.Model.Report();
-            report.Id =  DateTime.Now.ToString("yyMMddhhmmssffffff");
+            /*Report.Model.Report report = new Report.Model.Report();
+            //report.Id =  DateTime.Now.ToString("yyMMddhhmmssffffff");
             report.PatientId = dto.patientId;
             report.DoctorId = dto.doctorId;
             report.ReportDescription = dto.description;
             report.DayAndTimeOfMaking = DateTime.Now;
             report.Symptoms = CreateSymptoms(dto.symptoms);
             report.AppointmentId = dto.appointmentId;
-            report.Drugs=CreateDrugs(dto.drugs);
+            report.Drugs=CreateDrugs(dto.drugs);*/
+            Report.Model.Report report = new Report.Model.Report(DateTime.Now.ToString("yyMMddhhmmssffffff"), dto.patientId, dto.doctorId, dto.description, CreateSymptoms(dto.symptoms), DateTime.Now, CreateDrugs(dto.drugs));
+
             return report;
         }
+
 
         public static ICollection<Symptom>CreateSymptoms(List<SymptomDTO> dtos)
         {
@@ -52,6 +55,19 @@ namespace HospitalLibrary.Core.Report.DTO
             }
 
             return retList;
+        }
+
+        public static Model.Report SetFields(Model.Report report, ReportToCreateDTO dto)
+        {
+            report.PatientId = dto.patientId;
+            report.DoctorId = dto.doctorId;
+            report.ReportDescription = dto.description;
+            report.DayAndTimeOfMaking = DateTime.Now;
+            report.Symptoms = CreateSymptoms(dto.symptoms);
+            report.AppointmentId = dto.appointmentId;
+            report.Drugs = CreateDrugs(dto.drugs); 
+
+            return report;
         }
 
         private static List<SymptomDTO> CreateSymptomsDTO(ICollection<Symptom> symptoms)
@@ -97,6 +113,33 @@ namespace HospitalLibrary.Core.Report.DTO
             DrugPrescriptionToShowDTO dto = new DrugPrescriptionToShowDTO();
             dto.reportId  = report.Id;
             dto.drugs = CreateDrugdDTO(report.Drugs);
+            return dto;
+        }
+
+
+        /*
+    public string PatientId { get; set; }
+       public string DoctorId { get; set; }
+       public string AppointmentId { get; set; }
+       public string ReportDescription { get; set; }
+
+       //[Column(TypeName = "jsonb")]
+       public ICollection<Symptom> Symptoms { get; set; }
+       public DateTime DayAndTimeOfMaking { get; set; }
+
+       public ICollection<Drug> Drugs { get; set; }
+   */
+
+        public static SearchResultReportDTO CreateSearchResultDTO(Report.Model.Report report)
+        {
+            SearchResultReportDTO dto = new SearchResultReportDTO();
+
+            dto.patientId = report.PatientId;
+            dto.description = report.ReportDescription;
+            dto.symptoms = CreateSymptomsDTO(report.Symptoms);
+            dto.appointmentId = report.AppointmentId;
+            dto.prescriptions = CreateDrugdDTO(report.Drugs);
+
             return dto;
         }
     }

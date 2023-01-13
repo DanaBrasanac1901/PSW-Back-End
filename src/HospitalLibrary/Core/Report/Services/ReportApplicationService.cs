@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Report.Model;
 using HospitalLibrary.Core.Report.Repositories;
+using HospitalLibrary.Core.Infrastructure;
 
 namespace HospitalLibrary.Core.Report.Services
 {
@@ -14,22 +15,93 @@ namespace HospitalLibrary.Core.Report.Services
         private readonly IReportRepository _reportRepository;
         private readonly IDrugPrescriptionRepository _drugPrescriptionReposiotory;
         private readonly ISymptomRepository _symptomRepository;
+        private readonly IEventRepository _eventRepository;
 
         public ReportApplicationService(IReportRepository reportRepository, IDrugPrescriptionRepository drugPrescriptionReposiotory,
-            ISymptomRepository symptomRepository)
+            ISymptomRepository symptomRepository, IEventRepository eventRepository)
         {
             _reportRepository = reportRepository;
             _drugPrescriptionReposiotory = drugPrescriptionReposiotory;
             _symptomRepository = symptomRepository;
+            _eventRepository = eventRepository;
+        }
+
+        public List<SearchResultReportDTO> GetSearchMatches(string[] searchWords)
+        {
+            List<Model.Report> allReports = (List<Model.Report>)_reportRepository.GetAll();
+
+            List<SearchResultReportDTO> matchingReports = new List<SearchResultReportDTO>();
+
+
+            foreach (Model.Report report in allReports)
+            {
+                Model.Report reportForDTO = report.ContainsAny(searchWords);
+                if (reportForDTO != null)
+                    matchingReports.Add(ReportAdapter.CreateSearchResultDTO(reportForDTO));
+                
+            }
+
+            return matchingReports;
         }
 
         public ReportApplicationService(IReportRepository reportRepository,
-            ISymptomRepository symptomRepository)
+            ISymptomRepository symptomRepository, IEventRepository eventRepository)
         {
             _reportRepository = reportRepository;
             _symptomRepository = symptomRepository;
+            _eventRepository = eventRepository;
+
+        }
+   
+
+
+            //kada se dodje na stranicu na front-u salje se http request koji
+            //ce da pozove konstruktor objekta report koji mu dodeljuje id 
+            //i postavlja current_step na 0, taj id se vrati na front
+
+            //svaki put kad se klikne na neko dugme na frontu posalje se http req sa id-em agregata i na osnovu 
+            //njega se poziva odgovarajuca metoda agregata
+
+            //kad se klikne na finish dugme na frontu tada se popune sva polja 
+            //report objekta na beku na osnovu dto sa fronta (do tad ima sustinski prazna polja)
+
+            public string InstantiateReport()
+        {
+            var list = _reportRepository.GetAll();
+            string flag = (list.ToList().Count + 1).ToString();
+            Model.Report report = new Model.Report(flag);
+            _reportRepository.Create(report);
+            _eventRepository.Create(report.ReportCreated());
+            return report.Id;
         }
 
+        public void SetReportFields(string id, ReportToCreateDTO dto)
+        {
+            Report.Model.Report report = _reportRepository.GetById(id);
+
+            report = ReportAdapter.SetFields(report, dto);
+            DomainEvent domainEvent = report.FinishedCreating();
+
+            _reportRepository.Update(report);
+            _eventRepository.Create(domainEvent);
+        }
+
+        public DomainEvent HandleClick(string id, int click)
+        {
+            Report.Model.Report report = _reportRepository.GetById(id);
+
+            DomainEvent domainEvent = null;
+
+            if (click == 1)
+                domainEvent = report.ClickedOnNextButton();
+            else if (click == -1)
+                domainEvent = report.ClickedOnBackButton();
+           
+            _reportRepository.Update(report);
+            _eventRepository.Create(domainEvent);
+
+            return domainEvent;
+        }
 
         public void Create(ReportToCreateDTO dto)
         {

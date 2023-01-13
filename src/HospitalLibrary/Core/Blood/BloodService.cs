@@ -77,5 +77,58 @@ namespace HospitalLibrary.Core.Blood
         {
             return _bloodConsumptionRecordRepository.GetById(id);
         }
+
+        public double GetByGroupA ()
+        {
+            List<BloodSupply> supplies = _bloodSupplyRepository.GetByGroup(BloodType.A);
+
+            foreach (BloodSupply supply in supplies)
+            {
+                supply.Amount+=supply.Amount;
+                return supply.Amount;
+            }
+            return 0;
+          
+
+        }
+        public double GetByGroupB()
+        {
+            List<BloodSupply> supplies = _bloodSupplyRepository.GetByGroup(BloodType.B);
+
+            foreach (BloodSupply supply in supplies)
+            {
+                supply.Amount += supply.Amount;
+                return supply.Amount;
+            }
+            return 0;
+
+
+        }
+        public double GetByGroupAB()
+        {
+            List<BloodSupply> supplies = _bloodSupplyRepository.GetByGroup(BloodType.AB);
+
+            foreach (BloodSupply supply in supplies)
+            {
+                supply.Amount += supply.Amount;
+                return supply.Amount;
+            }
+            return 0;
+
+
+        }
+        public double GetByGroupO()
+        {
+            List<BloodSupply> supplies = _bloodSupplyRepository.GetByGroup(BloodType.O);
+
+            foreach (BloodSupply supply in supplies)
+            {
+                supply.Amount += supply.Amount;
+                return supply.Amount;
+            }
+            return 0;
+
+
+        }
     }
 }
