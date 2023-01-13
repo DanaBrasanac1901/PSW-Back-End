@@ -6,6 +6,7 @@ namespace HospitalLibrary.Core.Patient
     {
         IEnumerable<Patient> GetAll();
         Patient GetById(int id);
+        Patient GetByEmail(string email);
         void Create(Patient patient);
         void Update(Patient patient);
         void Delete(Patient patient);

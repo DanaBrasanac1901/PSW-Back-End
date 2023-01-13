@@ -28,6 +28,10 @@
   <ItemGroup>
     <Compile Include="Migrations\20230108170305_migracija.cs" />
     <Compile Include="Migrations\20230108170305_migracija.Designer.cs" />
+    <Compile Include="Migrations\20230112043224_addressMigration.cs" />
+    <Compile Include="Migrations\20230112043224_addressMigration.Designer.cs" />
+    <Compile Include="Migrations\20230112194033_feedback.cs" />
+    <Compile Include="Migrations\20230112194033_feedback.Designer.cs" />
     <Compile Include="Migrations\HospitalDbContextModelSnapshot.cs" />
   </ItemGroup>
 

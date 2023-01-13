@@ -43,6 +43,18 @@ namespace HospitalAPI.Controllers
 
             return Ok(patient);
         }
+
+        [HttpGet("getByEmail/{email}")]
+        public ActionResult GetByEmail(string email)
+        {
+            var patient = _patientService.GetDTOByEmail(email);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(patient);
+        }
         // POST api/patients
         [HttpPost]
         public ActionResult Create(Patient patient)

@@ -2,8 +2,10 @@
 using HospitalLibrary.Core.User;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Patient
@@ -15,8 +17,6 @@ namespace HospitalLibrary.Core.Patient
         private string name;
         private string surname;
         private string email;
-
-        private Address address;
         private string jmbg;
         private Gender gender;
         private int age;
@@ -31,7 +31,7 @@ namespace HospitalLibrary.Core.Patient
             this.name = regDTO.Name;
             this.surname=regDTO.Surname;
             this.email = regDTO.Email;
-            this.address = MakeAddress(regDTO.Address);
+            this.Address = MakeAddress(regDTO.Address);
             this.jmbg = regDTO.Jmbg;
             Gender.TryParse(regDTO.Gender, out this.gender);
             this.age = regDTO.Age;
@@ -87,7 +87,29 @@ namespace HospitalLibrary.Core.Patient
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Surname { get => surname; set => surname = value; }
-        public Address Address { get => address; private set => address = value; }
+        private string addressJson { get; set; }
+        [Column(TypeName = "jsonb")]
+        public string AddressJson
+        {
+            get => addressJson; set
+            {
+                addressJson = value;
+                Address = JsonSerializer.Deserialize<Address>(addressJson);
+                AddressString = Address.ToString();
+            }
+        }
+        [NotMapped]
+        private Address address { get; set; }
+        [NotMapped]
+        public Address Address
+        {
+            get => address; set
+            {
+                address = value;
+            }
+        }
+        [NotMapped]
+        public string AddressString { get; set; }
         public string Email { get => email; set => email = value; }
         public Gender Gender { get => gender; set => gender = value; }
         public int Age { get => age; set => age = value; }

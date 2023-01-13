@@ -17,5 +17,7 @@ namespace HospitalLibrary.Core.Patient
         IEnumerable<Doctor.Doctor> DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber);
         void Register(Patient patient);
         Patient GetByEmail(string email);
+
+        PatientDTO GetDTOByEmail(string email);
     }
 }

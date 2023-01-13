@@ -9,13 +9,15 @@ namespace HospitalLibrary.Core.Feedback
 {
     public class Feedback
     {
+        private int id;
         private string patientName;
         private string patientSurname;
+        private int patientId;
         private string text;
         private Boolean visibleToPublic;
         private Boolean approved;
         private DateTime date;
-        private int id;
+        
         private Boolean anonymous;
         public Feedback()
         {
@@ -25,6 +27,7 @@ namespace HospitalLibrary.Core.Feedback
             {
             internal string patientName;
             internal string patientSurname;
+            internal int patientId;
             internal string text;
             internal Boolean visibleToPublic;
             internal Boolean approved;
@@ -68,6 +71,12 @@ namespace HospitalLibrary.Core.Feedback
                 return this;
             }
 
+            public FeedbackBuilder PatientId(int patientId)
+            {
+                this.patientId = patientId;
+                return this;
+            }
+
             public FeedbackBuilder Text(string text)
             {
                 this.text = text;
@@ -84,20 +93,11 @@ namespace HospitalLibrary.Core.Feedback
                 return new Feedback(this);
             }
         }
-        public Feedback(string patientName, string patientSurname, string text, bool visibility, bool approved, DateTime date, int iD)
-        {
-            this.patientName = patientName;
-            this.patientSurname = patientSurname;
-            this.text = text;
-            this.VisibleToPublic = visibility;
-            this.approved = approved;
-            this.date = date;
-            this.ID = iD;
-        }
         public Feedback(FeedbackBuilder feedbackBuilder)
         {
             this.patientName = feedbackBuilder.patientName;
             this.patientSurname = feedbackBuilder.patientSurname;
+            this.patientId= feedbackBuilder.patientId;
             this.text = feedbackBuilder.text;
             this.VisibleToPublic = feedbackBuilder.visibleToPublic;
             this.approved = feedbackBuilder.approved;
@@ -105,21 +105,11 @@ namespace HospitalLibrary.Core.Feedback
             this.ID = feedbackBuilder.id;
         }
 
-        public Feedback(string patientName, string patientSurname, string text, bool visibleToPublic, bool approved, DateTime date, int id, bool anonymous)
-        {
-            this.patientName = patientName;
-            this.patientSurname = patientSurname;
-            this.text = text;
-            this.visibleToPublic = visibleToPublic;
-            this.approved = approved;
-            this.date = date;
-            this.id = id;
-            this.anonymous = anonymous;
-        }
 
         public string PatientName { get => patientName; set => patientName = value; }
 
         public string PatientSurname { get => patientSurname; set => patientSurname = value; }
+        public int PatientId { get => patientId; set => patientId = value; }
         public string Text { get => text; set => text = value; }
         public bool VisibleToPublic { get => visibleToPublic; set => visibleToPublic = value; }
         public bool Approved { get => approved; set => approved = value; }

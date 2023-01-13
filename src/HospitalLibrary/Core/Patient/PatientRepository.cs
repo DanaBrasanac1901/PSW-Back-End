@@ -24,6 +24,11 @@ namespace HospitalLibrary.Core.Patient
             return _context.Patients.Find(id);
         }
 
+        public Patient GetByEmail(string email)
+        {
+            return _context.Patients.Where( p=> p.Email == email ).FirstOrDefault();
+        }
+
         public void Create(Patient patient)
         {
             _context.Patients.Add(patient);
