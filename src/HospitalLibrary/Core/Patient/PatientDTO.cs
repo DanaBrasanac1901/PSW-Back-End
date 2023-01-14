@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,10 +28,21 @@ namespace HospitalLibrary.Core.Patient
             Gender=patient.Gender.ToString().ToLower();
             BloodType = patient.BloodType.ToString().ToUpper();
             Age=patient.Age;
-            Allergies = patient.Allergies;
+            Allergies = patient.ParseAllergies(patient.Allergies);
             Jmbg = patient.Jmbg;
             Address = patient.AddressString;
             Email=patient.Email;
+        }
+
+        public List<string> ParseAllergies(List<Allergy> allergies)
+        {
+            List<string> result = new List<string>();
+            foreach(Allergy allergy in allergies)
+            {
+                result.Add(allergy.ToString());
+            }
+
+            return result;
         }
 
     }

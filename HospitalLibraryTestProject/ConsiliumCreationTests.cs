@@ -43,7 +43,7 @@ namespace HospitalLibraryTestProject
         {
             DoctorService doctorService = new DoctorService(CreateDoctorRepository());
             DateTimeRange consiliumInterval = new DateTimeRange(new DateTime(2022, 12, 15, 15, 45, 0), new DateTime(2022, 12, 15, 15, 55, 0));
-            List<Doctor> neededDoctors = doctorService.GetByIds("DOC1,DOC2");
+           // List<Doctor> neededDoctors = doctorService.GetByIds(DOC1,DOC2);
 
             bool available = doctorService.AreAvailableForConsilium(neededDoctors, consiliumInterval);
 
@@ -134,10 +134,10 @@ namespace HospitalLibraryTestProject
 
 
             doctorAppointments = new List<Appointment>();
-            doctorAppointments.Add(new Appointment("APP1", "DOC2", "PAT0", new DateTime(2022, 12, 15, 16, 0, 0), 0));
+            doctorAppointments.Add(new Appointment("APP1", 2, "PAT0", new DateTime(2022, 12, 15, 16, 0, 0), 0));
             
             
-            Doctor doctor2 = new Doctor("DOC2", "Doktorka", "Doktoricka", "nekimail@gmail.com", 0, new Room(), 8, 16, doctorAppointments, 1);
+            Doctor doctor2 = new Doctor(2, "Doktorka", "Doktoricka", "nekimail@gmail.com", 0, new Room(), 8, 16, doctorAppointments, 1);
             doctors.Add(doctor2);
 
             List<Doctor> bySpec1 = new List<Doctor>();

@@ -29,15 +29,14 @@ namespace HospitalLibraryTestProject
         public void Have_Symptom_In_DB()
         {
             var haveSymptom = new Mock<IReportApplicationService>();
-<<<<<<< HEAD
+
             ReportApplicationService service = null;
             bool check = service.IsSymptomExist(CreateSymptomList(), "RET1");
             Assert.True(check);
-=======
+
             //ReportApplicationService service = new ReportApplicationService(CreateReport(), CreateSymptom());
            // bool check = service.IsSymptomExist(CreateSymptomList(), "RET1");
             Assert.True(true);
->>>>>>> 2f6be8e3f3a27fb9e7f7b287740a205116663d34
         }
 
 
@@ -58,7 +57,7 @@ namespace HospitalLibraryTestProject
             var drugs=new List<Drug>();
             var drug1 = new Drug("brufen 200mg", "Galenika");
             drugs.Add(drug1);
-            var rep1 = new Report("RET1", "PAT1", "DOC1", "description", null,new DateTime(2022, 11, 27, 12, 0, 0),null); ; ;
+            var rep1 = new Report("RET1", 1, 1, "description", null,new DateTime(2022, 11, 27, 12, 0, 0),null); ; ;
             var presc1 = new DrugPrescription("PRESC1", "RET1", drugs);
             reports.Add(rep1);
             drugPrescriptions.Add(presc1);

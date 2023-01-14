@@ -30,7 +30,7 @@ namespace HospitalTests.Integration
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            List<string> resultIds = new List<string>();
+            List<int> resultIds = new List<int>();
 
             var result = ((OkObjectResult)controller.GetDoctorsWithLeastPatients()).Value as List<Doctor>;
 
@@ -39,7 +39,7 @@ namespace HospitalTests.Integration
                 resultIds.Add(doctor.Id);
             }
 
-            Assert.Equal(new List<string>(){"2","3","4" }, resultIds);
+            Assert.Equal(new List<int>(){2, 3, 4}, resultIds);
         }
 
 

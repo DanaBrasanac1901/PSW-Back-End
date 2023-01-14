@@ -133,10 +133,10 @@ namespace HospitalTests.Setup
 
         private static void InitializeFeedback(HospitalDbContext context)
         {
-            context.Feedbacks.Add(new Feedback { ID = 1, Anonymous = true, Approved = false, Date = new DateTime(2022, 1, 1), PatientName="Lena", PatientSurname="Milic", Text="Komentar broj 1", VisibleToPublic = true });
-            context.Feedbacks.Add(new Feedback { ID = 2, Anonymous = false, Approved = true, Date = new DateTime(2022, 9, 9), PatientName = "Ivana", PatientSurname = "Paunovic", Text = "Komentar broj 2", VisibleToPublic = true });
-            context.Feedbacks.Add(new Feedback { ID = 3, Anonymous = false, Approved = true, Date = new DateTime(2022, 1, 1), PatientName = "Igor", PatientSurname = "Lazic", Text = "Komentar broj 3", VisibleToPublic = true });
-            context.Feedbacks.Add(new Feedback { ID = 4, Anonymous = false, Approved = false, Date = new DateTime(2022, 1, 1), PatientName = "Nemanja", PatientSurname = "Bilinac", Text = "Komentar broj 4", VisibleToPublic = true });
+            context.Feedbacks.Add(new Feedback { Id = 1, Anonymous = true, Approved = false, Date = new DateTime(2022, 1, 1), PatientName="Lena", PatientSurname="Milic", Text="Komentar broj 1", VisibleToPublic = true });
+            context.Feedbacks.Add(new Feedback { Id = 2, Anonymous = false, Approved = true, Date = new DateTime(2022, 9, 9), PatientName = "Ivana", PatientSurname = "Paunovic", Text = "Komentar broj 2", VisibleToPublic = true });
+            context.Feedbacks.Add(new Feedback { Id= 3, Anonymous = false, Approved = true, Date = new DateTime(2022, 1, 1), PatientName = "Igor", PatientSurname = "Lazic", Text = "Komentar broj 3", VisibleToPublic = true });
+            context.Feedbacks.Add(new Feedback { Id = 4, Anonymous = false, Approved = false, Date = new DateTime(2022, 1, 1), PatientName = "Nemanja", PatientSurname = "Bilinac", Text = "Komentar broj 4", VisibleToPublic = true });
         }
 
         private static void InitializeUsers(HospitalDbContext context)
@@ -196,9 +196,10 @@ namespace HospitalTests.Setup
                 context.Patients.Add(new Patient { Id = 8, Name = "Sanja", Surname = "Medic", Email = "medics@gmail.com", BloodType = BloodType.A, Allergies = { }, DoctorID = "3" });
                 context.Patients.Add(new Patient { Id = 9, Name = "Mirko", Surname = "Kis", Email = "mkis@gmail.com", BloodType = BloodType.B, Allergies = { }, DoctorID = "1" });
             }*/
-        }
+        
     }
 }
+
 
 
 

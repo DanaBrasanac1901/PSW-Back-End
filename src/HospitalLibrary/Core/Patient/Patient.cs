@@ -70,7 +70,11 @@ namespace HospitalLibrary.Core.Patient
             return (this.Id.GetHashCode() * 3 - 4) ^ this.Email.GetHashCode();  
         }
 
-     
+        internal List<string> ParseAllergies(List<Allergy> allergies)
+        {
+            throw new NotImplementedException();
+        }
+
         public Patient(int id, string name, string surname,string address, string email, Gender gender, int age, BloodType bloodType, List<Allergy> allergies, int doctorID)
         {
             this.Id = id;

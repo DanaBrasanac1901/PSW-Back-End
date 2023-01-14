@@ -14,11 +14,11 @@ namespace HospitalLibrary.Core.Feedback
         private string patientSurname;
         private int patientId;
         private string text;
-        private Boolean visibleToPublic;
-        private Boolean approved;
+        private bool visibleToPublic;
+        private bool approved;
         private DateTime date;
         
-        private Boolean anonymous;
+        private bool anonymous;
         public Feedback()
         {
 
@@ -29,11 +29,11 @@ namespace HospitalLibrary.Core.Feedback
             internal string patientSurname;
             internal int patientId;
             internal string text;
-            internal Boolean visibleToPublic;
-            internal Boolean approved;
+            internal bool visibleToPublic;
+            internal bool approved;
             internal DateTime date;
             internal int id;
-            internal Boolean anonymous;
+            internal bool anonymous;
 
             public FeedbackBuilder Anonymous(bool anonymous)
             {
@@ -53,7 +53,7 @@ namespace HospitalLibrary.Core.Feedback
                 return this;
             }
 
-            public FeedbackBuilder ID(int id)
+            public FeedbackBuilder Id(int id)
             {
                 this.id = id;
                 return this;
@@ -102,7 +102,7 @@ namespace HospitalLibrary.Core.Feedback
             this.VisibleToPublic = feedbackBuilder.visibleToPublic;
             this.approved = feedbackBuilder.approved;
             this.date = feedbackBuilder.date;
-            this.ID = feedbackBuilder.id;
+            this.Id = feedbackBuilder.id;
         }
 
 
@@ -115,7 +115,7 @@ namespace HospitalLibrary.Core.Feedback
         public bool Approved { get => approved; set => approved = value; }
         public DateTime Date { get => date; set => date = value; }
         
-        public int ID { get => id; set => id = value; }
+        public int Id { get => id; set => id = value; }
         public bool Anonymous { get => anonymous; set => anonymous = value; }
     }
 }
