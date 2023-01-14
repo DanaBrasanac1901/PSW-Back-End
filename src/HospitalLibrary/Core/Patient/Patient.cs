@@ -21,7 +21,7 @@ namespace HospitalLibrary.Core.Patient
         private Gender gender;
         private int age;
         private BloodType bloodType;
-        private List<string> allergies;
+        private List<Allergy> allergies;
         private int doctorID;
         private bool active;
        
@@ -39,11 +39,12 @@ namespace HospitalLibrary.Core.Patient
             this.age = regDTO.Age;
             BloodType.TryParse(regDTO.BloodType, out this.bloodType);
 
-            this.allergies = new List<string>();
+            this.allergies = new List<Allergy>();
 
             foreach (string allergy in regDTO.Allergies)
             {
-                allergies.Add(allergy);
+                Enum.TryParse<Allergy>(allergy, true, out Allergy allergyParsed);
+                allergies.Add(allergyParsed);
             }
             this.doctorID = regDTO.DoctorId;
         }
@@ -70,7 +71,7 @@ namespace HospitalLibrary.Core.Patient
         }
 
      
-        public Patient(int id, string name, string surname,string address, string email, Gender gender, int age, BloodType bloodType, List<string> allergies, int doctorID)
+        public Patient(int id, string name, string surname,string address, string email, Gender gender, int age, BloodType bloodType, List<Allergy> allergies, int doctorID)
         {
             this.Id = id;
             this.Name = name;
@@ -116,7 +117,7 @@ namespace HospitalLibrary.Core.Patient
         public Gender Gender { get => gender; set => gender = value; }
         public int Age { get => age; set => age = value; }
         public BloodType BloodType { get => bloodType; set => bloodType = value; }
-        public List<string> Allergies { get => allergies; set => allergies = value; }
+        public List<Allergy> Allergies { get => allergies; set => allergies = value; }
         public int DoctorID { get => doctorID; set => doctorID = value; }
         public bool Active { get => active; set => active = value; }
 

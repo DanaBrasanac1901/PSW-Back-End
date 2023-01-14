@@ -26,14 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Migrations\20230108170305_migracija.cs" />
-    <Compile Include="Migrations\20230108170305_migracija.Designer.cs" />
-    <Compile Include="Migrations\20230112043224_addressMigration.cs" />
-    <Compile Include="Migrations\20230112043224_addressMigration.Designer.cs" />
-    <Compile Include="Migrations\HospitalDbContextModelSnapshot.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="5.0.0" />
     <PackageReference Include="Identity.PasswordHasher" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />

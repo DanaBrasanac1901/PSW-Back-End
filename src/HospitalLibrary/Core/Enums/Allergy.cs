@@ -1,0 +1,32 @@
+﻿namespace HospitalLibrary.Core.Enums
+{
+    public enum Allergy
+    {
+        POLLEN,
+        DUST,
+        FEATHERS,
+        CATS,
+        DOGS,
+        GARLIC,
+        PEANUTS,
+        MILK,
+        RICE,
+        CELERY,
+        GLUTEN,
+        CRUSTACEANS,
+        EGGS,
+        SOYA,
+        FISH,
+        NUTS,
+        INSECTS,
+        LATEX,
+        SHELLFISH,
+        TETRACYCLINE,
+        PENICILLIN,
+        ANAESTHETICS,
+        DILANTIN,
+        TEGRETOL,
+        CEPHALOSPORINS,
+        SULPHONAMIDES
+    }
+}

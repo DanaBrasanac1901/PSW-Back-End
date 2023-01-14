@@ -73,6 +73,7 @@ namespace HospitalLibrary.Settings
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
             NpgsqlConnection.GlobalTypeMapper.MapEnum<Specialty>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<Allergy>();
             NpgsqlConnection.GlobalTypeMapper.MapEnum<Gender>();
             NpgsqlConnection.GlobalTypeMapper.MapEnum<BloodType>();
             NpgsqlConnection.GlobalTypeMapper.MapEnum<AppointmentStatus>();
