@@ -10,7 +10,8 @@ namespace HospitalLibrary.Core.Enums
     {
         Cardiologist,
         Anesthesiologist,
-        Neurosurgeon
+        Neurosurgeon,
+        General
     }
 
 }
