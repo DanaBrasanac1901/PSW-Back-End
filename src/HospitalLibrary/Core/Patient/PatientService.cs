@@ -12,13 +12,8 @@ namespace HospitalLibrary.Core.Patient
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
-        private readonly IAppointmentRepository _appointmentRepository;
         private readonly IDoctorRepository _doctorRepository;
 
-        public PatientService(IPatientRepository patientRepository)
-        {
-            _patientRepository = patientRepository;
-        }
         public PatientService(IPatientRepository patientRepository, IDoctorRepository doctorRepository)
         {
             _patientRepository = patientRepository;
@@ -36,11 +31,19 @@ namespace HospitalLibrary.Core.Patient
         }
         public Patient GetByEmail(string email)
         {
-            foreach(Patient p in GetAll())
+            return _patientRepository.GetByEmail(email);
+        }
+        public PatientDTO GetDTOByEmail(string email)
+        {
+            Patient patient = _patientRepository.GetByEmail(email);
+            PatientDTO patientDTO = new PatientDTO(patient);
+            if (patient.DoctorID != null)
             {
-                if (p.Email.Equals(email)) return p;
+                Doctor.Doctor doctor = _doctorRepository.GetById(patient.DoctorID);
+                patientDTO.ChosenDoctor = doctor.Name + " " + doctor.Surname;
             }
-            return null;
+            else patientDTO.ChosenDoctor = "NONE";
+            return patientDTO;
         }
 
         public void Create(Patient patient)

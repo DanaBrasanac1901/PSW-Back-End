@@ -23,7 +23,10 @@ namespace HospitalLibrary.Core.Patient
             Validate();
            
         }
-
+        public override string ToString()
+        {
+            return Street+" "+StreetNumber+","+City;
+        }
         private void Validate()
         {
             if(string.IsNullOrWhiteSpace(Street) || string.IsNullOrWhiteSpace(StreetNumber) || string.IsNullOrWhiteSpace(City))

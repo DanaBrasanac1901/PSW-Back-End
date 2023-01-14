@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Settings;
+﻿using HospitalLibrary.Core.Patient;
+using HospitalLibrary.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace HospitalLibrary.Core.Feedback
     public class FeedbackService : IFeedbackService
     {
         private readonly IFeedbackRepository _feedbackRepository;
+        private readonly IPatientService _patientService;
 
-        public FeedbackService(IFeedbackRepository feedbackRepository)
+        public FeedbackService(IFeedbackRepository feedbackRepository,IPatientService patientService)
         {
            _feedbackRepository= feedbackRepository;
+            _patientService= patientService;
 
         }
 
@@ -31,6 +34,8 @@ namespace HospitalLibrary.Core.Feedback
         {
             feedback.Date = System.DateTime.Today;
             feedback.Approved = false;
+            Patient.Patient patient=_patientService.GetById(feedback.PatientId);
+            feedback.PatientName=patient.Name; feedback.PatientSurname=patient.Surname;
             _feedbackRepository.Create(feedback);
         }
 
