@@ -22,7 +22,6 @@ namespace HospitalAPI.Controllers
         private readonly IDoctorService _doctorService;
         private readonly IAvailableAppointmentService _availableAppointmentService;
         private readonly IScheduleAppointment _scheduleAppointment;
-        private readonly IAppointmentService _appointmentService;
 
         public AppointmentsController(IAvailableAppointmentService availableAppointmentService, IAppointmentService appointmentService, IDoctorService doctorService, IEmailSendService emailSend, IScheduleAppointment scheduleAppointment)
         {
@@ -149,6 +148,7 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_appointmentService.GetDoctorsPatients(id));
         }
+
             /*
             //Dana&Anja
 
@@ -216,6 +216,6 @@ namespace HospitalAPI.Controllers
 
             _scheduleAppointment.Execute("end", DateTime.Now);
             return NoContent();
-        }
+        }*/
     }
 }
