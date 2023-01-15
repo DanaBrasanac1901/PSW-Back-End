@@ -11,6 +11,15 @@ namespace HospitalLibrary.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("Npgsql:Enum:allergy", "pollen,dust,feathers,cats,dogs,garlic,peanuts,milk,rice,celery,gluten,crustaceans,eggs,soya,fish,nuts,insects,latex,shellfish,tetracycline,penicillin,anaesthetics,dilantin,tegretol,cephalosporins,sulphonamides")
+                .Annotation("Npgsql:Enum:appointment_status", "scheduled,finished,cancelled")
+                .Annotation("Npgsql:Enum:blood_type", "a,b,ab,o")
+                .Annotation("Npgsql:Enum:equipment_type", "bed,bandages,medicine")
+                .Annotation("Npgsql:Enum:gender", "male,female")
+                .Annotation("Npgsql:Enum:specialty", "cardiologist,anesthesiologist,neurosurgeon,general")
+                .Annotation("Npgsql:Enum:vacation_request_status", "waiting_for_approval,cancelled,accepted,disapproved");
+
             migrationBuilder.CreateTable(
                 name: "BloodConsumptionRecords",
                 columns: table => new
@@ -387,7 +396,7 @@ namespace HospitalLibrary.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
+                    Type = table.Column<EquipmentType>(type: "equipment_type", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     RoomId = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -476,7 +485,7 @@ namespace HospitalLibrary.Migrations
                     Urgency = table.Column<bool>(type: "boolean", nullable: false),
                     DoctorId = table.Column<int>(type: "integer", nullable: false),
                     RejectionReason = table.Column<string>(type: "text", nullable: true),
-                    Status = table.Column<int>(type: "integer", nullable: false)
+                    Status = table.Column<VacationRequestStatus>(type: "vacation_request_status", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -494,12 +503,12 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "CompanyName", "Name" },
                 values: new object[,]
                 {
-                    { "baktrim", "Hemofarm", "Baktrim" },
+                    { "fervex", "Bayer", "Fervex" },
                     { "gentamicin", "Galenika", "Gentamicin" },
+                    { "baktrim", "Hemofarm", "Baktrim" },
                     { "rivotril", "Galenika", "Rivotril" },
                     { "strepsils", "Bayer", "Strepsils" },
                     { "prospan", "Bayer", "Prospan" },
-                    { "fervex", "Bayer", "Fervex" },
                     { "bromazepam", "Hemofarm", "Bromazepam" },
                     { "bensedin", "Galenika", "Bensedin" },
                     { "panadol", "Hemofarm", "Panadol" },
@@ -514,14 +523,14 @@ namespace HospitalLibrary.Migrations
                 {
                     { 4, 10.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.O },
                     { 8, 10.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.B },
-                    { 10, 40.0, new Guid("55510651-d36e-444d-95fb-871e0902cd7e"), BloodType.O },
-                    { 5, 23.0, new Guid("55510651-d36e-444d-95fb-871e0902cd7e"), BloodType.A },
-                    { 7, 24.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.A },
-                    { 1, 54.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.A },
-                    { 9, 34.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.AB },
-                    { 2, 30.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.B },
                     { 6, 40.0, new Guid("55510651-d36e-444d-95fb-871e0902cd7e"), BloodType.B },
-                    { 3, 15.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.AB }
+                    { 2, 30.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.B },
+                    { 9, 34.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.AB },
+                    { 3, 15.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.AB },
+                    { 7, 24.0, new Guid("a60460fe-0d33-478d-93b3-45d424079e66"), BloodType.A },
+                    { 5, 23.0, new Guid("55510651-d36e-444d-95fb-871e0902cd7e"), BloodType.A },
+                    { 1, 54.0, new Guid("2d4894b6-02e4-4288-a3d3-089489563190"), BloodType.A },
+                    { 10, 40.0, new Guid("55510651-d36e-444d-95fb-871e0902cd7e"), BloodType.O }
                 });
 
             migrationBuilder.InsertData(
@@ -529,16 +538,16 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Floor", "Number" },
                 values: new object[,]
                 {
+                    { 3, 1, "1C" },
+                    { 4, 2, "2A" },
+                    { 5, 2, "2B" },
+                    { 6, 2, "2C" },
+                    { 999, 4, "Consilium Hall" },
                     { 8, 3, "3B" },
+                    { 9, 3, "3F" },
                     { 2, 1, "1B" },
                     { 7, 3, "3A" },
-                    { 6, 2, "2C" },
-                    { 5, 2, "2B" },
-                    { 4, 2, "2A" },
-                    { 3, 1, "1C" },
-                    { 1, 1, "1A" },
-                    { 999, 4, "Consilium Hall" },
-                    { 9, 3, "3F" }
+                    { 1, 1, "1A" }
                 });
 
             migrationBuilder.InsertData(
@@ -546,15 +555,48 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
+                    { "Fatigue", "Fatigue" },
                     { "Vomiting", "Vomiting" },
                     { "Chronic pain", "Chronic pain" },
                     { "Short breath", "Short breath" },
-                    { "Fatigue", "Fatigue" },
+                    { "Fever", "Fever" },
                     { "Vertigo", "Vertigo" },
                     { "High blood pressure", "High blood pressure" },
                     { "Headache", "Headache" },
-                    { "Cough", "Cough" },
-                    { "Fever", "Fever" }
+                    { "Cough", "Cough" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Active", "Email", "IdByRole", "Name", "Password", "Role", "Surname", "Token" },
+                values: new object[,]
+                {
+                    { 8, true, "milica.jezdic@gmail.com", 7, "Milica", "ADCyG1fHX04K+wTwzJDPmb78k1YWMfTQqgeDZKorMbE46o0+zXEc2NF1SHjkEAiaWw==", "DOCTOR", "Jezdic", null },
+                    { 7, true, "katarina.radic@gmail.com", 6, "Katarina", "APxtdhzFubuhYnLITUwNYcwwt0ySvkTJ7C5qayocG3x5L9p3MbN3P0f27EYOCCInvw==", "DOCTOR", "Radic", null },
+                    { 6, true, "bojana.jelic@gmail.com", 5, "Bojana", "AEHe2m50J9F9RMJHmvuxZAQ9VFzCV7ebMjJFG/NND8GQM/C3tBut/fl1mhz0veof5Q==", "DOCTOR", "Jelic", null },
+                    { 5, true, "stefan.simic@gmail.com", 4, "Stefan", "AJbKG1PpVed0VCFu358yyNfXy8RsWk6sB55ejeXQaFOV3nQxSImn6qsLGS6N5oQfqg==", "DOCTOR", "Simic", null },
+                    { 1, true, "manageremail@gmail.com", 1, "Milica", "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==", "MANAGER", "Peric", null },
+                    { 3, true, "gorana.miljkovic@gmail.com", 2, "Gorana", "AGEU6JzOVaDY+DYUWWiWOKbrpIHMwuW2fyh6CJai+D159dhE0IRmWjM3oQVlAS3hlw==", "DOCTOR", "Miljkovic", null },
+                    { 2, true, "doctorfilip@hotmail.com", 1, "Filip", "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==", "DOCTOR", "Marinkovic", null },
+                    { 9, true, "zoran.katic@gmail.com", 8, "Zoran", "AA+E3CZi5TQ3+ciHGpGi7NFiE2GZDawBlSyBOK4IZd28ZB6oZWWOqY+gxY93xmI8kw==", "DOCTOR", "Katic", null },
+                    { 4, true, "petar.dobrosavljevic@gmail.com", 3, "Petar", "AAQWjfiC3pkhMnwzKmJjhwytFO73mFNYklxj6/hTSj0aS3j3KxTe7TsmqVmXSy0fnQ==", "DOCTOR", "Dobrosavljevic", null },
+                    { 10, true, "bojan.stanic@gmail.com", 9, "Bojan", "AL4E2lLskVtWAOnmsPLxHDP8hxJVqshvbL2F6uKhd51bCB/n07IYj6uabGAKTtYZlg==", "DOCTOR", "Stanic", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Doctors",
+                columns: new[] { "Id", "Age", "Email", "EndWorkTime", "Name", "RoomId", "Specialty", "StartWorkTime", "Surname" },
+                values: new object[,]
+                {
+                    { 1, 32, "doctorfilip@hotmail.com", 13, "Filip", 1, Specialty.Cardiologist, 8, "Marinkovic" },
+                    { 7, 27, "milica.jezdic@gmail.com", 13, "Milica", 7, Specialty.General, 7, "Jezdic" },
+                    { 6, 34, "katarina.radic@gmail.com", 20, "Katarina", 6, Specialty.Neurosurgeon, 14, "Radic" },
+                    { 5, 51, "bojana.jelic@gmail.com", 16, "Bojana", 5, Specialty.Neurosurgeon, 8, "Jelic" },
+                    { 4, 27, "stefan.simic@gmail.com", 13, "Stefan", 4, Specialty.Anesthesiologist, 8, "Simic" },
+                    { 8, 27, "zoran.katic@gmail.com", 13, "Zoran", 8, Specialty.General, 8, "Katic" },
+                    { 3, 40, "petar.dobrosavljevic@gmail.com", 20, "Petar", 3, Specialty.Cardiologist, 13, "Dobrosavljevic" },
+                    { 9, 35, "bojan.stanic@gmail.com", 19, "Bojan", 9, Specialty.General, 11, "Stanic" },
+                    { 2, 29, "gorana.miljkovic@gmail.com", 20, "Gorana", 2, Specialty.Anesthesiologist, 13, "Miljkovic" }
                 });
 
             migrationBuilder.InsertData(
@@ -562,17 +604,17 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Quantity", "RoomId", "Type" },
                 values: new object[,]
                 {
-                    { "1", 1, 1, 0 },
-                    { "3", 1, 1, 0 },
-                    { "2", 1, 2, 0 },
-                    { "6", 1, 2, 0 },
-                    { "7", 1, 2, 0 },
-                    { "4", 1, 3, 0 },
-                    { "5", 1, 3, 0 },
-                    { "10", 1, 5, 0 },
-                    { "11", 1, 5, 0 },
-                    { "8", 1, 6, 0 },
-                    { "9", 1, 6, 0 }
+                    { "4", 1, 3, EquipmentType.BED },
+                    { "6", 1, 2, EquipmentType.BED },
+                    { "2", 1, 2, EquipmentType.BED },
+                    { "10", 1, 5, EquipmentType.BED },
+                    { "11", 1, 5, EquipmentType.BED },
+                    { "3", 1, 1, EquipmentType.BED },
+                    { "8", 1, 6, EquipmentType.BED },
+                    { "9", 1, 6, EquipmentType.BED },
+                    { "1", 1, 1, EquipmentType.BED },
+                    { "7", 1, 2, EquipmentType.BED },
+                    { "5", 1, 3, EquipmentType.BED }
                 });
 
             migrationBuilder.CreateIndex(

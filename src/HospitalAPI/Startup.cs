@@ -97,11 +97,6 @@ namespace HospitalAPI
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            //services.AddScoped<IUserService, UserService>();
-
-
-
-            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IEmailSendService, EmailSendService>();
 

@@ -18,6 +18,13 @@ namespace HospitalLibrary.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasPostgresEnum(null, "allergy", new[] { "pollen", "dust", "feathers", "cats", "dogs", "garlic", "peanuts", "milk", "rice", "celery", "gluten", "crustaceans", "eggs", "soya", "fish", "nuts", "insects", "latex", "shellfish", "tetracycline", "penicillin", "anaesthetics", "dilantin", "tegretol", "cephalosporins", "sulphonamides" })
+                .HasPostgresEnum(null, "appointment_status", new[] { "scheduled", "finished", "cancelled" })
+                .HasPostgresEnum(null, "blood_type", new[] { "a", "b", "ab", "o" })
+                .HasPostgresEnum(null, "equipment_type", new[] { "bed", "bandages", "medicine" })
+                .HasPostgresEnum(null, "gender", new[] { "male", "female" })
+                .HasPostgresEnum(null, "specialty", new[] { "cardiologist", "anesthesiologist", "neurosurgeon", "general" })
+                .HasPostgresEnum(null, "vacation_request_status", new[] { "waiting_for_approval", "cancelled", "accepted", "disapproved" })
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
@@ -321,6 +328,116 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Age = 32,
+                            Email = "doctorfilip@hotmail.com",
+                            EndWorkTime = 13,
+                            Name = "Filip",
+                            RoomId = 1,
+                            Specialty = Specialty.Cardiologist,
+                            StartWorkTime = 8,
+                            Surname = "Marinkovic"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Age = 29,
+                            Email = "gorana.miljkovic@gmail.com",
+                            EndWorkTime = 20,
+                            Name = "Gorana",
+                            RoomId = 2,
+                            Specialty = Specialty.Anesthesiologist,
+                            StartWorkTime = 13,
+                            Surname = "Miljkovic"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Age = 40,
+                            Email = "petar.dobrosavljevic@gmail.com",
+                            EndWorkTime = 20,
+                            Name = "Petar",
+                            RoomId = 3,
+                            Specialty = Specialty.Cardiologist,
+                            StartWorkTime = 13,
+                            Surname = "Dobrosavljevic"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Age = 27,
+                            Email = "stefan.simic@gmail.com",
+                            EndWorkTime = 13,
+                            Name = "Stefan",
+                            RoomId = 4,
+                            Specialty = Specialty.Anesthesiologist,
+                            StartWorkTime = 8,
+                            Surname = "Simic"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Age = 51,
+                            Email = "bojana.jelic@gmail.com",
+                            EndWorkTime = 16,
+                            Name = "Bojana",
+                            RoomId = 5,
+                            Specialty = Specialty.Neurosurgeon,
+                            StartWorkTime = 8,
+                            Surname = "Jelic"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Age = 34,
+                            Email = "katarina.radic@gmail.com",
+                            EndWorkTime = 20,
+                            Name = "Katarina",
+                            RoomId = 6,
+                            Specialty = Specialty.Neurosurgeon,
+                            StartWorkTime = 14,
+                            Surname = "Radic"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Age = 27,
+                            Email = "milica.jezdic@gmail.com",
+                            EndWorkTime = 13,
+                            Name = "Milica",
+                            RoomId = 7,
+                            Specialty = Specialty.General,
+                            StartWorkTime = 7,
+                            Surname = "Jezdic"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Age = 27,
+                            Email = "zoran.katic@gmail.com",
+                            EndWorkTime = 13,
+                            Name = "Zoran",
+                            RoomId = 8,
+                            Specialty = Specialty.General,
+                            StartWorkTime = 8,
+                            Surname = "Katic"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Age = 35,
+                            Email = "bojan.stanic@gmail.com",
+                            EndWorkTime = 19,
+                            Name = "Bojan",
+                            RoomId = 9,
+                            Specialty = Specialty.General,
+                            StartWorkTime = 11,
+                            Surname = "Stanic"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Feedback.Feedback", b =>
@@ -393,8 +510,8 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                    b.Property<EquipmentType>("Type")
+                        .HasColumnType("equipment_type");
 
                     b.HasKey("Id");
 
@@ -408,77 +525,77 @@ namespace HospitalLibrary.Migrations
                             Id = "1",
                             Quantity = 1,
                             RoomId = 1,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "2",
                             Quantity = 1,
                             RoomId = 2,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "3",
                             Quantity = 1,
                             RoomId = 1,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "4",
                             Quantity = 1,
                             RoomId = 3,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "5",
                             Quantity = 1,
                             RoomId = 3,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "6",
                             Quantity = 1,
                             RoomId = 2,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "7",
                             Quantity = 1,
                             RoomId = 2,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "8",
                             Quantity = 1,
                             RoomId = 6,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "9",
                             Quantity = 1,
                             RoomId = 6,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "10",
                             Quantity = 1,
                             RoomId = 5,
-                            Type = 0
+                            Type = EquipmentType.BED
                         },
                         new
                         {
                             Id = "11",
                             Quantity = 1,
                             RoomId = 5,
-                            Type = 0
+                            Type = EquipmentType.BED
                         });
                 });
 
@@ -894,6 +1011,118 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            Email = "manageremail@gmail.com",
+                            IdByRole = 1,
+                            Name = "Milica",
+                            Password = "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==",
+                            Role = "MANAGER",
+                            Surname = "Peric"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            Email = "doctorfilip@hotmail.com",
+                            IdByRole = 1,
+                            Name = "Filip",
+                            Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==",
+                            Role = "DOCTOR",
+                            Surname = "Marinkovic"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Active = true,
+                            Email = "gorana.miljkovic@gmail.com",
+                            IdByRole = 2,
+                            Name = "Gorana",
+                            Password = "AGEU6JzOVaDY+DYUWWiWOKbrpIHMwuW2fyh6CJai+D159dhE0IRmWjM3oQVlAS3hlw==",
+                            Role = "DOCTOR",
+                            Surname = "Miljkovic"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Active = true,
+                            Email = "petar.dobrosavljevic@gmail.com",
+                            IdByRole = 3,
+                            Name = "Petar",
+                            Password = "AAQWjfiC3pkhMnwzKmJjhwytFO73mFNYklxj6/hTSj0aS3j3KxTe7TsmqVmXSy0fnQ==",
+                            Role = "DOCTOR",
+                            Surname = "Dobrosavljevic"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Active = true,
+                            Email = "stefan.simic@gmail.com",
+                            IdByRole = 4,
+                            Name = "Stefan",
+                            Password = "AJbKG1PpVed0VCFu358yyNfXy8RsWk6sB55ejeXQaFOV3nQxSImn6qsLGS6N5oQfqg==",
+                            Role = "DOCTOR",
+                            Surname = "Simic"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Active = true,
+                            Email = "bojana.jelic@gmail.com",
+                            IdByRole = 5,
+                            Name = "Bojana",
+                            Password = "AEHe2m50J9F9RMJHmvuxZAQ9VFzCV7ebMjJFG/NND8GQM/C3tBut/fl1mhz0veof5Q==",
+                            Role = "DOCTOR",
+                            Surname = "Jelic"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Active = true,
+                            Email = "katarina.radic@gmail.com",
+                            IdByRole = 6,
+                            Name = "Katarina",
+                            Password = "APxtdhzFubuhYnLITUwNYcwwt0ySvkTJ7C5qayocG3x5L9p3MbN3P0f27EYOCCInvw==",
+                            Role = "DOCTOR",
+                            Surname = "Radic"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Active = true,
+                            Email = "milica.jezdic@gmail.com",
+                            IdByRole = 7,
+                            Name = "Milica",
+                            Password = "ADCyG1fHX04K+wTwzJDPmb78k1YWMfTQqgeDZKorMbE46o0+zXEc2NF1SHjkEAiaWw==",
+                            Role = "DOCTOR",
+                            Surname = "Jezdic"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Active = true,
+                            Email = "zoran.katic@gmail.com",
+                            IdByRole = 8,
+                            Name = "Zoran",
+                            Password = "AA+E3CZi5TQ3+ciHGpGi7NFiE2GZDawBlSyBOK4IZd28ZB6oZWWOqY+gxY93xmI8kw==",
+                            Role = "DOCTOR",
+                            Surname = "Katic"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Active = true,
+                            Email = "bojan.stanic@gmail.com",
+                            IdByRole = 9,
+                            Name = "Bojan",
+                            Password = "AL4E2lLskVtWAOnmsPLxHDP8hxJVqshvbL2F6uKhd51bCB/n07IYj6uabGAKTtYZlg==",
+                            Role = "DOCTOR",
+                            Surname = "Stanic"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Vacation.VacationRequest", b =>
@@ -918,8 +1147,8 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("Start")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                    b.Property<VacationRequestStatus>("Status")
+                        .HasColumnType("vacation_request_status");
 
                     b.Property<bool>("Urgency")
                         .HasColumnType("boolean");

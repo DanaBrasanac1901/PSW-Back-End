@@ -17,6 +17,9 @@ using Npgsql;
 using System.Collections.Generic;
 using HospitalLibrary.Core.ApptSchedulingSession.Storage;
 using HospitalLibrary.Core.Infrastructure;
+using Microsoft.AspNetCore.Identity;
+using System.Data;
+using System.Xml.Linq;
 
 namespace HospitalLibrary.Settings
 {
@@ -77,12 +80,22 @@ namespace HospitalLibrary.Settings
             NpgsqlConnection.GlobalTypeMapper.MapEnum<Gender>();
             NpgsqlConnection.GlobalTypeMapper.MapEnum<BloodType>();
             NpgsqlConnection.GlobalTypeMapper.MapEnum<AppointmentStatus>();
-            NpgsqlConnection.GlobalTypeMapper.MapEnum<Gender>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<EquipmentType>();
+            NpgsqlConnection.GlobalTypeMapper.MapEnum<VacationRequestStatus>();
+
 
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasPostgresEnum<Specialty>();
+            modelBuilder.HasPostgresEnum<Allergy>();
+            modelBuilder.HasPostgresEnum<Gender>();
+            modelBuilder.HasPostgresEnum<BloodType>();
+            modelBuilder.HasPostgresEnum<AppointmentStatus>();
+            modelBuilder.HasPostgresEnum<EquipmentType>();
+            modelBuilder.HasPostgresEnum<VacationRequestStatus>();
+
             Guid bank1Id = new Guid("2D4894B6-02E4-4288-A3D3-089489563190");
             Guid bank2Id = new Guid("55510651-D36E-444D-95FB-871E0902CD7E");
             Guid bank3Id = new Guid("A60460FE-0D33-478D-93B3-45D424079E66");
@@ -269,6 +282,241 @@ namespace HospitalLibrary.Settings
                 .HasValue<BackButtonClicked>("back")
                 .HasValue<ReportCreated>("created")
                 .HasValue<ReportFinished>("finished");
+            
+
+            modelBuilder.Entity<User>().HasData(
+                  new User()
+                  {
+                      Id = 1,
+                      IdByRole = 1,
+                      Name = "Milica",
+                      Surname = "Peric",
+                      Email = "manageremail@gmail.com",
+                      Password = "AJMjUEYXE/EtKJlD2NfDblnM15ik0Wo547IgBuUFWyJtWRhj5PSBO/ttok4DT679oA==",
+                      Role = "MANAGER",
+                      Active = true,
+                      Token = null
+                  },
+                  new User()
+                  {
+                      Id = 2,
+                      IdByRole = 1,
+                      Name = "Filip",
+                      Surname = "Marinkovic",
+                      Email = "doctorfilip@hotmail.com",
+                      Password = "AKTyL6i1roIESl/br0aDrci1H15gFj0Wwede2GYJi0csDSUhrydNioQui0K3gfkJcA==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                  },
+                  new User()
+                  {
+                      Id = 3,
+                      IdByRole = 2,
+                      Name = "Gorana",
+                      Surname = "Miljkovic",
+                      Email = "gorana.miljkovic@gmail.com",
+                      Password = "AGEU6JzOVaDY+DYUWWiWOKbrpIHMwuW2fyh6CJai+D159dhE0IRmWjM3oQVlAS3hlw==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                   },
+                  new User()
+                  {
+                      Id = 4,
+                      IdByRole = 3,
+                      Name = "Petar",
+                      Surname = "Dobrosavljevic",
+                      Email = "petar.dobrosavljevic@gmail.com",
+                      Password = "AAQWjfiC3pkhMnwzKmJjhwytFO73mFNYklxj6/hTSj0aS3j3KxTe7TsmqVmXSy0fnQ==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                  },
+                  new User()
+                  {
+                      Id = 5,
+                      IdByRole = 4,
+                      Name = "Stefan",
+                      Surname = "Simic",
+                      Email = "stefan.simic@gmail.com",
+                      Password = "AJbKG1PpVed0VCFu358yyNfXy8RsWk6sB55ejeXQaFOV3nQxSImn6qsLGS6N5oQfqg==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                  },
+                  new User()
+                  {
+                      Id = 6,
+                      IdByRole = 5,
+                      Name = "Bojana",
+                      Surname = "Jelic",
+                      Email = "bojana.jelic@gmail.com",
+                      Password = "AEHe2m50J9F9RMJHmvuxZAQ9VFzCV7ebMjJFG/NND8GQM/C3tBut/fl1mhz0veof5Q==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                  },
+                  new User()
+                  {
+                      Id = 7,
+                      IdByRole = 6,
+                      Name = "Katarina",
+                      Surname = "Radic",
+                      Email = "katarina.radic@gmail.com",
+                      Password = "APxtdhzFubuhYnLITUwNYcwwt0ySvkTJ7C5qayocG3x5L9p3MbN3P0f27EYOCCInvw==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                  },
+                  new User()
+                  {
+                      Id = 8,
+                      IdByRole = 7,
+                      Name = "Milica",
+                      Surname = "Jezdic",
+                      Email = "milica.jezdic@gmail.com",
+                      Password = "ADCyG1fHX04K+wTwzJDPmb78k1YWMfTQqgeDZKorMbE46o0+zXEc2NF1SHjkEAiaWw==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                  },
+                  new User()
+                  {
+                      Id = 9,
+                      IdByRole = 8,
+                      Name = "Zoran",
+                      Surname = "Katic",
+                      Email = "zoran.katic@gmail.com",
+                      Password = "AA+E3CZi5TQ3+ciHGpGi7NFiE2GZDawBlSyBOK4IZd28ZB6oZWWOqY+gxY93xmI8kw==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                  },
+                  new User()
+                  {
+                      Id = 10,
+                      IdByRole = 9,
+                      Name = "Bojan",
+                      Surname = "Stanic",
+                      Email = "bojan.stanic@gmail.com",
+                      Password = "AL4E2lLskVtWAOnmsPLxHDP8hxJVqshvbL2F6uKhd51bCB/n07IYj6uabGAKTtYZlg==",
+                      Role = "DOCTOR",
+                      Active = true,
+                      Token = null
+                  }
+             );
+
+
+            modelBuilder.Entity<Doctor>().HasData(
+                new Doctor()
+                {
+                    Id = 1,
+                    Name = "Filip",
+                    Surname = "Marinkovic",
+                    Email = "doctorfilip@hotmail.com",
+                    Specialty = Specialty.Cardiologist,
+                    RoomId = 1,
+                    StartWorkTime = 8,
+                    EndWorkTime = 13,
+                    Age = 32
+                },
+                new Doctor()
+                {
+                    Id = 2,
+                    Name = "Gorana",
+                    Surname = "Miljkovic",
+                    Email = "gorana.miljkovic@gmail.com",
+                    Specialty = Specialty.Anesthesiologist,
+                    RoomId = 2,
+                    StartWorkTime = 13,
+                    EndWorkTime = 20,
+                    Age = 29
+                },
+                new Doctor()
+                {
+                    Id = 3,
+                    Name = "Petar",
+                    Surname = "Dobrosavljevic",
+                    Email = "petar.dobrosavljevic@gmail.com",
+                    Specialty = Specialty.Cardiologist,
+                    RoomId = 3,
+                    StartWorkTime = 13,
+                    EndWorkTime = 20,
+                    Age = 40
+                },
+                new Doctor()
+                {
+                    Id = 4,
+                    Name = "Stefan",
+                    Surname = "Simic",
+                    Email = "stefan.simic@gmail.com",
+                    Specialty = Specialty.Anesthesiologist,
+                    RoomId = 4,
+                    StartWorkTime = 8,
+                    EndWorkTime = 13,
+                    Age = 27
+                },
+                new Doctor()
+                {
+                    Id = 5,
+                    Name = "Bojana",
+                    Surname = "Jelic",
+                    Email = "bojana.jelic@gmail.com",
+                    Specialty = Specialty.Neurosurgeon,
+                    RoomId = 5,
+                    StartWorkTime = 8,
+                    EndWorkTime = 16,
+                    Age = 51
+                },
+                new Doctor()
+                {
+                    Id = 6,
+                    Name = "Katarina",
+                    Surname = "Radic",
+                    Email = "katarina.radic@gmail.com",
+                    Specialty = Specialty.Neurosurgeon,
+                    RoomId = 6,
+                    StartWorkTime = 14,
+                    EndWorkTime = 20,
+                    Age = 34
+                },
+                new Doctor()
+                {
+                    Id = 7,
+                    Name = "Milica",
+                    Surname = "Jezdic",
+                    Email = "milica.jezdic@gmail.com",
+                    Specialty = Specialty.General,
+                    RoomId = 7,
+                    StartWorkTime = 7,
+                    EndWorkTime = 13,
+                    Age = 27
+                },
+                new Doctor()
+                {
+                    Id = 8,
+                    Name = "Zoran",
+                    Surname = "Katic",
+                    Email = "zoran.katic@gmail.com",
+                    Specialty = Specialty.General,
+                    RoomId = 8,
+                    StartWorkTime = 8,
+                    EndWorkTime = 13,
+                    Age = 27
+                },
+                new Doctor()
+                {
+                    Id = 9,
+                    Name = "Bojan",
+                    Surname = "Stanic",
+                    Email = "bojan.stanic@gmail.com",
+                    Specialty = Specialty.General,
+                    RoomId = 9,
+                    StartWorkTime = 11,
+                    EndWorkTime = 19,
+                    Age = 35
+                });
 
             base.OnModelCreating(modelBuilder);
         }
