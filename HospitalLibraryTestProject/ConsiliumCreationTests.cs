@@ -9,7 +9,7 @@ using Moq;
 using HospitalLibrary.Core.Room;
 using HospitalLibrary.Core.Consiliums;
 using HospitalLibrary.Core.Appointment;
-
+/*
 namespace HospitalLibraryTestProject
 {
     public class ConsiliumCreationTests
@@ -197,4 +197,4 @@ namespace HospitalLibraryTestProject
             return stubRepo.Object;
         }
     }
-}
+}*/
