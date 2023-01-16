@@ -146,6 +146,14 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet]
+        [Route("Allergies")]
+        public ActionResult GetAllAllergies()
+        {
+            var allergies = _patientService.GetAllAllergies();
+            return Ok(allergies);
+        }
+
+        [HttpGet]
         [Route("[action]/{id}")]
         public ActionResult GetPatientsForSpecificDoctor(int id)
         {

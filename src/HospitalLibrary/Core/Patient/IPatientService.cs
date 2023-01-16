@@ -19,6 +19,8 @@ namespace HospitalLibrary.Core.Patient
         List<PatientForAppointmentDTO> GetPatientsForDoctor(int id);
         PatientForReportDTO GetPatientForReport(int id);
 
+        List<string> GetAllAllergies();
+
         void Register(Patient patient);
         Patient GetByEmail(string email);
 

@@ -1,8 +1,10 @@
 ﻿using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Doctor;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Patient.DTOS;
 using Microsoft.AspNetCore.Builder;
 using Org.BouncyCastle.Crypto.Tls;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -157,6 +159,17 @@ namespace HospitalLibrary.Core.Patient
         IEnumerable<int> IPatientService.DoctorsWithSimiliarNumOfPatients(int minNumber, int maxNumber)
         {
             throw new System.NotImplementedException();
+        }
+
+
+        public List<string> GetAllAllergies()
+        {
+            List<string> result = new List<string>();
+            foreach (var item in Enum.GetNames(typeof(Allergy)))
+            {
+                result.Add(item.ToString());
+            }
+            return result;
         }
 
         /*
