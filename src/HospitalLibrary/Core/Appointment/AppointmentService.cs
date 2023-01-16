@@ -157,21 +157,26 @@ namespace HospitalLibrary.Core.Appointment
 
         private string GetEmail(int patientId)
         {
-            if (patientId == 1)
-            {
-                return "imeprezime0124@gmail.com";
-            }
-            else if (patientId == 2)
-            {
-                return "milos.adnadjevic@gmail.com";
-            }
-            else if (patientId == 3)
-            {
-                return "jales32331@harcity.com";
-            }else
-            {
-                return "";
-            }
+            //if (patientId == "Pera Peric")
+            //{
+            //    return "imeprezime0124@gmail.com";
+            //}
+            //else if (patientId == "Sima Simic")
+            //{
+            //    return "milos.adnadjevic@gmail.com";
+            //}
+            //else if (patientId == "Djordje Djokic")
+            //{
+            //    return "jales32331@harcity.com";
+            //}else
+            //{
+            //    return "";
+            //}
+
+            Patient.Patient patient = _patientRepository.GetById(patientId);
+            string email = patient.Email;
+            return email;
+
         }
 
         public void Delete(string appId)
