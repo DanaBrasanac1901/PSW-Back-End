@@ -149,12 +149,12 @@ namespace HospitalAPI.Controllers
             return Ok(_appointmentService.GetDoctorsPatients(id));
         }
 
-            /*
+        
             //Dana&Anja
 
             // GET: api/Appointments/patient/id
             [HttpGet("patient/{id}")]
-            public ActionResult GetForPatient(string id)
+            public ActionResult GetForPatient(int id)
             {
                 return Ok(_availableAppointmentService.GetForPatient(id));
             }
@@ -216,6 +216,6 @@ namespace HospitalAPI.Controllers
 
             _scheduleAppointment.Execute("end", DateTime.Now);
             return NoContent();
-        }*/
+        }
     }
 }
