@@ -126,11 +126,33 @@ namespace HospitalLibrary.Core.Appointment
         public void Update(RescheduleAppointmentDTO appointmentDTO)
         {
             Appointment appointment = GetById(appointmentDTO.id);
-            Appointment appToSend = AppointmentAdapter.RescheduleAppointmentDTOToAppointment(appointmentDTO, appointment);
-            if (IsAvailable(appToSend) == true && CheckIfAppointmentIsSetInFuture(appToSend.Start) == true)
+            Appointment appToSend = appointment;
+            DateTime startTime = DateTime.Parse(appointmentDTO.date + " " + appointmentDTO.time);
+            if (IsAvailableAppointment(startTime, appointment.DoctorId) == true && CheckIfAppointmentIsSetInFuture(startTime) == true)
             {
+                appToSend.Start = startTime;
                 _appointmentRepository.Update(appToSend);
             }
+        }
+
+        public Boolean IsAvailableAppointment(DateTime start, int docId)
+        {
+            Doctor.Doctor doc = _doctorRepository.GetById(docId);
+            if (doc.Appointments == null)
+            {
+                return true;
+            }
+            ICollection<Appointment> allApp = doc.Appointments;
+            //List<Appointment> allAppList = allApp.ToList();
+
+            foreach (var appToCheck in allApp.ToList())
+            {
+                if (appToCheck.Start == start)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private string GetEmail(int patientId)
