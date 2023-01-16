@@ -1,4 +1,6 @@
 ﻿using Castle.Core.Internal;
+
+using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.Appointment;
 using HospitalLibrary.Core.Appointment.DTOS;
 using HospitalLibrary.Core.Doctor;
@@ -25,14 +27,18 @@ namespace HospitalLibrary.Core.Appointment
         private readonly IRoomRepository _roomRepository;
         private readonly IEmailSendService _emailSend;
         private string _email;
+        private readonly IPatientRepository _patientRepository;
 
         public AppointmentService(IAppointmentRepository appointmentRepository,IDoctorRepository doctorRepository, 
-            IRoomRepository roomRepository, IEmailSendService emailSend)
+            IRoomRepository roomRepository, IEmailSendService emailSend,IPatientRepository patientRepository)
         {
             _appointmentRepository = appointmentRepository;
             _doctorRepository = doctorRepository;
             _roomRepository = roomRepository;
             _emailSend = emailSend;
+            _patientRepository = patientRepository;
+
+
             UpdateFinishedAppointments();
         }
 
@@ -133,21 +139,26 @@ namespace HospitalLibrary.Core.Appointment
 
         private string GetEmail(string patientId)
         {
-            if (patientId == "Pera Peric")
-            {
-                return "imeprezime0124@gmail.com";
-            }
-            else if (patientId == "Sima Simic")
-            {
-                return "milos.adnadjevic@gmail.com";
-            }
-            else if (patientId == "Djordje Djokic")
-            {
-                return "jales32331@harcity.com";
-            }else
-            {
-                return "";
-            }
+            //if (patientId == "Pera Peric")
+            //{
+            //    return "imeprezime0124@gmail.com";
+            //}
+            //else if (patientId == "Sima Simic")
+            //{
+            //    return "milos.adnadjevic@gmail.com";
+            //}
+            //else if (patientId == "Djordje Djokic")
+            //{
+            //    return "jales32331@harcity.com";
+            //}else
+            //{
+            //    return "";
+            //}
+
+          Patient.Patient patient= _patientRepository.GetById(patientId);
+          string email = patient.Email; 
+          return email;
+
         }
 
         public void Delete(string appId)
