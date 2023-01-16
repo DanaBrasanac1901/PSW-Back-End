@@ -204,21 +204,18 @@ namespace HospitalLibrary.Core.Doctor
             return true;
         }
 
-        private IEnumerable<Doctor> StringToIntIds(string doctorIds)
-        {
-            List<Doctor> doctors = new List<Doctor>();
-            string[] doctorIdsSplit = doctorIds.Split(",");
-            foreach (string id in doctorIdsSplit)
-            {
-                int.TryParse(id, out int docId);
-                doctors.Add(_doctorRepository.GetById(docId));
-            }
-            return doctors;
-        }
-
         public IEnumerable<Doctor> GetByIds(string doctorIds)
         {
-            return StringToIntIds(doctorIds);
+            List<Doctor> ret = new();
+            List<string> doctorIdsString = new(doctorIds.Split(","));
+            foreach (string id in doctorIdsString)
+            {
+                if(int.TryParse(id, out int docId))
+                {
+                    ret.Add(GetById(docId));
+                }
+            }
+            return ret;
         }
         public List<Doctor> GetBySpecialty(string specialty)
         {
