@@ -172,6 +172,13 @@ namespace HospitalLibrary.Core.Patient
             return result;
         }
 
+        public void ActivatePatient(string email)
+        {
+            Patient p=_patientRepository.GetByEmail(email);
+            if (p != null) p.Active = true;
+            _patientRepository.Update(p);
+        }
+
         /*
         public Patient CheckCreditentials(string username, string password)
         {

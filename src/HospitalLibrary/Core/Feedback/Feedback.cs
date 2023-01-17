@@ -86,6 +86,7 @@ namespace HospitalLibrary.Core.Feedback
             public FeedbackBuilder VisibleToPublic(bool visibleToPublic)
             {
                 this.visibleToPublic = visibleToPublic;
+                
                 return this;
             }
             public Feedback build()

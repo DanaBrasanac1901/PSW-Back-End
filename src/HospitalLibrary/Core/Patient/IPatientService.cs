@@ -25,5 +25,6 @@ namespace HospitalLibrary.Core.Patient
         Patient GetByEmail(string email);
 
         PatientDTO GetDTOByEmail(string email);
+        void ActivatePatient(string email);
     }
 }

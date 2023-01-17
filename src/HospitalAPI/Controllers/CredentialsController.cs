@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.EmailSender;
+using HospitalLibrary.Core.Patient;
 using HospitalLibrary.Core.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,15 @@ namespace HospitalAPI.Controllers
 		private IUserService _userService;
 		private JwtSecurityTokenHandler tokenHandler;
 		private IEmailSendService _emailSendService;
+		private IPatientService _patientService;
 
-		public CredentialsController(IUserService userService, IEmailSendService emailSendService)
+		public CredentialsController(IUserService userService, IEmailSendService emailSendService,IPatientService patientService)
 		{
 			
 			_userService = userService;
 			tokenHandler=new JwtSecurityTokenHandler();
 			_emailSendService = emailSendService;
+			_patientService = patientService;
 		}
 
 		[AllowAnonymous] //prevent the auth process to happen when calling
@@ -81,6 +84,7 @@ namespace HospitalAPI.Controllers
 				
                 if (response)
                 {
+					_patientService.ActivatePatient(email);
 					return Redirect("http://localhost:4200/login");
                 }
                 else
