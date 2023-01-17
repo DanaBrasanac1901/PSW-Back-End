@@ -126,30 +126,57 @@ namespace HospitalLibrary.Core.Appointment
         public void Update(RescheduleAppointmentDTO appointmentDTO)
         {
             Appointment appointment = GetById(appointmentDTO.id);
-            Appointment appToSend = AppointmentAdapter.RescheduleAppointmentDTOToAppointment(appointmentDTO, appointment);
-            if (IsAvailable(appToSend) == true && CheckIfAppointmentIsSetInFuture(appToSend.Start) == true)
+            Appointment appToSend = appointment;
+            DateTime startTime = DateTime.Parse(appointmentDTO.date + " " + appointmentDTO.time);
+            if (IsAvailableAppointment(startTime, appointment.DoctorId) == true && CheckIfAppointmentIsSetInFuture(startTime) == true)
             {
+                appToSend.Start = startTime;
                 _appointmentRepository.Update(appToSend);
             }
         }
 
+        public Boolean IsAvailableAppointment(DateTime start, int docId)
+        {
+            Doctor.Doctor doc = _doctorRepository.GetById(docId);
+            if (doc.Appointments == null)
+            {
+                return true;
+            }
+            ICollection<Appointment> allApp = doc.Appointments;
+            //List<Appointment> allAppList = allApp.ToList();
+
+            foreach (var appToCheck in allApp.ToList())
+            {
+                if (appToCheck.Start == start)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private string GetEmail(int patientId)
         {
-            if (patientId == 1)
-            {
-                return "imeprezime0124@gmail.com";
-            }
-            else if (patientId == 2)
-            {
-                return "milos.adnadjevic@gmail.com";
-            }
-            else if (patientId == 3)
-            {
-                return "jales32331@harcity.com";
-            }else
-            {
-                return "";
-            }
+            //if (patientId == "Pera Peric")
+            //{
+            //    return "imeprezime0124@gmail.com";
+            //}
+            //else if (patientId == "Sima Simic")
+            //{
+            //    return "milos.adnadjevic@gmail.com";
+            //}
+            //else if (patientId == "Djordje Djokic")
+            //{
+            //    return "jales32331@harcity.com";
+            //}else
+            //{
+            //    return "";
+            //}
+
+            Patient.Patient patient = _patientRepository.GetById(patientId);
+            string email = patient.Email;
+            return email;
+
         }
 
         public void Delete(string appId)

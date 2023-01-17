@@ -12,11 +12,11 @@ namespace HospitalLibrary.Core.Consiliums.DTO
         public DateTime Start {
             get {
                 //string[] startStrSplit = StartStr.Split(' ');
-                string[] dateStrSplit = StartStr.Split('/');
-
-                int day = Int32.Parse(dateStrSplit[0]);
-                int month = Int32.Parse(dateStrSplit[1]);
-                int year = Int32.Parse(dateStrSplit[2]);
+                string[] dateStrSplit = StartStr.Split('T');
+                string[] date = dateStrSplit[0].Split('-');
+                int day = Int32.Parse(date[2]);
+                int month = Int32.Parse(date[1]);
+                int year = Int32.Parse(date[0]);
 
                 //string[] timeStrSplit = startStrSplit[1].Split(':');
                 //int hours = Int32.Parse(timeStrSplit[0]);
@@ -29,11 +29,11 @@ namespace HospitalLibrary.Core.Consiliums.DTO
             get
             {
                 //string[] startStrSplit = EndStr.Split(' ');
-                string[] dateStrSplit = EndStr.Split('/');
+                string[] dateStrSplit = EndStr.Split('-');
 
-                int day = Int32.Parse(dateStrSplit[0]);
+                int day = Int32.Parse(dateStrSplit[2]);
                 int month = Int32.Parse(dateStrSplit[1]);
-                int year = Int32.Parse(dateStrSplit[2]);
+                int year = Int32.Parse(dateStrSplit[0]);
 
                 //string[] timeStrSplit = startStrSplit[1].Split(':');
                 //int hours = Int32.Parse(timeStrSplit[0]);
@@ -64,7 +64,7 @@ namespace HospitalLibrary.Core.Consiliums.DTO
 
         public Consilium ConvertToConsilium()
         {
-            return new Consilium(0, Topic, Duration, Start, DoctorIds, Specialties, "DOC1");
+            return new Consilium(0, Topic, Duration, Start, DoctorIds, Specialties, "cardiologist");
         }
 
     }
