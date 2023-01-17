@@ -79,7 +79,7 @@ namespace IntegrationAPI.Controllers
                 _tenderHandlerService.CreateOffer(tenderOffer);
             else
                 _tenderHandlerService.UpdateOffer(tenderOffer);
-            return CreatedAtAction("GetById", new { id = tenderOffer.TenderId, bloodBankId=tenderOffer.BloodBankId }, tenderOffer);
+            return Ok();
         }
 
 
