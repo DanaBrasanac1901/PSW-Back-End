@@ -101,7 +101,7 @@ namespace HospitalLibrary.Core.Patient
             get => addressJson; set
             {
                 addressJson = value;
-                Address = JsonSerializer.Deserialize<Address>(addressJson);
+                address = JsonSerializer.Deserialize<Address>(addressJson);
                 AddressString = Address.ToString();
             }
         }
@@ -113,7 +113,7 @@ namespace HospitalLibrary.Core.Patient
             get => address; set
             {
                 address = value;
-                AddressJson=JsonSerializer.Serialize(address);
+                AddressJson=JsonSerializer.Serialize<Address>(address);
             }
         }
         [NotMapped]
