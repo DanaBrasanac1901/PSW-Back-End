@@ -48,7 +48,7 @@ namespace HospitalLibrary.Core.Consiliums
 
         public List<PotentialAppointmentsDTO> GetPotentialAppointmentTimesForDoctors(ConsiliumRequestDTO consiliumAppointmentInfo)
         {
-            List<Doctor.Doctor> neededDoctors = new List<Doctor.Doctor>((IEnumerable<Doctor.Doctor>)_doctorService.GetByIds(consiliumAppointmentInfo.DoctorIds));
+            List<Doctor.Doctor> neededDoctors = new(_doctorService.GetByIds(consiliumAppointmentInfo.DoctorIds));
             
             int start_time = GetStartTime(neededDoctors);
             int end_time = GetEndTime(neededDoctors);

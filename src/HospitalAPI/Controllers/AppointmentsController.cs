@@ -98,8 +98,16 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            _appointmentService.Create(appDTO);
-            return Ok();
+            string idFlag = _appointmentService.Create(appDTO);
+            if (idFlag == "Passed")
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+
         }
 
         [HttpGet]
