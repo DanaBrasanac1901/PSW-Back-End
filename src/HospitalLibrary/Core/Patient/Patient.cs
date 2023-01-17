@@ -113,6 +113,7 @@ namespace HospitalLibrary.Core.Patient
             get => address; set
             {
                 address = value;
+                AddressJson=JsonSerializer.Serialize(address);
             }
         }
         [NotMapped]

@@ -32,10 +32,6 @@ namespace HospitalLibrary.Core.Patient
             if(string.IsNullOrWhiteSpace(Street) || string.IsNullOrWhiteSpace(StreetNumber) || string.IsNullOrWhiteSpace(City))
             throw new ArgumentException();
             
-
-            Regex r = new Regex("\\d");
-            Match m = r.Match(this.StreetNumber);
-            if (!m.Success) throw new ArgumentException();
             Regex r1 = new Regex("^[a-zA-Z]+$");
             Match m1 = r1.Match(this.Street);
             Match m2 = r1.Match(this.City);
