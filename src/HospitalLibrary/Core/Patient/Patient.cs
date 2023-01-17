@@ -72,7 +72,12 @@ namespace HospitalLibrary.Core.Patient
 
         internal List<string> ParseAllergies(List<Allergy> allergies)
         {
-            throw new NotImplementedException();
+            List<string> res = new List<string>();
+            foreach (var allergy in allergies)
+            {
+                res.Add(allergy.ToString());
+            }
+            return res;
         }
 
         public Patient(int id, string name, string surname,string address, string email, Gender gender, int age, BloodType bloodType, List<Allergy> allergies, int doctorID)
