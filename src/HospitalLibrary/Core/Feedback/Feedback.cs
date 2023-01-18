@@ -103,7 +103,7 @@ namespace HospitalLibrary.Core.Feedback
             this.VisibleToPublic = feedbackBuilder.visibleToPublic;
             this.approved = feedbackBuilder.approved;
             this.date = feedbackBuilder.date;
-            this.Id = feedbackBuilder.id;
+           // this.Id = feedbackBuilder.id;
         }
 
 
