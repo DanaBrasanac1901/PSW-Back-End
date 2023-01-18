@@ -137,7 +137,7 @@ namespace IntegrationAPI.Controllers
                 string body = "Confirm tender win: \n" + lnkHref;
                 //Get and set the AppSettings using configuration manager.
 
-                _emailSendService.SendEmail(new Message(new string[] { email, "docatufe@hotmail.com" }, subject, body));
+                _emailSendService.SendEmail(new Message(new string[] { email, "danabrasanac@gmail.com" }, subject, body));
                 return Ok(lnkHref);
             }
             return BadRequest();
